@@ -1,10 +1,10 @@
 from django.db import models
-# TODO user import 정리
+# TODO import 위치정리
 from user.models import User
+from core.models import Tag
+from core.models import Location
 
 import json
-# TODO location 위치 정리
-from core.models import Location
 
 from .utils import uuid_name_upload_to
 
