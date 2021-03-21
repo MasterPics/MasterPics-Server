@@ -1,8 +1,13 @@
 from django.db import models
+
+# TODO import 위치
 from user.models import User
+from core.models import Tag
 
 # for view_count
 from django.utils import timezone
+
+from .utils import uuid_name_upload_to
 
 
 class Portfolio(models.Model):

@@ -138,7 +138,7 @@
 </div>
 
 
-<!-- TODO 기능 정리 -->
+<!-- 버튼 누르면 상단으로 -->
 <div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-circle-up"></i></div>
 
 
@@ -162,17 +162,9 @@
 
 
 {% block script %}
-<!-- TODO script 정리 -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-
-
 <script src="{% static 'js/infinite.min.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
+<script src="{% static 'js/go_to_top.js' %}"></script>
 <script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/save.js' %}"></script>
 <script src="{% static 'js/category.js' %}"></script>

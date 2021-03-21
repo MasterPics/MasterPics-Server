@@ -4,6 +4,10 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
+# TODO import 위치
+from core.models import Tag, Images
+from core.forms import ImageForm
+
 # for Save, Like
 from django.http import JsonResponse
 import json
