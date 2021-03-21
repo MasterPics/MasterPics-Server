@@ -5,6 +5,8 @@ from django_mysql.models import ListCharField
 from user.models import User
 from core.models import Tag
 
+from .utils import uuid_name_upload_to
+
 
 class Reference(models.Model):
     thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
