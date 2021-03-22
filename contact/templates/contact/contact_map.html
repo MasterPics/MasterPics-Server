@@ -1,0 +1,21 @@
+<!-- TODO layout 위치 -->
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block stylesheet %}
+{% endblock stylesheet %}
+
+
+{% block content %}
+<div id="map" style="width:100%;height:350px;"></div>
+{% endblock content%}
+
+
+{% block script %}
+<script>
+    let contacts = {{ contacts_json|safe }};
+</script>
+{% endblock script%}
+
+
+

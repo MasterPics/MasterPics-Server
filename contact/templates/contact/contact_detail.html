@@ -1,0 +1,116 @@
+<!-- TODO layout 위치  -->
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+
+<!-- TODO -->
+{% load poll_extras %}
+
+
+{% block stylesheet %}
+<!-- TODO -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+{% endblock stylesheet %}
+
+
+{% block content %}
+<div class="choose">
+    <!-- TODO -->
+    <a class="choose_profile" href="{% url 'user:profile_detail'  contact.user.pk %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+</div>
+    
+<!-- 게시글 작성자 정보 -->
+<div class="container_8">
+    <div class="user">
+        <div class="user_img">
+            {% if contact.user.image  %}
+            <img class="profile_image" src="{{contact.user.image.url}}" alt="profile_image">
+            {% else %}
+            <img class="profile_image"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="profile_image">
+            {% endif %}
+        </div>
+        <p>{{contact.user.username}} </p>
+        <p> {{contact.user.category}}</p>
+    </div>
+
+    <!-- 게시글 정보 -->
+    <div>
+        <p style="font-weight: bolder; font-size:larger; margin-top:10px;">{{ contact.title }}</p>
+    </div>
+    <div class="contact_img_container">
+        <div class="contact_img">
+            <img src="{{ contact.thumbnail.url }}" alt="">
+        </div>
+    </div>
+    <div style="line-height: 1.73em;">{{contact.desc}}</div>
+
+    <!-- tag -->
+    <div class="contact_tags">
+        {% for tag in tags %}
+        <a href="" class="contact_tag tag-button">
+            #{{ tag.tag }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="file"><a href="{{ contact.file_attach.url }}">시안 첨부파일</a></div>
+
+    <div class="pay_date">
+        <p>pay: {{ contact.pay }}</p>
+        <!-- TODO 촬영날짜/마감여부 -->
+        <p>{{ contact.start_date|datefilter }} ~ {{ contact.end_date|datefilter }}</p>
+
+    </div>
+
+    <!-- Comment, Save -->
+    <div class="comment_bookmark">
+        <div class="comment"><a href="#comment">
+                <i class="far fa-comment-dots"></i>
+                <span class="comment__content">{{ contact.contact_comments.count }}</span>
+            </a></div>
+
+        <div class="save save-{{contact.id}}">
+            {% if request_user in contact.save_users.all %}
+            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                value="save"></i>
+            {% else %}
+            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                value="save"></i>
+            {% endif %}
+            <span class="save__content">{{ contact.save_users.count }}</span>
+        </div>
+    </div>
+
+    <div id="comment" class="createComment createComment-{{contact.id}}">
+        <input class="comment__value" type="text" placeholder="댓글 달기...">
+        <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="게시">
+    </div>
+    <div class="comments-{{ contact.id }} comments">
+        {% for comment in contact.contact_comments.all %}
+        <div class="comment comment-{{ comment.id }}">
+            <span style="line-height: 1.8em;">{{ comment.content }}</span>
+            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- 게시물 작성자만 수정/삭제 가능 -->
+    {% if request_user.pk == contact.user.pk %}
+    <div class="contact_button">
+        <a class="edit_btn" href="{% url 'contact:contact_update' contact.pk %}">게시물 수정</a>
+        <a class="delete_btn" href="{% url 'contact:contact_delete' contact.pk %}">삭제</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content%}
+
+
+
+{% block script %}
+<script src="{% static 'js/save.js' %}"></script>
+<script src="{% static 'js/comment.js' %}"></script>    
+{% endblock script %}
