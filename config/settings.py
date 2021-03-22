@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
       
     # user installed apps
     'core',
@@ -46,6 +47,14 @@ INSTALLED_APPS = [
     'portfolio',
     'reference',
     'user',
+
+    # all-auth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +141,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # custom user
 AUTH_USER_MODEL = 'user.User'
+
+
+# social login 
+SITE_ID = 1

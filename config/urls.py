@@ -23,6 +23,10 @@ urlpatterns = [
     path('', include('core.urls')),
     path('place/', include('place.urls')),
     path('profile/', include('user.urls')),
+    path('contact/', include('contact.urls')),
+    path('portfolio/', include('portfolio.urls')),
+    path('reference/', include('reference.urls')),
+    path('accounts/', include('allauth.urls')),
 
 ]
 

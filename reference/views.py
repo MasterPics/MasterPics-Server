@@ -5,21 +5,20 @@ from portfolio.models import Portfolio
 from core.models import Tag
 
 
-def local_list(request):
+def reference_local_list(request):
 
     tags = Tag.objects.all()
 
     context = {
         'tags': tags,
-        'request_user': request.user,
     }
-    return render(request, 'reference/local_list.html', context=context)
+    return render(request, 'reference/reference_local_list.html', context=context)
 
 
-def local_detail(request, tag):
+def reference_local_detail(request, tag):
     portfolios_taged = Portfolio.objects.filter(tags__tag=tag)
 
     context = {
         'portfolios_taged': portfolios_taged,
     }
-    return render(request, 'reference/local_detail.html', context=context)
+    return render(request, 'reference/reference_local_detail.html', context=context)

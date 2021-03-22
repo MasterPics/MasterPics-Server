@@ -1,5 +1,12 @@
 from django import forms
-from .models import Location
+from .models import Location, Images    
+
+class ImageForm(forms.ModelForm):
+    image = forms.ImageField(label='Image')
+
+    class Meta:
+        model = Images
+        fields = ('image', )
 
 class LocationForm(forms.ModelForm):
     class Meta:

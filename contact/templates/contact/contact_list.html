@@ -2,12 +2,12 @@
 {% extends 'core/layout.html' %}
 
 {% load static %}
+{% load customtags %}
 
-<!-- TODO -->
-{% load poll_extras %}
 
 
 {% block stylesheet %}
+
 {% endblock stylesheet %}
 
 
@@ -185,6 +185,7 @@
 
 
 {% block script %}
+
 <script src="{% static 'js/save.js' %}"></script>
 <script src="{% static 'js/nopay.js' %}"></script>
 <script src="{% static 'js/search.js' %}"></script>
