@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import Tag, Location
 from user.models import User
+from core.utils import uuid_name_upload_to
 
 # Create your models here.
 class Place(models.Model):

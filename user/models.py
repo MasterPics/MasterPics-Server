@@ -73,5 +73,5 @@ class User(AbstractUser):
     objects = MyUserManager()
 
     def __str__(self):
-        return self.usernamefrom django.db import models
+        return self.username 
 

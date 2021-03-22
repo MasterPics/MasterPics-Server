@@ -1,10 +1,9 @@
-rom django.urls import path
+from django.urls import path
 from . import views
 
 app_name = 'profile'
 
 urlpatterns = [
-    path('', view=views.main_list, name='main_list'),
     path('<int:pk>/', view=views.profile_detail, name='profile_detail'),
     path('<int:pk>/posts/',
          view=views.profile_detail_posts, name='profile_detail_posts'),
