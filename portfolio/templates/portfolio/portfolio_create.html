@@ -1,0 +1,43 @@
+<!-- TODO layout.html -->
+{% extends 'core/layout.html' %}
+
+{% load static %}
+{% block stylesheet %}
+{% endblock stylesheet %}
+
+
+{% block content %}
+
+<div class='container'>
+    <div class='form-wrapper'>>
+            <h1 style="margin-top: 50px; margin-left: 60px; margin-bottom: 40px; font-size:30px; color:black;">Create Portfolio</h1>
+            <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                    <div class="form-group {{ field.name }}">
+                        {{ field.label_tag }}
+                        <div class='input-fields'>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="help-block">{{ field.help_text }}</p>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    {{ form }}
+                {% endfor %}
+
+                <input type="submit" class="btn" value="Submit" />
+            </form>
+    </div>
+</div>
+
+{% endblock content%}

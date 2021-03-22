@@ -1,0 +1,74 @@
+<!-- TODO layout 위치 -->
+{% extends 'core/layout.html' %}
+
+{% load static %}
+{% block stylesheet %}
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="portfolio_container">
+    <!-- category -->
+    <div class="category">
+        <ul>
+            <li><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></li>
+            <li><a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a></li>
+            <li><a href="javascript:void(0)" onclick="onClickLink('model')">Model</a></li>
+            <li><a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair&Makeup</a></li>
+            <li><a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a></li>
+            <li><a href="javascript:void(0)" onclick="onClickLink('otheruse')">Others</a></li>
+        </ul>
+    </div>
+
+    <!--sort-->
+    <div>
+        <select name="" id="" class="form-control sort ">
+            <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
+                최신순
+            </option>
+            <option value="view" {% if sort == 'view' %}selected{% endif %}>
+                조회순
+            </option>
+            <option value="like" {% if sort == 'like' %}selected{% endif %}>
+                좋아요순
+            </option>
+            <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                저장순
+            </option>
+        </select>
+    </div>
+
+
+    <!--portfolio_content-->
+    <div class="grid ">
+        {% for portfolio in portfolios_taged %}
+        <div class="grid-item">
+            <img src="{{ portfolio.thumbnail.url }}" alt="">
+        </div>
+        {% endfor %}
+
+        {% if portfolios_taged.has_next %}
+        <a class="infinite-more-link" href="?page={{ portfolios_taged.next_page_number }}">
+            <div class="loading" style="display: none;">Loading...</div>
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- category, sort filter form-->
+<div style="height: 0;">
+    <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
+        <input type="hidden" id="category" name="category" value="{{ category }}">
+        <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+    </form>
+</div>
+
+{% endblock content%}
+
+
+{% block script %}
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/save.js' %}"></script>
+<script src="{% static 'js/infinite.scroll.js' %}"></script>
+<script src="{% static 'js/category.js' %}"></script>
+<script src="{% static 'js/sort.js' %}"></script>
+{% endblock script %}
