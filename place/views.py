@@ -3,8 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json
 
-# category filtering
-from django.db.models import Count, Q
 
 # infinite loading
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger

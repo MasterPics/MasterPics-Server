@@ -1,21 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from .utils import uuid_name_upload_to, save_image_from_url
+from .utils import uuid_name_upload_to
 from django.utils.translation import ugettext_lazy as _
-
-from django.dispatch import receiver
-from allauth.account.signals import user_signed_up
-import urllib
-
 from django.shortcuts import redirect
 from user.models import User
 import re
-import json
-import datetime
-
-
-from django_mysql.models import ListCharField
-from django.utils import timezone
 
 
 class Location(models.Model):
@@ -29,6 +17,7 @@ class Location(models.Model):
         return self.address
 
 class Tag(models.Model):
+
     tag = models.CharField(max_length=30)
     save_users = models.ManyToManyField(
         to=User, related_name='tag_save_users', blank=True)
@@ -51,7 +40,15 @@ class Tag(models.Model):
         return self.tag
 
 
+class Comment(models.Model):
+
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class Images(models.Model):
+
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True,null=True, verbose_name='Image')
     created_at = models.DateTimeField(auto_now_add=True)

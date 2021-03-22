@@ -1,0 +1,126 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/profile_detail.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="choose">
+        {% if request.user.pk == user.pk %}
+        <a class="choose_profile" href="{% url 'profile:profile_detail' user.pk %}">
+            <div class="btn"><span class="noselect">My Profile</span></div>
+        </a>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect">My Posts</span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="onClickLink('contact')">Contact</a>
+                <a href="javascript:void(0)" onclick="onClickLink('portfolio')">Portfolio</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect">My Saves</span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="{% url 'profile:profile_detail_saves' user.pk %}" onclick="onClickLink('contact')">Contact</a>
+                <a href="{% url 'profile:profile_detail_saves' user.pk %}" onclick="onClickLink('portfolio')">Portfolio</a>
+            </div>
+        </div>
+        {% else %}
+        <a class="choose_profile" href="{% url 'profile:profile_detail' user.pk %}"><div class="btn"><span class="noselect">Profile</span></div></a>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect"><a href="{% url 'profile:profile_detail_posts' user.pk %}"
+                            onclick="onClickLink('all')">Posts</a></span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="onClickLink('contact')">Contact</a>
+                <a href="javascript:void(0)" onclick="onClickLink('portfolio')">Portfolio</a>            
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <div class="profile_container">
+        <div>
+
+            {% if user.image  %}
+            <img class="profile_image" src="{{user.image.url}}" alt="profile_image" width="20%">
+            {% else %}
+            <img class="profile_image"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="profile_image" width="20%">
+            {% endif %}
+
+
+        </div>
+
+        
+        <div class="profile_info_container">
+            <ul>
+                <li>
+                    <div class="profile_username">
+                        <div class="profile_info">username</div>
+                        <div class="profile_info_username">{{user.username}}</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="profile_email">
+                        <div class="profile_info">email</div>
+                        {% if not user.email %}
+                        <!-- <div class="profile_info_email">이메일 정보가 없습니다.</div> -->
+                        {% else %}
+                        <div class="profile_info_email">{{user.email}}</div>
+                        {% endif %}
+                    </div>
+                </li>
+                <li>
+                    <div class="profile_category">
+                        <div class="profile_info">category</div>
+                        <div class="profile_info_category">{{user.category}}</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="profile_desc">
+                        <div class="profile_info">프로필 소개</div>
+                        <div class="profile_info_desc">{{user.desc}}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% if request_user.username == user.username %}
+    <div class="profile_button">
+        <a class="edit_btn" href="{% url 'profile:profile_update' user.pk %}">프로필 수정</a>
+        <a class="edit_btn" href="{% url 'profile:profile_update_password' user.pk %}">비밀번호 변경</a>
+        <a class="delete_btn" href="{% url 'profile:profile_delete' user.pk %}">탈퇴</a>
+    </div>
+    {% endif %}
+
+</div>
+</div>
+
+<!--filter form-->
+<div style="height: 0;">
+    <form id="searchForm" method="get" action="{% url 'profile:profile_detail_posts' user.pk %}">
+        <!--category-->
+        <input type="hidden" id="category" name="category" value="{{ category }}">
+
+    </form>
+</div>
+{% endblock content%}
+
+
+
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/profile/profile_detail.js' %}"></script>
+{% endblock script %}

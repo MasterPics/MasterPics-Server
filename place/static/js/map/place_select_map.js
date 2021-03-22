@@ -1,3 +1,4 @@
+
 let geocoder = new kakao.maps.services.Geocoder();
 
 let DEFAULT_LAT = 37.564214;
