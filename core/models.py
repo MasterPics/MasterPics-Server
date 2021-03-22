@@ -6,6 +6,10 @@ from user.models import User
 import re
 
 
+
+
+
+
 class Location(models.Model):
 
     # location
@@ -47,10 +51,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Images(models.Model):
-
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True,null=True, verbose_name='Image')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 

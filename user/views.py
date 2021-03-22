@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http.response import HttpResponse
 from .forms import *
 from .models import *
+from contact.models import Contact
 
 from django.contrib.auth import login as auth_login
 from core.utils import *
@@ -21,7 +22,7 @@ def profile_delete(request, pk):
         return redirect('myApp:main_list')
     else:
         ctx = {'user': user}
-        return render(request, 'myApp/profile/profile_delete.html', context=ctx)
+        return render(request, 'profile/profile_delete.html', context=ctx)
 
 
 @login_required
@@ -39,12 +40,12 @@ def profile_update(request, pk):
             user = form.save()
             user.image = request.FILES.get('image')
 
-            return redirect('myApp:profile_detail', user.id)
+            return redirect('profile_detail', user.id)
 
     else:
         form = ProfileForm(instance=user)
         ctx = {'form': form}
-        return render(request, 'myApp/profile/profile_update.html', ctx)
+        return render(request, 'profile/profile_update.html', ctx)
 
 
 @login_required
@@ -61,7 +62,7 @@ def profile_update_password(request, pk):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'myApp/profile/profile_update_password.html', {
+    return render(request, 'profile/profile_update_password.html', {
         'form': form
     })
 
@@ -80,12 +81,12 @@ def profile_create(request):
             auth_login(request, user,
                        backend='django.contrib.auth.backends.ModelBackend')
 
-            return redirect('myApp:profile_detail', user.id)
+            return redirect('profile:profile_detail', user.id)
 
     else:
         signup_form = ProfileForm()
 
-    return render(request, 'myApp/profile/profile_create.html', {'form': signup_form})
+    return render(request, 'profile/profile_create.html', {'form': signup_form})
 
 
 @login_required
@@ -93,7 +94,7 @@ def profile_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     request_user=request.user
     ctx = {'user': user,'request_user':request_user, }
-    return render(request, 'myApp/profile/profile_detail.html', context=ctx)
+    return render(request, 'profile/profile_detail.html', context=ctx)
 
 
 @login_required
@@ -123,7 +124,7 @@ def profile_detail_posts(request, pk):
         'posts': posts,
         'category': category,
     }
-    return render(request, 'myApp/profile/profile_detail_posts.html', context=ctx)
+    return render(request, 'profile/profile_detail_posts.html', context=ctx)
 
 
 @login_required
@@ -147,7 +148,7 @@ def profile_detail_saves(request, pk):
         'category': category,
         'request_user':request_user,
     }
-    return render(request, 'myApp/profile/profile_detail_saves.html', context=ctx)
+    return render(request, 'profile/profile_detail_saves.html', context=ctx)
 
 
 @login_required
@@ -156,4 +157,4 @@ def post_create(request):
         messages.success(request, "create your post!")
     else:
         ctx = {}
-        return render(request, 'myApp/profile/post_create.html', context=ctx)
+        return render(request, 'profile/post_create.html', context=ctx)

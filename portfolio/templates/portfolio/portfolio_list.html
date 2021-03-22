@@ -61,7 +61,7 @@
                     <!-- 게시글 작성자 정보 -->
                     <div>
                         <!-- TODO profile위치 -->
-                        <a href="{% url 'user:profile_detail' portfolio.user.pk %}">
+                        <a href="{% url 'profile:profile_detail' portfolio.user.pk %}">
                             <div class="portfolio_owner">
                                 <div class="user_img">
                                     {% if user.image  %}

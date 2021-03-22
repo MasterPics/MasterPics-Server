@@ -5,8 +5,8 @@ from .models import *
 from .forms import *
 
 # TODO import 위치
-from core.models import Tag, Images
-from core.forms import ImageForm
+from core.models import Tag
+
 
 # for Save, Like
 from django.http import JsonResponse
@@ -180,7 +180,6 @@ def portfolio_create(request):
             for form in formset.cleaned_data:
                 if form:
                     image = form['image']
-
                     photo = Images(portfolio=portfolio, image=image)
                     photo.save()
             messages.success(request, "posted!")
