@@ -1,0 +1,155 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/profile_detail_posts.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<div>
+    <div class="choose">
+        {% if request.user.pk == user.pk %}
+        <a class="choose_profile" href="{% url 'profile:profile_detail' user.pk %}">
+            <div class="btn"><span class="noselect">My Profile</span></div>
+        </a>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect"><div class="posts">My Posts</div></span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="onClickLink('contact')">Contact</a>
+                <a href="javascript:void(0)" onclick="onClickLink('portfolio')">Portfolio</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect">My Saves</span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="{% url 'profile:profile_detail_saves' user.pk %}" onclick="onClickLink('contact')">Contact</a>
+                <a href="{% url 'profile:profile_detail_saves' user.pk %}" onclick="onClickLink('portfolio')">Portfolio</a>
+            </div>
+        </div>
+        {% else %}
+        <a class="choose_profile" href="{% url 'profile:profile_detail' user.pk %}"><div class="btn"><span class="noselect">My Profile</span></div></a>
+        <div class="dropdown">
+            <div class="dropbtn">
+                <div class="btn"><span class="noselect"><div class="posts">My Posts</div></span></div>
+            </div>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="onClickLink('contact')">Contact</a>
+                <a href="javascript:void(0)" onclick="onClickLink('portfolio')">Portfolio</a>            
+            </div>
+        </div>
+        {% endif %}
+
+        {% if request.user.pk == user.pk %}
+        <!--post_create-->
+        <div class="post_create">
+            <a class="update_btn" href="{% url 'profile:post_create' %}"><i class="far fa-plus-square"></i></a>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    <div class="user_postlist">
+
+        <!--post_list-->
+        <div class="content">
+            <!---->
+            <div class="grid">
+                {% for post in posts %}
+                {% for i in "x"|rjust:"10" %}
+                <div class="grid-item">
+                    {% if post.classname == "Contact" %}
+                    <div>
+                        <div class="item_top">
+                            <a href="{% url 'contact:contact_detail' post.pk %}">
+                                <div class="title">{{ post.title }}</div>
+                                <div class="thumbnail_desc"><img src="{{ post.thumbnail.url }}" alt=""></div>
+                                <div class="date">{{post.created_at}}</div>
+                            </a>
+                        </div>
+                        <div class="item_bottom">
+                            <div class="save save-{{post.id}}">
+                                {% if request_user in post.save_users.all %}
+                                <i class="fas fa-bookmark" type="submit"
+                                    onclick="onClickContactSave({{ post.id }})" name="type" value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit"
+                                    onclick="onClickContactSave({{ post.id }})" name="type" value="save"></i>
+                                {% endif %}
+                                <span class="save__content">{{ post.save_users.count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif post.classname == "Portfolio" %}
+                    <div>
+                        <div class="item_top">
+                            <a href="{% url 'portfolio:portfolio_detail' post.pk %}">
+                                <div class="title">{{ post.title }}</div>
+                                <div class="thumbnail_desc"><img src="{{ post.thumbnail.url }}" alt=""></div>
+                                <div class="date">{{post.created_at}}</div>
+                        
+                            </a>
+                        </div>
+                        <div class="item_bottom">
+                            <div class="save save-{{post.id}}">
+                                {% if request_user in post.save_users.all %}
+                                <i class="fas fa-bookmark"  type="submit" onclick="onClickPortfolioSave({{ post.id }})" name="type"
+                                    value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit" onclick="onClickPortfolioSave({{ post.id }})" name="type"
+                                    value="save"></i>
+                                {% endif %}
+                                <span class="save__content">{{ post.save_users.count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-circle-up"></i></div>
+
+            {% if posts.has_next %}
+            <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">
+                <div class="loading" style="display: none;"></div>
+            </a>
+            {% endif %}
+        </div>
+
+        <!--filter form-->
+        <div style="height: 0;">
+            <form id="searchForm" method="get" action="{% url 'profile:profile_detail_posts' user.pk %}">
+                <!--category-->
+                <input type="hidden" id="category" name="category" value="{{ category }}">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+<!--js-->
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+
+<script src="{% static 'js/contact.js' %}" defer></script>
+<script type="text/javascript" src="{% static 'js/profile/profile_detail_posts.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,73 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/place/place_detail.css' %}">
+
+
+{% endblock stylesheet %}
+
+{% block content %}
+<!-- 카테고리 왼쪽에 -->
+
+<div>
+    <!-- SHOW PROFILE 버튼 -->
+    <p>
+        <!--user img--> {{place.user}}</p>
+    <p>{{ place.user.category }}</p>
+    <p>{{ place.title }}</p>
+    <div>
+        <img src="{{ place.thumbnail.url }}" alt="">
+    </div>
+    <!-- DESC -->
+    <a href="{{ place.file_attach.url }}">시안 첨부파일</a>
+    <p>{{ place.pay }}</p>
+    <!-- 촬영날짜/마감여부 -->
+    <p>{{ place.start_date }}</p>
+    <p>{{ place.end_date }}</p>
+    <p>{{ place.location }}</p>
+
+    <!-- 댓글,저장수 ajax -->
+
+    <!--Comment-->
+    <div class="comments-{{ place.id }} comments">
+        {% for comment in place.place_comments.all %}
+        <div class="comment comment-{{ comment.id }}">
+            <span>{{ place.id }}</span>
+            <span>{{ comment.id }}</span>
+            <span>{{ comment.content }}</span>
+            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="createComment createComment-{{place.id}}">
+        <input class="comment__value" type="text" placeholder="댓글 달기...">
+        <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
+    </div>
+
+    <!-- 이게뭐져?? -->
+    <p>request.user: {{ request.user.username }}</p>
+    <p>place.user: {{ place.user.username }}</p>
+    {% if request.user.pk == place.user.pk %}
+    <div class="profile_button">
+        <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
+        <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
+    </div>
+    {% endif %}
+
+
+    <div class="save">
+        {% if request.user in place.save_users.all %}
+        <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+        {% else %}
+        <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+        {% endif %}
+        <span class="save__content">{{ place.save_users.count }}</span>
+    </div>
+
+</div>
+{% endblock content%}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
+{% endblock script %}
