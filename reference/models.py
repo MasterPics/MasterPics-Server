@@ -1,7 +1,6 @@
 from django.db import models
 from django_mysql.models import ListCharField
 
-# TODO import 위치
 from user.models import User
 from core.models import Tag
 

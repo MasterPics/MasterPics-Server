@@ -1,12 +1,7 @@
-<!-- TODO layout 위치  -->
 {% extends 'core/layout.html' %}
 
 {% load static %}
 {% load customtags %}
-
-
-
-
 {% block stylesheet %}
 <!-- TODO -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
@@ -15,7 +10,6 @@
 
 {% block content %}
 <div class="choose">
-    <!-- TODO -->
     <a class="choose_profile" href="{% url 'profile:profile_detail'  contact.user.pk %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 </div>
     

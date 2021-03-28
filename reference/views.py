@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from portfolio.models import Portfolio
-# TODO tag 위치
+
 from core.models import Tag
 
 

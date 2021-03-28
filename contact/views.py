@@ -4,7 +4,6 @@ from django.contrib import messages
 from .forms import *
 from .models import *
 
-# TODO comment 위치
 from core.models import Comment
 
 # for Comment, Save
@@ -15,7 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # for location
-# TODO locationform 위치
 from core.forms import LocationForm
 
 # for Sort, Category, Search
@@ -40,13 +38,6 @@ def contact_save(request):
         is_saved = not is_saved
         contact.save()
         return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
-
-
-# TODO 정리
-DEFAULT = 0
-PENDING = 1
-MEMBER = 2
-REJECTED = 3
 
 
 def contact_list(request):

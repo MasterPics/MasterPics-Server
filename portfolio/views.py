@@ -4,7 +4,6 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
-# TODO import 위치
 from core.models import Tag
 
 
@@ -130,8 +129,8 @@ def portfolio_delete(request, pk):
     if request.method == 'POST':
         portfolio.delete()
         messages.success(request, "삭제되었습니다.")
-        # TODO redirect 위치
-        return redirect('user:profile_detail_posts', owner.id)
+        
+        return redirect('profile:profile_detail_posts', owner.id)
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
