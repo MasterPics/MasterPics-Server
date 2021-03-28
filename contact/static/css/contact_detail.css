@@ -1,0 +1,219 @@
+/*show profile btn*/
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  color: black;
+}
+
+.btn {
+  width: 150px;
+  height: 50px;
+  border: 1px solid #333;
+  font-family: "Cinzel", serif;
+  font-size: 15px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+  transition: 1s;
+}
+
+.btn::before,
+.btn::after {
+  position: absolute;
+  background: #fff;
+  z-index: -1;
+  transition: 1s;
+  content: "";
+}
+
+.btn::before {
+  height: 50px;
+  width: 130px;
+}
+
+.btn::after {
+  width: 150px;
+  height: 30px;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btn:hover::before {
+  width: 0px;
+  background: #fff;
+}
+
+.btn:hover::after {
+  height: 0px;
+  background: #fff;
+}
+
+.btn:hover {
+  background: #fff;
+}
+
+.choose a,
+.profile_button a {
+  color: black;
+}
+
+.choose {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  margin-top: 60px;
+}
+
+/*contact_detail*/
+
+.container_8 {
+  display: grid;
+  grid-template-rows: auto;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 65%;
+}
+
+.container_8 > div {
+  padding: 13px;
+}
+
+.contact_img_container {
+  display: flex;
+  justify-content: center;
+}
+
+.contact_img {
+  width: 310px;
+  height: 310px;
+}
+
+.contact_img img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  text-align: center;
+}
+
+.container_8 .user {
+  display: flex;
+  align-items: center;
+  border-bottom: rgb(180, 180, 180) 1px solid;
+}
+
+.container_8 .user .user_img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.user_img .profile_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container_8 .user p {
+  margin-right: 15px;
+}
+
+.container_8 .file a {
+  color: red;
+}
+
+.pay_date {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment_bookmark {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  border-top: rgb(180, 180, 180) 1px solid;
+  font-size: 1.3rem;
+}
+
+.comment_bookmark i:hover {
+  cursor: pointer;
+}
+
+.createComment {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.createComment .comment__value {
+  border: 0;
+  padding: 5px;
+  font-size: 1rem;
+  border: solid 1px rgb(70, 70, 70);
+  width: 60%;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.createComment .comment__value:focus {
+  outline: none !important;
+  border-color: #000000;
+  box-shadow: 0 0 10px #000000;
+}
+
+.createComment .comment__btn {
+  padding: 6px;
+  border: solid 1px rgb(131, 131, 131);
+  border-radius: 3px;
+}
+
+.createComment .comment__btn:hover {
+  cursor: pointer;
+}
+
+.comment {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.comment .comment-btn {
+  padding: 2px;
+  margin-left: 13px;
+  background-color: rgba(100, 30, 30, 0.884);
+  border: none;
+  color: white;
+  font-size: 0.65rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.contact_button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding: 2px;
+}
+
+.contact_button .edit_btn {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.contact_button .delete_btn {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
