@@ -10,8 +10,7 @@ let location_input = document.getElementById('location-address'), // 도로명 �
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(DEFAULT_LAT, DEFAULT_LON), // 지도의 중심좌표
-        level: 4, // 지도의 확대 레벨 
-        zIndex: 1,
+        level: 4 // 지도의 확대 레벨 
     }; 
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -62,7 +61,6 @@ kakao.maps.event.addListener(userMarker, 'dragend', function() {
     });
 });
 
-searchPlaces();
 
 
 function searchDetailAddrFromCoords(coords, callback) {
