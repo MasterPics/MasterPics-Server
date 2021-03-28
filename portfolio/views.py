@@ -162,6 +162,7 @@ def portfolio_update(request, pk):
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 
+
 @login_required
 def portfolio_create(request):
     # 'extra' : number of photos
