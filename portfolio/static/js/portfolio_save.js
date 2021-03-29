@@ -11,7 +11,7 @@ const onClickSave = async (portfolio_id) => {
         const responseOK = response && response.status === 200 && response.statusText === 'OK'
         if (responseOK) {
             const data = response.data
-            //modify에서는 뒤집힌 is_saved 값이 들어감
+            //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
             modifySave(data.portfolio_id, data.is_saved)
         }
     } catch (error) {
@@ -36,4 +36,5 @@ const modifySave = (portfolio_id, is_saved) => {
         const count = Number(num) - 1;
         save_content.innerHTML = count
     }
+
 }

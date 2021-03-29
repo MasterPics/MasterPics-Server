@@ -27,9 +27,11 @@ def portfolio_list(request):
     portfolios = Portfolio.objects.all().order_by("?")
     request_user = request.user  # 로그인한 유저
 
-    # Category, order_by("?"): random 으로 선택
-    category = request.GET.get('category', 'all')
+    category = request.GET.get('category', 'all')  # Category
+    sort = request.GET.get('sort', 'recent')  # Sort
+    search = request.GET.get('search', '')  # Search
 
+    # Category, order_by("?"): random 으로 선택
     if category != 'all':
         if category == User.CATEGORY_PHOTOGRAPHER:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_PHOTOGRAPHER)
@@ -48,19 +50,25 @@ def portfolio_list(request):
                                            ).distinct().order_by("?")
 
     # Sort 최신순, 조회순, 좋아요순, 저장순
-    sort = request.GET.get('sort', 'recent')
 
     if sort == 'recent':
         portfolios = portfolios.order_by('-updated_at')
     elif sort == 'view':
-        portfolios = portfolios.annotate(num_save=Count(
-            'view_count')).order_by('-num_save', '-updated_at')
+        portfolios = portfolios.order_by('-view_count', '-updated_at')
     elif sort == 'like':
         portfolios = portfolios.annotate(num_save=Count(
             'like_users')).order_by('-num_save', '-updated_at')
     elif sort == 'save':
         portfolios = portfolios.annotate(num_save=Count(
             'save_users')).order_by('-num_save', '-updated_at')
+
+    # Search
+    if search:
+        portfolios = portfolios.filter(
+            Q(title__icontains=search) |  # 제목검색
+            Q(desc__icontains=search) |  # 내용검색
+            Q(user__username__icontains=search)  # 질문 글쓴이검색
+        ).distinct()
 
     # infinite scroll
     portfolios_per_page = 6
@@ -129,7 +137,7 @@ def portfolio_delete(request, pk):
     if request.method == 'POST':
         portfolio.delete()
         messages.success(request, "삭제되었습니다.")
-        
+
         return redirect('profile:profile_detail_posts', owner.id)
     else:
         ctx = {'portfolio': portfolio}

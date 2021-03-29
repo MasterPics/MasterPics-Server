@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/portfolio_list.css' %}">
 {% endblock stylesheet %}
 
+
 {% block content %}
 <div class="portfolio_list">
     <div class="bar">
@@ -25,8 +26,17 @@
             </div>
         </div>
         
-        <!--sort-->        
+       
         <div class="bar_right">
+            <!--search-->
+            <div class="input-group">
+                <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
+                </div>
+            </div>
+            
+            <!--sort-->  
             <div class="sort">
                 <select name="" id="" class="form-control sort ">
                     <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
@@ -141,22 +151,25 @@
 <div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-circle-up"></i></div>
 
 
-<!--category, sort filter form-->
+<!--category, sort, search filter form-->
 <div style="height: 0;">
     <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
         <input type="hidden" id="category" name="category" value="{{ category }}">
         <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+        <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
     </form>
 </div>
 {% endblock content%}
 
 
 {% block script %}
+
 <script src="{% static 'js/infinite.min.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
 <script src="{% static 'js/go_to_top.js' %}"></script>
-<script src="{% static 'js/like.js' %}"></script>
-<script src="{% static 'js/save.js' %}"></script>
+<script src="{% static 'js/portfolio_save.js' %}"></script>
+<script src="{% static 'js/portfolio_like.js' %}"></script>
 <script src="{% static 'js/category.js' %}"></script>
 <script src="{% static 'js/sort.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
 {% endblock script %}
