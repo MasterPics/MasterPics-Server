@@ -86,7 +86,9 @@
         {% for comment in contact.contact_comments.all %}
         <div class="comment comment-{{ comment.id }}">
             <span style="line-height: 1.8em;">{{ comment.content }}</span>
+            {% if request.user == comment.contact.user %}
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -105,6 +107,6 @@
 
 
 {% block script %}
-<script src="{% static 'js/save.js' %}"></script>
-<script src="{% static 'js/comment.js' %}"></script>    
+<script src="{% static 'js/contact_save.js' %}"></script>
+<script src="{% static 'js/contact_comment.js' %}"></script>    
 {% endblock script %}
