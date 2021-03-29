@@ -2,6 +2,7 @@
 
 {% load static %}
 {% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/reference_local_list.css' %}">
 {% endblock stylesheet %}
 
 {% block content %}
@@ -58,7 +59,7 @@
 
 
 {% block script %}
-<script src="{% static 'js/like.js' %}"></script>
-<script src="{% static 'js/save.js' %}"></script>
+<script src="{% static 'js/reference_like.js' %}"></script>
+<script src="{% static 'js/reference_save.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
 {% endblock script %}
