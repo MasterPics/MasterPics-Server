@@ -5,6 +5,7 @@ const modifyNewComment = (contact_id, comment_id, value) => {
     const tempContainer = document.createElement("div");
     tempContainer.className = `comment comment-${comment_id}`;
 
+
     tempContainer.textContent = value;
 
     const deleteBtn = document.createElement("input");
@@ -19,20 +20,25 @@ const modifyNewComment = (contact_id, comment_id, value) => {
 }
 
 const onClickNewComment = async (id) => {
-    const url = `/contact/${id}/comment_create/`;
-    const value = document.querySelector(`.createComment-${id} .comment__value`);
-    const value_text = value.value
-    const {
-        data
-    } = await axios.post(url, {
-        id,
-        value: value_text
-    })
-
-    modifyNewComment(id, data.comment_id, data.value);
-
-    const cmt = document.querySelector('.comment__value')
-    cmt.value = ''
+    try{
+        const url = `/contact/${id}/comment_create/`;
+        const value = document.querySelector(`.createComment-${id} .comment__value`);
+        const value_text = value.value
+        const {
+            data
+        } = await axios.post(url, {
+            id,
+            value: value_text
+        })
+    
+        modifyNewComment(id, data.comment_id, data.value);
+    
+        const cmt = document.querySelector('.comment__value')
+        cmt.value = ''
+    }   catch (error) {
+        console.log(error)
+    }
+    
 }
 
 const modifyDeleteComment = (comment_id) => {

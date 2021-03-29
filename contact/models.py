@@ -46,3 +46,12 @@ class Contact(models.Model):
 
     def classname(self):
         return self.__class__.__name__
+
+
+class Comment(models.Model):
+    contact = models.ForeignKey(
+        to=Contact, null=True, blank=True, related_name='contact_comments', on_delete=models.CASCADE)
+
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
