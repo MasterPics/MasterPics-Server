@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-      
+
     # user installed apps
     'core',
-    'contact', 
+    'contact',
     'place',
     'portfolio',
     'reference',
@@ -143,5 +143,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = 'user.User'
 
 
-# social login 
+# social login
 SITE_ID = 1
