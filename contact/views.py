@@ -4,8 +4,6 @@ from django.contrib import messages
 from .forms import *
 from .models import *
 
-from core.models import Comment
-
 # for Comment, Save
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -90,7 +88,7 @@ def contact_list(request):
         ).distinct()
 
     # infinite scroll
-    contacts_per_page = 1
+    contacts_per_page = 6
     page = request.GET.get('page', 1)
     paginator = Paginator(contacts, contacts_per_page)
     try:
@@ -227,6 +225,7 @@ def contact_comment_delete(request, pk):
         comment_id = data["comment_id"]
 
         comment = Comment.objects.get(id=comment_id)
+
         comment.delete()
 
         return JsonResponse({'comment_id': comment_id})
