@@ -198,12 +198,6 @@ def contact_map(request):
     return render(request, 'contact/contact_map.html', context=ctx)
 
 
-# TODO login 위치
-def general_login(request):
-    form
-    return render(request, 'allauth/account/general_login.html', context={})
-
-
 ############################### comment ###############################
 @csrf_exempt
 def contact_comment_create(request, pk):
