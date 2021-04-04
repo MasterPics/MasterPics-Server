@@ -1,18 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/vscode
-# Edit at https://www.toptal.com/developers/gitignore?templates=vscode
 
-### vscode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
-
-# End of https://www.toptal.com/developers/gitignore/api/vscode
-
-# Created by https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=django,vscode,python,macos
+# Created by https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows,venv
+# Edit at https://www.toptal.com/developers/gitignore?templates=django,vscode,python,macos,windows,venv
 
 ### Django ###
 *.log
@@ -265,6 +253,19 @@ Temporary Items
 # profiling data
 
 
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
 ### vscode ###
 .vscode/*
 !.vscode/settings.json
@@ -273,4 +274,30 @@ Temporary Items
 !.vscode/extensions.json
 *.code-workspace
 
-# End of https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows,venv
