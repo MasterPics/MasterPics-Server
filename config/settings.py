@@ -145,3 +145,4 @@ AUTH_USER_MODEL = 'user.User'
 
 # social login
 SITE_ID = 1
+## TODO:redirect url을 추가정보 입력받는 url로 변경하기
