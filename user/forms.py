@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserChangeForm
 
 
 class ProfileForm(forms.ModelForm):
@@ -17,3 +18,10 @@ class ProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
+
+
+class SocialSignUpForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'category', 'image', 'desc',)
+        # excldue = ('password', )

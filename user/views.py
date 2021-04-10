@@ -158,3 +158,14 @@ def post_create(request):
     else:
         ctx = {}
         return render(request, 'profile/post_create.html', context=ctx)
+
+
+
+# social sign up 시 -> 추가 정보 입력받기
+def social_signup(request):
+    if request.method == 'GET':
+        form = SocialSignUpForm(instance=request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/social_signup.html', ctx)
