@@ -22,6 +22,7 @@ django-extensions==3.1.1
 django-import-export==2.5.0
 django-mathfilters==1.0.0
 django-mysql==3.11.1
+djangorestframework==3.12.4
 et-xmlfile==1.0.1
 hiredis==1.1.0
 hyperlink==21.0.0
@@ -37,6 +38,7 @@ oauthlib==3.1.0
 odfpy==1.4.1
 openpyxl==3.0.6
 Pillow==8.1.0
+pkg-resources==0.0.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycodestyle==2.6.0
@@ -57,6 +59,7 @@ tablib==3.0.0
 toml==0.10.2
 Twisted==20.3.0
 txaio==20.12.1
+typed-ast==1.4.2
 urllib3==1.26.3
 wrapt==1.12.1
 xlrd==2.0.1
