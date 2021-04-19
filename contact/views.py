@@ -99,13 +99,13 @@ def contact_list(request):
         contacts = paginator.page(paginator.num_pages)
 
     context = {
-        'contacts': contacts,
-        'sort': sort,
-        'category': category,
-        'search': search,
-        'request_user': request.user,
+        "contacts": contacts,
+        "sort": sort,
+        "category": category,
+        "search": search,
+        "request_user": request.user,
     }
-    return render(request, 'contact/contact_list.html', context=context)
+    return render(request, "contact/contact_list.html", context=context)
 
 
 def contact_detail(request, pk):
@@ -113,32 +113,32 @@ def contact_detail(request, pk):
     tags = contact.tags.all()
 
     ctx = {
-        'contact': contact,
-        'request_user': request.user,
-        'tags': tags,
+        "contact": contact,
+        "request_user": request.user,
+        "tags": tags,
     }
-    return render(request, 'contact/contact_detail.html', context=ctx)
+    return render(request, "contact/contact_detail.html", context=ctx)
 
 
 @login_required
 def contact_delete(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    if request.method == 'POST':
+    if request.method == "POST":
         contact.delete()
         messages.success(request, "삭제되었습니다.")
-        return redirect('contact:contact_list')
+        return redirect("contact:contact_list")
     else:
-        ctx = {'contact': contact}
-        return render(request, 'contact/contact_delete.html', context=ctx)
+        ctx = {"contact": contact}
+        return render(request, "contact/contact_delete.html", context=ctx)
 
 
 @login_required
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
-            contact.image = request.FILES.get('image')
+            contact.image = request.FILES.get("image")
             contact = form.save()
 
             # tag
@@ -147,16 +147,16 @@ def contact_update(request, pk):
             for tag in tags:
                 contact.tags.add(tag)
 
-            return redirect('contact:contact_detail', contact.pk)
+            return redirect("contact:contact_detail", contact.pk)
     else:
         form = ContactForm(instance=contact)
-        ctx = {'form': form}
-        return render(request, 'contact/contact_update.html', ctx)
+        ctx = {"form": form}
+        return render(request, "contact/contact_update.html", ctx)
 
 
 @login_required
 def contact_create(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         contact_form = ContactForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
 
@@ -172,49 +172,46 @@ def contact_create(request):
             contact.is_closed = False
             contact.location = location
             contact.save()
-            contact.image = request.FILES.get('image')
+            contact.image = request.FILES.get("image")
 
             # save tag
             tags = Tag.add_tags(contact.tag_str)
             for tag in tags:
                 contact.tags.add(tag)
-            return redirect('contact:contact_detail', contact.pk)
+            return redirect("contact:contact_detail", contact.pk)
 
     else:
         contact_form = ContactForm()
         location_form = LocationForm()
 
-    ctx = {
-        'contact_form': contact_form, 'location_form': location_form
-    }
-    return render(request, 'contact/contact_create.html', context=ctx)
+    ctx = {"contact_form": contact_form, "location_form": location_form}
+    return render(request, "contact/contact_create.html", context=ctx)
 
 
 def contact_map(request):
     contacts = Contact.objects.filter(is_closed=False)
-    ctx = {
-        'contacts_json': json.dumps([contact.to_json() for contact in contacts])
-    }
-    return render(request, 'contact/contact_map.html', context=ctx)
+    ctx = {"contacts_json": json.dumps([contact.to_json() for contact in contacts])}
+    return render(request, "contact/contact_map.html", context=ctx)
 
 
 ############################### comment ###############################
 @csrf_exempt
 def contact_comment_create(request, pk):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
         contact_id = data["id"]
         comment_value = data["value"]
         contact = Contact.objects.get(id=contact_id)
-        comment = Comment.objects.create(
-            content=comment_value, contact=contact)
-        return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
+        comment = Comment.objects.create(content=comment_value, contact=contact)
+        return JsonResponse(
+            {"contact_id": contact_id, "comment_id": comment.id, "value": comment_value}
+        )
 
 
 @csrf_exempt
 def contact_comment_delete(request, pk):
-    if request.method == 'POST':
-        print('data is delivered')
+    if request.method == "POST":
+        print("data is delivered")
         data = json.loads(request.body)
         comment_id = data["comment_id"]
 
@@ -222,4 +219,4 @@ def contact_comment_delete(request, pk):
 
         comment.delete()
 
-        return JsonResponse({'comment_id': comment_id})
+        return JsonResponse({"comment_id": comment_id})
