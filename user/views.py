@@ -12,14 +12,53 @@ from core.utils import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
-from rest_framework import viewsets, permissions
-from user.serializers import UserSerializer
+
+from django.contrib.auth import login
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+# django rest framefork
+from rest_framework import viewsets, permissions, generics
+from rest_framework.response import Response
+from knox.models import AuthToken
+from rest_framework.authentication import BasicAuthentication
+from knox.views import LoginView as KnoxLoginView
+from .serializers import CreateUserSerializer, LoginUserSerializer
+
+
+class LoginView(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = [
+        BasicAuthentication,
+    ]
+    serializer_class = LoginUserSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        login(request, user)
+        return super(LoginView, self).post(request, format=None)
+
+
+class RegistrationAPI(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = CreateUserSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        print(dir(user))
+        return Response(
+            {
+                "user": {
+                    "username": user.username,
+                    "email": user.email,
+                    "category": user.category,
+                },
+                "token": AuthToken.objects.create(user)[1],
+            }
+        )
 
 
 @login_required

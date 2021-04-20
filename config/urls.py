@@ -18,18 +18,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rest_framework import routers
-from user.views import UserViewSet
-
-router = routers.DefaultRouter()
-router.register("users", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include(router.urls)),
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    # path("api/auth/", include("knox.urls")),
+    #
     # path('place/', include('place.urls')),
-    # path('profile/', include('user.urls')),
+    path("profile/", include("user.urls")),
     # path('contact/', include('contact.urls')),
     # path('portfolio/', include('portfolio.urls')),
     # path('reference/', include('reference.urls')),

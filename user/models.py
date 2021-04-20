@@ -24,7 +24,7 @@ class MyUserManager(BaseUserManager):
         Creates and saves a User with the given email and password.
         """
         if not email:
-            raise ValueError('The Email must be set')
+            raise ValueError("The Email must be set")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -32,46 +32,45 @@ class MyUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
         return self._create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
-    CATEGORY_PHOTOGRAPHER = 'photographer'
-    CATEGORY_MODEL = 'model'
-    CATEGORY_HM = 'HairMakeup'
-    CATEGORY_STYLIST = 'stylist'
-    CATEGORY_OTHERS = 'otheruse'
+    CATEGORY_PHOTOGRAPHER = "photographer"
+    CATEGORY_MODEL = "model"
+    CATEGORY_HM = "HairMakeup"
+    CATEGORY_STYLIST = "stylist"
+    CATEGORY_OTHERS = "otheruse"
 
     CATEGORY = (
-        ('photographer', CATEGORY_PHOTOGRAPHER),
-        ('model', CATEGORY_MODEL),
-        ('HairMakeup', CATEGORY_HM),
-        ('stylist', CATEGORY_STYLIST),
-        ('otheruse', CATEGORY_OTHERS),
+        ("photographer", CATEGORY_PHOTOGRAPHER),
+        ("model", CATEGORY_MODEL),
+        ("HairMakeup", CATEGORY_HM),
+        ("stylist", CATEGORY_STYLIST),
+        ("otheruse", CATEGORY_OTHERS),
     )
 
     username = models.CharField(max_length=20, unique=False)
-    email = models.EmailField('email address', unique=True)
-    category = models.CharField(
-        max_length=20, choices=CATEGORY)
+    email = models.EmailField("email address", unique=True)
+    category = models.CharField(max_length=20, choices=CATEGORY)
     image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
+        upload_to=uuid_name_upload_to, blank=True, default="unnamed.png"
+    )
     desc = models.TextField(blank=True)
     # objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = MyUserManager()
 
     def __str__(self):
-        return self.username 
-
+        return self.username
