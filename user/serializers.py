@@ -44,13 +44,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 
 
-# 유저 정보 처리
-class UserSerializer(serializers.ModelField):
-    class Meta:
-        model = User
-        fields = ("id", "username", "email", "category")
-
-
 # 로그인
 class LoginUserSerializer(serializers.Serializer):
     email = serializers.EmailField()

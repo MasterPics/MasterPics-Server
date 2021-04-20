@@ -15,11 +15,14 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from django.contrib.auth import login
 
-from rest_framework import permissions
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+# django rest framefork
+from rest_framework import viewsets, permissions, generics
+from rest_framework.response import Response
+from knox.models import AuthToken
+from rest_framework.authentication import BasicAuthentication
 from knox.views import LoginView as KnoxLoginView
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from .serializers import CreateUserSerializer, LoginUserSerializer
 
 
 class LoginView(KnoxLoginView):
@@ -35,13 +38,6 @@ class LoginView(KnoxLoginView):
         user = serializer.validated_data
         login(request, user)
         return super(LoginView, self).post(request, format=None)
-
-
-# django rest framefork
-from rest_framework import viewsets, permissions, generics, status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from knox.models import AuthToken
 
 
 class RegistrationAPI(generics.GenericAPIView):
@@ -63,14 +59,6 @@ class RegistrationAPI(generics.GenericAPIView):
                 "token": AuthToken.objects.create(user)[1],
             }
         )
-
-
-class UserAPI(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = UserSerializer
-
-    def get_object(self):
-        return self.request.user
 
 
 @login_required
