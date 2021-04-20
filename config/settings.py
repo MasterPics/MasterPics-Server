@@ -147,8 +147,29 @@ AUTH_USER_MODEL = "user.User"
 # social login
 SITE_ID = 1
 
+# django rest framework
+
+
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
-    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "knox.auth.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAdminUser",),
+}
+
+from datetime import timedelta
+from rest_framework.settings import api_settings
+
+REST_KNOX = {
+    "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
+    "AUTH_TOKEN_CHARACTER_LENGTH": 64,
+    "TOKEN_TTL": timedelta(hours=10),
+    "USER_SERIALIZER": "knox.serializers.UserSerializer",
+    "TOKEN_LIMIT_PER_USER": None,
+    "AUTO_REFRESH": False,
+    "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
+    "SALT_LENGTH": 5,
 }
