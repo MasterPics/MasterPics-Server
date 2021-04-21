@@ -19,14 +19,25 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
+from rest_framework import routers
+from contact.views import ContactViewSets
+from core.views import LocationViewsets
+from user.views import UserViewSets
+
+router = routers.DefaultRouter()
+router.register("contact", ContactViewSets)
+router.register("location", LocationViewsets)
+router.register("user", UserViewSets)
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # path("api/auth/", include("knox.urls")),
+    path("api/", include(router.urls)),
     #
     # path('place/', include('place.urls')),
     path("profile/", include("user.urls")),
-    # path('contact/', include('contact.urls')),
+    # path("contact/", include("contact.urls")),
     # path('portfolio/', include('portfolio.urls')),
     # path('reference/', include('reference.urls')),
     # path('accounts/', include('allauth.urls')),

@@ -22,7 +22,23 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.authentication import BasicAuthentication
 from knox.views import LoginView as KnoxLoginView
-from .serializers import CreateUserSerializer, LoginUserSerializer
+from .serializers import CreateUserSerializer, LoginUserSerializer, UserSerializer
+from .permissions import IsUser
+
+
+class UserViewSets(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [permissions.AllowAny]
+        elif self.action in ["update", "partial_update", "destroy"]:
+            self.permission_classes = [IsUser]
+        else:
+            self.permission_classes = [permissions.IsAdminUser]
+
+        return super().get_permissions()
 
 
 class LoginView(KnoxLoginView):

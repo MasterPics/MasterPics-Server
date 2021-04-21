@@ -21,14 +21,16 @@ class Tag(models.Model):
 
     tag = models.CharField(max_length=30)
     save_users = models.ManyToManyField(
-        to=User, related_name='tag_save_users', blank=True)
+        to=User, related_name="tag_save_users", blank=True
+    )
     like_users = models.ManyToManyField(
-        to=User, related_name='tag_like_users', blank=True)
+        to=User, related_name="tag_like_users", blank=True
+    )
 
     @classmethod
     def add_tags(selt, tag_str):
         # NOTE: self.desc 말고 TAG FIELD 따로 만들까?
-        tags = re.findall(r'#(\w+)\b', tag_str)
+        tags = re.findall(r"#(\w+)\b", tag_str)
         tag_lst = []
 
         for t in tags:
