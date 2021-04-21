@@ -5,6 +5,13 @@ from django.contrib.auth import authenticate
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
 
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
+
 # 회원가입
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:

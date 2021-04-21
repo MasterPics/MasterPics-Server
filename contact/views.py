@@ -21,13 +21,17 @@ from django.db.models import Count, Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # django rest framework
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.reverse import reverse
+from rest_framework.response import Response
 from .serializers import ContactSerializer
 from .permissions import IsWrittenByUser
 from core.serializers import LocationSerializer
+from rest_framework.authtoken.models import Token
+import json
 
 
-class ContactViewsets(viewsets.ModelViewSet):
+class ContactViewSets(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
 
@@ -38,21 +42,24 @@ class ContactViewsets(viewsets.ModelViewSet):
             self.permission_classes = [permissions.IsAuthenticated]
         elif self.action in ["update", "partial_update", "destroy"]:
             self.permission_classes = [IsWrittenByUser]
+        else:
+            self.permission_classes = [permissions.IsAdminUser]
 
         return super().get_permissions()
 
     def create(self, request, *args, **kwargs):
-        request.data["user"] = request.user.pk
-        location_data = {
-            "address": request.data["location_address"],
-            "lon": request.data["location_lon"],
-            "lat": request.data["location_lat"],
-        }
-        _locationSerializer = LocationSerializer(data=location_data)
-        _locationSerializer.is_valid(raise_exception=True)
-        location = _locationSerializer.save()
+        location_data = json.loads(request.data["location"])
+        location_serializer = LocationSerializer(data=location_data)
+        location_serializer.is_valid(raise_exception=True)
+        location = location_serializer.save()
 
-        return super().create(request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.auth.user, location=location)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 @csrf_exempt

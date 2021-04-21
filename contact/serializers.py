@@ -1,13 +1,14 @@
 from rest_framework import serializers
 from contact.models import Contact, Comment
 from django.contrib.auth import authenticate
-from core.models import Location
+from core.serializers import LocationSerializer
+
+from user.serializers import UserSerializer
 
 
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
-    location_address = serializers.CharField()
-    location_lat = serializers.FloatField()
-    location_lon = serializers.FloatField()
+    user = UserSerializer(read_only=True)
+    location = LocationSerializer(read_only=True)
 
     class Meta:
         model = Contact
