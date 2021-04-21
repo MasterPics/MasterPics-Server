@@ -20,12 +20,14 @@ from django.conf import settings
 
 
 from rest_framework import routers
-from contact.views import ContactViewsets
+from contact.views import ContactViewSets
 from core.views import LocationViewsets
+from user.views import UserViewSets
 
 router = routers.DefaultRouter()
-router.register("contact", ContactViewsets)
+router.register("contact", ContactViewSets)
 router.register("location", LocationViewsets)
+router.register("user", UserViewSets)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

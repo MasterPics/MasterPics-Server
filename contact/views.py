@@ -27,7 +27,7 @@ from .permissions import IsWrittenByUser
 from core.serializers import LocationSerializer
 
 
-class ContactViewsets(viewsets.ModelViewSet):
+class ContactViewSets(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
 
@@ -38,6 +38,8 @@ class ContactViewsets(viewsets.ModelViewSet):
             self.permission_classes = [permissions.IsAuthenticated]
         elif self.action in ["update", "partial_update", "destroy"]:
             self.permission_classes = [IsWrittenByUser]
+        else:
+            self.permission_classes = [permissions.IsAdminUser]
 
         return super().get_permissions()
 
