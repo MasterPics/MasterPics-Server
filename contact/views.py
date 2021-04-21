@@ -24,6 +24,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework import viewsets, permissions
 from .serializers import ContactSerializer
 from .permissions import IsWrittenByUser
+from core.serializers import LocationSerializer
 
 
 class ContactViewsets(viewsets.ModelViewSet):
@@ -41,9 +42,16 @@ class ContactViewsets(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def create(self, request, *args, **kwargs):
-        print(dir(request))
-        print(request.user.pk)
         request.data["user"] = request.user.pk
+        location_data = {
+            "address": request.data["location_address"],
+            "lon": request.data["location_lon"],
+            "lat": request.data["location_lat"],
+        }
+        _locationSerializer = LocationSerializer(data=location_data)
+        _locationSerializer.is_valid(raise_exception=True)
+        location = _locationSerializer.save()
+
         return super().create(request, *args, **kwargs)
 
 
