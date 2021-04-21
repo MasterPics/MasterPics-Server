@@ -20,76 +20,117 @@ from django.db.models import Count, Q
 # for infinite scroll
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# django rest framework
+from rest_framework import viewsets, permissions
+from .serializers import ContactSerializer
+from .permissions import IsWrittenByUser
+
+
+class ContactViewsets(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [permissions.AllowAny]
+        elif self.action == "create":
+            self.permission_classes = [permissions.IsAuthenticated]
+        elif self.action in ["update", "partial_update", "destroy"]:
+            self.permission_classes = [IsWrittenByUser]
+
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        print(dir(request))
+        print(request.user.pk)
+        request.data["user"] = request.user.pk
+        return super().create(request, *args, **kwargs)
+
 
 @csrf_exempt
 def contact_save(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
         contact_id = data["contact_id"]
         contact = get_object_or_404(Contact, pk=contact_id)
         is_saved = request.user in contact.save_users.all()
-        if(is_saved):
-            contact.save_users.remove(
-                get_object_or_404(User, pk=request.user.pk))
+        if is_saved:
+            contact.save_users.remove(get_object_or_404(User, pk=request.user.pk))
         else:
             contact.save_users.add(get_object_or_404(User, pk=request.user.pk))
         is_saved = not is_saved
         contact.save()
-        return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
+        return JsonResponse({"contact_id": contact_id, "is_saved": is_saved})
 
 
 def contact_list(request):
     contacts = Contact.objects.all()
 
     # 상호무페이
-    no_pay = request.GET.get('no_pay', False)
-    if no_pay == 'true':
+    no_pay = request.GET.get("no_pay", False)
+    if no_pay == "true":
         contacts = Contact.objects.all().filter(pay=0).distinct()
     else:
         contacts = Contact.objects.all()
 
-    category = request.GET.get('category', 'all')  # Category
-    sort = request.GET.get('sort', 'recent')  # Sort
-    search = request.GET.get('search', '')  # Search
+    category = request.GET.get("category", "all")  # Category
+    sort = request.GET.get("sort", "recent")  # Sort
+    search = request.GET.get("search", "")  # Search
 
     # Category
-    if category != 'all':
+    if category != "all":
         if category == User.CATEGORY_PHOTOGRAPHER:
-            contacts = contacts.filter(Q(user__category=User.CATEGORY_PHOTOGRAPHER)
-                                       ).distinct().order_by("?")
+            contacts = (
+                contacts.filter(Q(user__category=User.CATEGORY_PHOTOGRAPHER))
+                .distinct()
+                .order_by("?")
+            )
         elif category == User.CATEGORY_MODEL:
-            contacts = contacts.filter(Q(user__category=User.CATEGORY_MODEL)
-                                       ).distinct().order_by("?")
+            contacts = (
+                contacts.filter(Q(user__category=User.CATEGORY_MODEL))
+                .distinct()
+                .order_by("?")
+            )
         elif category == User.CATEGORY_HM:
-            contacts = contacts.filter(Q(user__category=User.CATEGORY_HM)
-                                       ).distinct().order_by("?")
+            contacts = (
+                contacts.filter(Q(user__category=User.CATEGORY_HM))
+                .distinct()
+                .order_by("?")
+            )
         elif category == User.CATEGORY_STYLIST:
-            contacts = contacts.filter(Q(user__category=User.CATEGORY_STYLIST)
-                                       ).distinct().order_by("?")
+            contacts = (
+                contacts.filter(Q(user__category=User.CATEGORY_STYLIST))
+                .distinct()
+                .order_by("?")
+            )
         elif category == User.CATEGORY_OTHERS:
-            contacts = contacts.filter(Q(user__category=User.CATEGORY_OTHERS)
-                                       ).distinct().order_by("?")
+            contacts = (
+                contacts.filter(Q(user__category=User.CATEGORY_OTHERS))
+                .distinct()
+                .order_by("?")
+            )
 
     # Sort
-    if sort == 'save':
-        contacts = contacts.annotate(num_save=Count(
-            'save_users')).order_by('-num_save', '-created_at')
-    elif sort == 'pay':
-        contacts = contacts.order_by('-pay', '-created_at')
-    elif sort == 'recent':
-        contacts = contacts.order_by('-created_at')
+    if sort == "save":
+        contacts = contacts.annotate(num_save=Count("save_users")).order_by(
+            "-num_save", "-created_at"
+        )
+    elif sort == "pay":
+        contacts = contacts.order_by("-pay", "-created_at")
+    elif sort == "recent":
+        contacts = contacts.order_by("-created_at")
 
     # Search
     if search:
         contacts = contacts.filter(
-            Q(title__icontains=search) |  # 제목검색
-            Q(desc__icontains=search) |  # 내용검색
-            Q(user__username__icontains=search)  # 질문 글쓴이검색
+            Q(title__icontains=search)
+            | Q(desc__icontains=search)  # 제목검색
+            | Q(user__username__icontains=search)  # 내용검색  # 질문 글쓴이검색
         ).distinct()
 
     # infinite scroll
     contacts_per_page = 6
-    page = request.GET.get('page', 1)
+    page = request.GET.get("page", 1)
     paginator = Paginator(contacts, contacts_per_page)
     try:
         contacts = paginator.page(page)
