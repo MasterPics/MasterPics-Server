@@ -24,7 +24,7 @@ from contact.views import ContactViewSets
 from core.views import LocationViewsets
 from user.views import UserViewSets
 
-router = routers.DefaultRouter()
+router = routers.DefaultRouter(trailing_slash=True)
 router.register("contact", ContactViewSets)
 router.register("location", LocationViewsets)
 router.register("user", UserViewSets)
