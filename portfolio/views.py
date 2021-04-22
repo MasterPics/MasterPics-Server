@@ -34,7 +34,13 @@ class PortfolioViewSets(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.auth.user)
+        portfolio = serializer.save(user=request.auth.user)
+
+        # tag_str = portfolio.tag_str
+        # tags_portfolio = Tag.add_tags(tag_str)
+        # for tag in tags_portfolio:
+        #     portfolio.tags.add(tag)
+
         headers = self.get_success_headers(serializer.data)
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
