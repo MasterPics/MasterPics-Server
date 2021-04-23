@@ -7,10 +7,15 @@ def main_list(request):
 
 
 from rest_framework import viewsets
-from .models import Location
-from .serializers import LocationSerializer
+from .models import Location, Tag
+from .serializers import LocationSerializer, TagSerializer
 
 
 class LocationViewsets(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
+
+class TagViewSets(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer

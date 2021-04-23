@@ -24,6 +24,7 @@ from django.forms import modelformset_factory
 # django rest framework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from core.serializers import TagSerializer
 from .serializers import PortfolioSerializer
 
 
@@ -32,14 +33,16 @@ class PortfolioViewSets(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
 
     def create(self, request, *args, **kwargs):
+        print(request.data["tags"])
+
+        # Create Tags
+        # tag_serializer = TagSerializer(data=request.data["tags"])
+        # tag_serializer.is_valid()
+        # tag_list = tag_serializer.save()
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        portfolio = serializer.save(user=request.auth.user)
-
-        # tag_str = portfolio.tag_str
-        # tags_portfolio = Tag.add_tags(tag_str)
-        # for tag in tags_portfolio:
-        #     portfolio.tags.add(tag)
+        portfolio = serializer.save(user=request.auth.user, tags=request.data["tags"])
 
         headers = self.get_success_headers(serializer.data)
         return Response(

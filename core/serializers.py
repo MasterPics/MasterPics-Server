@@ -13,8 +13,7 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
         model = Tag
         fields = "__all__"
 
-    def run_validators(self, value):
-        return super().run_validators(value)
-
     def create(self, validated_data):
-        return super().create(validated_data)
+        tag, _ = Tag.objects.get_or_create(validated_data)
+
+        return tag
