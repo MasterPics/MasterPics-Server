@@ -21,13 +21,17 @@ from django.conf import settings
 
 from rest_framework import routers
 from contact.views import ContactViewSets
-from core.views import LocationViewsets
+from core.views import LocationViewsets, TagViewSets
 from user.views import UserViewSets
+from portfolio.views import PortfolioViewSets
 
 router = routers.DefaultRouter(trailing_slash=True)
 router.register("contact", ContactViewSets)
 router.register("location", LocationViewsets)
+router.register("tag", TagViewSets)
 router.register("user", UserViewSets)
+router.register("portfolio", PortfolioViewSets)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,vscode,python,macos,windows,venv
 
+# Custom .gitignore
+*.jpg
+*.webp
+
 ### Django ###
 *.log
 *.pot
