@@ -27,10 +27,6 @@ class PortfolioSerializer(serializers.HyperlinkedModelSerializer):
             new_tag = Tag.objects.get_or_create(**tag_data)[0]
             print(new_tag)
             tags_list.append(new_tag)
-            # tag_serializer = TagSerializer(data=tag_data)
-            # tag_serializer.is_valid()
-            # tag = tag_serializer.save()
-            # tags_list.append(tag)
 
         portfolio = Portfolio.objects.create(**validated_data)
         portfolio.tags.set(tags_list)
