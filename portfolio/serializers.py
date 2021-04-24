@@ -8,7 +8,6 @@ from .models import Portfolio
 class PortfolioSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer(read_only=True)
     tags = TagSerializer(read_only=True, many=True)
-    thumbnail = serializers.ImageField(required=False)
 
     class Meta:
         model = Portfolio
