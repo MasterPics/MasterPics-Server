@@ -33,8 +33,6 @@ class PortfolioViewSets(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
 
     def create(self, request, *args, **kwargs):
-        print(request.data["tags"])
-
         # Create Tags
         # tag_serializer = TagSerializer(data=request.data["tags"])
         # tag_serializer.is_valid()
@@ -42,7 +40,8 @@ class PortfolioViewSets(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        portfolio = serializer.save(user=request.auth.user, tags=request.data["tags"])
+        portfolio = serializer.save(
+            user=request.auth.user, tags=request.data["tags"])
 
         headers = self.get_success_headers(serializer.data)
         return Response(
@@ -158,11 +157,13 @@ def portfolio_detail(request, pk):
     except Exception as e:
         print(e)
         view_counts = ViewCount(ip=ip, post=portfolio)
-        Portfolio.objects.filter(pk=pk).update(view_count=portfolio.view_count + 1)
+        Portfolio.objects.filter(pk=pk).update(
+            view_count=portfolio.view_count + 1)
         view_counts.save()
     else:
         if not view_counts.date == timezone.localtime().date():
-            Portfolio.objects.filter(pk=pk).update(view_count=portfolio.view_count + 1)
+            Portfolio.objects.filter(pk=pk).update(
+                view_count=portfolio.view_count + 1)
             view_counts.date = timezone.localtime()
             view_counts.save()
         else:
@@ -281,9 +282,11 @@ def portfolio_save(request):
         request_user = request.user
         is_saved = request_user in portfolio.save_users.all()
         if is_saved:
-            portfolio.save_users.remove(get_object_or_404(User, pk=request_user.pk))
+            portfolio.save_users.remove(
+                get_object_or_404(User, pk=request_user.pk))
         else:
-            portfolio.save_users.add(get_object_or_404(User, pk=request_user.pk))
+            portfolio.save_users.add(
+                get_object_or_404(User, pk=request_user.pk))
         is_saved = not is_saved
         portfolio.save()
         return JsonResponse({"portfolio_id": portfolio_id, "is_saved": is_saved})
@@ -298,9 +301,11 @@ def portfolio_like(request):
         request_user = request.user
         is_liked = request_user in portfolio.like_users.all()
         if is_liked:
-            portfolio.like_users.remove(get_object_or_404(User, pk=request_user.pk))
+            portfolio.like_users.remove(
+                get_object_or_404(User, pk=request_user.pk))
         else:
-            portfolio.like_users.add(get_object_or_404(User, pk=request_user.pk))
+            portfolio.like_users.add(
+                get_object_or_404(User, pk=request_user.pk))
         is_liked = not is_liked
         portfolio.save()
         return JsonResponse({"portfolio_id": portfolio_id, "is_liked": is_liked})

@@ -20,10 +20,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # django rest framework
 from rest_framework import viewsets
+from .serializers import ReferenceSerializer
 
 
 class ReferenceViewSets(viewsets.ModelViewSet):
     queryset = Reference.objects.all()
+    serializer_class = ReferenceSerializer
 
 
 def reference_local_list(request):

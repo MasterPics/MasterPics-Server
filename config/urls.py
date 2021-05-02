@@ -25,6 +25,7 @@ from core.views import LocationViewsets, TagViewSets
 from user.views import UserViewSets
 from portfolio.views import PortfolioViewSets
 from place.views import PlaceViewSets
+from reference.views import ReferenceViewSets
 
 router = routers.DefaultRouter(trailing_slash=True)
 router.register("contact", ContactViewSets)
@@ -33,6 +34,7 @@ router.register("tag", TagViewSets)
 router.register("user", UserViewSets)
 router.register("portfolio", PortfolioViewSets)
 router.register("place", PlaceViewSets)
+router.register("reference", ReferenceViewSets)
 
 
 urlpatterns = [
