@@ -18,6 +18,14 @@ from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
+# django rest framework
+from rest_framework import viewsets
+
+
+class ReferenceViewSets(viewsets.ModelViewSet):
+    queryset = Reference.objects.all()
+
+
 def reference_local_list(request):
 
     tags = Tag.objects.all()
