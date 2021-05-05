@@ -23,5 +23,5 @@ class ProfileForm(forms.ModelForm):
 class SocialSignUpForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'category', 'image', 'desc',)
+        fields = ('username', 'email', 'category', 'image', 'desc', 'is_ToS')
         # excldue = ('password', )

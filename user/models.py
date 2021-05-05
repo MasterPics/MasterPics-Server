@@ -65,6 +65,7 @@ class User(AbstractUser):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
+    is_ToS = models.BooleanField(default=False)
     # objects = UserManager()
 
     USERNAME_FIELD = 'email'
