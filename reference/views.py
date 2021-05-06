@@ -16,14 +16,21 @@ from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def reference_local_list(request):
+def reference_list(request):
 
-    tags = Tag.objects.all()
+    query = request.GET.get('tags')
+
+    if query is not None:
+        tags = query.split()
+        portfolios = Portfolio.objects.filter(tags__name__in=tags).distinct()
+
+    else:
+        portfolios = Portfolio.objects.order_by('-created_at')
 
     context = {
-        'tags': tags,
+        'portfolios': portfolios,
     }
-    return render(request, 'reference/reference_local_list.html', context=context)
+    return render(request, 'reference/reference_list.html', context=context)
 
 
 def reference_local_detail(request, tag):
