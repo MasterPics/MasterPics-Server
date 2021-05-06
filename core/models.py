@@ -58,3 +58,7 @@ class Information(models.Model):
         to=User, related_name='like_users', blank=True)
     like_counter = models.PositiveIntegerField(default=0)
     view_count = models.PositiveIntegerField(default=0)
+
+    @classmethod
+    def add_count(cls, info):
+        info.view_count += 1
