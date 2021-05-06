@@ -7,8 +7,7 @@ import json
 # infinite loading
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# from core app 
-from core.models import Tag
+# from core app
 from core.forms import LocationForm
 
 # from place app
@@ -31,10 +30,6 @@ def place_create(request):
             place.location = location
             place.save()
 
-            tags = Tag.add_tags(place.tag_str)
-            for tag in tags:
-                place.tags.add(tag)
-
             place.image = request.FILES.get('image')
             return redirect('place:place_detail', place.pk)
 
@@ -42,10 +37,9 @@ def place_create(request):
         place_form = PlaceForm()
         location_form = LocationForm()
 
-    
     ctx = {
         'location_form': location_form,
-        'place_form': place_form, 
+        'place_form': place_form,
     }
 
     return render(request, 'place/place_create.html', context=ctx)
@@ -56,16 +50,17 @@ def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
     request_user = request.user
     ctx = {
-        'place' : place,
+        'place': place,
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
+
 
 @login_required
 def place_update(request, pk):
 
     place = get_object_or_404(Place, pk=pk)
-    
+
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES, instance=place)
         location_form = LocationForm(request.POST, instance=place.location)
@@ -75,12 +70,6 @@ def place_update(request, pk):
             location.save()
             place.location = location
             place.image = request.FILES.get('image')
-
-            place.tags.clear()
-            tags = Tag.add_tags(place.tag_str)
-            for tag in tags:
-                place.tags.add(tag)
-
             place.save()
             return redirect('place:place_detail', place.pk)
 
@@ -89,14 +78,13 @@ def place_update(request, pk):
         location_form = LocationForm(instance=place.location)
 
         ctx = {
-        'place_form' : place_form,
-        'location_form' : location_form,
+            'place_form': place_form,
+            'location_form': location_form,
         }
-        
-        return render(request, 'place/place_update.html', context=ctx)
-            
 
-    
+        return render(request, 'place/place_update.html', context=ctx)
+
+
 def place_list(request):
 
     places = Place.objects.all()
@@ -116,7 +104,6 @@ def place_list(request):
             Q(desc__icontains=search) |  # 내용검색
             Q(user__username__icontains=search)  # 질문 글쓴이검색
         ).distinct()
-
 
     # infinite scroll
     places_per_page = 3
@@ -148,11 +135,10 @@ def place_delete(request, pk):
         place.delete()
         messages.success(request, '삭제되었습니다.')
         return redirect('place:place_list')
-    
+
     else:
         ctx = {'place': place}
         return render(request, 'place/place_delete.html', context=ctx)
-
 
 
 def place_map(request):
@@ -160,11 +146,10 @@ def place_map(request):
     places = Place.objects.all()
 
     ctx = {
-        'places_json' : json.dumps([places.to_json() for place in places])
+        'places_json': json.dumps([places.to_json() for place in places])
     }
 
     return render(request, 'place/place_map.html', context=ctx)
-
 
 
 def place_select(request):
@@ -175,20 +160,3 @@ def place_select(request):
         'form': form,
     }
     return render(request, 'place/place_select.html', context=ctx)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

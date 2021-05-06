@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
+
+    # taggit
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +148,9 @@ AUTH_USER_MODEL = 'user.User'
 
 # social login
 SITE_ID = 1
+
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = 'core.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'core.utils.hashtag_joiner'

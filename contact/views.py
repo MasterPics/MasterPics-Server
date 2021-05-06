@@ -141,12 +141,6 @@ def contact_update(request, pk):
             contact.image = request.FILES.get('image')
             contact = form.save()
 
-            # tag
-            contact.tags.all().delete()
-            tags = Tag.add_tags(contact.tag_str)
-            for tag in tags:
-                contact.tags.add(tag)
-
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
@@ -174,10 +168,6 @@ def contact_create(request):
             contact.save()
             contact.image = request.FILES.get('image')
 
-            # save tag
-            tags = Tag.add_tags(contact.tag_str)
-            for tag in tags:
-                contact.tags.add(tag)
             return redirect('contact:contact_detail', contact.pk)
 
     else:

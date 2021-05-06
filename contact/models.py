@@ -1,10 +1,12 @@
 from django.db import models
 from .utils import uuid_name_upload_to
 from user.models import User
-from core.models import Tag, Location, Comment, Information
+from core.models import Location, Comment, Information
 import json
 
-#TODO Counting Comment Method
+# TODO Counting Comment Method
+
+
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
@@ -14,8 +16,6 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='contacts', blank=True)
 
     # specific field
     file_attach = models.FileField()
@@ -25,7 +25,7 @@ class Contact(models.Model):
     pay_negotiation = models.BooleanField(default=False)
     free = models.BooleanField(default=False)
 
-    #TODO decorator 추가하기 지민아 화이팅
+    # TODO decorator 추가하기 지민아 화이팅
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
@@ -45,9 +45,11 @@ class Contact(models.Model):
     def classname(self):
         return self.__class__.__name__
 
+
 class ContactComment(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
 
 class ContactInformation(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)

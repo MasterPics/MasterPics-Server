@@ -1,12 +1,20 @@
 from django.db import models
 
 from user.models import User
-from core.models import Tag, Comment, Information
+from core.models import Comment, Information
 
 # for view_count
 from django.utils import timezone
 
 from .utils import uuid_name_upload_to
+
+from taggit.managers import TaggableManager
+from taggit.models import (
+    TagBase, TaggedItemBase
+)
+
+
+# Tag
 
 
 # TODO 전체참여자를 participant로 넣고 중계 모델 만들기
@@ -15,7 +23,23 @@ from .utils import uuid_name_upload_to
 # TODO 수빈쓰 아이디어 ㄱ
 
 
-# TODO user 삭제 할지말지 기획팀이랑 얘기해봐야함
+class Tag(TagBase):
+
+    slug = models.SlugField(
+        verbose_name='slug',
+        unique=True,
+        max_length=100,
+        allow_unicode=True,
+    )
+
+
+class TaggedPortfolio(TaggedItemBase):
+    content_object = models.ForeignKey('Portfolio', on_delete=models.CASCADE)
+    tags = models.ForeignKey(
+        'Tag', related_name='tagged_portfolios', on_delete=models.CASCADE, null=True)
+
+
+
 class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
@@ -25,8 +49,8 @@ class Portfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='portfolios', blank=True)
+    tags = TaggableManager(
+        verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
     # TODO Like count 추가, like_users의 내용 확인 (필요 여부 확인)
 

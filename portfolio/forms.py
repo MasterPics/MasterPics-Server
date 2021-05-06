@@ -5,7 +5,7 @@ from .models import *
 class PortfolioForm(forms.ModelForm):
     class Meta:
         model = Portfolio
-        fields = ('title', 'thumbnail',  'desc', 'tag_str',)
+        fields = ('title', 'thumbnail',  'desc', 'tags',)
 
     def __init__(self, *args, **kwargs):
         super(PortfolioForm, self).__init__(*args, **kwargs)
@@ -13,6 +13,7 @@ class PortfolioForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
+
 
 class ImageForm(forms.ModelForm):
     image = forms.ImageField(label='Image')

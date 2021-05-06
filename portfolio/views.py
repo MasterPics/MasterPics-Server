@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
-from core.models import Tag
+from portfolio.models import Tag
 
 
 # for Save, Like
@@ -104,22 +104,22 @@ def portfolio_detail(request, pk):
         ip = request.META.get('REMOTE_ADDR')
     print(ip)
 
-    try:
-        view_counts = ViewCount.objects.get(ip=ip, post=portfolio)
-    except Exception as e:
-        print(e)
-        view_counts = ViewCount(ip=ip, post=portfolio)
-        Portfolio.objects.filter(pk=pk).update(
-            view_count=portfolio.view_count+1)
-        view_counts.save()
-    else:
-        if not view_counts.date == timezone.localtime().date():
-            Portfolio.objects.filter(pk=pk).update(
-                view_count=portfolio.view_count+1)
-            view_counts.date = timezone.localtime()
-            view_counts.save()
-        else:
-            print(str()+'has already hit his post.\n\n')
+    # try:
+    #     view_counts = ViewCount.objects.get(ip=ip, post=portfolio)
+    # except Exception as e:
+    #     print(e)
+    #     view_counts = ViewCount(ip=ip, post=portfolio)
+    #     Portfolio.objects.filter(pk=pk).update(
+    #         view_count=portfolio.view_count+1)
+    #     view_counts.save()
+    # else:
+    #     if not view_counts.date == timezone.localtime().date():
+    #         Portfolio.objects.filter(pk=pk).update(
+    #             view_count=portfolio.view_count+1)
+    #         view_counts.date = timezone.localtime()
+    #         view_counts.save()
+    #     else:
+    #         print(str()+'has already hit his post.\n\n')
 
     ctx = {'portfolio': portfolio,
            'images': images,
@@ -153,14 +153,8 @@ def portfolio_update(request, pk):
             portfolio = form.save(commit=False)
             portfolio.user = request.user
             portfolio.save()
+            form.save_m2m()
             portfolio.image = request.FILES.get('image')
-
-            portfolio.tags.all().delete()
-
-            # save tag
-            tags = Tag.add_tags(portfolio.tag_str)
-            for tag in tags:
-                portfolio.tags.add(tag)
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
     else:
@@ -183,6 +177,7 @@ def portfolio_create(request):
             portfolio = form.save(commit=False)
             portfolio.user = request.user
             portfolio.save()
+            form.save_m2m()
             portfolio.image = request.FILES.get('image')
             for form in formset.cleaned_data:
                 if form:
@@ -190,14 +185,6 @@ def portfolio_create(request):
                     photo = Images(portfolio=portfolio, image=image)
                     photo.save()
             messages.success(request, "posted!")
-
-            # TODO tag 처리
-            # # prev_tag
-            # prev_tags = Tag.objects.all()
-            # save tag
-            tags_portfolio = Tag.add_tags(portfolio.tag_str)
-            for tag in tags_portfolio:
-                portfolio.tags.add(tag)
 
             # # tag compare
             # # tags_portfolio의 tag가 tag_all에 있는지 확인하고
