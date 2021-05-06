@@ -6,7 +6,7 @@ from core.models import Tag
 # for view_count
 from django.utils import timezone
 
-from .utils import uuid_name_upload_to
+from .utils import uuid_name_upload_to, compress
 
 
 class Portfolio(models.Model):
@@ -31,14 +31,14 @@ class Portfolio(models.Model):
     def classname(self):
         return self.__class__.__name__
 
+
 class Images(models.Model):
     image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True,null=True, verbose_name='Image')
+        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
     portfolio = models.ForeignKey(
         to=Portfolio, null=True, blank=True, related_name='portfolio_images', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 
 class ViewCount(models.Model):
