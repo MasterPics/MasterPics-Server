@@ -14,6 +14,8 @@ from .utils import uuid_name_upload_to
 # TODO 지민이의 의견 -> 시영이에게 물어봐야 함 -> 지민아 화이팅
 # TODO 수빈쓰 아이디어 ㄱ
 
+
+# TODO user 삭제 할지말지 기획팀이랑 얘기해봐야함
 class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
@@ -32,7 +34,14 @@ class Portfolio(models.Model):
         return self.__class__.__name__
 
 
-# TODO: 다중이미지 core로 이동 @ 호영
+class Participants(models.Model):
+    portfolio = models.ForeignKey(
+        to=Portfolio, related_name='portfolio', on_delete=models.CASCADE)
+    participant = models.ForeignKey(
+        to=User, related_name='user', on_delete=models.CASCADE)
+
+
+# FIXME: 다중이미지 core로 이동 @ 호영
 class Images(models.Model):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
@@ -42,7 +51,7 @@ class Images(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-# # TODO: ViewCount core로 이동(삭제)
+# # TODO: ViewCount core로 이동(삭제), admin 지우기
 # class ViewCount(models.Model):
 #     ip = models.CharField(max_length=15, default=None, null=True)
 #     post = models.ForeignKey(Portfolio, default=None, null=True,
