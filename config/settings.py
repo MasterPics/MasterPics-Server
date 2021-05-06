@@ -152,4 +152,5 @@ SITE_ID = 1
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
-TAGGIT_TAGS_FROM_STRING = 'core.utils.hashtag_splitter'
+TAGGIT_TAGS_FROM_STRING = 'portfolio.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'

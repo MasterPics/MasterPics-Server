@@ -29,6 +29,7 @@ class TaggedPortfolio(TaggedItemBase):
     tags = models.ForeignKey(
         'Tag', related_name='tagged_portfolios', on_delete=models.CASCADE, null=True)
 
+
 class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
@@ -61,11 +62,14 @@ class Images(models.Model):
 
 class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, blank=True, null=True)
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, blank=True, null=True)
+
 
 class PortfolioInformation(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     information = models.ForeignKey(Information, on_delete=models.CASCADE)
+
 
 class PortfolioParticipant(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
