@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json
 
-
 # infinite loading
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -11,8 +10,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from core.forms import LocationForm
 
 # from place app
-from .models import Place
-from .forms import PlaceForm
+from .models import *
+from .forms import *
 
 
 @login_required
@@ -31,6 +30,12 @@ def place_create(request):
             place.save()
 
             place.image = request.FILES.get('image')
+            
+            information = Information.objects.create()
+            place_information = PlaceInformation.objects.create(
+                place=place,
+                information=information
+            )
             return redirect('place:place_detail', place.pk)
 
     else:
@@ -46,9 +51,14 @@ def place_create(request):
 
 
 def place_detail(request, pk):
-
     place = get_object_or_404(Place, pk=pk)
-    request_user = request.user
+    place_information = PlaceInformation.objects.get(
+        place=place
+    )
+
+    place_information.information.view_count += 1
+    place_information.information.save()
+
     ctx = {
         'place': place,
     }
@@ -58,7 +68,6 @@ def place_detail(request, pk):
 
 @login_required
 def place_update(request, pk):
-
     place = get_object_or_404(Place, pk=pk)
 
     if request.method == 'POST':
@@ -142,20 +151,15 @@ def place_delete(request, pk):
 
 
 def place_map(request):
-
     places = Place.objects.all()
-
     ctx = {
         'places_json': json.dumps([places.to_json() for place in places])
     }
-
     return render(request, 'place/place_map.html', context=ctx)
 
 
 def place_select(request):
-
     form = LocationForm()
-
     ctx = {
         'form': form,
     }

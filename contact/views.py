@@ -110,12 +110,15 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    tags = contact.tags.all()
+    contact_information = ContactInformation.objects.get(
+        contact=contact)
+
+    contact_information.information.view_count += 1
+    contact_information.information.save()
 
     ctx = {
         'contact': contact,
         'request_user': request.user,
-        'tags': tags,
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -167,6 +170,12 @@ def contact_create(request):
             contact.location = location
             contact.save()
             contact.image = request.FILES.get('image')
+
+            information = Information.objects.create()
+            contact_information = ContactInformation.objects.create(
+                contact=contact,
+                information=information
+            )
 
             return redirect('contact:contact_detail', contact.pk)
 

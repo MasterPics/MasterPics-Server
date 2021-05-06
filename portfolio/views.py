@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from .forms import *
-
-from portfolio.models import Tag
-
-
 from core.models import Comment, Information
+
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -22,8 +19,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for multiple images
 from django.forms import modelformset_factory
 
-
-# TODO @api_view(['GET'])
 def portfolio_list(request):
     portfolios = Portfolio.objects.all().order_by("created_at")
     request_user = request.user  # 로그인한 유저
@@ -51,7 +46,6 @@ def portfolio_list(request):
                                            ).distinct().order_by("?")
 
     # Sort 최신순, 조회순, 좋아요순, 저장순
-
     if sort == 'recent':
         portfolios = portfolios.order_by('-updated_at')
     elif sort == 'view':
@@ -86,7 +80,6 @@ def portfolio_list(request):
                'category': category, }
     return render(request, 'portfolio/portfolio_list.html', context=context)
 
-
 def portfolio_detail(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
     portfolio_information = PortfolioInformation.objects.get(
@@ -112,7 +105,6 @@ def portfolio_detail(request, pk):
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
 
-
 @login_required
 def portfolio_delete(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
@@ -125,7 +117,6 @@ def portfolio_delete(request, pk):
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
-
 
 @login_required
 def portfolio_update(request, pk):
@@ -146,7 +137,6 @@ def portfolio_update(request, pk):
         form = PortfolioForm(instance=portfolio)
         ctx = {'form': form, }
         return render(request, 'portfolio/portfolio_update.html', ctx)
-
 
 @login_required
 def portfolio_create(request):
@@ -175,12 +165,6 @@ def portfolio_create(request):
                 portfolio=portfolio,
                 information=information
             )
-
-            # #TODO Comment는 아마 안해도 될 듯 함
-            # portfolio_comment = PortfolioComment.objects.create(
-            #     portfolio = portfolio,
-            #     comment = None
-            # )
 
             return redirect('portfolio:portfolio_detail', portfolio.pk)
         else:
