@@ -9,6 +9,6 @@ class PortfolioAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ViewCount)
-class ViewCountAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(ViewCount)
+# class ViewCountAdmin(admin.ModelAdmin):
+#     pass
