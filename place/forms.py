@@ -6,15 +6,10 @@ class PlaceForm(forms.ModelForm):
 
     class Meta:
         model = Place
-        fields = ('thumbnail', 'title', 'desc', 'pay', 'tag_str')
-        # exclude = ('start_date_time', 'end_date_time',)
+        fields = ('thumbnail', 'title', 'desc', 'pay')
+
         widgets = {
-            # 'thumbnail': forms.ImageField(
-            #     attrs={
-            #         'class': 'form-control place place-thumbnail',
-            #         'id': 'place-thumbnail',
-            #     }
-            # ),
+
             'title': forms.TextInput(
                 attrs={
                     'class': 'form-control place place-title',

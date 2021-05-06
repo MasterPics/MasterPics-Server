@@ -7,7 +7,7 @@ from .forms import *
 from portfolio.models import Tag
 
 
-from core.models import Tag, Comment, Information
+from core.models import Comment, Information
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -89,7 +89,8 @@ def portfolio_list(request):
 
 def portfolio_detail(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
-    portfolio_information = PortfolioInformation.objects.get(portfolio=portfolio)
+    portfolio_information = PortfolioInformation.objects.get(
+        portfolio=portfolio)
 
     images = portfolio.portfolio_images.all()
     num_of_imgs = images.count
@@ -99,52 +100,8 @@ def portfolio_detail(request, pk):
     portfolio_owner = portfolio.user  # 게시글 작성자
     request_user = request.user  # 로그인한 유저
 
-    #TODO 코드 필요 여부 확인
-    # 조회수(view_count)
-    # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    # if x_forwarded_for:
-    #     ip = x_forwarded_for.split(',')[0]
-    # else:
-    #     ip = request.META.get('REMOTE_ADDR')
-    # print(ip)
-
-    try:
-        view_counts = ViewCount.objects.get(ip=ip, post=portfolio)
-    except Exception as e:
-        print(e)
-        view_counts = ViewCount(ip=ip, post=portfolio)
-        Portfolio.objects.filter(pk=pk).update(
-            view_count=portfolio.view_count+1)
-        view_counts.save()
-    else:
-        if not view_counts.date == timezone.localtime().date():
-            Portfolio.objects.filter(pk=pk).update(
-                view_count=portfolio.view_count+1)
-            view_counts.date = timezone.localtime()
-            view_counts.save()
-        else:
-            print(str()+'has already hit his post.\n\n')
-
     portfolio_information.information.view_count += 1
     portfolio_information.information.save()
-
-    # try:
-    #     view_counts = ViewCount.objects.get(ip=ip, post=portfolio)
-    # except Exception as e:
-    #     print(e)
-    #     view_counts = ViewCount(ip=ip, post=portfolio)
-    #     Portfolio.objects.filter(pk=pk).update(
-    #         view_count=portfolio.view_count+1)
-    #     view_counts.save()
-    # else:
-    #     if not view_counts.date == timezone.localtime().date():
-    #         Portfolio.objects.filter(pk=pk).update(
-    #             view_count=portfolio.view_count+1)
-    #         view_counts.date = timezone.localtime()
-    #         view_counts.save()
-    #     else:
-    #         print(str()+'has already hit his post.\n\n')
-
 
     ctx = {'portfolio': portfolio,
            'images': images,
@@ -188,6 +145,7 @@ def portfolio_update(request, pk):
         ctx = {'form': form, }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
+
 @login_required
 def portfolio_create(request):
     # 'extra' : number of photos
@@ -208,27 +166,12 @@ def portfolio_create(request):
 
             messages.success(request, "posted!")
 
-            # TODO tag 처리
-            # # prev_tag
-            # prev_tags = Tag.objects.all()
-            # save tag
-            tags_portfolio = Tag.add_tags(portfolio.tag_str)
-            for tag in tags_portfolio:
-                portfolio.tags.add(tag)
-
-            # # tag compare
-            # # tags_portfolio의 tag가 tag_all에 있는지 확인하고
-            # # 이미 있으면 do nothing
-            # # 없으면 tag 게시물 create
-            # local_create(request, prev_tags)
-
-
-            #자동으로 comment 와 information 생성
+            # 자동으로 comment 와 information 생성
 
             information = Information.objects.create()
             portfolio_information = PortfolioInformation.objects.create(
-                portfolio = portfolio,
-                information = information
+                portfolio=portfolio,
+                information=information
             )
 
             # #TODO Comment는 아마 안해도 될 듯 함
