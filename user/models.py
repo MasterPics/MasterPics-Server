@@ -65,6 +65,9 @@ class User(AbstractUser):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
+
+    #TODO 이제부터 hashkey 를 사용
+    user_identifier = models.CharField(max_length=100, blank=True, null=True)
     # objects = UserManager()
 
     #TODO instagram, phone, phone_public

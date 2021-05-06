@@ -25,6 +25,7 @@ def profile_delete(request, pk):
         return render(request, 'profile/profile_delete.html', context=ctx)
 
 
+#TODO 업데이트 분리 user가 본인 것을 업데이트, 혹은 마이페이지 보기
 @login_required
 def profile_update(request, pk):
     user = get_object_or_404(User, pk=pk)
@@ -98,7 +99,7 @@ def profile_detail(request, pk):
 
 
 @login_required
-def profile_detail_posts(request, pk):
+def profile_detail_list(request, pk):
     user = get_object_or_404(User, pk=pk)
     request_user=request.user
 
@@ -124,7 +125,7 @@ def profile_detail_posts(request, pk):
         'posts': posts,
         'category': category,
     }
-    return render(request, 'profile/profile_detail_posts.html', context=ctx)
+    return render(request, 'profile/profile_detail_post.html', context=ctx)
 
 
 @login_required
