@@ -2,6 +2,18 @@ import os
 from uuid import uuid4
 from django.utils import timezone
 
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
+
+
+def compress(image):
+    img = Image.open(image)
+    img_io = BytesIO()
+    img.save(img_io, 'JPEG', quality=50)
+    compressed_img = File(img_io, name=image.name)
+    return compressed_img
+
 
 def uuid_name_upload_to(instance, filename):
     app_label = instance.__class__._meta.app_label  # 앱 별로

@@ -4,7 +4,8 @@ from core.models import Comment, Information
 
 # for view_count
 from django.utils import timezone
-from .utils import uuid_name_upload_to
+
+from .utils import uuid_name_upload_to, compress
 
 from taggit.managers import TaggableManager
 from taggit.models import (

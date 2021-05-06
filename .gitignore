@@ -270,6 +270,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 ### vscode ###
+.vscode/
 .vscode/*
 .vscode/
 !.vscode/settings.json
