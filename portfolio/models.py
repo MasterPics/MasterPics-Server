@@ -6,8 +6,6 @@ from core.models import Comment, Information
 from django.utils import timezone
 from .utils import uuid_name_upload_to, compress
 
-from .utils import uuid_name_upload_to, compress
-
 from taggit.managers import TaggableManager
 from taggit.models import (
     TagBase, TaggedItemBase
@@ -44,6 +42,11 @@ class Portfolio(models.Model):
     tags = TaggableManager(
         verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.thumbnail)
+        self.thumbnail = compressed_img
+        super().save(*args, **kwargs)
+
     def classname(self):
         return self.__class__.__name__
 
@@ -62,16 +65,19 @@ class Images(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.image)
+        self.image = compressed_img
+        super().save(*args, **kwargs)
+
 class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     comment = models.ForeignKey(
         Comment, on_delete=models.CASCADE, blank=True, null=True)
 
-
 class PortfolioInformation(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     information = models.ForeignKey(Information, on_delete=models.CASCADE)
-
 
 class PortfolioParticipant(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
