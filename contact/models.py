@@ -8,7 +8,7 @@ import json
 
 from .utils import uuid_name_upload_to
 
-
+#TODO pay_negotiation
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
@@ -28,6 +28,8 @@ class Contact(models.Model):
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField()
+    
+    #TODO decorator 추가하기 지민아 화이팅
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
@@ -48,6 +50,7 @@ class Contact(models.Model):
         return self.__class__.__name__
 
 
+#TODO 요 코멘트를 core에 있는 애로 바꾸던지 상속을하던지 너네 알아서 하고
 class Comment(models.Model):
     contact = models.ForeignKey(
         to=Contact, null=True, blank=True, related_name='contact_comments', on_delete=models.CASCADE)
