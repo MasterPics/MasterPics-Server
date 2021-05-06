@@ -7,7 +7,7 @@ from .forms import *
 from portfolio.models import Tag
 
 
-from core.models import Comment, Information
+from core.models import *
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -161,9 +161,11 @@ def portfolio_create(request):
             form.save_m2m()
             portfolio.image = request.FILES.get('images')
             for image in request.FILES.getlist('images'):
-                image_obj = Images()
+                image_obj = PortfolioImages()
                 image_obj.portfolio_id = portfolio.id
-                image_obj.image = image
+                image_obj.image = Images()
+                image_obj.image.image = image
+                image_obj.image.save()
                 image_obj.save()
 
             messages.success(request, "posted!")
