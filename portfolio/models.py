@@ -40,6 +40,11 @@ class Images(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.image)
+        self.image = compressed_img
+        super().save(*args, **kwargs)
+
 
 class ViewCount(models.Model):
     ip = models.CharField(max_length=15, default=None, null=True)

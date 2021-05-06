@@ -9,9 +9,9 @@ from django.core.files import File
 
 def compress(image):
     img = Image.open(image)
-    img_io = BytesIO()  # create a BytesIO object
-    img.save(img_io, 'JPEG', quality=50)  # save image to BytesIO object
-    compressed_img = File(img_io, name=image.name)  # create a Files object
+    img_io = BytesIO()
+    img.save(img_io, 'JPEG', quality=50)
+    compressed_img = File(img_io, name=image.name)
     return compressed_img
 
 
