@@ -17,7 +17,6 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 
-
 let ps = new kakao.maps.services.Places();  // 장소 검색 객체를 생성합니다
 let markers = []; // 마커를 담을 배열입니다
 
@@ -41,8 +40,6 @@ userMarker = new kakao.maps.Marker({
     zIndex: 3
 }); 
 
-renewLocationInputs();
-
 // 출발 마커에 dragend 이벤트를 등록합니다
 kakao.maps.event.addListener(userMarker, 'dragend', function() {
     searchDetailAddrFromCoords(userMarker.getPosition(), function(result, status) {
@@ -61,15 +58,11 @@ kakao.maps.event.addListener(userMarker, 'dragend', function() {
     });
 });
 
-searchPlaces();
-
 
 function searchDetailAddrFromCoords(coords, callback) {
     // 좌표로 법정동 상세 주소 정보를 요청합니다
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
-
-
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
@@ -249,7 +242,6 @@ $(function (){
   });
 });
 
-
 // function markerClickListener(targetMarker) {
 //     return function(){
 //         markerLoc = targetMarker.getPosition();
@@ -258,8 +250,6 @@ $(function (){
 //         marker.setPosition(markerLoc);
 //     }
 // }
-
- 
 
 function renewLocationInputs(){
     searchDetailAddrFromCoords(userMarker.getPosition(), function(result, status) {
