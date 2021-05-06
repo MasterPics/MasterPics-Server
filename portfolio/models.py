@@ -45,8 +45,6 @@ class Images(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-
 class ViewCount(models.Model):
     ip = models.CharField(max_length=15, default=None, null=True)
     post = models.ForeignKey(Portfolio, default=None, null=True,
@@ -54,4 +52,5 @@ class ViewCount(models.Model):
     date = models.DateField(default=timezone.now, null=True, blank=True)
 
 
-#TODO Portfolio Comment 
+#TODO Portfolio Comment depth 한개
+    #comment, portfolio, self 대댓글
