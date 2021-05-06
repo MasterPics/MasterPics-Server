@@ -176,27 +176,23 @@ def portfolio_update(request, pk):
         ctx = {'form': form, }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
-
 @login_required
 def portfolio_create(request):
     # 'extra' : number of photos
-    ImageFormSet = modelformset_factory(Images, form=ImageForm, extra=10)
-
     if request.method == 'POST':
         form = PortfolioForm(request.POST, request.FILES,)
-        formset = ImageFormSet(request.POST, request.FILES,
-                               queryset=Images.objects.none())
 
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
             portfolio.save()
-            portfolio.image = request.FILES.get('image')
-            for form in formset.cleaned_data:
-                if form:
-                    image = form['image']
-                    photo = Images(portfolio=portfolio, image=image)
-                    photo.save()
+            portfolio.image = request.FILES.get('images')
+            for image in request.FILES.getlist('images'):
+                image_obj = Images()
+                image_obj.portfolio_id = portfolio.id
+                image_obj.image = image
+                image_obj.save()
+
             messages.success(request, "posted!")
 
             # TODO tag 처리
@@ -233,8 +229,7 @@ def portfolio_create(request):
 
     else:
         form = PortfolioForm()
-        formset = ImageFormSet(queryset=Images.objects.none())
-        ctx = {'form': form, 'formset': formset}
+        ctx = {'form': form}
 
     return render(request, 'portfolio/portfolio_create.html', ctx)
 
