@@ -8,4 +8,4 @@ class PortfolioForm(forms.ModelForm):
 
     class Meta:
         model = Portfolio
-        fields = ('title', 'thumbnail',  'desc', 'tag_str', 'images')
+        fields = ('title', 'thumbnail',  'desc', 'tags',)

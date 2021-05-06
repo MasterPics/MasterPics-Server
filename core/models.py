@@ -6,6 +6,8 @@ from user.models import User
 import re
 
 
+
+
 class Location(models.Model):
     # location
     address = models.TextField()  # 도로명 주소
@@ -16,28 +18,28 @@ class Location(models.Model):
         return self.address
 
 
-class Tag(models.Model):
-    tag = models.CharField(max_length=30)
-    save_users = models.ManyToManyField(
-        to=User, related_name='tag_save_users', blank=True)
-    like_users = models.ManyToManyField(
-        to=User, related_name='tag_like_users', blank=True)
+# TODO: taggit 사용 시 없앨 것
+# class Tag(models.Model):
+#     tag = models.CharField(max_length=30)
+#     save_users = models.ManyToManyField(
+#         to=User, related_name='tag_save_users', blank=True)
+#     like_users = models.ManyToManyField(
+#         to=User, related_name='tag_like_users', blank=True)
 
-    @classmethod
-    def add_tags(selt, tag_str):
-        # NOTE: self.desc 말고 TAG FIELD 따로 만들까?
-        tags = re.findall(r'#(\w+)\b', tag_str)
-        tag_lst = []
+#     @classmethod
+#     def add_tags(selt, tag_str):
+#         # NOTE: self.desc 말고 TAG FIELD 따로 만들까?
+#         tags = re.findall(r'#(\w+)\b', tag_str)
+#         tag_lst = []
 
-        for t in tags:
-            tag, tag_created = Tag.objects.get_or_create(tag=t)
-            tag_lst.append(tag)
+#         for t in tags:
+#             tag, tag_created = Tag.objects.get_or_create(tag=t)
+#             tag_lst.append(tag)
 
-        return tag_lst
+#         return tag_lst
 
-    def __str__(self):
-        return self.tag
-
+#     def __str__(self):
+#         return self.tag
 
 # TODO 작성자가 없네? 어라?
 # TODO target을 넣어줘야 함, 영빈

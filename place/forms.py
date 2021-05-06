@@ -1,6 +1,7 @@
 from django import forms
 from .models import Place
 
+
 class PlaceForm(forms.ModelForm):
 
     class Meta:
@@ -32,12 +33,6 @@ class PlaceForm(forms.ModelForm):
             #         'id': 'place-pay',
             #     }
             # ),
-            'tag_str': forms.TextInput(
-                attrs={
-                    'class': 'form-control place place-tag-str',
-                    'id': 'place-tag-str',
-                }
-            ),
         }
         labels = {
             'thumbnail': 'Thumbnail',
