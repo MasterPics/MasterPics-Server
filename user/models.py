@@ -7,6 +7,10 @@ from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 import urllib
 
+# User validators 
+from django import forms
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 
@@ -43,6 +47,11 @@ class MyUserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
+# User validators 
+def is_ToS(value):
+    if value == False:
+        raise forms.ValidationError("약관에 동의해야 합니다.")
+
 class User(AbstractUser):
     CATEGORY_PHOTOGRAPHER = 'photographer'
     CATEGORY_MODEL = 'model'
@@ -60,16 +69,14 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=20, unique=False)
     email = models.EmailField('email address', unique=True)
-    category = models.CharField(
-        max_length=20, choices=CATEGORY)
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
+    category = models.CharField(max_length=20, choices=CATEGORY)
+    image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
-    is_ToS = models.BooleanField(default=False)
+    is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     # objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username', 'category']
 
     objects = MyUserManager()
 

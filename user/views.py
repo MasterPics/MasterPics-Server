@@ -173,9 +173,12 @@ def social_signup(request):
                 'form': form,
             }
             return render(request, 'profile/social_signup.html', ctx)
-    if request.method == 'GET':
+    # 현재 유저가 약관 동의를 하지 않았을 경우 (== 추가 정보를 입력하지 않았을 경우)
+    elif request.method == 'GET' and (request.user.is_ToS == False):
         form = SocialSignUpForm(instance=request.user)
         ctx = {
             'form': form,
         }
         return render(request, 'profile/social_signup.html', ctx)
+    elif request.method == 'GET':
+        return redirect("profile:profile_detail", pk = request.user.pk)
