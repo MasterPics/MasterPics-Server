@@ -136,6 +136,8 @@ def portfolio_update(request, pk):
             portfolio = form.save(commit=False)
             portfolio.user = request.user
             portfolio.save()
+            portfolio.tags.clear()
+
             form.save_m2m()
             portfolio.image = request.FILES.get('image')
 
