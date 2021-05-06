@@ -7,7 +7,6 @@ import re
 
 
 class Location(models.Model):
-
     # location
     address = models.TextField()  # 도로명 주소
     lat = models.FloatField(blank=True)
@@ -18,7 +17,6 @@ class Location(models.Model):
 
 
 class Tag(models.Model):
-
     tag = models.CharField(max_length=30)
     save_users = models.ManyToManyField(
         to=User, related_name='tag_save_users', blank=True)
@@ -41,7 +39,22 @@ class Tag(models.Model):
         return self.tag
 
 
+# TODO 작성자가 없네? 어라?
+# TODO target을 넣어줘야 함, 영빈
 class Comment(models.Model):
+    writer = models.ForeignKey(
+        User, related_name="writer_set", on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+# TODO save_user, like, view_count
+
+
+class Information(models.Model):
+    save_users = models.ManyToManyField(
+        to=User, related_name='save_users', blank=True)
+    like_users = models.ManyToManyField(
+        to=User, related_name='like_users', blank=True)
+    like_counter = models.PositiveIntegerField(default=0)
+    view_count = models.PositiveIntegerField(default=0)

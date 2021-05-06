@@ -75,6 +75,8 @@ class User(AbstractUser):
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     # objects = UserManager()
 
+    #TODO instagram, phone, phone_public
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'category']
 

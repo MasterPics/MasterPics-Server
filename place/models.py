@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Tag, Location
+from core.models import Tag, Location, Comment, Information
 from user.models import User
 from core.utils import uuid_name_upload_to
 
@@ -12,16 +12,14 @@ class Place(models.Model):
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    save_users = models.ManyToManyField(
-        to=User, related_name='save_users', blank=True)
     desc = models.TextField()
 
     # specific field
-    like_users = models.ManyToManyField(
-        to=User, related_name='like_users', blank=True)
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
+    #fee
     pay = models.PositiveIntegerField()
+    free = models.BooleanField(default=False)
     tag_str = models.CharField(max_length=50, blank=True)
     tags = models.ManyToManyField(Tag, related_name='places', blank=True)
 
@@ -36,3 +34,11 @@ class Place(models.Model):
             'pay': self.location.pay,
             'tag_str': ' '.join([tag.tag for tag in tags.all()])
         }
+
+class PlaceComment(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+class PlaceInformation(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    information = models.ForeignKey(Information, on_delete=models.CASCADE)
