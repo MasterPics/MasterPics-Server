@@ -22,22 +22,17 @@ class Portfolio(models.Model):
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    save_users = models.ManyToManyField(
-        to=User, related_name='portfolio_save_users', blank=True)
     desc = models.TextField()
-
-    # specific field
-    # TODO Like count 추가, like_users의 내용 확인 (필요 여부 확인)
-    view_count = models.PositiveIntegerField(default=0)
-    like_users = models.ManyToManyField(
-        to=User, related_name='portfolio_like_users', blank=True)
     tag_str = models.CharField(max_length=50, blank=True)
     tags = models.ManyToManyField(Tag, related_name='portfolios', blank=True)
+
+    # TODO Like count 추가, like_users의 내용 확인 (필요 여부 확인)
 
     def classname(self):
         return self.__class__.__name__
 
 
+# TODO: 다중이미지 core로 이동 @ 호영
 class Images(models.Model):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
@@ -47,11 +42,23 @@ class Images(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class ViewCount(models.Model):
-    ip = models.CharField(max_length=15, default=None, null=True)
-    post = models.ForeignKey(Portfolio, default=None, null=True,
-                             related_name='view_counts', on_delete=models.CASCADE)
-    date = models.DateField(default=timezone.now, null=True, blank=True)
+# # TODO: ViewCount core로 이동(삭제)
+# class ViewCount(models.Model):
+#     ip = models.CharField(max_length=15, default=None, null=True)
+#     post = models.ForeignKey(Portfolio, default=None, null=True,
+#                              related_name='view_counts', on_delete=models.CASCADE)
+#     date = models.DateField(default=timezone.now, null=True, blank=True)
 
 
-# TODO Portfolio Comment
+# TODO Portfolio Comment depth 한개
+    # comment, portfolio, self 대댓글
+
+
+class PortfolioComment(models.Model):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+
+class PortfolioInformation(models.Model):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    information = models.ForeignKey(Information, on_delete=models.CASCADE)
