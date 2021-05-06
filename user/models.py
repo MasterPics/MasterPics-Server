@@ -11,6 +11,9 @@ import urllib
 from django import forms
 from django.core.exceptions import ValidationError
 
+# User field
+from phone_field import PhoneField
+
 
 # Create your models here.
 
@@ -73,12 +76,15 @@ class User(AbstractUser):
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
+    phone = PhoneField(blank=True)
+    phone_public = models.BooleanField(default=False)
+    instagram = models.CharField(max_length=20, blank=True)
     # objects = UserManager()
 
     #TODO instagram, phone, phone_public
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'category']
+    REQUIRED_FIELDS = []
 
     objects = MyUserManager()
 
