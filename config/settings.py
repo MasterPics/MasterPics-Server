@@ -147,11 +147,16 @@ AUTH_USER_MODEL = 'user.User'
 
 
 # social login
+# 인증관련 설정
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 SITE_ID = 1
 ## TODO:redirect url을 추가정보 입력받는 url로 변경하기
+LOGIN_REDIRECT_URL = "/profile/social_signup/"
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-
-SOCIALACCOUNT_AUTO_SIGNUP = False
 ACCOUNT_EMAIL_VERIFICATION = None

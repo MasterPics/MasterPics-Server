@@ -49,6 +49,8 @@
 
         {% if not user.is_authenticated %}
 
+        <!-- <li><a href="{% url 'google_login' %}">google</li>
+        <li><a href="{% url 'naver_login' %}">naver</li> -->
         <li><a href="{% url 'account_login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
         <li><a href="{% url 'account_login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
         {% else %}
