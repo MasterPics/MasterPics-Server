@@ -252,6 +252,9 @@ Temporary Items
 
 # profiling data
 
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
 
 ### venv ###
 # Virtualenv
@@ -302,3 +305,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows,venv
+
