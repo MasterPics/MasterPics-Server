@@ -84,9 +84,9 @@ class User(AbstractUser):
     #TODO instagram, phone, phone_public
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
-    objects = MyUserManager()
+    # objects = MyUserManager()
 
     def __str__(self):
         return self.username 
