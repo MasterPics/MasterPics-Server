@@ -67,6 +67,8 @@ class User(AbstractUser):
     desc = models.TextField(blank=True)
     # objects = UserManager()
 
+    #TODO instagram, phone, phone_public
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

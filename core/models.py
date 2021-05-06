@@ -41,6 +41,8 @@ class Tag(models.Model):
         return self.tag
 
 
+#TODO 작성자가 없네? 어라?
+#TODO target을 넣어줘야 함, 영빈
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
