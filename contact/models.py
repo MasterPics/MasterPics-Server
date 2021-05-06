@@ -4,9 +4,6 @@ from user.models import User
 from core.models import Location, Comment, Information
 import json
 
-# TODO Counting Comment Method
-
-
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
@@ -45,11 +42,9 @@ class Contact(models.Model):
     def classname(self):
         return self.__class__.__name__
 
-
 class ContactComment(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
 
 class ContactInformation(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)

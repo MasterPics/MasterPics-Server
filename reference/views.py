@@ -3,7 +3,6 @@ from .models import *
 
 from portfolio.models import Portfolio, Tag
 
-
 # for Save, Like
 from django.http import JsonResponse
 import json

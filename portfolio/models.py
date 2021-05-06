@@ -11,15 +11,8 @@ from taggit.models import (
     TagBase, TaggedItemBase
 )
 
-
-# Tag
-
-
 # TODO 전체참여자를 participant로 넣고 중계 모델 만들기
 # TODO class Participants portfolio 1개 participant 1명
-# TODO 지민이의 의견 -> 시영이에게 물어봐야 함 -> 지민아 화이팅
-# TODO 수빈쓰 아이디어 ㄱ
-
 
 class Tag(TagBase):
 
@@ -36,8 +29,6 @@ class TaggedPortfolio(TaggedItemBase):
     tags = models.ForeignKey(
         'Tag', related_name='tagged_portfolios', on_delete=models.CASCADE, null=True)
 
-
-
 class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
@@ -50,17 +41,14 @@ class Portfolio(models.Model):
     tags = TaggableManager(
         verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
-
     def classname(self):
         return self.__class__.__name__
-
 
 class Participants(models.Model):
     portfolio = models.ForeignKey(
         to=Portfolio, related_name='portfolio', on_delete=models.CASCADE)
     participant = models.ForeignKey(
         to=User, related_name='user', on_delete=models.CASCADE)
-
 
 # FIXME: 다중이미지 core로 이동 @ 호영
 class Images(models.Model):
@@ -70,14 +58,6 @@ class Images(models.Model):
         to=Portfolio, null=True, blank=True, related_name='portfolio_images', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-# # TODO: ViewCount core로 이동(삭제), admin 지우기
-# class ViewCount(models.Model):
-#     ip = models.CharField(max_length=15, default=None, null=True)
-#     post = models.ForeignKey(Portfolio, default=None, null=True,
-#                              related_name='view_counts', on_delete=models.CASCADE)
-#     date = models.DateField(default=timezone.now, null=True, blank=True)
 
 class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
