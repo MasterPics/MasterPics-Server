@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from user.models import User
 import re
 
+
 class Location(models.Model):
     # location
     address = models.TextField()  # 도로명 주소
@@ -13,6 +14,7 @@ class Location(models.Model):
 
     def __str__(self):
         return self.address
+
 
 class Tag(models.Model):
     tag = models.CharField(max_length=30)
@@ -37,15 +39,18 @@ class Tag(models.Model):
         return self.tag
 
 
-#TODO 작성자가 없네? 어라?
-#TODO target을 넣어줘야 함, 영빈
+# TODO 작성자가 없네? 어라?
+# TODO target을 넣어줘야 함, 영빈
 class Comment(models.Model):
-    writer = models.Foreignkey(User, related_name="writer_set")
+    writer = models.ForeignKey(
+        User, related_name="writer_set", on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-#TODO save_user, like, view_count
+# TODO save_user, like, view_count
+
+
 class Information(models.Model):
     save_users = models.ManyToManyField(
         to=User, related_name='save_users', blank=True)

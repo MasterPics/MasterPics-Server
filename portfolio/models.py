@@ -1,7 +1,7 @@
 from django.db import models
 
 from user.models import User
-from core.models import Tag
+from core.models import Tag, Comment, Information
 
 # for view_count
 from django.utils import timezone
