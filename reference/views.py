@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from .models import *
 
-from portfolio.models import Portfolio
-
-from core.models import Tag
-
+from portfolio.models import Portfolio, Tag
 
 # for Save, Like
 from django.http import JsonResponse

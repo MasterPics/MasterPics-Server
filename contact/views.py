@@ -110,12 +110,15 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    tags = contact.tags.all()
+    contact_information = ContactInformation.objects.get(
+        contact=contact)
+
+    contact_information.information.view_count += 1
+    contact_information.information.save()
 
     ctx = {
         'contact': contact,
         'request_user': request.user,
-        'tags': tags,
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -140,12 +143,6 @@ def contact_update(request, pk):
         if form.is_valid():
             contact.image = request.FILES.get('image')
             contact = form.save()
-
-            # tag
-            contact.tags.all().delete()
-            tags = Tag.add_tags(contact.tag_str)
-            for tag in tags:
-                contact.tags.add(tag)
 
             return redirect('contact:contact_detail', contact.pk)
     else:
@@ -174,10 +171,12 @@ def contact_create(request):
             contact.save()
             contact.image = request.FILES.get('image')
 
-            # save tag
-            tags = Tag.add_tags(contact.tag_str)
-            for tag in tags:
-                contact.tags.add(tag)
+            information = Information.objects.create()
+            contact_information = ContactInformation.objects.create(
+                contact=contact,
+                information=information
+            )
+
             return redirect('contact:contact_detail', contact.pk)
 
     else:

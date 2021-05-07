@@ -1,9 +1,8 @@
 from django.db import models
-from core.models import Tag, Location, Comment, Information
+from core.models import Location, Comment, Information
 from user.models import User
 from core.utils import uuid_name_upload_to
 
-# Create your models here.
 class Place(models.Model):
     # common field
     user = models.ForeignKey(
@@ -17,11 +16,9 @@ class Place(models.Model):
     # specific field
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
-    #fee
+    # fee
     pay = models.PositiveIntegerField()
     free = models.BooleanField(default=False)
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='places', blank=True)
 
     def to_json(self):
         return {

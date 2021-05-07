@@ -3,20 +3,9 @@ from .models import *
 
 
 class PortfolioForm(forms.ModelForm):
+    images = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}))  # 다중이미지
+
     class Meta:
         model = Portfolio
-        fields = ('title', 'thumbnail',  'desc', 'tag_str',)
-
-    def __init__(self, *args, **kwargs):
-        super(PortfolioForm, self).__init__(*args, **kwargs)
-        for field in self.fields.keys():
-            self.fields[field].widget.attrs.update({
-                'class': field + " form",
-                'id': 'form-id', })
-
-class ImageForm(forms.ModelForm):
-    image = forms.ImageField(label='Image')
-
-    class Meta:
-        model = Images
-        fields = ('image', )
+        fields = ('title', 'thumbnail',  'desc', 'tags',)

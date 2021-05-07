@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
+
+    # taggit
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +141,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
 
 # custom user
 AUTH_USER_MODEL = 'user.User'
@@ -145,3 +151,9 @@ AUTH_USER_MODEL = 'user.User'
 
 # social login
 SITE_ID = 1
+
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = 'portfolio.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'

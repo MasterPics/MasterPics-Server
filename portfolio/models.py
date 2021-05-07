@@ -1,18 +1,34 @@
 from django.db import models
-
 from user.models import User
-from core.models import Tag, Comment, Information
+from core.models import Comment, Information
 
 # for view_count
 from django.utils import timezone
+from .utils import uuid_name_upload_to, compress
 
-from .utils import uuid_name_upload_to
-
+from taggit.managers import TaggableManager
+from taggit.models import (
+    TagBase, TaggedItemBase
+)
 
 # TODO 전체참여자를 participant로 넣고 중계 모델 만들기
 # TODO class Participants portfolio 1개 participant 1명
-# TODO 지민이의 의견 -> 시영이에게 물어봐야 함 -> 지민아 화이팅
-# TODO 수빈쓰 아이디어 ㄱ
+
+class Tag(TagBase):
+
+    slug = models.SlugField(
+        verbose_name='slug',
+        unique=True,
+        max_length=100,
+        allow_unicode=True,
+    )
+
+
+class TaggedPortfolio(TaggedItemBase):
+    content_object = models.ForeignKey('Portfolio', on_delete=models.CASCADE)
+    tags = models.ForeignKey(
+        'Tag', related_name='tagged_portfolios', on_delete=models.CASCADE, null=True)
+
 
 class Portfolio(models.Model):
     # common field
@@ -23,16 +39,24 @@ class Portfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='portfolios', blank=True)
+    tags = TaggableManager(
+        verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
-    # TODO Like count 추가, like_users의 내용 확인 (필요 여부 확인)
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.thumbnail)
+        self.thumbnail = compressed_img
+        super().save(*args, **kwargs)
 
     def classname(self):
         return self.__class__.__name__
 
+class Participants(models.Model):
+    portfolio = models.ForeignKey(
+        to=Portfolio, related_name='portfolio', on_delete=models.CASCADE)
+    participant = models.ForeignKey(
+        to=User, related_name='user', on_delete=models.CASCADE)
 
-# TODO: 다중이미지 core로 이동 @ 호영
+# FIXME: 다중이미지 core로 이동 @ 호영
 class Images(models.Model):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
@@ -41,24 +65,20 @@ class Images(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-# # TODO: ViewCount core로 이동(삭제)
-# class ViewCount(models.Model):
-#     ip = models.CharField(max_length=15, default=None, null=True)
-#     post = models.ForeignKey(Portfolio, default=None, null=True,
-#                              related_name='view_counts', on_delete=models.CASCADE)
-#     date = models.DateField(default=timezone.now, null=True, blank=True)
-
-
-# TODO Portfolio Comment depth 한개
-    # comment, portfolio, self 대댓글
-
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.image)
+        self.image = compressed_img
+        super().save(*args, **kwargs)
 
 class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, blank=True, null=True)
 
 class PortfolioInformation(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     information = models.ForeignKey(Information, on_delete=models.CASCADE)
+
+class PortfolioParticipant(models.Model):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    participant = models.ForeignKey(User, on_delete=models.CASCADE)
