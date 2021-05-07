@@ -215,3 +215,19 @@ def logout(request):
         return redirect('core:main_list')
     elif request.method == 'GET':
         return redirect('core:main_list')
+
+
+# TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
+#         -> 파라미터에 user_identifier 추가, profile_owner 바꾸기
+def profile_portfolio(request):
+    profile_owner = request.user
+    portfolios = profile_owner.portfolios.all()
+    portfolio_count = profile_owner.portfolios.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'portfolios': portfolios,
+        'portfolio_count': portfolio_count,
+    }
+
+    return render(request, 'profile/profile_portfolio.html', ctx)

@@ -21,4 +21,5 @@ urlpatterns = [
      path('local_signup/', view=views.local_signup, name='local_signup'),
      path('login/', view=views.login, name='login'),
      path('logout/', view=views.logout, name='logout'),
+     path('profile_portfolio/', view=views.profile_portfolio, name='profile_portfolio'),
 ]
