@@ -10,6 +10,12 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('is_ToS', 'nickname', 'username',)
 
+# local login
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("nickname", "password",)
+        widgets = {"password": forms.PasswordInput}
 
 
 class ProfileForm(forms.ModelForm):

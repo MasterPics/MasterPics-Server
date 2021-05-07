@@ -163,7 +163,9 @@ def post_create(request):
 
 
 # ----------------------new-------------------------------
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 
 def local_signup(request):
     if request.method == 'POST':
@@ -176,9 +178,31 @@ def local_signup(request):
                 'form': form,
             }
             return render(request, 'profile/local_signup.html', ctx)
-    if request.method == 'GET':
+    elif request.method == 'GET':
         form = SignupForm()
         ctx = {
             'form': form,
         }
         return render(request, 'profile/local_signup.html', ctx)
+
+def local_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        nickname = request.POST['nickname']
+        password = request.POST['password']
+        user = authenticate(nickname=nickname, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('core:main_list')
+        else:
+            ctx = {
+                'form': form,
+                'error': '아이디 혹은 비밀번호가 올바르지 않습니다.'
+            }
+            return render(request, 'profile/local_login.html', ctx)
+    elif request.method == 'GET':
+        form = LoginForm()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/local_login.html', ctx)
