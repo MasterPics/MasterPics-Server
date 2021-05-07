@@ -166,6 +166,16 @@ def post_create(request):
 from .forms import SignupForm
 
 def local_signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:main_list')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/local_signup.html', ctx)
     if request.method == 'GET':
         form = SignupForm()
         ctx = {

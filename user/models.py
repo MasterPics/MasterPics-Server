@@ -51,6 +51,10 @@ from phone_field import PhoneField
 # ------------------------new--------------------------------
 
 # User validators 
+from django import forms
+from django.core.exceptions import ValidationError
+
+# User validators 
 def is_ToS(value):
     if value == False:
         raise forms.ValidationError("약관에 동의해야 합니다.")

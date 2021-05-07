@@ -58,6 +58,9 @@ INSTALLED_APPS = [
 
     # taggit
     'taggit',
+
+    # User -> django-phone-field
+    'phone_field',
 ]
 
 MIDDLEWARE = [
