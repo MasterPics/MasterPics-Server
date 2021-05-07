@@ -1,6 +1,15 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+
+
+# local signup
+class SignupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('is_ToS', 'nickname', 'username',)
+
 
 
 class ProfileForm(forms.ModelForm):

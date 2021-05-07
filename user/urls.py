@@ -17,4 +17,6 @@ urlpatterns = [
          view=views.profile_update_password, name='profile_update_password'),
     path('create/', view=views.profile_create, name='profile_create'),
     path('post/create/', view=views.post_create, name='post_create'),
+#     ------------------------new------------------------------
+     path('local_signup/', view=views.local_signup, name='local_signup'),
 ]

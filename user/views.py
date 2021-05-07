@@ -158,3 +158,17 @@ def post_create(request):
     else:
         ctx = {}
         return render(request, 'profile/post_create.html', context=ctx)
+
+
+
+
+# ----------------------new-------------------------------
+from .forms import SignupForm
+
+def local_signup(request):
+    if request.method == 'GET':
+        form = SignupForm()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/local_signup.html', ctx)
