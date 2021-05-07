@@ -248,3 +248,23 @@ def profile_post_contact(request):
     }
 
     return render(request, 'profile/profile_post_contact.html', ctx)
+
+# portfolio app > participants 먼저 구현해야 실행 가능
+def profile_post_tagged(request):
+    profile_owner = request.user
+    taggeds = profile_owner.participants.all()      # profile_owner가 태그된 participant 객체들
+    tagged_posts = []       # profile_owner가 태그된 portfolio 객체들
+    for tagged in taggeds:
+        tagged_posts.append(tagged.portfolio)
+
+    portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'tagged_posts': tagged_posts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/profile_post_tagged.html', ctx)
