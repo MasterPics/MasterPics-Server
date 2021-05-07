@@ -223,11 +223,28 @@ def profile_portfolio(request):
     profile_owner = request.user
     portfolios = profile_owner.portfolios.all()
     portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
 
     ctx = {
         'profile_owner': profile_owner,
         'portfolios': portfolios,
         'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
     }
 
     return render(request, 'profile/profile_portfolio.html', ctx)
+
+def profile_post_contact(request):
+    profile_owner = request.user
+    contacts = profile_owner.contacts.all()
+    portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'contacts': contacts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/profile_post_contact.html', ctx)
