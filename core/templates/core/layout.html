@@ -67,6 +67,12 @@
             style="margin-right: 10px;"></input>
         </form>
 
+        <li>
+          <form method='post' action="{% url 'profile:logout' %}">
+            {% csrf_token %}
+            <button type='submit'>loggggout</button>
+          </form>
+        </li>
         <li><a href=" {% url 'profile:profile_detail' user.id %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
         </li>
 

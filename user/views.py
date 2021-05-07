@@ -166,6 +166,7 @@ def post_create(request):
 from .forms import SignupForm, LoginForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 
 def local_signup(request):
     if request.method == 'POST':
@@ -185,7 +186,7 @@ def local_signup(request):
         }
         return render(request, 'profile/local_signup.html', ctx)
 
-def local_login(request):
+def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         nickname = request.POST['nickname']
@@ -199,10 +200,18 @@ def local_login(request):
                 'form': form,
                 'error': '아이디 혹은 비밀번호가 올바르지 않습니다.'
             }
-            return render(request, 'profile/local_login.html', ctx)
+            return render(request, 'profile/login.html', ctx)
     elif request.method == 'GET':
         form = LoginForm()
         ctx = {
             'form': form,
         }
-        return render(request, 'profile/local_login.html', ctx)
+        return render(request, 'profile/login.html', ctx)
+
+# TODO : logout 페이지 존재하면 GET방식 살려두고 존재하지 않으면 삭제
+def logout(request):
+    if request.method == 'POST':
+        auth_logout(request)
+        return redirect('core:main_list')
+    elif request.method == 'GET':
+        return redirect('core:main_list')

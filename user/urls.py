@@ -19,5 +19,6 @@ urlpatterns = [
     path('post/create/', view=views.post_create, name='post_create'),
 #     ------------------------new------------------------------
      path('local_signup/', view=views.local_signup, name='local_signup'),
-     path('local_login/', view=views.local_login, name='local_login'),
+     path('login/', view=views.login, name='login'),
+     path('logout/', view=views.logout, name='logout'),
 ]
