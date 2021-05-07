@@ -18,4 +18,5 @@ urlpatterns = [
     path('create/', view=views.profile_create, name='profile_create'),
     path('post/create/', view=views.post_create, name='post_create'),
      path('social_signup/', view=views.social_signup, name='social_signup'),
+     path('signup/', view=views.signup, name='signup'),
 ]

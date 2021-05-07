@@ -70,7 +70,7 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    username = models.CharField(max_length=20, unique=False)
+    username = models.CharField(max_length=20, unique=True)
     email = models.EmailField('email address', unique=True)
     category = models.CharField(max_length=20, choices=CATEGORY)
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
@@ -81,10 +81,8 @@ class User(AbstractUser):
     instagram = models.CharField(max_length=20, blank=True)
     # objects = UserManager()
 
-    #TODO instagram, phone, phone_public
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    # USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     # objects = MyUserManager()
 

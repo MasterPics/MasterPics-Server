@@ -161,6 +161,26 @@ def post_create(request):
 
 
 
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpFrom(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect("profile:profile_detail", pk = user.pk)
+        else:
+            ctx = {
+                'form' : form,
+            }
+            return render(request, 'profile/signup.html', ctx)
+    if request.method == 'GET':
+        form = SignUpFrom()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/signup.html', context=ctx)
+        
+
 # social sign up 시 -> 추가 정보 입력받기
 def social_signup(request):
     if request.method == "POST" :
