@@ -15,3 +15,8 @@ class PortfolioCommentAdmin(admin.ModelAdmin):
 class PortfolioInformationAdmin(admin.ModelAdmin):
     list_display = ['portfolio', 'information']
     list_display_links = ['portfolio', 'information']
+
+@admin.register(PortfolioParticipant)
+class PortfolioParticipantAdmin(admin.ModelAdmin):
+    list_display = ['portfolio', 'participant']
+    list_display_links = ['portfolio', 'participant']
