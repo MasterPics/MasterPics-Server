@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
 
@@ -22,6 +22,12 @@ class ProfileModifyForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('username', 'category', 'phone', 'instagram', 'desc', 'image',)
+
+# password_modify (user password change form) - local user만 가능
+class LocalPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = User
+        field = '__all__'
 
 
 class ProfileForm(forms.ModelForm):

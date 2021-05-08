@@ -163,12 +163,13 @@ def post_create(request):
 
 
 # ----------------------new-------------------------------
-from .forms import SignupForm, LoginForm, ProfileModifyForm
+from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from portfolio.models import PortfolioInformation
 from core.models import Information
+from django.contrib.auth import update_session_auth_hash
 
 # ----login 관련----
 def local_signup(request):
@@ -326,4 +327,23 @@ def profile_modify(request):
         }
         return render(request, 'profile/profile_modify.html', ctx)
 
-# def password_modify(request):
+# TODO : 자동 로그아웃 할지 말지
+# TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
+def password_modify(request):
+    if request.method == 'POST':
+        form = LocalPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)     # 자동 로그아웃X
+            return redirect('profile:profile_portfolio')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/password_modify.html', ctx)
+    elif request.method == 'GET':
+        form = LocalPasswordChangeForm(request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/password_modify.html', ctx)

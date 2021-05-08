@@ -26,4 +26,5 @@ urlpatterns = [
      path('profile_post_tagged/', view=views.profile_post_tagged, name='profile_post_tagged'),
      path('profile_save/', view=views.profile_save, name='profile_save'),
      path('profile_modify/', view=views.profile_modify, name='profile_modify'),
+     path('password_modify/', view=views.password_modify, name='password_modify'),
 ]
