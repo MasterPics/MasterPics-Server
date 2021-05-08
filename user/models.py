@@ -8,10 +8,6 @@ from allauth.account.signals import user_signed_up
 import urllib
 
 
-# User field
-from phone_field import PhoneField
-
-
 # Create your models here.
 
 # from django.contrib.auth.models import BaseUserManager
@@ -49,6 +45,9 @@ from phone_field import PhoneField
 
 
 # ------------------------new--------------------------------
+
+# User field
+from phone_field import PhoneField
 
 # User validators 
 from django import forms
