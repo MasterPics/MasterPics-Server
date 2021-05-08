@@ -193,9 +193,9 @@ def local_signup(request):
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        nickname = request.POST['nickname']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(nickname=nickname, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
             auth_login(request, user)
             return redirect('core:main_list')

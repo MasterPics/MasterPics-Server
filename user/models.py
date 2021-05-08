@@ -75,9 +75,9 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    nickname = models.CharField(max_length=20, unique=True)     # userID
-    username = models.CharField(max_length=20, unique=False)    # user 이름
-    email = models.EmailField('email address', unique=True)     # social login 시 사용
+    realname = models.CharField(max_length=20, unique=False)     # user 이름
+    username = models.CharField(max_length=20, unique=True)    # user ID
+    email = models.EmailField('email address', blank=True)     # social login 시에만 사용
     category = models.CharField(max_length=20, choices=CATEGORY)
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
@@ -88,11 +88,11 @@ class User(AbstractUser):
 
     # TODO : user_identifier 추가
 
-    USERNAME_FIELD = 'nickname'
-    REQUIRED_FIELDS = ['username',]
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['realname',]
 
     # objects = MyUserManager()
 
     def __str__(self):
-        return self.nickname 
+        return self.username 
 

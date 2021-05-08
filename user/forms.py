@@ -8,20 +8,20 @@ from django.contrib.auth import get_user_model
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('is_ToS', 'nickname', 'username',)
+        fields = ('is_ToS', 'username', 'realname',)
 
 # local login
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("nickname", "password",)
+        fields = ("username", "password",)
         widgets = {"password": forms.PasswordInput}
 
 # profile_modity (user info change form)
 class ProfileModifyForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'category', 'phone', 'instagram', 'desc', 'image',)
+        fields = ('realname', 'category', 'phone', 'instagram', 'desc', 'image',)
 
 # password_modify (user password change form) - local user만 가능
 class LocalPasswordChangeForm(PasswordChangeForm):

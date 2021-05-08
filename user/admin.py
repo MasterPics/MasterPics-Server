@@ -4,5 +4,5 @@ from .models import *
 # Register your models here.
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['nickname', 'username']
-    list_display_links = ['nickname', 'username']
+    list_display = ['username', 'realname']
+    list_display_links = ['username', 'realname']
