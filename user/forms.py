@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 
 
@@ -16,6 +16,12 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ("nickname", "password",)
         widgets = {"password": forms.PasswordInput}
+
+# profile_modity (user info change form)
+class ProfileModifyForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'category', 'phone', 'instagram', 'desc', 'image',)
 
 
 class ProfileForm(forms.ModelForm):

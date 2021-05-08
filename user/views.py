@@ -163,13 +163,14 @@ def post_create(request):
 
 
 # ----------------------new-------------------------------
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, ProfileModifyForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from portfolio.models import PortfolioInformation
 from core.models import Information
 
+# ----login 관련----
 def local_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -219,6 +220,7 @@ def logout(request):
         return redirect('core:main_list')
 
 
+# ----mypage 관련----
 # TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
 #         -> 파라미터에 user_identifier 추가, profile_owner 바꾸기
 def profile_portfolio(request):
@@ -271,6 +273,7 @@ def profile_post_tagged(request):
 
     return render(request, 'profile/profile_post_tagged.html', ctx)
 
+# TODO : 모델관련 회의 후 재구성 필요
 # 이름 북마크로 바꾸고 싶다... 근데 다른데서 save로 다 해놨겠지..?ㅠㅠ
 def profile_save(request):
     profile_owner = request.user
@@ -302,3 +305,13 @@ def profile_save(request):
     }
 
     return render(request, 'profile/profile_post_tagged.html', ctx)
+
+
+# ----profile 관련----
+def profile_modify(request):
+    if request.method == 'GET':
+        form = ProfileModifyForm(instance=request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/profile_modify.html', ctx)
