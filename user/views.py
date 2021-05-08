@@ -163,7 +163,7 @@ def post_create(request):
 
 
 # ----------------------new-------------------------------
-from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm
+from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm, SocialUserInfoForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -219,6 +219,29 @@ def logout(request):
         return redirect('core:main_list')
     elif request.method == 'GET':
         return redirect('core:main_list')
+
+# social sign up 시 -> 추가 정보 입력받기
+def social_user_more_info(request):
+    if request.method == 'POST':
+        form = SocialUserInfoForm(request.POST, instance=request.user)
+        if form.is_valid():
+            request.user.is_social = True
+            form.save()
+            return redirect('profile:profile_portfolio')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/social_user_more_info.html', ctx)
+    # 현재 유저가 약관 동의를 하지 않았을 경우 (== 추가 정보를 입력하지 않았을 경우)
+    if request.method == 'GET' and (request.user.is_ToS == False):
+        form = SocialUserInfoForm(instance=request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/social_user_more_info.html', ctx)
+    elif request.method == 'GET':
+        return redirect('profile:profile_portfolio')
 
 
 # ----mypage 관련----

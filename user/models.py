@@ -85,6 +85,7 @@ class User(AbstractUser):
     phone_public = models.BooleanField(default=False)
     instagram = models.CharField(max_length=20, blank=True)
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
+    is_social = models.BooleanField(default=False)
 
     # TODO : user_identifier 추가
 

@@ -29,6 +29,13 @@ class LocalPasswordChangeForm(PasswordChangeForm):
         model = User
         field = '__all__'
 
+# social signup 시 redirect page에서 추가로 입력받아야 할 정보를 담은 form
+# TODO : html에서 email 필드는 readonly로 설정해야함
+class SocialUserInfoForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'realname', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
+
 
 class ProfileForm(forms.ModelForm):
     class Meta:
