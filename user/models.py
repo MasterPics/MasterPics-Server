@@ -76,7 +76,7 @@ class User(AbstractUser):
 
     realname = models.CharField(max_length=20, unique=False)     # user 이름
     username = models.CharField(max_length=20, unique=True)    # user ID
-    email = models.EmailField('email address', blank=True)     # social login 시에만 사용
+    email = models.EmailField('email address', blank=True)     # social login 시 readonly로 사용
     category = models.CharField(max_length=20, choices=CATEGORY)
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
