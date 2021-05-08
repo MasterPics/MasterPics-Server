@@ -52,18 +52,3 @@ class ProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
-
-
-# social signup 시 redirect page에서 추가로 입력받아야 할 정보를 담은 form
-class SocialSignUpForm(UserChangeForm):
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS')
-        # excldue = ('password', )
-
-
-# local signup
-class SignUpFrom(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ('email', 'username', 'is_ToS', 'category',)
