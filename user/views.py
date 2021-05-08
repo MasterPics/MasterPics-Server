@@ -309,9 +309,21 @@ def profile_save(request):
 
 # ----profile 관련----
 def profile_modify(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
+        form = ProfileModifyForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile:profile_portfolio')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/profile_modify.html', ctx)
+    elif request.method == 'GET':
         form = ProfileModifyForm(instance=request.user)
         ctx = {
             'form': form,
         }
         return render(request, 'profile/profile_modify.html', ctx)
+
+# def password_modify(request):
