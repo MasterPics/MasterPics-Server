@@ -24,4 +24,5 @@ urlpatterns = [
      path('profile_portfolio/', view=views.profile_portfolio, name='profile_portfolio'),
      path('profile_post_contact/', view=views.profile_post_contact, name='profile_post_contact'),
      path('profile_post_tagged/', view=views.profile_post_tagged, name='profile_post_tagged'),
+     path('profile_save/', view=views.profile_save, name='profile_save'),
 ]

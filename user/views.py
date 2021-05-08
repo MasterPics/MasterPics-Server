@@ -167,6 +167,8 @@ from .forms import SignupForm, LoginForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from portfolio.models import PortfolioInformation
+from core.models import Information
 
 def local_signup(request):
     if request.method == 'POST':
@@ -263,6 +265,38 @@ def profile_post_tagged(request):
     ctx = {
         'profile_owner': profile_owner,
         'tagged_posts': tagged_posts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/profile_post_tagged.html', ctx)
+
+# 이름 북마크로 바꾸고 싶다... 근데 다른데서 save로 다 해놨겠지..?ㅠㅠ
+def profile_save(request):
+    profile_owner = request.user
+    
+    # informations = Information.objects.filter(save_users=profile_owner)
+    # print(informations)
+
+    saved_informations = profile_owner.save_users.all()      # profile_owner가 save한 information 객체들
+    print(saved_informations)
+    
+    saved_posts = []        # profile_owner가 save한 portfolio 객체들
+    for info in saved_informations:
+        saved_posts.append(PortfolioInformation.objects.filter(information=info).portfolio.title)
+    print(saved_posts)
+
+    saved_posts2 = []        # profile_owner가 save한 portfolio 객체들
+    for info in saved_informations:
+        saved_posts2.append(info.portfolioInformation_set.all())
+    print(saved_posts)
+
+    portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        # 'tagged_posts': tagged_posts,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
