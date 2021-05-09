@@ -8,11 +8,11 @@ import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # from core app
-from core.forms import LocationForm
+from core.forms import *
 
 # from place app
-from .models import Place
-from .forms import PlaceForm
+from .models import *
+from .forms import *
 
 
 @login_required
@@ -31,6 +31,13 @@ def place_create(request):
             place.save()
 
             place.image = request.FILES.get('image')
+            for image in request.FILES.getlist('images'):
+                image_obj = PlaceImages()
+                image_obj.place_id = place.id
+                image_obj.image = Images()
+                image_obj.image.image = image
+                image_obj.image.save()
+                image_obj.save()
             return redirect('place:place_detail', place.pk)
 
     else:
