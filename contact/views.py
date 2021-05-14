@@ -178,6 +178,13 @@ def contact_create(request):
             )
 
             return redirect('contact:contact_detail', contact.pk)
+        
+        else:
+            ctx = {
+                'contact_form': contact_form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
 
     else:
         contact_form = ContactForm()
