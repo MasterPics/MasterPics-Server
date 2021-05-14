@@ -23,6 +23,14 @@ class ContactForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
+
+    def clean_start_date(self):
+        start_date = self.cleaned_data['start_date']
+
+        if start_date.date() < datetime.date.today():
+            raise ValidationError('시작일은 오늘보다 빠를 수 없습니다.')
+        
+        return start_date
     
     def clean_end_date(self):
         start_date = self.cleaned_data['start_date']
