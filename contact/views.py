@@ -202,27 +202,25 @@ def contact_map(request):
 
 
 ############################### comment ###############################
+#TODO comment 동작 여부 확인
 @csrf_exempt
-def contact_comment_create(request, pk):
+def contact_comment_create(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         contact_id = data["id"]
         comment_value = data["value"]
         contact = Contact.objects.get(id=contact_id)
         comment = Comment.objects.create(
-            content=comment_value, contact=contact)
-        return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
+            writer=request.user, content=comment_value)
+        contactcomment = ContactComment.objects.create(comment=comment, contact=contact)
+        return JsonResponse({'contact_id': contact_id, 'comment_id': contactcomment.id, 'value': comment_value})
 
 
 @csrf_exempt
-def contact_comment_delete(request, pk):
+def contact_comment_delete(request):
     if request.method == 'POST':
-        print('data is delivered')
         data = json.loads(request.body)
         comment_id = data["comment_id"]
-
         comment = Comment.objects.get(id=comment_id)
-
         comment.delete()
-
         return JsonResponse({'comment_id': comment_id})

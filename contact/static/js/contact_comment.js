@@ -21,7 +21,7 @@ const modifyNewComment = (contact_id, comment_id, value) => {
 
 const onClickNewComment = async (id) => {
     try{
-        const url = `/contact/${id}/comment_create/`;
+        const url = `/contact/comment_create/`;
         const value = document.querySelector(`.createComment-${id} .comment__value`);
         const value_text = value.value
         const {
@@ -48,7 +48,7 @@ const modifyDeleteComment = (comment_id) => {
 }
 
 const onClickDeleteComment = async (comment_id) => {
-    const url = `/contact/${comment_id}/comment_delete/`;
+    const url = `/contact/comment_delete/`;
 
     const {
         data
