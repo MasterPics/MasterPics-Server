@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 import urllib
+from hashid_field import HashidField, HashidAutoField
 
 
 # Create your models here.
@@ -87,8 +88,7 @@ class User(AbstractUser):
     instagram_public = models.BooleanField(default=True)
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
-
-    # TODO : user_identifier 추가
+    user_identifier = models.CharField(max_length=100, blank=True, null=True)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username', 'email',]

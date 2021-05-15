@@ -20,3 +20,4 @@ sqlparse==0.4.1
 urllib3==1.26.4
 django-taggit==1.4.0
 django-phone-field==1.8.1
+django-hashid-field==3.2.1
