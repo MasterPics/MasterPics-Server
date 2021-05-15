@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 
 # for view_count
 from django.utils import timezone
+
+#TODO Utils 아마 지워도 될 듯 이제?
 from .utils import uuid_name_upload_to, compress
 
 from taggit.managers import TaggableManager
@@ -39,7 +41,7 @@ class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="portfolios", on_delete=models.CASCADE)
-    thumbnail = models.ForeignKey(Images, related_name="thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
+    thumbnail = models.ForeignKey(Images, related_name="portfolio_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

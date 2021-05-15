@@ -10,7 +10,7 @@ class Place(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="posts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(blank=True, null=True)
+    thumbnail = models.ForeignKey(Images, related_name="place_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -55,6 +55,7 @@ class PlaceInformation(models.Model):
     information = models.ForeignKey(Information, on_delete=models.CASCADE)
 
 
+#TODO place는 attached files
 class PlaceImages(models.Model):
     image = models.ForeignKey(Images, on_delete=models.CASCADE)
     place = models.ForeignKey(to=Place, null=True, blank=True,

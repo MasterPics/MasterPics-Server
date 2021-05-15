@@ -17,7 +17,7 @@
     <p>{{ place.user.category }}</p>
     <p>{{ place.title }}</p>
     <div>
-        <img src="{{ place.thumbnail.url }}" alt="">
+        <img src="{{ place.thumbnail.image.url }}" alt="">
     </div>
     <!-- DESC -->
     <a href="{{ place.file_attach.url }}">시안 첨부파일</a>
@@ -45,16 +45,12 @@
         <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
     </div>
 
-    <!-- 이게뭐져?? -->
-    <p>request.user: {{ request.user.username }}</p>
-    <p>place.user: {{ place.user.username }}</p>
     {% if request.user.pk == place.user.pk %}
-    <div class="profile_button">
-        <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
-        <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
-    </div>
+        <div class="profile_button">
+            <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
+            <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
+        </div>
     {% endif %}
-
 
     <div class="save">
         {% if request.user in place.save_users.all %}

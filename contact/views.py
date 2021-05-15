@@ -154,7 +154,7 @@ def contact_update(request, pk):
         ctx = {'form': form}
         return render(request, 'contact/contact_update.html', ctx)
 
-
+#TODO 파일 첨부 
 @login_required
 def contact_create(request):
     if request.method == 'POST':
@@ -174,12 +174,6 @@ def contact_create(request):
             contact.location = location
             contact.save()
             contact.image = request.FILES.get('image')
-
-            information = Information.objects.create()
-            contact_information = ContactInformation.objects.create(
-                contact=contact,
-                information=information
-            )
 
             return redirect('contact:contact_detail', contact.pk)
 

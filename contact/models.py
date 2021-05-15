@@ -1,15 +1,17 @@
 from django.db import models
 from .utils import uuid_name_upload_to
 from user.models import User
-from core.models import Location, Comment, Information
+from core.models import Location, Comment, Information, Images
 import json
 from django.shortcuts import get_object_or_404
 
+
+#TODO Contact 이미지 하기
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(null=True, blank=True)
+    thumbnail = models.ForeignKey(Images, related_name="contact_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

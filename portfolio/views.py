@@ -105,12 +105,13 @@ def portfolio_detail(request, pk):
     portfolio_information.information.view_count += 1 
     portfolio_information.information.save()
 
-    ctx = {'portfolio': portfolio,
-           'images': images,
-           'tags': tags,
-           'portfolio_owner': portfolio_owner,
-           'request_user': request_user,
-           'num_of_imgs': num_of_imgs,
+    ctx = {
+            'portfolio': portfolio,
+            'images': images,
+            'tags': tags,
+            'portfolio_owner': portfolio_owner,
+            'request_user': request_user,
+            'num_of_imgs': num_of_imgs,
             'comments': comments,   
         }
 
@@ -153,7 +154,7 @@ def portfolio_update(request, pk):
 def portfolio_create(request):
     # 'extra' : number of photos
     if request.method == 'POST':
-        form = PortfolioForm(request.POST, request.FILES,)
+        form = PortfolioForm(request.POST, request.FILES)
 
         if form.is_valid():
             portfolio = form.save(commit=False)
@@ -164,6 +165,7 @@ def portfolio_create(request):
             portfolio.image = request.FILES.get('images')
 
 
+            #TODO 이게 최선임 ㄹㅇ...
             i = 0
             for image in request.FILES.getlist('images'):
 
@@ -171,9 +173,6 @@ def portfolio_create(request):
                 image_obj.portfolio_id = portfolio.id
                 image_obj.image = Images()
                 image_obj.image.image = image
-
-                    #portfolio.thumbnail = image_obj.image.url
-                    #portfolio.save()
                 image_obj.image.save()
                 image_obj.save()
 
