@@ -173,7 +173,7 @@ def portfolio_create(request):
 
             return redirect('portfolio:portfolio_detail', portfolio.pk)
         else:
-            print(form.errors, formset.errors)
+            print(form.errors)
 
     else:
         form = PortfolioForm()
