@@ -37,6 +37,13 @@ def place_create(request):
                 image_obj.image.image = image
                 image_obj.image.save()
                 image_obj.save()
+            
+            information = Information.objects.create()
+            place_information = PlaceInformation.objects.create(
+                place=place,
+                information=information
+            )
+
             return redirect('place:place_detail', place.pk)
 
     else:
