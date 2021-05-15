@@ -168,33 +168,23 @@ def profile_post_tagged(request):
 def profile_save(request):
     profile_owner = request.user
     
-    # informations = Information.objects.filter(save_users=profile_owner)
-    # print(informations)
-
     saved_informations = profile_owner.save_users.all()      # profile_owner가 save한 information 객체들
-    print(saved_informations)
     
     saved_posts = []        # profile_owner가 save한 portfolio 객체들
     for info in saved_informations:
-        saved_posts.append(PortfolioInformation.objects.filter(information=info).portfolio.title)
-    print(saved_posts)
-
-    saved_posts2 = []        # profile_owner가 save한 portfolio 객체들
-    for info in saved_informations:
-        saved_posts2.append(info.portfolioInformation_set.all())
-    print(saved_posts)
+        saved_posts.append(info.portfolioInformation_set.portfolio)
 
     portfolio_count = profile_owner.portfolios.count()
     contact_count = profile_owner.contacts.count()
 
     ctx = {
         'profile_owner': profile_owner,
-        # 'tagged_posts': tagged_posts,
+        'saved_posts': saved_posts,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/profile_post_tagged.html', ctx)
+    return render(request, 'profile/profile_save.html', ctx)
 
 
 # ----profile 관련----
