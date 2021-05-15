@@ -58,6 +58,9 @@ INSTALLED_APPS = [
 
     # taggit
     'taggit',
+
+    # User -> django-phone-field
+    'phone_field',
 ]
 
 MIDDLEWARE = [
@@ -149,8 +152,20 @@ MEDIA_URL = "/media/"
 AUTH_USER_MODEL = 'user.User'
 
 
+
 # social login
+# 인증관련 설정
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 SITE_ID = 1
+LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = None
+
 
 
 # taggit

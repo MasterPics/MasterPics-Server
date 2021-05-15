@@ -1,0 +1,37 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="login__container">
+    <div class="login__body">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="form-id" class="col-sm-2 {{field.name}} ">{{field.label}}</label>
+                        <div class='col-sm-10 {{field.name}}'>
+                            {{ field }}
+                            {% comment %} {% if field.help_text %}
+                                <p class="help-block">{{ field.help_text }}</p>
+                            {% endif %} {% endcomment %}
+                        </div>
+                    </div>
+            {% endfor %}
+
+            {% if error %}
+                <div class='login__form-error'>
+                    {{ error }}
+                </div>
+            {% endif %}
+            
+            <input type="submit" class="update_btn " value="로그인" />
+        </form>
+    </div>
+
+    <div>
+        <li><a href="{% url 'google_login' %}">google</a></li>
+        <li><a href="{% url 'naver_login' %}">naver</a></li>
+    </div>
+</div>
+{% endblock content%}

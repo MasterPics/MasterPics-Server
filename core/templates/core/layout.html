@@ -49,11 +49,13 @@
 
         {% if not user.is_authenticated %}
 
+        <!-- <li><a href="{% url 'google_login' %}">google</li>
+        <li><a href="{% url 'naver_login' %}">naver</li> -->
         <li><a href="{% url 'account_login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
         <li><a href="{% url 'account_login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
         {% else %}
 
-        {% url 'profile:profile_detail' user.id as profile_path %}
+        {% url 'profile:profile' as profile_path %}
 
 
   
@@ -67,7 +69,13 @@
             style="margin-right: 10px;"></input>
         </form>
 
-        <li><a href=" {% url 'profile:profile_detail' user.id %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
+        <li>
+          <form method='post' action="{% url 'profile:logout' %}">
+            {% csrf_token %}
+            <button type='submit'>loggggout</button>
+          </form>
+        </li>
+        <li><a href=" {% url 'profile:profile' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
         </li>
 
         {% endif %}

@@ -50,11 +50,11 @@ class Portfolio(models.Model):
     def classname(self):
         return self.__class__.__name__
 
-class Participants(models.Model):
+class PortfolioParticipant(models.Model):
     portfolio = models.ForeignKey(
-        to=Portfolio, related_name='portfolio', on_delete=models.CASCADE)
+        to=Portfolio, related_name='participants', on_delete=models.CASCADE)
     participant = models.ForeignKey(
-        to=User, related_name='user', on_delete=models.CASCADE)
+        to=User, related_name='participants', on_delete=models.CASCADE)
 
 # FIXME: 다중이미지 core로 이동 @ 호영
 class Images(models.Model):
@@ -77,8 +77,8 @@ class PortfolioComment(models.Model):
 
 class PortfolioInformation(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, on_delete=models.CASCADE)
+    information = models.ForeignKey(Information, related_name='portfolioInformation_set', on_delete=models.CASCADE)
 
-class PortfolioParticipant(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    participant = models.ForeignKey(User, on_delete=models.CASCADE)
+# class PortfolioParticipant(models.Model):
+#     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+#     participant = models.ForeignKey(User, on_delete=models.CASCADE)
