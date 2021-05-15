@@ -27,6 +27,7 @@ urlpatterns = [
     path('portfolio/', include('portfolio.urls')),
     path('reference/', include('reference.urls')),
     path('accounts/', include('allauth.urls')),
+    path('chat/', include('chat.urls')),
 
 ]
 

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'portfolio',
     'reference',
     'user',
+    'chat',
 
     # all-auth
     'allauth',
@@ -58,6 +59,9 @@ INSTALLED_APPS = [
 
     # taggit
     'taggit',
+
+    # channels
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +93,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+# channels
+ASGI_APPLICATION = 'config.asgi.application'
 
 
 # Database
