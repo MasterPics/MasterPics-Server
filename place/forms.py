@@ -8,4 +8,4 @@ class PlaceForm(forms.ModelForm):
 
     class Meta:
         model = Place
-        fields = ('thumbnail', 'title', 'desc', 'pay')
+        fields = ('title', 'desc', 'pay')

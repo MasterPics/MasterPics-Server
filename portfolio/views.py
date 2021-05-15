@@ -24,7 +24,6 @@ from django.forms import modelformset_factory
 
 def portfolio_list(request):
     portfolios = Portfolio.objects.all().order_by("created_at")
-    request_user = request.user  # 로그인한 유저
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort
@@ -81,6 +80,7 @@ def portfolio_list(request):
 
     context = {'portfolios': portfolios, 'request_user': request.user, 'sort': sort,
                'category': category, }
+
     return render(request, 'portfolio/portfolio_list.html', context=context)
 
 def portfolio_detail(request, pk):
@@ -89,6 +89,9 @@ def portfolio_detail(request, pk):
         portfolio=portfolio)
 
     images = portfolio.portfolio_images.all()
+    
+
+    #TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
     num_of_imgs = images.count
 
     tags = portfolio.tags.all()
@@ -99,7 +102,7 @@ def portfolio_detail(request, pk):
     portfolio_owner = portfolio.user  # 게시글 작성자
     request_user = request.user  # 로그인한 유저
 
-    portfolio_information.information.view_count += 1
+    portfolio_information.information.view_count += 1 
     portfolio_information.information.save()
 
     ctx = {'portfolio': portfolio,
@@ -157,20 +160,36 @@ def portfolio_create(request):
             portfolio.user = request.user
             portfolio.save()
             form.save_m2m()
+
             portfolio.image = request.FILES.get('images')
+
+
+            i = 0
             for image in request.FILES.getlist('images'):
+
                 image_obj = PortfolioImages()
                 image_obj.portfolio_id = portfolio.id
                 image_obj.image = Images()
                 image_obj.image.image = image
+
+                    #portfolio.thumbnail = image_obj.image.url
+                    #portfolio.save()
                 image_obj.image.save()
                 image_obj.save()
+
+                if not i:
+                    portfolio.thumbnail = image_obj.image
+                    portfolio.save()
+
+                i += 1
 
             messages.success(request, "posted!")
 
             # 자동으로 comment 와 information 생성
 
             information = Information.objects.create()
+
+            #TODO information 지울꺼면 지워도 됨
             portfolio_information = PortfolioInformation.objects.create(
                 portfolio=portfolio,
                 information=information

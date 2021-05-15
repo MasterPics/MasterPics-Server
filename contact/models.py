@@ -9,7 +9,7 @@ class Contact(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
+    thumbnail = models.ImageField(null=True, blank=True)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

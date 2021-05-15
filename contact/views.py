@@ -202,7 +202,6 @@ def contact_map(request):
 
 
 ############################### comment ###############################
-#TODO comment 동작 여부 확인
 @csrf_exempt
 def contact_comment_create(request):
     if request.method == 'POST':

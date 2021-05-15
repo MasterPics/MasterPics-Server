@@ -5,6 +5,10 @@ from django.shortcuts import redirect
 from user.models import User
 import re
 
+import os
+from uuid import uuid4
+from django.utils import timezone
+
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소

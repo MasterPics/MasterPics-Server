@@ -259,6 +259,8 @@ def password_modify(request):
         return render(request, 'profile/password_modify.html', ctx)
 
 
+
+
 #TODO 다른 사람꺼 profile 보기 만들기
 #TODO HTML 에서 해당 링크 클릭 시 request 넘겨줘야 함
 def others_profile(request, pk):
