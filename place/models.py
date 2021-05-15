@@ -1,7 +1,8 @@
 from django.db import models
-from core.models import Location, Comment, Information
+from core.models import *
 from user.models import User
 from core.utils import uuid_name_upload_to
+
 
 class Place(models.Model):
     # common field
@@ -32,10 +33,18 @@ class Place(models.Model):
             'tag_str': ' '.join([tag.tag for tag in tags.all()])
         }
 
+
 class PlaceComment(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
 
+
 class PlaceInformation(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     information = models.ForeignKey(Information, on_delete=models.CASCADE)
+
+
+class PlaceImages(models.Model):
+    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    place = models.ForeignKey(to=Place, null=True, blank=True,
+                              related_name='place_images', on_delete=models.CASCADE)
