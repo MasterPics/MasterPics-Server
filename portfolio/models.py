@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-from core.models import Comment, Information
+from core.models import Comment, Information, Images
 from django.shortcuts import get_object_or_404
 
 
@@ -39,7 +39,7 @@ class Portfolio(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="portfolios", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
+    thumbnail = models.ForeignKey(Images, related_name="thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -47,10 +47,10 @@ class Portfolio(models.Model):
     tags = TaggableManager(
         verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
-    def save(self, *args, **kwargs):
-        compressed_img = compress(self.thumbnail)
-        self.thumbnail = compressed_img
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     compressed_img = compress(self.thumbnail)
+    #     self.thumbnail = compressed_img
+    #     super().save(*args, **kwargs)
 
     def classname(self):
         return self.__class__.__name__
@@ -61,12 +61,6 @@ class Participants(models.Model):
         to=Portfolio, related_name='participants', on_delete=models.CASCADE)
     participant = models.ForeignKey(
         to=User, related_name='participants', on_delete=models.CASCADE)
-
-
-    def save(self, *args, **kwargs):
-        compressed_img = compress(self.image)
-        self.image = compressed_img
-        super().save(*args, **kwargs)
 
 class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

@@ -8,7 +8,7 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ('title', 'desc', 'start_date', 'end_date',
-                  'file_attach', 'thumbnail', 'pay')
+                  'file_attach', 'pay')
         widgets = {
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
             'end_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
