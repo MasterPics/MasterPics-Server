@@ -43,7 +43,7 @@ class PlaceComment(models.Model):
     @classmethod
     def get_comments(cls, target):
         try:
-            comments = PlaceComment.objects.filter(portfolio=target)
+            comments = PlaceComment.objects.filter(place=target)
         except:
             comments = None
         finally:

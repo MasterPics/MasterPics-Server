@@ -47,7 +47,8 @@ class ContactComment(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
 
-    def get_comments(self, contact):
+    @classmethod
+    def get_comments(cls, contact):
         try:
             comments = ContactComment.objects.filter(contact=contact)
         except:

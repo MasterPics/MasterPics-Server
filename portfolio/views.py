@@ -95,7 +95,6 @@ def portfolio_detail(request, pk):
 
     #comment 를 가져오는 쿼리
     comments = PortfolioComment.get_comments(portfolio)
-    print(comments)
 
     portfolio_owner = portfolio.user  # 게시글 작성자
     request_user = request.user  # 로그인한 유저

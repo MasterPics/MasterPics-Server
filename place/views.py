@@ -57,11 +57,15 @@ def place_detail(request, pk):
         place=place
     )
 
+    #comment 를 가져오는 쿼리
+    comments = PlaceComment.get_comments(place)
+
     place_information.information.view_count += 1
     place_information.information.save()
 
     ctx = {
         'place': place,
+        'comments': comments
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
