@@ -40,8 +40,8 @@ class PlaceComment(models.Model):
 
 
 class PlaceInformation(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, on_delete=models.CASCADE)
+    place = models.OneToOneField(Place, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, on_delete=models.CASCADE)
 
 
 class PlaceImages(models.Model):

@@ -72,8 +72,8 @@ class PortfolioComment(models.Model):
         Comment, on_delete=models.CASCADE, blank=True, null=True)
 
 class PortfolioInformation(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, related_name='portfolioInformation_set', on_delete=models.CASCADE)
+    portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, related_name='portfolioInformation_set', on_delete=models.CASCADE)
 
 # class PortfolioParticipant(models.Model):
 #     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

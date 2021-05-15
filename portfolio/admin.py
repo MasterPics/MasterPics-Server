@@ -19,7 +19,7 @@ class PortfolioInformationAdmin(admin.ModelAdmin):
     list_display = ['portfolio', 'information']
     list_display_links = ['portfolio', 'information']
 
-@admin.register(PortfolioParticipant)
+@admin.register(Participants)
 class PortfolioParticipantAdmin(admin.ModelAdmin):
     list_display = ['portfolio', 'participant']
     list_display_links = ['portfolio', 'participant']
