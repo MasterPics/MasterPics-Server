@@ -74,25 +74,27 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    realname = models.CharField(max_length=20, unique=False)     # user 이름
-    username = models.CharField(max_length=20, unique=True)    # user ID
-    email = models.EmailField('email address', blank=True)     # social login 시 readonly로 사용
+    user_id = models.CharField(max_length=20, unique=True)     # user id
+    username = models.CharField(max_length=20, unique=False)    # user name (본명 혹은 예명)
+    email = models.EmailField('email address', unique=True)
+    email_public = models.BooleanField(default=True)
     category = models.CharField(max_length=20, choices=CATEGORY)
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
     desc = models.TextField(blank=True)
     phone = PhoneField(blank=True)
-    phone_public = models.BooleanField(default=False)
+    phone_public = models.BooleanField(default=True)
     instagram = models.CharField(max_length=20, blank=True)
+    instagram_public = models.BooleanField(default=True)
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
 
     # TODO : user_identifier 추가
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['realname',]
+    USERNAME_FIELD = 'user_id'
+    REQUIRED_FIELDS = ['username', 'email',]
 
     # objects = MyUserManager()
 
     def __str__(self):
-        return self.username 
+        return self.user_id 
 

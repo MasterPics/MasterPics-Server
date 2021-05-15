@@ -9,20 +9,20 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('is_ToS', 'username', 'realname',)
+        fields = ('is_ToS', 'user_id', 'username', 'email',)
 
 # local login
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("username", "password",)
+        fields = ("user_id", "password",)
         widgets = {"password": forms.PasswordInput}
 
 # profile_modity (user info change form)
 class ProfileModifyForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('realname', 'category', 'phone', 'instagram', 'desc', 'image',)
+        fields = ('user_id', 'username', 'email', 'category', 'phone', 'instagram', 'desc', 'image',)
 
 # password_modify (user password change form) - local user만 가능
 class LocalPasswordChangeForm(PasswordChangeForm):
@@ -35,7 +35,7 @@ class LocalPasswordChangeForm(PasswordChangeForm):
 class SocialUserInfoForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'realname', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
+        fields = ('user_id', 'username', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
 
 
 class ProfileForm(forms.ModelForm):
