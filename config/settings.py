@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
 
+    # social signup issue
+    'social_django',
+
     # taggit
     'taggit',
 
@@ -156,9 +159,14 @@ AUTH_USER_MODEL = 'user.User'
 # social login
 # 인증관련 설정
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
@@ -166,6 +174,19 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = None
 
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    # 'user.utils.check_email_exists',  # move if appropriate
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
 
 
 # taggit
