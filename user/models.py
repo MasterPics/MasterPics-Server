@@ -6,7 +6,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 import urllib
+
+#For Hashing Password
 from hashid_field import HashidField, HashidAutoField
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.contrib.auth.hashers import make_password, is_password_usable
 
 
 # Create your models here.
@@ -98,3 +103,8 @@ class User(AbstractUser):
     def __str__(self):
         return self.user_id 
 
+
+@receiver(pre_save, sender=User)
+def password_hashing(instance, **kwargs):
+    if not is_password_usable(instance.password):
+        instance.password = make_password(instance.password)

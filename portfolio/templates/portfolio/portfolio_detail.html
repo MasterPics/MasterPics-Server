@@ -29,6 +29,20 @@
 
     <div class="portfolio_title">{{portfolio.title}}</div>
     
+    <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
+    <div class="portfolio_comment">
+
+        {% for comment in comments %}
+        
+            {{ comment.comment.writer }}
+            {{ comment.comment.content }}
+            {{ comment.comment.created_at }}
+            <br>
+
+        {% endfor %}
+
+    </div>
+
     
     <div class="portfolio_detail">
         <div class="detail_left">

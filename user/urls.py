@@ -18,4 +18,7 @@ urlpatterns = [
      path('profile_modify/', view=views.profile_modify, name='profile_modify'),
      path('password_modify/', view=views.password_modify, name='password_modify'),
      path('social_user_more_info/', view=views.social_user_more_info, name='social_user_more_info'),
+
+     #TODO 다른 사람꺼 보기
+     path('others/<str:pk>', view=views.others_profile, name='others_profile'),
 ]

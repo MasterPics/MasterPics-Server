@@ -12,6 +12,8 @@ from core.utils import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
+import hashlib
+import time
 
 @login_required
 def profile_delete(request, pk):
@@ -38,7 +40,16 @@ from django.contrib.auth import update_session_auth_hash
 def local_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
+
         if form.is_valid():
+            customer = form.save()
+
+            string = str(customer.pk + int(time.time()))
+
+            encoded_string = string.encode()
+            result = hashlib.sha256(encoded_string).hexdigest()
+            customer.user_identifier = result
+
             form.save()
             return redirect('core:main_list')
         else:
@@ -89,7 +100,17 @@ def social_user_more_info(request):
         form = SocialUserInfoForm(request.POST, instance=request.user)
         if form.is_valid():
             request.user.is_social = True
+
+            #TODO user identifier 확인 필요
+            customer = form.save()
+            string = str(customer.pk + int(time.time()))
+
+            encoded_string = string.encode()
+            result = hashlib.sha256(encoded_string).hexdigest()
+            customer.user_identifier = result
+
             form.save()
+
             return redirect('profile:profile_portfolio')
         else:
             ctx = {
@@ -236,3 +257,21 @@ def password_modify(request):
             'form': form,
         }
         return render(request, 'profile/password_modify.html', ctx)
+
+
+#TODO 다른 사람꺼 profile 보기 만들기
+#TODO HTML 에서 해당 링크 클릭 시 request 넘겨줘야 함
+def others_profile(request, pk):
+    profile_owner = get_object_or_404(User, user_identifier=pk)
+    portfolios = profile_owner.portfolios.all()
+    portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'portfolios': portfolios,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/profile_others.html', context = ctx)
