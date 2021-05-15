@@ -47,5 +47,5 @@ class ContactComment(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
 
 class ContactInformation(models.Model):
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, on_delete=models.CASCADE)
+    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, on_delete=models.CASCADE)

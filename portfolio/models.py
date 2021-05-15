@@ -11,8 +11,11 @@ from taggit.models import (
     TagBase, TaggedItemBase
 )
 
+from core.models import Images
+
 # TODO 전체참여자를 participant로 넣고 중계 모델 만들기
 # TODO class Participants portfolio 1개 participant 1명
+
 
 class Tag(TagBase):
 
@@ -50,20 +53,13 @@ class Portfolio(models.Model):
     def classname(self):
         return self.__class__.__name__
 
-class PortfolioParticipant(models.Model):
+
+class Participants(models.Model):
     portfolio = models.ForeignKey(
         to=Portfolio, related_name='participants', on_delete=models.CASCADE)
     participant = models.ForeignKey(
         to=User, related_name='participants', on_delete=models.CASCADE)
 
-# FIXME: 다중이미지 core로 이동 @ 호영
-class Images(models.Model):
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
-    portfolio = models.ForeignKey(
-        to=Portfolio, null=True, blank=True, related_name='portfolio_images', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         compressed_img = compress(self.image)
@@ -76,9 +72,14 @@ class PortfolioComment(models.Model):
         Comment, on_delete=models.CASCADE, blank=True, null=True)
 
 class PortfolioInformation(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, related_name='portfolioInformation_set', on_delete=models.CASCADE)
+    portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, related_name='portfolioInformation_set', on_delete=models.CASCADE)
 
 # class PortfolioParticipant(models.Model):
 #     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 #     participant = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class PortfolioImages(models.Model):
+    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    portfolio = models.ForeignKey(to=Portfolio, null=True, blank=True,
+                                  related_name='portfolio_images', on_delete=models.CASCADE)
