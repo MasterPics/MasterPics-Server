@@ -21,6 +21,7 @@ from taggit.models import (
 # TODO 수빈쓰 아이디어 ㄱ
 
 
+
 class Tag(TagBase):
 
     slug = models.SlugField(
