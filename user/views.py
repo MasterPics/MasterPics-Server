@@ -13,18 +13,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-@login_required
-def profile_delete(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    if request.method == 'POST':
-        user.delete()
-        messages.success(request, "탈퇴되었습니다.")
-        return redirect('myApp:main_list')
-    else:
-        ctx = {'user': user}
-        return render(request, 'profile/profile_delete.html', context=ctx)
-
-
 # ----------------------new-------------------------------
 from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm, SocialUserInfoForm
 from django.contrib.auth import authenticate
@@ -105,6 +93,15 @@ def social_user_more_info(request):
         return render(request, 'profile/social_user_more_info.html', ctx)
     elif request.method == 'GET':
         return redirect('profile:profile_portfolio')
+
+def withdrawal(request):
+    if request.method == 'POST':
+        request.user.delete()
+        # messages.success(request, "탈퇴되었습니다.")
+        return redirect('core:main_list')
+    # 추후 모달창으로
+    else:
+        return render(request, 'profile/withdrawal.html')
 
 
 # ----mypage 관련----
