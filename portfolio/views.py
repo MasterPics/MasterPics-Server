@@ -93,6 +93,9 @@ def portfolio_detail(request, pk):
 
     tags = portfolio.tags.all()
 
+    #comment 를 가져오는 쿼리
+    comments = PortfolioComment.get_comments(portfolio)
+
     portfolio_owner = portfolio.user  # 게시글 작성자
     request_user = request.user  # 로그인한 유저
 
@@ -104,7 +107,9 @@ def portfolio_detail(request, pk):
            'tags': tags,
            'portfolio_owner': portfolio_owner,
            'request_user': request_user,
-           'num_of_imgs': num_of_imgs, }
+           'num_of_imgs': num_of_imgs,
+            'comments': comments,   
+        }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
 

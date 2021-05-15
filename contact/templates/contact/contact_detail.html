@@ -83,12 +83,12 @@
         <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="게시">
     </div>
     <div class="comments-{{ contact.id }} comments">
-        {% for comment in contact.contact_comments.all %}
+        {% for comment in comments %}
         <div class="comment comment-{{ comment.id }}">
-            <span style="line-height: 1.8em;">{{ comment.content }}</span>
-            {% if request.user == comment.contact.user %}
+            <span>{{ comment.comment.writer }}</span>
+            <span>{{ comment.comment.content }}</span>
+            <span>{{ comment.comment.created_at }}</span>
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
-            {% endif %}
         </div>
         {% endfor %}
     </div>

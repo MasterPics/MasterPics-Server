@@ -2,6 +2,8 @@ from django.db import models
 from core.models import *
 from user.models import User
 from core.utils import uuid_name_upload_to
+from django.shortcuts import get_object_or_404
+
 
 
 class Place(models.Model):
@@ -37,6 +39,15 @@ class Place(models.Model):
 class PlaceComment(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_comments(cls, target):
+        try:
+            comments = PlaceComment.objects.filter(place=target)
+        except:
+            comments = None
+        finally:
+            return comments
 
 
 class PlaceInformation(models.Model):

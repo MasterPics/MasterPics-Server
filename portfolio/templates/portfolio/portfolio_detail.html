@@ -29,6 +29,8 @@
 
     <div class="portfolio_title">{{portfolio.title}}</div>
     
+
+
     
     <div class="portfolio_detail">
         <div class="detail_left">
@@ -96,12 +98,26 @@
                 </div>
             </div>
 
-            <!-- 게시글 작성자만 수정/삭제 가능 -->
-            {% if request_user.username == portfolio_owner.username %}
-            <div class="portfolio_button">
-                <a class="edit_btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">게시물 수정</a>
-                <a class="delete_btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
+
+
+            <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
+            {% for comment in comments %}
+            <div class="comment comment-{{ comment.id }}">
+                <span>{{ comment.comment.writer }}</span>
+                <span>{{ comment.comment.content }}</span>
+                <span>{{ comment.comment.created_at }}</span>
+                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
             </div>
+            {% endfor %}
+
+
+
+            <!-- 게시글 작성자만 수정/삭제 가능 -->
+            {% if request_user.pk == portfolio_owner.pk %}
+                <div class="portfolio_button">
+                    <a class="edit_btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">게시물 수정</a>
+                    <a class="delete_btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
+                </div>
             {% endif %}
         </div>
 

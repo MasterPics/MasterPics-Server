@@ -3,6 +3,7 @@ from .utils import uuid_name_upload_to
 from user.models import User
 from core.models import Location, Comment, Information
 import json
+from django.shortcuts import get_object_or_404
 
 class Contact(models.Model):
     # common field
@@ -45,6 +46,15 @@ class Contact(models.Model):
 class ContactComment(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_comments(cls, contact):
+        try:
+            comments = ContactComment.objects.filter(contact=contact)
+        except:
+            comments = None
+        finally:
+            return comments
 
 class ContactInformation(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)

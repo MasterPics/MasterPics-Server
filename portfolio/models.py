@@ -1,6 +1,8 @@
 from django.db import models
 from user.models import User
 from core.models import Comment, Information
+from django.shortcuts import get_object_or_404
+
 
 # for view_count
 from django.utils import timezone
@@ -70,6 +72,15 @@ class PortfolioComment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     comment = models.ForeignKey(
         Comment, on_delete=models.CASCADE, blank=True, null=True)
+
+    @classmethod
+    def get_comments(cls, target):
+        try:
+            comments = PortfolioComment.objects.filter(portfolio=target)
+        except:
+            comments = None
+        finally:
+            return comments
 
 class PortfolioInformation(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

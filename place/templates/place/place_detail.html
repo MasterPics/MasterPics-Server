@@ -31,11 +31,11 @@
 
     <!--Comment-->
     <div class="comments-{{ place.id }} comments">
-        {% for comment in place.place_comments.all %}
+        {% for comment in comments %}
         <div class="comment comment-{{ comment.id }}">
-            <span>{{ place.id }}</span>
-            <span>{{ comment.id }}</span>
-            <span>{{ comment.content }}</span>
+            <span>{{ comment.comment.writer }}</span>
+            <span>{{ comment.comment.content }}</span>
+            <span>{{ comment.comment.created_at }}</span>
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
         </div>
         {% endfor %}
