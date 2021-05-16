@@ -29,9 +29,8 @@ def place_create(request):
             place.location = location
             place.save()
 
-            i = 0
             place.image = request.FILES.get('image')
-            for image in request.FILES.getlist('images'):
+            for i, image in enumerate(request.FILES.getlist('images')):
                 image_obj = PlaceImages()
                 image_obj.place_id = place.id
                 image_obj.image = Images()
@@ -42,8 +41,8 @@ def place_create(request):
                 if not i:
                     place.thumbnail = image_obj.image
                     place.save()
-
-                i += 1
+                else:
+                    i += 1
 
             return redirect('place:place_detail', place.pk)
 

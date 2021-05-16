@@ -164,10 +164,7 @@ def portfolio_create(request):
 
             portfolio.image = request.FILES.get('images')
 
-
-            #TODO 이게 최선임 ㄹㅇ...
-            i = 0
-            for image in request.FILES.getlist('images'):
+            for i, image in enumerate(request.FILES.getlist('images')):
 
                 image_obj = PortfolioImages()
                 image_obj.portfolio_id = portfolio.id
@@ -179,8 +176,8 @@ def portfolio_create(request):
                 if not i:
                     portfolio.thumbnail = image_obj.image
                     portfolio.save()
-
-                i += 1
+                else:
+                    i += 1
 
             messages.success(request, "posted!")
 
