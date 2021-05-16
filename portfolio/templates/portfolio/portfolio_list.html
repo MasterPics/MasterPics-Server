@@ -70,7 +70,11 @@
                 <div class='item-top'>
                     <!-- 게시글 작성자 정보 -->
                     <div>
-                        <a href="{% url 'profile:profile' %}">
+                        {% if portfolio.user == request_user %}
+                            <a href="{% url 'profile:profile' %}">
+                        {% else %}
+                            <a href="{% url 'profile:others_profile' portfolio.user.user_identifier %}">
+                        {% endif %}
                             <div class="portfolio_owner">
                                 <div class="user_img">
                                     {% if user.image  %}

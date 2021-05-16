@@ -260,9 +260,7 @@ def password_modify(request):
 
 
 
-
-#TODO 다른 사람꺼 profile 보기 만들기
-#TODO HTML 에서 해당 링크 클릭 시 request 넘겨줘야 함
+#TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
 def others_profile(request, pk):
     profile_owner = get_object_or_404(User, user_identifier=pk)
     portfolios = profile_owner.portfolios.all()
