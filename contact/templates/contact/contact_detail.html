@@ -11,7 +11,11 @@
 
 {% block content %}
 <div class="choose">
-    <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+    {% if contact.user == request_user %}
+        <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+    {% else %}
+        <a class="choose_profile" href="{% url 'profile:others_profile' contact.user.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+    {% endif %}
 </div>
     
 <!-- 게시글 작성자 정보 -->

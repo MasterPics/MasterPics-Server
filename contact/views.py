@@ -110,14 +110,14 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    contact_information = ContactInformation.objects.get(
-        contact=contact)
+    # contact_information = ContactInformation.objects.get(
+    #     contact=contact)
 
     #comment 를 가져오는 쿼리
     comments = ContactComment.get_comments(contact)
 
-    contact_information.information.view_count += 1
-    contact_information.information.save()
+    # contact_information.information.view_count += 1
+    # contact_information.information.save()
 
     ctx = {
         'contact': contact,

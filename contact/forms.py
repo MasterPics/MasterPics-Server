@@ -7,7 +7,7 @@ class ContactForm(forms.ModelForm):
     # https://stackoverflow.com/questions/57241617/what-is-exactly-meta-in-django
     class Meta:
         model = Contact
-        fields = ('title', 'desc', 'start_date', 'end_date',
+        fields = ('title', 'desc', 'start_date', 'end_date', 'thumbnail',
                   'file_attach', 'pay')
         widgets = {
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),

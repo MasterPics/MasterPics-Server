@@ -49,10 +49,7 @@ class Portfolio(models.Model):
     tags = TaggableManager(
         verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedPortfolio)
 
-    # def save(self, *args, **kwargs):
-    #     compressed_img = compress(self.thumbnail)
-    #     self.thumbnail = compressed_img
-    #     super().save(*args, **kwargs)
+
 
     def classname(self):
         return self.__class__.__name__
