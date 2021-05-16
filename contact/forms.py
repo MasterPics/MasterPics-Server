@@ -24,19 +24,15 @@ class ContactForm(forms.ModelForm):
                 'class': field + " form",
                 'id': 'form-id', })
 
-    def clean_start_date(self):
-        start_date = self.cleaned_data['start_date']
 
-        if start_date.date() < datetime.date.today():
-            raise ValidationError('시작일은 오늘보다 빠를 수 없습니다.')
-        
-        return start_date
-    
-    def clean_end_date(self):
+    def clean(self):
         start_date = self.cleaned_data['start_date']
         end_date = self.cleaned_data['end_date']
 
+        if start_date.date() < datetime.date.today():
+            self._errors['start_date'] = self.error_class(['시작일은 오늘보다 빠를 수 없습니다.'])
+        
         if end_date < start_date:
-            raise ValidationError('종료일은 시작일보다 빠를 수 없습니다.')
-
-        return end_date
+            self._errors['end_date'] = self.error_class(['종료일은 시작일보다 빠를 수 없습니다.'])
+        
+        return self.cleaned_data
