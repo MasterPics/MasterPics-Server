@@ -43,6 +43,6 @@ class Images(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        compressed_img = compress(self.thumbnail)
-        self.thumbnail = compressed_img
+        compressed_img = compress(self.image)
+        self.image = compressed_img
         super().save(*args, **kwargs)
