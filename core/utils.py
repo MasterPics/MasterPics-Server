@@ -8,11 +8,21 @@ import re
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
 # from .models import Tag
 
 # models.py에도 utils가 import 돼 있어 순환참조
 # Tag 따로 안쓰길래 주석처리함
 #from .models import Tag
+
+def compress(image):
+    img = Image.open(image)
+    img_io = BytesIO()
+    img.save(img_io, 'JPEG', quality=50)
+    compressed_img = File(img_io, name=image.name)
+    return compressed_img
 
 
 def list_to_four_groups(queryset_list):
@@ -43,6 +53,7 @@ def uuid_name_upload_to(instance, filename):
         uuid_name,
         uuid_name + extension,
     ])
+
 
 
 def save_image_from_url(user, url):

@@ -6,10 +6,6 @@ from django.shortcuts import get_object_or_404
 
 # for view_count
 from django.utils import timezone
-
-#TODO Utils 아마 지워도 될 듯 이제?
-from .utils import uuid_name_upload_to, compress
-
 from taggit.managers import TaggableManager
 from taggit.models import (
     TagBase, TaggedItemBase

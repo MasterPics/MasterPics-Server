@@ -66,7 +66,8 @@ def place_detail(request, pk):
 
     ctx = {
         'place': place,
-        'comments': comments
+        'comments': comments,
+        'request_user' : request.user
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
@@ -134,6 +135,7 @@ def place_list(request):
         'places': places,
         'sort': sort,
         'search': search,
+        'request_user': request.user
     }
 
     return render(request, 'place/place_list.html', context=ctx)

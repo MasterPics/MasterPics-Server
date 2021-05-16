@@ -1,5 +1,5 @@
 from django.db import models
-from .utils import uuid_name_upload_to
+from .utils import uuid_name_upload_to, compress
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import redirect
 from user.models import User
@@ -41,3 +41,8 @@ class Images(models.Model):
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.thumbnail)
+        self.thumbnail = compressed_img
+        super().save(*args, **kwargs)
