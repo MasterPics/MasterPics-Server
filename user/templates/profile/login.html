@@ -8,15 +8,18 @@
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form.visible_fields %}
-                    <div class="form-group">
-                        <label for="form-id" class="col-sm-2 {{field.name}} ">{{field.label}}</label>
-                        <div class='col-sm-10 {{field.name}}'>
-                            {{ field }}
-                            {% comment %} {% if field.help_text %}
+                <div class="form-field-group {{ field.name }}_group">
+                    <label for="{{ field.id_for_label }}" class="col-sm-2 {{ field.name }} ">{{ field.label }}</label>
+                    <div class='col-sm-10 {{ field.name }}'>
+                        {{ field }}
+
+                        {% comment %}
+                            {% if field.help_text %}
                                 <p class="help-block">{{ field.help_text }}</p>
-                            {% endif %} {% endcomment %}
-                        </div>
+                            {% endif %}
+                        {% endcomment %}
                     </div>
+                </div>
             {% endfor %}
 
             {% if error %}
@@ -25,9 +28,33 @@
                 </div>
             {% endif %}
             
-            <input type="submit" class="update_btn " value="로그인" />
+            <input type="submit" class="submit_btn " value="로그인" />
         </form>
     </div>
+
+    {% comment %} 아이디/비밀번호 찾기, 회원가입 {% endcomment %}
+    <div class="sub-login__container">
+        <div class="">
+            id 기억하기요...?
+        </div>
+        <div class="">
+            <a href="" class="to_find-id">
+                아이디
+            </a>
+            /
+            <a href="" class="to_find-pw">
+                비밀번호 찾기
+            </a>
+        </div>
+
+        <div class="signup__container">
+            <a href="{% url 'profile:local_signup' %}" class="to_signup">
+                회원가입
+            </a>
+        </div>
+    </div>
+
+    {% comment %} 소셜 로그인 {% endcomment %}
 
     <div>
         <li><a href="{% url 'google_login' %}">google</a></li>
