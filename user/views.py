@@ -1,30 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http.response import HttpResponse
+from django.shortcuts import render, redirect
+# from django.contrib.auth.decorators import login_required
+# from django.contrib import messages
 from .forms import *
 from .models import *
-from contact.models import Contact
-
-from django.contrib.auth import login as auth_login
-from core.utils import *
-
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-
-import hashlib
-import time
-
-@login_required
-def profile_delete(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    if request.method == 'POST':
-        user.delete()
-        messages.success(request, "탈퇴되었습니다.")
-        return redirect('myApp:main_list')
-    else:
-        ctx = {'user': user}
-        return render(request, 'profile/profile_delete.html', context=ctx)
+# from core.utils import *
 
 
 # ----------------------new-------------------------------
@@ -86,12 +65,9 @@ def login(request):
         }
         return render(request, 'profile/login.html', ctx)
 
-# TODO : logout 페이지 존재하면 GET방식 살려두고 존재하지 않으면 삭제
 def logout(request):
     if request.method == 'POST':
         auth_logout(request)
-        return redirect('core:main_list')
-    elif request.method == 'GET':
         return redirect('core:main_list')
 
 # social sign up 시 -> 추가 정보 입력받기
@@ -110,8 +86,7 @@ def social_user_more_info(request):
             customer.user_identifier = result
 
             form.save()
-
-            return redirect('profile:profile_portfolio')
+            return redirect('profile:mypage')
         else:
             ctx = {
                 'form': form,
@@ -125,97 +100,91 @@ def social_user_more_info(request):
         }
         return render(request, 'profile/social_user_more_info.html', ctx)
     elif request.method == 'GET':
-        return redirect('profile:profile_portfolio')
+        return redirect('profile:mypage')
+
+def withdrawal(request):
+    if request.method == 'POST':
+        request.user.delete()
+        # TODO : 추후 모달창으로 / messages.success(request, "탈퇴되었습니다.")
+        return redirect('core:main_list')
+    # TODO : 추후 모달창으로
+    else:
+        return render(request, 'profile/withdrawal.html')
 
 
 # ----mypage 관련----
 # TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
-#         -> 파라미터에 user_identifier 추가, profile_owner 바꾸기
-def profile(request):
-    return redirect('profile:profile_portfolio')
+#         -> 파라미터에 user_identifier 추가, mypage_owner 바꾸기
+def mypage(request):
+    return redirect('profile:mypage_portfolio')
 
-def profile_portfolio(request):
-    profile_owner = request.user
-    portfolios = profile_owner.portfolios.all()
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
+def mypage_portfolio(request):
+    mypage_owner = request.user
+    portfolios = mypage_owner.portfolios.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'profile_owner': profile_owner,
+        'mypage_owner': mypage_owner,
         'portfolios': portfolios,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/profile_portfolio.html', ctx)
+    return render(request, 'profile/mypage_portfolio.html', ctx)
 
-def profile_post_contact(request):
-    profile_owner = request.user
-    contacts = profile_owner.contacts.all()
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
+def mypage_post_contact(request):
+    mypage_owner = request.user
+    contacts = mypage_owner.contacts.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'profile_owner': profile_owner,
+        'mypage_owner': mypage_owner,
         'contacts': contacts,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/profile_post_contact.html', ctx)
+    return render(request, 'profile/mypage_post_contact.html', ctx)
 
-# portfolio app > participants 먼저 구현해야 실행 가능
-def profile_post_tagged(request):
-    profile_owner = request.user
-    taggeds = profile_owner.participants.all()      # profile_owner가 태그된 participant 객체들
-    tagged_posts = []       # profile_owner가 태그된 portfolio 객체들
+def mypage_post_tagged(request):
+    mypage_owner = request.user
+    taggeds = mypage_owner.participants.all()      # mypage_owner 태그된 participant 객체들
+    tagged_posts = []       # mypage_owner 태그된 portfolio 객체들
     for tagged in taggeds:
         tagged_posts.append(tagged.portfolio)
 
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'profile_owner': profile_owner,
+        'mypage_owner': mypage_owner,
         'tagged_posts': tagged_posts,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/profile_post_tagged.html', ctx)
+    return render(request, 'profile/mypage_post_tagged.html', ctx)
 
-# TODO : 모델관련 회의 후 재구성 필요
-# 이름 북마크로 바꾸고 싶다... 근데 다른데서 save로 다 해놨겠지..?ㅠㅠ
-def profile_save(request):
-    profile_owner = request.user
-    
-    # informations = Information.objects.filter(save_users=profile_owner)
-    # print(informations)
-
-    saved_informations = profile_owner.save_users.all()      # profile_owner가 save한 information 객체들
-    print(saved_informations)
-    
-    saved_posts = []        # profile_owner가 save한 portfolio 객체들
+def mypage_bookmark(request):
+    mypage_owner = request.user
+    saved_informations = mypage_owner.save_users.all()      # mypage_owner bookmark한 information 객체들
+    saved_posts = []        # mypage_owner bookmark한 portfolio 객체들
     for info in saved_informations:
-        saved_posts.append(PortfolioInformation.objects.filter(information=info).portfolio.title)
-    print(saved_posts)
+        saved_posts.append(info.portfolioInformation_set.portfolio)
 
-    saved_posts2 = []        # profile_owner가 save한 portfolio 객체들
-    for info in saved_informations:
-        saved_posts2.append(info.portfolioInformation_set.all())
-    print(saved_posts)
-
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'profile_owner': profile_owner,
-        # 'tagged_posts': tagged_posts,
+        'mypage_owner': mypage_owner,
+        'saved_posts': saved_posts,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/profile_post_tagged.html', ctx)
+    return render(request, 'profile/mypage_bookmark.html', ctx)
 
 
 # ----profile 관련----
@@ -224,7 +193,7 @@ def profile_modify(request):
         form = ProfileModifyForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('profile:profile_portfolio')
+            return redirect('profile:mypage')
         else:
             ctx = {
                 'form': form,
@@ -237,15 +206,14 @@ def profile_modify(request):
         }
         return render(request, 'profile/profile_modify.html', ctx)
 
-# TODO : 자동 로그아웃 할지 말지
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
 def password_modify(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             form.save()
-            update_session_auth_hash(request, request.user)     # 자동 로그아웃X
-            return redirect('profile:profile_portfolio')
+            # update_session_auth_hash(request, request.user)     # 자동 로그아웃X
+            return redirect('profile:login')
         else:
             ctx = {
                 'form': form,
