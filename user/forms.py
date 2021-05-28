@@ -17,8 +17,11 @@ class SignupForm(UserCreationForm):
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("user_id", "password",)
-        widgets = {"password": forms.PasswordInput}
+        fields = ('user_id', 'password',)
+        widgets = {
+            'password': forms.PasswordInput(attrs={'placeholder': '비밀번호'}),
+            'user_id': forms.TextInput(attrs={'placeholder': '아이디'})
+        }
 
 # profile_modity (user info change form)
 class ProfileModifyForm(UserChangeForm):
