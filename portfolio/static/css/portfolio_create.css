@@ -75,6 +75,11 @@ body {
   margin-bottom: 25px;
   padding: 10px 0;
 }
+.title input:focus,
+.desc textarea:focus,
+.tags input:focus {
+  outline: none !important;
+}
 .images {
   width: 40%;
   margin-top: -40%;
@@ -98,9 +103,4 @@ body {
   background-color: #5200ff;
   color: #ffffff;
   cursor: pointer;
-}
-.title input:focus,
-.desc textarea:focus,
-.tags input:focus {
-  outline: none !important;
 }
