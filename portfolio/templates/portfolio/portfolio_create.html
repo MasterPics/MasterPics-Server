@@ -7,30 +7,49 @@
 
 
 {% block content %}
-<div class='container'>
-    <div class='form-wrapper'>>
-            <h1 style="margin-top: 50px; margin-left: 60px; margin-bottom: 40px; font-size:30px; color:black;">Create Portfolio</h1>
-            <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% for field in form.visible_fields %}
-                    <div class="form-group {{ field.name }}">
-                        {{ field.label_tag }}
-                        <div class='input-fields'>
-                            {{ field }}
-                            {% if field.help_text %}
-                                <p class="help-block">{{ field.help_text }}</p>
-                            {% endif %}
-                            {% for error in field.errors %}
-                                <div class="alert alert-danger">
-                                    {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
+<div class="wrapper">
+    <div class="create">
+        <h1 class="create__text">Portfolio 등록하기</h1>
+        <div class="create__user">
+            {% if request.user.image  %}
+            <img class="create__user-img" src="{{request.user.image.url}}" alt="img">
+            {% else %}
+            <img class="create__user-img"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="img">
+            {% endif %}
+            <div class="create__user-name">{{request.user.username}}</div>
+            <p class="create__user-category">{{request.user.category}}</p>
+        </div>
+    </div>          
 
-                <input type="submit" class="btn" value="Submit" />
-            </form>
+    <div class="line"></div>
+
+    <div class="form">
+        <form class="form__wrapper" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form__group {{ field.name }}">
+                    <div class="form__label">
+                        {{ field.label }}
+                    </div>                   
+                    <div class="form__input">
+                        {{ field }}
+                        <!-- {% if field.help_text %}
+                            <p class="help-block">{{ field.help_text }}</p>
+                        {% endif %} -->
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form__btn">
+                <input class="form__submit" type="submit" value="등록하기" />
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content%}
