@@ -80,13 +80,13 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    user_id = models.CharField(max_length=20, unique=True)     # user id
-    username = models.CharField(max_length=20, unique=False)    # user name (본명 혹은 예명)
-    email = models.EmailField('email address', unique=True)
+    user_id = models.CharField(max_length=20, unique=True, verbose_name='아이디')     # user id
+    username = models.CharField(max_length=20, unique=False, verbose_name='사용자 이름')    # user name (본명 혹은 예명)
+    email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
-    category = models.CharField(max_length=20, choices=CATEGORY)
+    category = models.CharField(max_length=20, choices=CATEGORY, default='otheruse')
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
-    desc = models.TextField(blank=True)
+    desc = models.TextField(blank=True, verbose_name='프로필 소개')
     phone = PhoneField(blank=True)
     phone_public = models.BooleanField(default=True)
     instagram = models.CharField(max_length=20, blank=True)

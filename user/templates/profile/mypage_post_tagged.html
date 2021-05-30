@@ -9,11 +9,11 @@
 
 {% block content %}
     <div class="container">
-        <div>{{profile_owner.username}}</div>
+        <div>{{mypage_owner.username}}</div>
         <div>
-            {% for contact in contacts %}
+            {% for tagged_post in tagged_posts %}
                 <div>
-                    {{ contact.title }}
+                    {{ tagged_post.title }}
                 </div>
             {% endfor %}
         </div>
