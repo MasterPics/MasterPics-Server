@@ -10,13 +10,18 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('is_ToS', 'user_id', 'username', 'email',)
+        # labels = {'is_ToS' : '약관 동의'}
+        # help_texts = {'is_ToS' : "약관에 동의해야합니다."}
 
 # local login
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("user_id", "password",)
-        widgets = {"password": forms.PasswordInput}
+        fields = ('user_id', 'password',)
+        widgets = {
+            'password': forms.PasswordInput(attrs={'placeholder': '비밀번호'}),
+            'user_id': forms.TextInput(attrs={'placeholder': '아이디'})
+        }
 
 # profile_modity (user info change form)
 class ProfileModifyForm(UserChangeForm):
