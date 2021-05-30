@@ -164,7 +164,7 @@ nav a {
   border-top: 1px solid rgb(54, 54, 54);
   padding: 15px 30px;
   font-size: 13px;
-  margin-top: 20px;
+  z-index: 100;
 }
 
 footer li,
