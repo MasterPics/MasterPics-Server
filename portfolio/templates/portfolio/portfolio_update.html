@@ -5,17 +5,51 @@
 <link rel="stylesheet" href="{% static 'css/portfolio_update.css' %}">
 {% endblock stylesheet %}
 
+
 {% block content %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+<div class="wrapper">
+    <div class="update">
+        <h1 class="update__text">Portfolio 수정하기</h1>
+        <div class="update__user">
+            {% if request.user.image  %}
+            <img class="update__user-img" src="{{request.user.image.url}}" alt="img">
+            {% else %}
+            <img class="update__user-img"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="img">
+            {% endif %}
+            <div class="update__user-name">{{request.user.username}}</div>
+            <p class="update__user-category">{{request.user.category}}</p>
+        </div>
+    </div>
+
+    <div class="line"></div>
     
-    {{ formset.management_form }}
-    {% for form in formset %}
-            {{ form }}
-    {% endfor %}
-    <input type="submit" value="저장하기">
-</form>
+    <div class="form">
+        <form class="form__wrapper" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form__group {{ field.name }}">
+                    <div class="form__label">
+                        {{ field.label }}
+                    </div>                   
+                    <div class="form__input">
+                        {{ field }}
+                        <!-- {% if field.help_text %}
+                            <p class="help-block">{{ field.help_text }}</p>
+                        {% endif %} -->
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form__btn">
+                <input class="form__submit" type="submit" value="수정하기" />
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock content%}
