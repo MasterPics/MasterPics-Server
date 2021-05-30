@@ -104,8 +104,3 @@ body {
 .tags input:focus {
   outline: none !important;
 }
-#id_title,
-#id_desc,
-#id_tags {
-  color: #888888;
-}
