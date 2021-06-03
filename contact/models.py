@@ -48,4 +48,4 @@ class ContactComment(models.Model):
 
 class ContactInformation(models.Model):
     contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    information = models.OneToOneField(Information, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, related_name='contactInformations', on_delete=models.CASCADE)
