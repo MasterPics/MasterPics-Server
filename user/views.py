@@ -117,24 +117,24 @@ def mypage_portfolio(request):
     return render(request, 'profile/mypage_portfolio.html', ctx)
 
 # mypage / 포트폴리오 / 태그된 목록
-def mypage_post_tagged(request):
+def mypage_portfolio_tagged(request):
     mypage_owner = request.user
     taggeds = mypage_owner.participants.all()      # mypage_owner 태그된 participant 객체들
-    tagged_posts = []       # mypage_owner 태그된 portfolio 객체들
+    tagged_portfolios = []       # mypage_owner 태그된 portfolio 객체들
     for tagged in taggeds:
-        tagged_posts.append(tagged.portfolio)
+        tagged_portfolios.append(tagged.portfolio)
 
     portfolio_count = mypage_owner.portfolios.count()
     contact_count = mypage_owner.contacts.count()
 
     ctx = {
         'mypage_owner': mypage_owner,
-        'tagged_posts': tagged_posts,
+        'tagged_portfolios': tagged_portfolios,
         'portfolio_count': portfolio_count,
         'contact_count': contact_count,
     }
 
-    return render(request, 'profile/mypage_post_tagged.html', ctx)
+    return render(request, 'profile/mypage_portfolio_tagged.html', ctx)
 
 # mypage / 게시글 / 컨택트
 def mypage_post_contact(request):
