@@ -100,6 +100,7 @@ def withdrawal(request):
 def mypage(request):
     return redirect('profile:mypage_portfolio')
 
+# mypage / 포트폴리오 / 나의 포트폴리오
 def mypage_portfolio(request):
     mypage_owner = request.user
     portfolios = mypage_owner.portfolios.all()
@@ -115,21 +116,7 @@ def mypage_portfolio(request):
 
     return render(request, 'profile/mypage_portfolio.html', ctx)
 
-def mypage_post_contact(request):
-    mypage_owner = request.user
-    contacts = mypage_owner.contacts.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'contacts': contacts,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_post_contact.html', ctx)
-
+# mypage / 포트폴리오 / 태그된 목록
 def mypage_post_tagged(request):
     mypage_owner = request.user
     taggeds = mypage_owner.participants.all()      # mypage_owner 태그된 participant 객체들
@@ -148,6 +135,38 @@ def mypage_post_tagged(request):
     }
 
     return render(request, 'profile/mypage_post_tagged.html', ctx)
+
+# mypage / 게시글 / 컨택트
+def mypage_post_contact(request):
+    mypage_owner = request.user
+    contacts = mypage_owner.contacts.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
+
+    ctx = {
+        'mypage_owner': mypage_owner,
+        'contacts': contacts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/mypage_post_contact.html', ctx)
+
+# mypage / 게시글 / 플레이스
+def mypage_post_place(request):
+    mypage_owner = request.user
+    places = mypage_owner.places.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
+
+    ctx = {
+        'mypage_owner': mypage_owner,
+        'places': places,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/mypage_post_place.html', ctx)
 
 def mypage_bookmark(request):
     mypage_owner = request.user

@@ -7,7 +7,7 @@ from core.utils import uuid_name_upload_to
 class Place(models.Model):
     # common field
     user = models.ForeignKey(
-        to=User, related_name="posts", on_delete=models.CASCADE)
+        to=User, related_name="places", on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)

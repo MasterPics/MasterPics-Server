@@ -12,6 +12,7 @@ urlpatterns = [
      path('mypage/', view=views.mypage, name='mypage'),
      path('mypage_portfolio/', view=views.mypage_portfolio, name='mypage_portfolio'),
      path('mypage_post_contact/', view=views.mypage_post_contact, name='mypage_post_contact'),
+     path('mypage_post_place/', view=views.mypage_post_place, name='mypage_post_place'),
      path('mypage_post_tagged/', view=views.mypage_post_tagged, name='mypage_post_tagged'),
      path('mypage_bookmark/', view=views.mypage_bookmark, name='mypage_bookmark'),
      path('profile_modify/', view=views.profile_modify, name='profile_modify'),
