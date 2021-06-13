@@ -1,160 +1,245 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http.response import HttpResponse
+from django.shortcuts import render, redirect
+# from django.contrib.auth.decorators import login_required
+# from django.contrib import messages
 from .forms import *
 from .models import *
-from contact.models import Contact
+# from core.utils import *
 
+
+# ----------------------new-------------------------------
+from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm, SocialUserInfoForm
+from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
-from core.utils import *
-
+from django.contrib.auth import logout as auth_logout
+from portfolio.models import PortfolioInformation
+from core.models import Information
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 
-
-@login_required
-def profile_delete(request, pk):
-    user = get_object_or_404(User, pk=pk)
+# ----login 관련----
+def local_signup(request):
     if request.method == 'POST':
-        user.delete()
-        messages.success(request, "탈퇴되었습니다.")
-        return redirect('myApp:main_list')
-    else:
-        ctx = {'user': user}
-        return render(request, 'profile/profile_delete.html', context=ctx)
+        form = SignupForm(request.POST)
 
-
-@login_required
-def profile_update(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
-            print("form.is_valid")
+            customer = form.save()
 
-            # user = form.save()
-            # if user.image:
-            #     user.image = request.FILES.get('image')
-            # return redirect('myApp:profile_detail', user.id)
-            user = form.save()
-            user.image = request.FILES.get('image')
+            string = str(customer.pk + int(time.time()))
 
-            return redirect('profile_detail', user.id)
+            encoded_string = string.encode()
+            result = hashlib.sha256(encoded_string).hexdigest()
+            customer.user_identifier = result
 
-    else:
-        form = ProfileForm(instance=user)
-        ctx = {'form': form}
-        return render(request, 'profile/profile_update.html', ctx)
-
-
-@login_required
-def profile_update_password(request, pk):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(
-                request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            form.save()
+            return redirect('core:main_list')
         else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'profile/profile_update_password.html', {
-        'form': form
-    })
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/local_signup.html', ctx)
+    elif request.method == 'GET':
+        form = SignupForm()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/local_signup.html', ctx)
 
-
-def profile_create(request):
-    # if request.user.is_authenticated:
-    #     return redirect('myApp:profile_detail')
-
+def login(request):
     if request.method == 'POST':
-        signup_form = ProfileForm(request.POST, request.FILES)
-        if signup_form.is_valid():
-            user = signup_form.save()
-            user.image = request.FILES['image']
+        form = LoginForm(request.POST)
+        user_id = request.POST['user_id']
+        password = request.POST['password']
+        user = authenticate(user_id=user_id, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('core:main_list')
+        else:
+            ctx = {
+                'form': form,
+                'error': '아이디 혹은 비밀번호가 올바르지 않습니다.'
+            }
+            return render(request, 'profile/login.html', ctx)
+    elif request.method == 'GET':
+        form = LoginForm()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/login.html', ctx)
 
-            # automatic login
-            auth_login(request, user,
-                       backend='django.contrib.auth.backends.ModelBackend')
+def logout(request):
+    if request.method == 'POST':
+        auth_logout(request)
+        return redirect('core:main_list')
 
-            return redirect('profile:profile_detail', user.id)
+# social sign up 시 -> 추가 정보 입력받기
+def social_user_more_info(request):
+    if request.method == 'POST':
+        form = SocialUserInfoForm(request.POST, instance=request.user)
+        if form.is_valid():
+            request.user.is_social = True
 
+            #TODO user identifier 확인 필요
+            customer = form.save()
+            string = str(customer.pk + int(time.time()))
+
+            encoded_string = string.encode()
+            result = hashlib.sha256(encoded_string).hexdigest()
+            customer.user_identifier = result
+
+            form.save()
+            return redirect('profile:mypage')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/social_user_more_info.html', ctx)
+    # 현재 유저가 약관 동의를 하지 않았을 경우 (== 추가 정보를 입력하지 않았을 경우)
+    if request.method == 'GET' and (request.user.is_ToS == False):
+        form = SocialUserInfoForm(instance=request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/social_user_more_info.html', ctx)
+    elif request.method == 'GET':
+        return redirect('profile:mypage')
+
+def withdrawal(request):
+    if request.method == 'POST':
+        request.user.delete()
+        # TODO : 추후 모달창으로 / messages.success(request, "탈퇴되었습니다.")
+        return redirect('core:main_list')
+    # TODO : 추후 모달창으로
     else:
-        signup_form = ProfileForm()
-
-    return render(request, 'profile/profile_create.html', {'form': signup_form})
+        return render(request, 'profile/withdrawal.html')
 
 
-@login_required
-def profile_detail(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    request_user=request.user
-    ctx = {'user': user,'request_user':request_user, }
-    return render(request, 'profile/profile_detail.html', context=ctx)
+# ----mypage 관련----
+# TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
+#         -> 파라미터에 user_identifier 추가, mypage_owner 바꾸기
+def mypage(request):
+    return redirect('profile:mypage_portfolio')
 
-
-@login_required
-def profile_detail_posts(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    request_user=request.user
-
-    category = request.GET.get('category', 'contact')  # CATEGORY
-    # sort = request.GET.get('sort', 'recent')  # SORT
-    # search = request.GET.get('search', '')  # SEARCH
-
-    # CATEGORY
-    if category == 'contact':
-        posts = user.contacts.all()
-
-    elif category == 'portfolio':
-        posts = user.portfolios.all()
-
-    # SORT
-
-    # SEARCH
-
-    # infinite scroll
+def mypage_portfolio(request):
+    mypage_owner = request.user
+    portfolios = mypage_owner.portfolios.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'user': user,
-        'posts': posts,
-        'category': category,
+        'mypage_owner': mypage_owner,
+        'portfolios': portfolios,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
     }
-    return render(request, 'profile/profile_detail_posts.html', context=ctx)
 
+    return render(request, 'profile/mypage_portfolio.html', ctx)
 
-@login_required
-def profile_detail_saves(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    request_user=request.user
-
-    category = request.GET.get('category', 'contact')  # CATEGORY
-    # sort = request.GET.get('sort', 'recent')  # SORT
-    search = request.GET.get('search', '')  # SEARCH
-
-    # CATEGORY
-    if category == 'contact':
-        posts = Contact.objects.all()
-    elif category == 'portfolio':
-        posts = Portfolio.objects.all()
+def mypage_post_contact(request):
+    mypage_owner = request.user
+    contacts = mypage_owner.contacts.all()
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
 
     ctx = {
-        'user': user,
-        'posts': posts,
-        'category': category,
-        'request_user':request_user,
+        'mypage_owner': mypage_owner,
+        'contacts': contacts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
     }
-    return render(request, 'profile/profile_detail_saves.html', context=ctx)
+
+    return render(request, 'profile/mypage_post_contact.html', ctx)
+
+def mypage_post_tagged(request):
+    mypage_owner = request.user
+    taggeds = mypage_owner.participants.all()      # mypage_owner 태그된 participant 객체들
+    tagged_posts = []       # mypage_owner 태그된 portfolio 객체들
+    for tagged in taggeds:
+        tagged_posts.append(tagged.portfolio)
+
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
+
+    ctx = {
+        'mypage_owner': mypage_owner,
+        'tagged_posts': tagged_posts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/mypage_post_tagged.html', ctx)
+
+def mypage_bookmark(request):
+    mypage_owner = request.user
+    saved_informations = mypage_owner.save_users.all()      # mypage_owner bookmark한 information 객체들
+    saved_posts = []        # mypage_owner bookmark한 portfolio 객체들
+    for info in saved_informations:
+        saved_posts.append(info.portfolioInformation_set.portfolio)
+
+    portfolio_count = mypage_owner.portfolios.count()
+    contact_count = mypage_owner.contacts.count()
+
+    ctx = {
+        'mypage_owner': mypage_owner,
+        'saved_posts': saved_posts,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/mypage_bookmark.html', ctx)
 
 
-@login_required
-def post_create(request):
+# ----profile 관련----
+def profile_modify(request):
     if request.method == 'POST':
-        messages.success(request, "create your post!")
-    else:
-        ctx = {}
-        return render(request, 'profile/post_create.html', context=ctx)
+        form = ProfileModifyForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile:mypage')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/profile_modify.html', ctx)
+    elif request.method == 'GET':
+        form = ProfileModifyForm(instance=request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/profile_modify.html', ctx)
+
+# TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
+def password_modify(request):
+    if request.method == 'POST':
+        form = LocalPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            # update_session_auth_hash(request, request.user)     # 자동 로그아웃X
+            return redirect('profile:login')
+        else:
+            ctx = {
+                'form': form,
+            }
+            return render(request, 'profile/password_modify.html', ctx)
+    elif request.method == 'GET':
+        form = LocalPasswordChangeForm(request.user)
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/password_modify.html', ctx)
+
+
+
+#TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
+def others_profile(request, pk):
+    profile_owner = get_object_or_404(User, user_identifier=pk)
+    portfolios = profile_owner.portfolios.all()
+    portfolio_count = profile_owner.portfolios.count()
+    contact_count = profile_owner.contacts.count()
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'portfolios': portfolios,
+        'portfolio_count': portfolio_count,
+        'contact_count': contact_count,
+    }
+
+    return render(request, 'profile/profile_others.html', context = ctx)

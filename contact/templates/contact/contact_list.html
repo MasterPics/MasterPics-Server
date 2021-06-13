@@ -77,7 +77,11 @@
 
                     <!-- 게시글 작성자 정보 -->
                     <div>
-                        <a href="{% url 'profile:profile_detail' contact.user.pk %}">
+                        {% if contact.user == request_user %}
+                            <a href="{% url 'profile:profile' %}">
+                        {% else %}
+                            <a href="{% url 'profile:others_profile' contact.user.user_identifier %}">
+                        {% endif %}
                             <div class="contact_owner">
                                 <div class="user_img">
                                     {% if contact.user.image  %}

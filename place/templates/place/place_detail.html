@@ -12,12 +12,18 @@
 
 <div>
     <!-- SHOW PROFILE 버튼 -->
-    <p>
-        <!--user img--> {{place.user}}</p>
+    <div class="choose">
+        {% if place.user == request_user %}
+            <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+        {% else %}
+            <a class="choose_profile" href="{% url 'profile:others_profile' place.user.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+        {% endif %}
+    </div>
+
     <p>{{ place.user.category }}</p>
     <p>{{ place.title }}</p>
     <div>
-        <img src="{{ place.thumbnail.url }}" alt="">
+        <img src="{{ place.thumbnail.image.url }}" alt="">
     </div>
     <!-- DESC -->
     <a href="{{ place.file_attach.url }}">시안 첨부파일</a>
@@ -31,11 +37,11 @@
 
     <!--Comment-->
     <div class="comments-{{ place.id }} comments">
-        {% for comment in place.place_comments.all %}
+        {% for comment in comments %}
         <div class="comment comment-{{ comment.id }}">
-            <span>{{ place.id }}</span>
-            <span>{{ comment.id }}</span>
-            <span>{{ comment.content }}</span>
+            <span>{{ comment.comment.writer }}</span>
+            <span>{{ comment.comment.content }}</span>
+            <span>{{ comment.comment.created_at }}</span>
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
         </div>
         {% endfor %}
@@ -45,16 +51,12 @@
         <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
     </div>
 
-    <!-- 이게뭐져?? -->
-    <p>request.user: {{ request.user.username }}</p>
-    <p>place.user: {{ place.user.username }}</p>
     {% if request.user.pk == place.user.pk %}
-    <div class="profile_button">
-        <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
-        <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
-    </div>
+        <div class="profile_button">
+            <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
+            <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
+        </div>
     {% endif %}
-
 
     <div class="save">
         {% if request.user in place.save_users.all %}

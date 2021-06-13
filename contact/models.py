@@ -1,33 +1,29 @@
 from django.db import models
-
+from .utils import uuid_name_upload_to, compress
 from user.models import User
-from core.models import Tag
-from core.models import Location
-
+from core.models import Location, Comment, Information, Images
 import json
-
-from .utils import uuid_name_upload_to
-
+from django.shortcuts import get_object_or_404
 
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
+    thumbnail = models.ImageField(upload_to=uuid_name_upload_to, verbose_name="Image")
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    save_users = models.ManyToManyField(
-        to=User, related_name='contact_save_users', blank=True)
     desc = models.TextField()
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='contacts', blank=True)
 
     # specific field
     file_attach = models.FileField()
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField()
+    pay_negotiation = models.BooleanField(default=False)
+    free = models.BooleanField(default=False)
+
+    # TODO decorator 추가하기 지민아 화이팅
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
@@ -47,11 +43,26 @@ class Contact(models.Model):
     def classname(self):
         return self.__class__.__name__
 
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.thumbnail)
+        self.thumbnail = compressed_img
+        super().save(*args, **kwargs)
 
-class Comment(models.Model):
-    contact = models.ForeignKey(
-        to=Contact, null=True, blank=True, related_name='contact_comments', on_delete=models.CASCADE)
 
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
+class ContactComment(models.Model):
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_comments(cls, contact):
+        try:
+            comments = ContactComment.objects.filter(contact=contact)
+        except:
+            comments = None
+        finally:
+            return comments
+
+class ContactInformation(models.Model):
+    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, on_delete=models.CASCADE)

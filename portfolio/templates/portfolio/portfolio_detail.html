@@ -7,7 +7,11 @@
 
 {% block content %}
 <div class="choose">
-    <a class="choose_profile" href="{% url 'profile:profile_detail' portfolio_owner.pk %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+{% if portfolio_owner == request_user %}
+    <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+{% else %}
+    <a class="choose_profile" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+{% endif %}
 </div>
 
 <div class="container_4">
@@ -29,6 +33,8 @@
 
     <div class="portfolio_title">{{portfolio.title}}</div>
     
+
+
     
     <div class="portfolio_detail">
         <div class="detail_left">
@@ -36,15 +42,15 @@
             <div class="slides">
                 <div class="mySlides fade">
                     <div class="numbertext">1 / {{num_of_imgs|add:"1"}}</div>
-                    <div class="img_container"><img src="{{portfolio.thumbnail.url}}"></div>
+                        <div class="img_container"><img src="{{portfolio.thumbnail.image.url}}"></div>
                 </div>
                 {% for image in images %}
-                {% if image %}
-                <div class="mySlides fade">
-                    <div class="numbertext"> {{forloop.counter|add:"1"}} / {{num_of_imgs|add:"1"}}</div>
-                    <div class="img_container"><img src="{{image.image.url}}"></div>
-                </div>
-                {% endif %}
+                    {% if image %}
+                        <div class="mySlides fade">
+                            <div class="numbertext"> {{forloop.counter|add:"1"}} / {{num_of_imgs|add:"1"}}</div>
+                            <div class="img_container"><img src="{{image.image.image.url}}"></div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -55,7 +61,7 @@
             <div class="portfolio_tags">
                 {% for tag in tags %}
                 <a href="" class="portfolio_tag tag-button">
-                    #{{ tag.tag }}
+                    #{{ tag.name }} 
                 </a>
                 {% endfor %}
             </div>
@@ -96,8 +102,22 @@
                 </div>
             </div>
 
+
+
+            <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
+            {% for comment in comments %}
+            <div class="comment comment-{{ comment.id }}">
+                <span>{{ comment.comment.writer }}</span>
+                <span>{{ comment.comment.content }}</span>
+                <span>{{ comment.comment.created_at }}</span>
+                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+            </div>
+            {% endfor %}
+
+
+
             <!-- 게시글 작성자만 수정/삭제 가능 -->
-            {% if request_user.username == portfolio_owner.username %}
+            {% if request_user.pk == portfolio_owner.pk %}
             <div class="portfolio_button">
                 <a class="edit_btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">게시물 수정</a>
                 <a class="delete_btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
@@ -108,10 +128,11 @@
         <!-- carousel, thumbnail image controls -->
         <div class="detail_right">
             <div class="img_container">
-                <img class="demo" src="{{portfolio.thumbnail.url}}" onclick="currentSlide(1)" alt="img">
+
+                <!--<img class="demo" src="{{portfolio.thumbnail.image.url}}" onclick="currentSlide(1)" alt="img">-->            
                 {% for image in images %}
                 {% if image %}
-                <img class="demo" src="{{image.image.url}}" onclick="currentSlide({{forloop.counter}}+1)" alt="img">
+                    <img class="demo" src="{{image.image.image.url}}" onclick="currentSlide({{forloop.counter}}+1)" alt="img">
                 {% endif %}
                 {% endfor %}
             </div>

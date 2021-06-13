@@ -1,0 +1,83 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="login__container">
+    <div class="login__logo">
+        {% comment %}
+            To. 현지
+            로고 들어가는 곳. 지금은 로고 사진이 없어서 src 빈칸으로 둠
+        {% endcomment %}
+        <img src="" alt="MasterPic's_logo">
+    </div>
+
+    <div class="login__body">
+        {% comment %}
+            To. 현지
+            로고 제외, 로그인관련된 모든 html 코드가 들어가는 곳
+            (로그인 폼, 아이디/비번 찾기, 소셜 로그인 등 모두)
+            편의에 따라 로그인 폼만 login__body에 넣고 나머지 다 밖으로 빼도 전혀 상관없음
+        {% endcomment %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form-field-group {{ field.name }}_group">
+                    <div class='{{ field.name }}'>
+                        {{ field }}
+
+                        {% comment %}
+                            {% if field.help_text %}
+                                <p class="help-block">{{ field.help_text }}</p>
+                            {% endif %}
+                        {% endcomment %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if error %}
+                <div class='login__form-error'>
+                    {{ error }}
+                </div>
+            {% endif %}
+            
+            <input type="submit" class="submit_btn " value="로그인" />
+        </form>
+    </div>
+
+    <div class="sub-login__container">
+        {% comment %}
+            To. 현지
+            ID 기억하기는 일단 없는걸로 취급해주세요!!
+            아이디/비밀번호 찾기도 아직은 구현이 안되어있어서 추후 구현하고 url 알려드리겠습니당
+        {% endcomment %}
+        <div class="to-find__container">
+            <a href="" class="to_find-id">
+                아이디
+            </a>
+            /
+            <a href="" class="to_find-pw">
+                비밀번호 찾기
+            </a>
+        </div>
+
+        <div class="to-signup__container">
+            <a href="{% url 'profile:local_signup' %}" class="to-signup">
+                회원가입
+            </a>
+        </div>
+    </div>
+
+
+    {% comment %} 소셜 로그인 {% endcomment %}
+    <div class="social-login__container">
+        <div class="social-login__title">
+            소셜 로그인
+        </div>
+        <div class="social-login__body">
+            <li><a href="{% url 'google_login' %}">google</a></li>
+            <li><a href="{% url 'naver_login' %}">naver</a></li>
+        </div>
+    </div>
+</div>
+{% endblock content%}

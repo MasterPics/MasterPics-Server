@@ -63,15 +63,11 @@ kakao.maps.event.addListener(userMarker, 'dragend', function() {
     });
 });
 
-searchPlaces();
-
 
 function searchDetailAddrFromCoords(coords, callback) {
     // 좌표로 법정동 상세 주소 정보를 요청합니다
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
-
-
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {

@@ -75,15 +75,35 @@
 
                 <div class="infinite-item">
                     <div class="item_top place-{{place.pk}}">
+
                         <div>
-                            <!-- user_img -->
-                            User : {{ place.user }}
+                            {% if place.user == request_user %}
+                                <a href="{% url 'profile:profile' %}">
+                            {% else %}
+                                <a href="{% url 'profile:others_profile' place.user.user_identifier %}">
+                            {% endif %}
+                                <div class="place_owner">
+                                    <div class="user_img">
+                                        {% if place.user.image  %}
+                                        <img class="profile_image" src="{{place.user.image.url}}" alt="profile_image">
+                                        {% else %}
+                                        <img class="place_image"
+                                            src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                                            alt="profile_image">
+                                        {% endif %}
+                                    </div>
+                                    <div>{{place.user.username}}</div>
+                                </div>
+                            </a>
                         </div>
-                        <a href="{% url 'place:place_detail' place.pk %}">
-                            <div>{{ place.title }}</div>
-                        </a>
+                    
+                        <div>
+                            <a href="{% url 'place:place_detail' place.pk %}">
+                                {{ place.title }}
+                            </a>
+                        </div>
                         <div class="thumbnail_desc">
-                            <img src="{{ place.thumbnail.url }}" alt="">
+                            <img src="{{ place.thumbnail.image.url }}" alt="">
                             <div class="desc">
                                 <!-- desc ... -->
                             </div>
