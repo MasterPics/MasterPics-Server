@@ -121,7 +121,7 @@ def place_list(request):
         ).distinct()
 
     # infinite scroll
-    places_per_page = 3
+    places_per_page = 8
     page = request.GET.get('page', 1)
     paginator = Paginator(places, places_per_page)
     try:

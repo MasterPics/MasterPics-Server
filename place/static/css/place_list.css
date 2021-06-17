@@ -1,3 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+body{
+  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/*header*/
+.place-header{
+  background-image: url("../img/place-header.png");
+  background-repeat: no-repeat;
+  width:100vw;
+  height: 40vh;
+  background-size:cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.place-header-content{
+  margin:10%;
+  color:white;
+}
+
+.place-header-content p{
+  margin:1.6rem 0;
+  line-height:1.6rem;
+}
+
+.register-btn{
+  background-color: rgba(0,0,0,0);
+  border-radius: 100px;
+  border: 1px solid white;
+  padding:1rem;
+}
+.register-btn a{
+  color:white;
+  text-decoration: none;
+}
+
+.place-list{
+  margin:5% 0;
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+.place-list-grid{
+  display:grid;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+  grid-templates-rows:repeat(2,100%);
+  gird-templates-columns:repeat(5,100%);
+}
+.place-search{
+  grid-column:1;
+  display:inline;
+}
+.place-filter{
+  grid-column: 2;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+hr{
+  grid-column: span 2;
+  margin:3% 0;
+}
+.place-content{
+  display: flex;
+  margin:1.5rem;
+}
+.place-thumbnail{
+  width:250px; 
+  height:195px;
+  border-radius: 7px;
+}
+.place-content-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  margin-left:1rem;
+}
+.place-content-title a{
+  text-decoration: none;
+  color:black;
+}
+.place-content-title p{
+  margin-top:0.7rem;
+}
+.place-title{
+  font-weight:bold;
+}
+.place-desc{
+  font-size:0.9rem;
+  color:#6b6b6b;
+}
+.place-user{
+  font-size:0.9rem;
+}
+.user-image{
+  width:40px;
+  height:40px;
+  border-radius: 100px;
+}
+
 /* 무한스크롤 */
 
 .loading,
@@ -52,7 +164,9 @@
   }
 }
 
-/* Contact List CSS */
+
+/* Contact List CSS 
+
 a {
   text-decoration: none;
   color: black;
@@ -125,7 +239,7 @@ a {
   margin-right: 10px;
 }
 */
-
+/*
 .bar .btn_search {
   padding: 6px;
   border: solid 1px #ccc;
@@ -173,8 +287,8 @@ a {
 }
 
 .item_top img {
-  /* display: flex;
-  justify-content: center; */
+  display: flex;
+  justify-content: center; 
   width: 80%;
   align-content: center;
 }
@@ -186,7 +300,7 @@ a {
   padding: 5px 10px;
   border-top: #ccc 1px solid;
 }
-
+*/
 /* hover */
 
 .infinite-item {
