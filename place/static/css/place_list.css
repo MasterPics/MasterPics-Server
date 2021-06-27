@@ -9,6 +9,8 @@ body{
   flex-direction: column;
   justify-content: center;
 }
+
+
 /*header*/
 .place-header{
   background-image: url("../img/place-header.png");
@@ -42,6 +44,7 @@ body{
   text-decoration: none;
 }
 
+/*컨텐츠*/
 .place-list{
   margin:5% 0;
   display:flex;
@@ -58,6 +61,8 @@ body{
   grid-templates-rows:repeat(2,100%);
   gird-templates-columns:repeat(5,100%);
 }
+
+/*폼,필터*/
 .place-search{
   grid-column:1;
   display:inline;
@@ -67,11 +72,45 @@ body{
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+  font-size:0.8rem;
 }
+.place-filter div{
+  margin:0 7px;
+}
+.search{
+  width:80%;
+  padding:0.8rem;
+  color:gray;
+  border:1px solid #cfcfcf;
+  border-radius: 10px;
+}
+.btn_search{
+  background-color:#5200ff;
+  color:white;
+  border:none;
+  border-radius: 10px;
+  padding:0.8rem;
+}
+.sort-box{
+  width:100px;
+  margin-right: 0;
+}
+.sort{
+  padding:0.5rem 1.1rem;
+  font-size:0.7rem;
+  border-radius: 10px;
+}
+
+
+/*구분선*/
+
 hr{
   grid-column: span 2;
   margin:3% 0;
 }
+
+/*컨텐츠 목록*/
+
 .place-content{
   display: flex;
   margin:1.5rem;
@@ -86,29 +125,93 @@ hr{
   flex-direction: column;
   justify-content: top;
   margin-left:1rem;
+  width:270px;
 }
+
 .place-content-title a{
   text-decoration: none;
   color:black;
 }
-.place-content-title p{
-  margin-top:0.7rem;
-}
+
 .place-title{
   font-weight:bold;
+  font-size:1.1rem;
+}
+.place-address{
+  margin-top:0.7rem;
 }
 .place-desc{
+  margin-top:0.7rem;
   font-size:0.9rem;
   color:#6b6b6b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap:break-word; 
+  line-height: 1.2rem;
+  height: 2.4rem;
+}
+.place-tag{
+  display: inline-block;
+  margin:1rem 0;
+}
+.place-tag button{
+  border:1px solid #5200ff;
+  border-radius: 10px;
+  background-color:rgba(0, 0, 0, 0);
+  padding:0.5rem;
+  font-size: 0.5rem;
+  margin-right:2px;
+  margin-top:2px;
+}
+.place-tag a{
+  text-decoration: none;
+  color:#5200ff;
+}
+.user-info{
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
 }
 .place-user{
+  display:flex;
+  align-items:center;
   font-size:0.9rem;
+  margin-left: 0.5rem;
+}
+.user-name{
+  margin-left:0.5rem;
+}
+.user-category{
+  color:#a6a6a6;
+  font-size:0.5rem;
+  margin-top:0.3rem;
 }
 .user-image{
   width:40px;
   height:40px;
-  border-radius: 100px;
+  border-radius:100px;
+  object-fit:cover;
 }
+.place-like-count{
+  margin-left:1.2rem;
+  font-size:0.9rem;
+}
+.place-like-count i{
+  font-size:1.2rem;
+  color:#a2a2a2;
+}
+.place-like-count span{
+  margin-left:0.2rem;
+  color:#4f4f4f;
+}
+.place-save{
+  font-size:1.2rem;
+  color:#a2a2a2;
+}
+
 
 /* 무한스크롤 */
 

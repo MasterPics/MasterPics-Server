@@ -4,15 +4,22 @@
   text-decoration: none;
   list-style-type: none;
 }
+
+.container{
+  position: relative;
+}
 label {
-  font-size: 1.1rem;
+  display: none;
 }
 
 
 .form-group {
-  margin: 20px 60px;
   display: grid;
   grid-template-columns: 200px 1fr;
+}
+
+.col-sm-10{
+  width:100%;
 }
 
 .title input,
@@ -66,4 +73,15 @@ input.btn {
 
 input.btn:hover {
   cursor: pointer;
+}
+
+.place_create_form{
+  position: absolute;
+  top:0;
+  left:0;
+  padding:20px;
+  z-index: 1000;
+  width:500px;
+  height: 100vh;
+  background-color: #FCFCFC;
 }

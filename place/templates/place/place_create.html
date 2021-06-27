@@ -26,15 +26,12 @@
         </div>
     </div>
     
-    <div class='row'>
-
+    <div class='place_create_form'>
         <div class='col-md-12'>
-            <h1 style="margin-top: 80px; margin-left: 60px; margin-bottom: 40px; font-size:30px;">Create Place</h1>
+            <h1>Place 등록하기</h1>
+            <p>지도의 마커로 등록할 장소의 위치를 지정하고, 상세한 설명을 등록해주세요.</p>
             <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="location-form">
-                    {{ location_form.as_table }}
-                </div>
 
                 <div class="place-form">
                     {% for field in place_form.visible_fields %}
@@ -53,6 +50,10 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+
+                <div class="location-form">
+                    {{ location_form.as_table }}
                 </div>
         
                 <input type="submit" class="btn" />

@@ -10,66 +10,80 @@
 {% block content %}
 <!-- 카테고리 왼쪽에 -->
 
-<div>
-    <!-- SHOW PROFILE 버튼 -->
-    <!--
-    <div class="choose">
-        {% if place.user == request_user %}
-            <a class="choose_profile" href=""><div class="btn"><span class="noselect">Show Profile</span></div></a>
-        {% else %}
-            <a class="choose_profile" href=""><div class="btn"><span class="noselect">Show Profile</span></div></a>
-        {% endif %}
-    </div>-->
-
-    <p>{{ place.user.category }}</p>
-    <p>{{ place.title }}</p>
-    <div>
-        <img src="{{ place.thumbnail.image.url }}" alt="">
+<section class="info-box">
+    <div class="user-profile">
+        <h6>게시자</h6>
+        <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
+        <p>{{place.user}}</p>
+        <p>{{place.user.category}}</p>
     </div>
-    <!-- DESC -->
-    <a href="{{ place.file_attach.url }}">시안 첨부파일</a>
-    <p>{{ place.pay }}</p>
-    <!-- 촬영날짜/마감여부 -->
-    <p>{{ place.start_date }}</p>
-    <p>{{ place.end_date }}</p>
-    <p>{{ place.location }}</p>
-
-    <!-- 댓글,저장수 ajax -->
-
-    <!--Comment-->
-    <div class="comments-{{ place.id }} comments">
-        {% for comment in comments %}
-        <div class="comment comment-{{ comment.id }}">
-            <span>{{ comment.comment.writer }}</span>
-            <span>{{ comment.comment.content }}</span>
-            <span>{{ comment.comment.created_at }}</span>
-            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+    <div class="place-location-map">
+        {{place.location}}
+    </div>
+    <div class="likeSave">
+        <div class="like">
+            <i class="far fa-heart"></i>
+            <p>24</p>
         </div>
-        {% endfor %}
+        <div class="save">
+            {% if request.user in place.save_users.all %}
+                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+            {% else %}
+                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+            {% endif %}
+            <span class="save__content">{{ place.save_users.count }}</span>
+        </div>
     </div>
-    <div class="createComment createComment-{{place.id}}">
-        <input class="comment__value" type="text" placeholder="댓글 달기...">
-        <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
+    <div class="place-tag">
+        <button><a href="">#아방가르드</a></button>
+        <button><a href="">#인공광</a></button>
+        <button><a href="">#메이크업</a></button>
+        <button><a href="">#무드</a></button>
     </div>
+</section>
+
+<section class="place-detail">
+    <h2>{{ place.title }}</h2>
 
     {% if request.user.pk == place.user.pk %}
-        <div class="profile_button">
-            <a class="edit_btn" href="{% url 'place:place_update' place.pk %}">Contact 수정</a>
-            <a class="delete_btn" href="{% url 'place:place_delete' place.pk %}">Contact 삭제</a>
-        </div>
+        <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
+        <button class="delete"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
     {% endif %}
 
-    <div class="save">
-        {% if request.user in place.save_users.all %}
-        <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
-        {% else %}
-        <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
-        {% endif %}
-        <span class="save__content">{{ place.save_users.count }}</span>
+    <span>{{ place.location }}</span>
+    <span>{{ place.created_at }}</span>
+
+    <div class="place-images">
+        <img src="{{ place.thumbnail.image.url }}" alt="image">
+        <div class="image-list"></div>
     </div>
 
-</div>
+    <p>{{place.desc}}</p>
+    
+    <div class="place-comment">
+        <div class="createComment createComment-{{place.id}}">
+            <input class="comment__value" type="text" placeholder="댓글 달기...">
+            <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
+        </div>
+        <div class="comments-{{ place.id }} comments">
+            {% for comment in comments %}
+            <div class="comment comment-{{ comment.id }}">
+                <span>{{ comment.comment.writer }}</span>
+                <span>{{ comment.comment.content }}</span>
+                <span>{{ comment.comment.created_at }}</span>
+                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+   
+
+
 {% endblock content%}
+
+
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
