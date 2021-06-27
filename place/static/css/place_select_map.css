@@ -18,24 +18,24 @@
   top: 0;
   right: 10px;
   bottom: 0;
-  width: 250px;
+  width: 300px;
   margin: 10px 0 30px 10px;
-  padding: 16px;
+  padding: 1rem;
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.7);
   z-index: 1;
   font-size: 12px;
   border-radius: 10px;
+  background: rgba(255, 255, 255, 0);
 }
-.bg_white {
-    background:#fff;
-}
+
+
+
 #menu_wrap hr {
     display: block; 
     height: 1px;
     border: 0; 
-    border-top: 2px solid #5F5F5F;
-    margin:3px 0;
+    border-top: 1px solid #5F5F5F;
+    margin:1rem 0;
 }
 #menu_wrap .option{
     text-align: center;
@@ -46,12 +46,45 @@
 #menu_wrap .option button {
     margin-left:5px;
 }
+form{
+    display:block;
+}
+#keyword{
+  padding:0.8rem;
+  width:84%;
+  height: 32px;
+  border:1px solid #CACACA;
+  border-radius: 5px;
+  background:white;
+  float: left;
+
+}
+.search-btn{
+  width:32px;
+  height: 32px;
+  background:#5200FF;
+  color:white;
+  border:none;
+  border-radius: 5px;
+}
+
+.search-btn i{
+  color:white;
+}
+
+.placeList-container{
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    margin-top:1rem;
+    height: auto;
+}
 #placesList li {
     list-style: none;
+    padding:1rem;
 }
 #placesList .item {
     position:relative;
-    border-bottom:1px solid #888;
+    border-bottom:1px solid #cacaca;
     overflow: hidden;
     cursor: pointer;
     min-height: 65px;
@@ -134,7 +167,7 @@
     background-position: 0 -654px;
 }
 #pagination {
-    margin:10px auto;
+    padding:1rem auto;
     text-align: center;
 }
 #pagination a {
