@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 # from core.utils import *
+import time, hashlib
 
 
 # ----------------------new-------------------------------
