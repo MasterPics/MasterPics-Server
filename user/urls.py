@@ -25,8 +25,6 @@ urlpatterns = [
      path('others/<str:pk>', view=views.others_profile, name='others_profile'),
 
      # smpt
-     path('csregister/', view=views.CsRegisterView.as_view(), name='csregister'),
-     path('registerauth/', views.register_success, name='register_success'),
-     path('activate/<str:uid64>/<str:token>/', views.activate, name='activate'),
-
+     path('smtp_sending_success/', view=views.smtp_sending_success, name='smtp_sending_success'),
+     path('smtp_auth/<str:uid64>/<str:token>/', view=views.smtp_auth, name='smtp_auth'),
 ]
