@@ -8,8 +8,7 @@ from django.shortcuts import get_object_or_404
 
 class Place(models.Model):
     # common field
-    user = models.ForeignKey(
-        to=User, related_name="posts", on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, related_name="places", on_delete=models.CASCADE)
     thumbnail = models.ForeignKey(Images, related_name="place_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)

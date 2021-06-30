@@ -1,0 +1,75 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/profile/profile_detail.css' %}">
+{% endblock stylesheet %}
+
+
+{% block content %}
+    <div class="container">
+        <div>{{mypage_owner.username}}</div>
+        <div>
+            {% for place in places %}
+                <div>
+                    {{ place.title }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mypage__container">
+        <div class="category__container">
+            <ul class="category__big">
+                <li>포트폴리오</li>
+                <li>게시글</li>
+                <li>저장 목록</li>
+            </ul>
+            <ul class="category__small">
+                <li class="my_portfolio">나의 포트폴리오</li>
+                <li class="tagged_portfolio">태그된 목록</li>
+            </ul>
+        </div>
+        <div class="post__container">
+            {% for portfolio in portfolios %}
+                <div>
+                    {{ portfolio.title }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content%}
+
+
+
+{% block script %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const contentBox = document.querySelector('.post__container');
+
+    const onClickMyPortfolio = async() => {
+        const url = '/profile/mypage/portfolio/my_portfolio/';
+        const {data} = await axios.get(url);
+        printMyPortfolio(data.portfolioList);
+    };
+
+    const printMyPortfolio = (portfolioList) => {
+        contentBox.innerHTML = '';
+        for(let i = 0; i < portfolioList.length; i++) {
+            // 각 portfolio의 pk, img링크, like_count, view_count 필요
+            const innerHtmlTemplate = `<div>
+                                            <a href='http://127.0.0.1:8000/portfolio/` + portfolioList[i].id + `'>`
+                                            + `<img src='` + portfolioList[i].thumbnail + `'>`
+                                            + `<div class='like_count'>` + portfolioList[i].like_count + `</div>`
+                                            + `<div class='view_count'>` + portfolioList[i].view_count + `</div>`
+                                        + `</div>`
+        }
+    }
+</script> -->
+
+<script type="text/javascript" src="{% static 'js/profile/profile_detail.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/profile/profile_detail_posts.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/profile/profile_detail_saves.js' %}"></script>
+{% endblock script %}
