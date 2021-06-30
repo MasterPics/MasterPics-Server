@@ -13,11 +13,12 @@ class SignupForm(UserCreationForm):
         # labels = {'is_ToS' : '약관 동의'}
         # help_texts = {'is_ToS' : "약관에 동의해야합니다."}
     
-    # def save(self, commit=True):
-    #     user = super(SignupForm, self).save(commit=False)
-    #     user.is_active = False
-    #     user.save()
-    #     return user
+    # smtp
+    def save(self, commit=True):
+        user = super(SignupForm, self).save(commit=False)
+        user.is_active = False
+        user.save()
+        return user
 
 # local login
 class LoginForm(forms.ModelForm):
@@ -63,39 +64,3 @@ class ProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
-
-
-
-
-
-# smtp
-from .models import User
-
-def hp_validator(value):
-    if len(str(value)) != 10:
-        raise forms.ValidationError('정확한 핸드폰 번호를 입력해주세요.')
-
-class CsRegisterForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super(CsRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['user_id'].label = '아이디'
-        self.fields['user_id'].widget.attrs.update({     
-            'class': 'form-control',
-            'autofocus': False
-        })
-        self.fields['password1'].label = '비밀번호'
-        self.fields['password1'].widget.attrs.update({
-            'class': 'form-control',
-        })
-
-    class Meta:
-        model = User
-        fields = ['is_ToS', 'user_id', 'username', 'email', 'password1', 'password2']
-
-    def save(self, commit=True):
-        user = super(CsRegisterForm, self).save(commit=False)
-        user.is_active = False
-        user.save()
-
-        return user

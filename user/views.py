@@ -16,7 +16,19 @@ from portfolio.models import Portfolio, PortfolioInformation
 from core.models import Information
 from django.contrib.auth import update_session_auth_hash
 
+# ----------------------smtp-------------------------------
+from django.core.exceptions import PermissionDenied
+from django.contrib import messages
+
+from .utils import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.tokens import default_token_generator
+from django.views.decorators.csrf import csrf_protect
+
 # ----login 관련----
+@csrf_protect
 def local_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -24,14 +36,31 @@ def local_signup(request):
         if form.is_valid():
             customer = form.save()
 
+            # hash (add user_identifier)
             string = str(customer.pk + int(time.time()))
-
             encoded_string = string.encode()
             result = hashlib.sha256(encoded_string).hexdigest()
             customer.user_identifier = result
-
             form.save()
-            return redirect('core:main_list')
+
+
+            # smtp
+            send_mail(
+                "[masterpic's]: {}님의 회원가입 인증메일 입니다.".format(customer.user_id),
+                [customer.email],
+                html=render_to_string('profile/smtp_email.html', {
+                    'user': customer,
+                    'uid': urlsafe_base64_encode(force_bytes(customer.pk)).encode().decode(),
+                    'domain': request.META['HTTP_HOST'],
+                    'token': default_token_generator.make_token(customer),
+                }),
+            )
+
+            request.session['smtp_auth'] = True
+            messages.success(request, '회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다.')
+        
+            # return redirect('core:main_list')
+            return redirect('profile:smtp_sending_success')
         else:
             ctx = {
                 'form': form,
