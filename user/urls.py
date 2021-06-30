@@ -23,4 +23,10 @@ urlpatterns = [
 
      #TODO 다른 사람꺼 보기
      path('others/<str:pk>', view=views.others_profile, name='others_profile'),
+
+     # smpt
+     path('csregister/', view=views.CsRegisterView.as_view(), name='csregister'),
+     path('registerauth/', views.register_success, name='register_success'),
+     path('activate/<str:uid64>/<str:token>/', views.activate, name='activate'),
+
 ]
