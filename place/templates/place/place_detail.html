@@ -2,82 +2,94 @@
 
 {% load static %}
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'css/place/place_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/place_detail.css' %}">
 
 
 {% endblock stylesheet %}
 
 {% block content %}
 <!-- 카테고리 왼쪽에 -->
-
-<section class="info-box">
-    <div class="user-profile">
-        <h6>게시자</h6>
-        <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
-        <p>{{place.user}}</p>
-        <p>{{place.user.category}}</p>
-    </div>
-    <div class="place-location-map">
-        {{place.location}}
-    </div>
-    <div class="likeSave">
-        <div class="like">
-            <i class="far fa-heart"></i>
-            <p>24</p>
+<main>
+    <section class="info-box">
+        <div class="user-profile">
+            <p class="writer">게시자</p>
+            <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
+            <h4 class="user-name">{{place.user}}</h4>
+            <p class="user-category">{{place.user.category}}</p>
         </div>
-        <div class="save">
-            {% if request.user in place.save_users.all %}
-                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
-            {% else %}
-                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
-            {% endif %}
-            <span class="save__content">{{ place.save_users.count }}</span>
+        <div class="place-location-map">
+            {{place.location}}
         </div>
-    </div>
-    <div class="place-tag">
-        <button><a href="">#아방가르드</a></button>
-        <button><a href="">#인공광</a></button>
-        <button><a href="">#메이크업</a></button>
-        <button><a href="">#무드</a></button>
-    </div>
-</section>
-
-<section class="place-detail">
-    <h2>{{ place.title }}</h2>
-
-    {% if request.user.pk == place.user.pk %}
-        <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-        <button class="delete"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
-    {% endif %}
-
-    <span>{{ place.location }}</span>
-    <span>{{ place.created_at }}</span>
-
-    <div class="place-images">
-        <img src="{{ place.thumbnail.image.url }}" alt="image">
-        <div class="image-list"></div>
-    </div>
-
-    <p>{{place.desc}}</p>
-    
-    <div class="place-comment">
-        <div class="createComment createComment-{{place.id}}">
-            <input class="comment__value" type="text" placeholder="댓글 달기...">
-            <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="게시">
-        </div>
-        <div class="comments-{{ place.id }} comments">
-            {% for comment in comments %}
-            <div class="comment comment-{{ comment.id }}">
-                <span>{{ comment.comment.writer }}</span>
-                <span>{{ comment.comment.content }}</span>
-                <span>{{ comment.comment.created_at }}</span>
-                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+        <div class="likeSave">
+            <div class="like">
+                <i class="far fa-heart"></i>
+                <p>24</p>
             </div>
-            {% endfor %}
+            <div class="save">
+                {% if request.user in place.save_users.all %}
+                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                {% else %}
+                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                {% endif %}
+                <p class="save__content">{{ place.save_users.count }}</p>
+            </div>
         </div>
-    </div>
+        <div class="place-tag">
+            <a href=""><span>#아방가르드</span></a>
+            <a href=""><span>#인공광</span></a>
+            <a href=""><span>#메이크업</span></a>
+            <a href=""><span>#무드</span></a>
+        </div>
+    </section>
 
-</section>
+    <section class="place-detail">
+        <div class="place-detail-header">
+            <h2>{{ place.title }}</h2>
+
+            {% if request.user.pk == place.user.pk %}
+                <div class="modify-delete">
+                    <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
+                    <button class="delete"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
+                </div>
+            {% endif %}
+        </div>
+
+        <hr>
+        
+        <div class="place-detail-info">
+            <span><i class="fas fa-map-marker-alt"></i>{{ place.location }}</span>
+            <span>{{ place.created_at }}</span>
+        </div>
+
+        <div class="place-images">
+            <div class="image-box">
+                <img src="{{ place.thumbnail.image.url }}" alt="image">
+            </div>
+            <div class="image-list"></div>
+        </div>
+
+        <p class="place-description">{{place.desc}}</p>
+        
+        <div class="place-comment">
+            <div class="createComment createComment-{{place.id}}">
+                <input class="comment__value" type="text" placeholder="댓글 달기...">
+                <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="댓글 게시">
+            </div>
+            <div class="comments-{{ place.id }} comments">
+                {% for comment in comments %}
+                <div class="comment comment-{{ comment.id }}">
+                    <div class="comment-image"><img src={{comment.comment.writer.image.url}}</div>
+                    <span class="comment-writer">{{ comment.comment.writer }}</span>
+                    <span class="comment-content">{{ comment.comment.content }}</span>
+                    <span class="comment-created">{{ comment.comment.created_at }}</span>
+                    <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+</main>
    
 
 
