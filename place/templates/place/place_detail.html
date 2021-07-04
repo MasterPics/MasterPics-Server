@@ -14,7 +14,7 @@
     <!-- SHOW PROFILE 버튼 -->
     <div class="choose">
         {% if place.user == request_user %}
-            <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+            <a class="choose_profile" href="{% url 'profile:mypage' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
         {% else %}
             <a class="choose_profile" href="{% url 'profile:others_profile' place.user.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
         {% endif %}
