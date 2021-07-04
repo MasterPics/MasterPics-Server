@@ -8,7 +8,7 @@
 {% block content %}
 <div class="choose">
 {% if portfolio_owner == request_user %}
-    <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+    <a class="choose_profile" href="{% url 'profile:mypage_portfolio' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% else %}
     <a class="choose_profile" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% endif %}
