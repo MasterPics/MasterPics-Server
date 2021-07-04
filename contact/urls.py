@@ -8,9 +8,10 @@ urlpatterns = [
     path('map/', view=views.contact_map, name='contact_map'),
     path('detail/<int:pk>/',
          view=views.contact_detail, name='contact_detail'),
-    path('<int:pk>/comment_create/',
+
+    path('comment_create/',
          view=views.contact_comment_create, name='contact_comment_create'),
-    path('<int:pk>/comment_delete/',
+    path('comment_delete/',
          view=views.contact_comment_delete, name='contact_comment_delete'),
     path('<int:pk>/delete/',
          view=views.contact_delete, name='contact_delete'),

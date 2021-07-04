@@ -26,7 +26,7 @@ SECRET_KEY = 'mikvg^#cy6isjbn!q4(=s3+2m9mu-kr^41yl(i)_zj7!qwhik&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 
 # Application definition
@@ -55,6 +55,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
+
+    # taggit
+    'taggit',
+
+    # User -> django-phone-field
+    'phone_field',
 ]
 
 MIDDLEWARE = [
@@ -138,10 +144,31 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
 
 # custom user
 AUTH_USER_MODEL = 'user.User'
 
 
+
 # social login
+# 인증관련 설정
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 SITE_ID = 1
+LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = None
+
+
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = 'portfolio.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'

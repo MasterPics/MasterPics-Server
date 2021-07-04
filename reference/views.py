@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from .models import *
 
-from portfolio.models import Portfolio
-
-from core.models import Tag
-
+from portfolio.models import Portfolio, Tag
 
 # for Save, Like
 from django.http import JsonResponse
@@ -18,20 +15,39 @@ from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def reference_local_list(request):
+def reference_list(request):
 
-    tags = Tag.objects.all()
+    portfolios = Portfolio.objects.get_queryset().order_by('-id')
+
+    search = request.GET.get('search', '')  # Search
+    print(search)
+
+    # Search
+    if search:
+        portfolios = portfolios.filter(
+            Q(tags__name__icontains=search)
+        ).distinct()
+
+
+    # infinite scroll
+    portfolios_per_page = 30
+    page = request.GET.get('page', 1)
+    paginator = Paginator(portfolios, portfolios_per_page)
+    try:
+        portfolios = paginator.page(page)
+    except PageNotAnInteger:
+        portfolios = paginator.page(1)
+    except EmptyPage:
+        portfolios = paginator.page(paginator.num_pages)
 
     context = {
-        'tags': tags,
+        'portfolios': portfolios,
     }
-    return render(request, 'reference/reference_local_list.html', context=context)
+    return render(request, 'reference/reference_list.html', context=context)
 
 
 def reference_local_detail(request, tag):
     portfolios_taged = Portfolio.objects.filter(tags__tag=tag)
-
-    request_user = request.user  # 로그인한 유저
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort

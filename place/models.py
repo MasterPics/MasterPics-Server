@@ -1,29 +1,27 @@
 from django.db import models
-from core.models import Tag, Location
+from core.models import *
 from user.models import User
 from core.utils import uuid_name_upload_to
+from django.shortcuts import get_object_or_404
 
-# Create your models here.
+
+
 class Place(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="posts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
+    thumbnail = models.ForeignKey(Images, related_name="place_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    save_users = models.ManyToManyField(
-        to=User, related_name='save_users', blank=True)
     desc = models.TextField()
 
     # specific field
-    like_users = models.ManyToManyField(
-        to=User, related_name='like_users', blank=True)
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
+    # fee
     pay = models.PositiveIntegerField()
-    tag_str = models.CharField(max_length=50, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='places', blank=True)
+    free = models.BooleanField(default=False)
 
     def to_json(self):
         return {
@@ -36,3 +34,31 @@ class Place(models.Model):
             'pay': self.location.pay,
             'tag_str': ' '.join([tag.tag for tag in tags.all()])
         }
+
+
+class PlaceComment(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_comments(cls, target):
+        try:
+            comments = PlaceComment.objects.filter(place=target)
+        except:
+            comments = None
+        finally:
+            return comments
+
+
+class PlaceInformation(models.Model):
+    place = models.OneToOneField(Place, on_delete=models.CASCADE)
+    information = models.OneToOneField(Information, on_delete=models.CASCADE)
+
+
+#TODO place는 attached files
+class PlaceImages(models.Model):
+    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    place = models.ForeignKey(to=Place, null=True, blank=True,
+                              related_name='place_images', on_delete=models.CASCADE)
+
+    
