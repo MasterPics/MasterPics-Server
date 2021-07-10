@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 # from django.contrib.auth.decorators import login_required
 # from django.contrib import messages
@@ -391,3 +392,25 @@ def others_profile(request, pk):
     }
 
     return render(request, 'profile/profile_others.html', context = ctx)
+
+
+
+
+
+
+
+
+
+
+
+
+# 비밀번호 찾기 인증 관련
+from .forms import RecoveryPwForm 
+
+def recovery_pw(request):
+    if request.method == 'GET':
+        form = RecoveryPwForm()
+        ctx = {
+            'form': form,
+        }
+        return render(request, 'profile/recovery_pw.html', context = ctx)

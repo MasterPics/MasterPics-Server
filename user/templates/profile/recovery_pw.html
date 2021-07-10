@@ -1,0 +1,40 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+    {% csrf_token %}
+    <div>
+        <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
+        <div onkeyup='getUserId()'>
+            {{ form.user_id }}
+        </div>
+    </div>
+    <div>
+        <label name="label_username" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        <div onkeyup="getUsername()">
+            {{ form.username }}
+        </div>
+    </div>
+    <div>
+        <label name="label_email" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        <div onkeyup="getEmail()">
+            {{ form.email }}
+        </div>
+    </div>
+
+    <div id="div_find_pw">
+        <button id="find_pw" name="recovery_pw" onclick="onClickFindPW()">비밀번호찾기</button>
+    </div>
+
+    <div id="result_pw"></div>
+</div>
+
+
+
+
+
+
+
+{% endblock content%}
