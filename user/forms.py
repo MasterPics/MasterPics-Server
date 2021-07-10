@@ -64,3 +64,49 @@ class ProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
+
+
+
+
+# 비밀번호 인증관련
+class RecoveryPwForm(forms.Form):
+    user_id = forms.CharField(widget=forms.TextInput,)
+    username = forms.CharField(
+        widget=forms.TextInput,)
+    email = forms.EmailField(
+        widget=forms.EmailInput,)
+
+    class Meta:
+        fields = ('user_id', 'username', 'email',)
+
+    def __init__(self, *args, **kwargs):
+        super(RecoveryPwForm, self).__init__(*args, **kwargs)
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_id',
+        })
+        self.fields['username'].label = '이름'
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_name',
+        })
+        self.fields['email'].label = '이메일'
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_email',
+        })
+
+from django.contrib.auth.forms import SetPasswordForm
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control',
+        })
+        self.fields['new_password2'].label = '새 비밀번호 확인'
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control',
+        })
