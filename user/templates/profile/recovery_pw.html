@@ -111,7 +111,31 @@
             }
         })
     };
-            
+    
+    
+    var input_auth_num;
+    function getAuthNum() {
+        input_auth_num = document.querySelector('#input_auth_num').value;
+    }
+    const authConfirm = () => {
+        const url = '/profile/recovery/pw/auth/';
+        axios.post(url, {
+            'user_id': user_id,
+            'input_auth_num': input_auth_num,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        })
+        .then(function (response) {
+            location.href = "{% url 'profile:recovery_pw_reset' %}";
+        })
+        .catch(function (error) {
+            if(input_auth_num == '') {
+                alert('회원님의 이메일로 전송된 인증번호를 입력해주세요.');
+            }
+            else {
+                alert('인증번호가 일치하지 않습니다.');
+            }
+        })
+    };
 
 </script>
 

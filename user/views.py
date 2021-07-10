@@ -440,3 +440,15 @@ def recovery_pw_send_email(request):
             }),
         )
     return JsonResponse({"user_id": user.user_id})
+
+# ajax 방식
+@csrf_exempt
+def recovery_pw_auth_confirm(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    input_auth_num = req['input_auth_num']
+    user = User.objects.get(user_id=user_id, auth=input_auth_num)
+    user.auth = ""
+    user.save()
+    request.session['auth'] = user.user_id  
+    return JsonResponse({"user_id": user.user_id})
