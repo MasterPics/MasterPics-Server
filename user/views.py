@@ -434,7 +434,7 @@ def recovery_pw_send_email(request):
         user.save()
 
         send_mail(
-            "[masterpic's]: {}님의 회원가입 인증메일 입니다.".format(user.user_id),
+            "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
             [email],
             html=render_to_string('profile/recovery_pw_email.html', {
                 'auth_num': auth_num,
