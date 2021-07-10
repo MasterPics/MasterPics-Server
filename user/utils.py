@@ -20,3 +20,16 @@ class EmailThread(threading.Thread):
 
 def send_mail(subject, recipient_list, body='', from_email='smart_chan@naver.com', fail_silently=False, html=None, *args, **kwargs):
     EmailThread(subject, body, from_email, recipient_list, fail_silently, html).start()
+
+
+# 비밀번호 찾기 인증관련
+import string
+import random
+
+def email_auth_num():
+    LENGTH = 8
+    string_pool = string.ascii_letters + string.digits
+    auth_num = ""
+    for i in range(LENGTH):
+        auth_num += random.choice(string_pool)
+    return auth_num
