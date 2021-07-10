@@ -70,10 +70,8 @@ class ProfileForm(forms.ModelForm):
 # ----recovery password 관련----
 class RecoveryPwForm(forms.Form):
     user_id = forms.CharField(widget=forms.TextInput,)
-    username = forms.CharField(
-        widget=forms.TextInput,)
-    email = forms.EmailField(
-        widget=forms.EmailInput,)
+    username = forms.CharField(widget=forms.TextInput,)
+    email = forms.EmailField(widget=forms.EmailInput,)
 
     class Meta:
         fields = ('user_id', 'username', 'email',)
@@ -82,17 +80,14 @@ class RecoveryPwForm(forms.Form):
         super(RecoveryPwForm, self).__init__(*args, **kwargs)
         self.fields['user_id'].label = '아이디'
         self.fields['user_id'].widget.attrs.update({
-            'class': 'form-control',
             'id': 'pw_form_id',
         })
         self.fields['username'].label = '이름'
         self.fields['username'].widget.attrs.update({
-            'class': 'form-control',
             'id': 'pw_form_name',
         })
         self.fields['email'].label = '이메일'
         self.fields['email'].widget.attrs.update({
-            'class': 'form-control',
             'id': 'pw_form_email',
         })
 
@@ -101,10 +96,4 @@ class CustomSetPasswordForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
         self.fields['new_password1'].label = '새 비밀번호'
-        self.fields['new_password1'].widget.attrs.update({
-            'class': 'form-control',
-        })
         self.fields['new_password2'].label = '새 비밀번호 확인'
-        self.fields['new_password2'].widget.attrs.update({
-            'class': 'form-control',
-        })
