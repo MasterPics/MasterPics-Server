@@ -396,15 +396,7 @@ def others_profile(request, pk):
 
 
 
-
-
-
-
-
-
-
-
-# 비밀번호 찾기 인증 관련
+# ----recovery password 관련----
 from .forms import RecoveryPwForm 
 from django.views.decorators.csrf import csrf_exempt
 from .utils import email_auth_num
@@ -418,6 +410,7 @@ def recovery_pw(request):
             'form': form,
         }
         return render(request, 'profile/recovery_pw.html', context = ctx)
+
 
 # ajax 방식
 @csrf_exempt
@@ -442,6 +435,7 @@ def recovery_pw_send_email(request):
         )
     return JsonResponse({"user_id": user.user_id})
 
+
 # ajax 방식
 @csrf_exempt
 def recovery_pw_auth_confirm(request):
@@ -453,6 +447,7 @@ def recovery_pw_auth_confirm(request):
     user.save()
     request.session['auth'] = user.user_id  
     return JsonResponse({"user_id": user.user_id})
+
 
 def recovery_pw_reset(request):
     if request.method == 'GET':

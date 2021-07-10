@@ -28,10 +28,10 @@ urlpatterns = [
      path('smtp_sending_success/', view=views.smtp_sending_success, name='smtp_sending_success'),
      path('smtp_auth/<str:uid64>/<str:token>/', view=views.smtp_auth, name='smtp_auth'),
 
-     # 비밀번호 인증관련
+     # ecovery password
      path('recovery/pw/', view=views.recovery_pw, name='recovery_pw'),
-     path('recovery/pw/find/', view=views.recovery_pw_send_email, name='ajax_pw'),
-     path('recovery/pw/auth/', view=views.recovery_pw_auth_confirm, name='recovery_auth'),
+     path('recovery/pw/find/', view=views.recovery_pw_send_email, name='recovery_pw_send_email'),
+     path('recovery/pw/auth/', view=views.recovery_pw_auth_confirm, name='recovery_pw_auth_confirm'),
      path('recovery/pw/reset/', view=views.recovery_pw_reset, name='recovery_pw_reset'),
 
 ]

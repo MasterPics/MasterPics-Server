@@ -2,7 +2,7 @@ from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 
 
 # local signup
@@ -67,8 +67,7 @@ class ProfileForm(forms.ModelForm):
 
 
 
-
-# 비밀번호 인증관련
+# ----recovery password 관련----
 class RecoveryPwForm(forms.Form):
     user_id = forms.CharField(widget=forms.TextInput,)
     username = forms.CharField(
@@ -97,7 +96,6 @@ class RecoveryPwForm(forms.Form):
             'id': 'pw_form_email',
         })
 
-from django.contrib.auth.forms import SetPasswordForm
 
 class CustomSetPasswordForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
