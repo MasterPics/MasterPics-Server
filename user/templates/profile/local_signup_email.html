@@ -11,7 +11,7 @@
                 아래의 '인증하기'를 클릭하여 이메일 인증을 완료해주세요.
             </div>
             <div class='smtp_email_auth'>
-                <a href="http://{{ domain }}{% url 'profile:smtp_auth' uid64=uid token=token %}">인증하기</a>
+                <a href="http://{{ domain }}{% url 'profile:local_signup_auth' uid64=uid token=token %}">인증하기</a>
             </div>
         </div>
     </div>           

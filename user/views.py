@@ -1,12 +1,11 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.decorators import login_required
 # from django.contrib import messages
 from .forms import *
 from .models import *
 # from core.utils import *
 import time, hashlib
-
 
 # ----------------------new-------------------------------
 from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm, SocialUserInfoForm
@@ -28,6 +27,13 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import default_token_generator
 from django.views.decorators.csrf import csrf_protect
 
+# ----recovery password 관련----
+from .forms import RecoveryPwForm 
+from django.views.decorators.csrf import csrf_exempt
+from .utils import email_auth_num
+import json    
+from .forms import CustomSetPasswordForm   
+
 # ----login 관련----
 @csrf_protect
 def local_signup(request):
@@ -44,12 +50,11 @@ def local_signup(request):
             customer.user_identifier = result
             form.save()
 
-
             # smtp
             send_mail(
                 "[masterpic's]: {}님의 회원가입 인증메일 입니다.".format(customer.user_id),
                 [customer.email],
-                html=render_to_string('profile/smtp_email.html', {
+                html=render_to_string('profile/local_signup_email.html', {
                     'user': customer,
                     'uid': urlsafe_base64_encode(force_bytes(customer.pk)).encode().decode(),
                     'domain': request.META['HTTP_HOST'],
@@ -60,6 +65,7 @@ def local_signup(request):
             request.session['smtp_auth'] = True
             messages.success(request, '회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다.')
         
+            # 추후 smtp_sending_success.html 삭제 예정
             # return redirect('core:main_list')
             return redirect('profile:smtp_sending_success')
         else:
@@ -74,7 +80,7 @@ def local_signup(request):
         }
         return render(request, 'profile/local_signup.html', ctx)
     
-def smtp_auth(request, uid64, token):
+def local_signup_auth(request, uid64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uid64))
         current_user = User.objects.get(pk=uid)
@@ -356,7 +362,7 @@ def profile_modify(request):
         return render(request, 'profile/profile_modify.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
-def password_modify(request):
+def password_change(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -367,13 +373,13 @@ def password_modify(request):
             ctx = {
                 'form': form,
             }
-            return render(request, 'profile/password_modify.html', ctx)
+            return render(request, 'profile/password_change.html', ctx)
     elif request.method == 'GET':
         form = LocalPasswordChangeForm(request.user)
         ctx = {
             'form': form,
         }
-        return render(request, 'profile/password_modify.html', ctx)
+        return render(request, 'profile/password_change.html', ctx)
 
 
 
@@ -397,12 +403,6 @@ def others_profile(request, pk):
 
 
 # ----recovery password 관련----
-from .forms import RecoveryPwForm 
-from django.views.decorators.csrf import csrf_exempt
-from .utils import email_auth_num
-import json    
-from .forms import CustomSetPasswordForm       
-
 def recovery_pw(request):
     if request.method == 'GET':
         form = RecoveryPwForm()
@@ -438,7 +438,7 @@ def recovery_pw_send_email(request):
 
 # ajax 방식
 @csrf_exempt
-def recovery_pw_auth_confirm(request):
+def recovery_pw_auth(request):
     req = json.loads(request.body)
     user_id = req['user_id']
     input_auth_num = req['input_auth_num']
