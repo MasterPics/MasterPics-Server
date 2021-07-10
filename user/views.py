@@ -409,6 +409,7 @@ from .forms import RecoveryPwForm
 from django.views.decorators.csrf import csrf_exempt
 from .utils import email_auth_num
 import json    
+from .forms import CustomSetPasswordForm       
 
 def recovery_pw(request):
     if request.method == 'GET':
@@ -452,3 +453,28 @@ def recovery_pw_auth_confirm(request):
     user.save()
     request.session['auth'] = user.user_id  
     return JsonResponse({"user_id": user.user_id})
+
+def recovery_pw_reset(request):
+    if request.method == 'GET':
+        if not request.session.get('auth', False):
+            raise PermissionDenied
+        else:
+            reset_pw_form = CustomSetPasswordForm(request.user)
+            return render(request, 'profile/recovery_pw_reset.html', {'form':reset_pw_form})
+
+    elif request.method == 'POST':
+        session_user = request.session['auth']
+        user = User.objects.get(user_id=session_user)
+        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        reset_pw_form = CustomSetPasswordForm(request.user, request.POST)
+        
+        if reset_pw_form.is_valid():
+            user = reset_pw_form.save()
+            messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
+            auth_logout(request)
+            return redirect('profile:login')
+        else:
+            auth_logout(request)
+            request.session['auth'] = session_user
+            return render(request, 'profile/recovery_pw_reset.html', {'form':reset_pw_form})
