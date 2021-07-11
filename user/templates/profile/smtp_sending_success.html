@@ -1,0 +1,11 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+        {% for msg in messages %}
+            {{ msg.message }}
+        {% endfor %}
+    {% endif %}
+{% endblock content%}

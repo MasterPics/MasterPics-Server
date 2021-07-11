@@ -125,7 +125,7 @@ def portfolio_delete(request, pk):
         portfolio.delete()
         messages.success(request, "삭제되었습니다.")
 
-        return redirect('profile:profile_portfolio')
+        return redirect('profile:mypage_portfolio')
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
