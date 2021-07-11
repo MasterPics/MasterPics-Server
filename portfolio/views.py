@@ -125,7 +125,7 @@ def portfolio_delete(request, pk):
         portfolio.delete()
         messages.success(request, "삭제되었습니다.")
 
-        return redirect('profile:mypage_portfolio')
+        return redirect('portfolio:portfolio_list')
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
@@ -185,7 +185,6 @@ def portfolio_create(request):
 
             information = Information.objects.create()
 
-            #TODO information 지울꺼면 지워도 됨
             portfolio_information = PortfolioInformation.objects.create(
                 portfolio=portfolio,
                 information=information

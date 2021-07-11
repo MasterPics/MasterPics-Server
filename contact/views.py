@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
 from .models import *
+from core.models import *
 
 # for Comment, Save
 from django.http import JsonResponse
@@ -73,7 +74,7 @@ def contact_list(request):
     # Sort
     if sort == 'save':
         contacts = contacts.annotate(num_save=Count(
-            'save_users')).order_by('-num_save', '-created_at')
+            'contactinformation')).order_by('-num_save', '-created_at')
     elif sort == 'pay':
         contacts = contacts.order_by('-pay', '-created_at')
     elif sort == 'recent':
@@ -113,7 +114,7 @@ def contact_detail(request, pk):
     # contact_information = ContactInformation.objects.get(
     #     contact=contact)
 
-    #comment 를 가져오는 쿼리
+    # comment 를 가져오는 쿼리
     comments = ContactComment.get_comments(contact)
 
     # contact_information.information.view_count += 1
@@ -154,7 +155,9 @@ def contact_update(request, pk):
         ctx = {'form': form}
         return render(request, 'contact/contact_update.html', ctx)
 
-#TODO 파일 첨부 
+# TODO 파일 첨부
+
+
 @login_required
 def contact_create(request):
     if request.method == 'POST':
@@ -176,7 +179,7 @@ def contact_create(request):
             contact.image = request.FILES.get('image')
 
             return redirect('contact:contact_detail', contact.pk)
-        
+
         else:
             ctx = {
                 'contact_form': contact_form,
@@ -212,7 +215,8 @@ def contact_comment_create(request):
         contact = Contact.objects.get(id=contact_id)
         comment = Comment.objects.create(
             writer=request.user, content=comment_value)
-        contactcomment = ContactComment.objects.create(comment=comment, contact=contact)
+        contactcomment = ContactComment.objects.create(
+            comment=comment, contact=contact)
         return JsonResponse({'contact_id': contact_id, 'comment_id': contactcomment.id, 'value': comment_value})
 
 
