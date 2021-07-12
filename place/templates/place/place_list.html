@@ -92,9 +92,24 @@
         {% endfor %}
     </div>
 </section>
-
 <div class="place-pagenation">
+    <!-- 수정할 예정 : https://cjh5414.github.io/django-pagination/ 
+        EL pagination digg style -->
+    <span>
+    {% if places.has_previous %}
+        <a href="?page={{places.previous_page_number}}">이전</a>
+    {% endif %}
+
+    Page {{places.number}} of {{places.paginator.num_pages}}</span>
+
+    {% if places.has_next %}
+        <a href="?page={{places.next_page_number}}">다음</a>
+    {% endif %}
+
+
+        
 </div>
+
 
 {% endblock content %}
 

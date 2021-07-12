@@ -13,8 +13,13 @@
     <section class="info-box">
         <div class="user-profile">
             <p class="writer">게시자</p>
-            <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
-            <h4 class="user-name">{{place.user}}</h4>
+        {% if place.user == request_user %}
+                <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
+                <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user}}</a>
+        {% else %}
+                <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
+                <a class="user-name" href="{% url 'profile:others_profile' place.user.user_identifier %}">{{place.user}}</a>
+        {% endif %}
             <p class="user-category">{{place.user.category}}</p>
         </div>
         <div class="place-location-map">

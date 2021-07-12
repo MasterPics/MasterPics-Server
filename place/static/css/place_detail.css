@@ -32,6 +32,8 @@ main{
     padding:1rem;
 }
 .user-profile .user-name{
+    color:black;
+    font-weight: bold;
     margin-top:1rem;
 }
 .user-profile .user-category{
