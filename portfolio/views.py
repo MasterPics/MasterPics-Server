@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
-from portfolio.models import Tag
+from core.models import Tag
 
 
 from core.models import *
@@ -21,6 +21,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # for multiple images
 from django.forms import modelformset_factory
+
 
 def portfolio_list(request):
     portfolios = Portfolio.objects.all().order_by("created_at")
@@ -83,39 +84,40 @@ def portfolio_list(request):
 
     return render(request, 'portfolio/portfolio_list.html', context=context)
 
+
 def portfolio_detail(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
     portfolio_information = PortfolioInformation.objects.get(
         portfolio=portfolio)
 
     images = portfolio.portfolio_images.all()
-    
 
-    #TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
+    # TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
     num_of_imgs = images.count
 
     tags = portfolio.tags.all()
 
-    #comment 를 가져오는 쿼리
+    # comment 를 가져오는 쿼리
     comments = PortfolioComment.get_comments(portfolio)
 
     portfolio_owner = portfolio.user  # 게시글 작성자
     request_user = request.user  # 로그인한 유저
 
-    portfolio_information.information.view_count += 1 
+    portfolio_information.information.view_count += 1
     portfolio_information.information.save()
 
     ctx = {
-            'portfolio': portfolio,
-            'images': images,
-            'tags': tags,
-            'portfolio_owner': portfolio_owner,
-            'request_user': request_user,
-            'num_of_imgs': num_of_imgs,
-            'comments': comments,   
-        }
+        'portfolio': portfolio,
+        'images': images,
+        'tags': tags,
+        'portfolio_owner': portfolio_owner,
+        'request_user': request_user,
+        'num_of_imgs': num_of_imgs,
+        'comments': comments,
+    }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
+
 
 @login_required
 def portfolio_delete(request, pk):
@@ -129,6 +131,7 @@ def portfolio_delete(request, pk):
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
+
 
 @login_required
 def portfolio_update(request, pk):
@@ -149,6 +152,7 @@ def portfolio_update(request, pk):
         form = PortfolioForm(instance=portfolio)
         ctx = {'form': form, }
         return render(request, 'portfolio/portfolio_update.html', ctx)
+
 
 @login_required
 def portfolio_create(request):

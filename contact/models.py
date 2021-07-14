@@ -5,11 +5,23 @@ from core.models import Location, Comment, Information, Images
 import json
 from django.shortcuts import get_object_or_404
 
+# for hashtag
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+
+class TaggedContact(TaggedItemBase):
+    content_object = models.ForeignKey('Contact', on_delete=models.CASCADE)
+    tags = models.ForeignKey(
+        'core.Tag', related_name='tagged_contacts', on_delete=models.CASCADE, null=True)
+
+
 class Contact(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to, verbose_name="Image")
+    thumbnail = models.ImageField(
+        upload_to=uuid_name_upload_to, verbose_name="Image")
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -23,10 +35,12 @@ class Contact(models.Model):
     pay_negotiation = models.BooleanField(default=False)
     free = models.BooleanField(default=False)
 
-    # TODO decorator 추가하기 지민아 화이팅
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
+
+    tags = TaggableManager(
+        verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through=TaggedContact)
 
     def to_json(self):
         return {
@@ -49,7 +63,6 @@ class Contact(models.Model):
         super().save(*args, **kwargs)
 
 
-
 class ContactComment(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
@@ -63,6 +76,8 @@ class ContactComment(models.Model):
         finally:
             return comments
 
+
 class ContactInformation(models.Model):
     contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    information = models.OneToOneField(Information, related_name='contactInformations', on_delete=models.CASCADE)
+    information = models.OneToOneField(
+        Information, related_name='contactInformations', on_delete=models.CASCADE)

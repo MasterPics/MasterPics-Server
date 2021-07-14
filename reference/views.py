@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import *
 
-from portfolio.models import Portfolio, Tag
+from portfolio.models import Portfolio
+from core.models import Tag
 
 # for Save, Like
 from django.http import JsonResponse
@@ -27,7 +28,6 @@ def reference_list(request):
         portfolios = portfolios.filter(
             Q(tags__name__icontains=search)
         ).distinct()
-
 
     # infinite scroll
     portfolios_per_page = 30
