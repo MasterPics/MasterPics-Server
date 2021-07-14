@@ -12,21 +12,9 @@
         <div class="side-bar__user-info">
             {% if portfolio_owner == request_user %}
             <a class="side-bar__user" href="{% url 'profile:mypage' %}">
-                <div class="side-bar__text">
-                    게시자
-                </div>
-                {% if portfolio_owner.image  %}
-                <img class="side-bar__user-img" src="{{portfolio_owner.image.url}}" alt="img">
-                {% else %}
-                <img class="side-bar__user-img"
-                    src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                    alt="img">
-                {% endif %}
-                <div class="side-bar__user-name">{{portfolio_owner.username}}</div>
-                <div class="side-bar__user-category">{{portfolio_owner.category}}</div>
-            </a>
             {% else %}
             <a class="side-bar__user" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}">
+            {% endif %}
                 <div class="side-bar__text">
                     게시자
                 </div>
@@ -40,7 +28,6 @@
                 <div class="side-bar__user-name">{{portfolio_owner.username}}</div>
                 <div class="side-bar__user-category">{{portfolio_owner.category}}</div>
             </a>
-            {% endif %}
         </div>
         <!-- like, view_count, save -->
         <div class="side-bar__info">
@@ -70,6 +57,7 @@
             </div>
         </div>
         <!-- tags -->
+        {% if tags %}
         <div class="side-bar__tags-info">
             {% for tag in tags %}
             <a href="" class="side-bar__tags">
@@ -77,6 +65,7 @@
             </a>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 
     <div class="post">
@@ -102,12 +91,18 @@
                 <div class="mySlides">
                     <div class="numbertext">1 / {{num_of_imgs|add:"1"}}</div>
                     <img src="{{portfolio.thumbnail.image.url}}">
+                    <!-- Next and previous buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
                 {% for image in images %}
                 {% if image %}
                 <div class="mySlides">
                     <div class="numbertext"> {{forloop.counter|add:"1"}} / {{num_of_imgs|add:"1"}}</div>
                     <img src="{{image.image.image.url}}">
+                    <!-- Next and previous buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -121,22 +116,22 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <!-- Next and previous buttons -->
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
             </div>
         </div>
         <div class="post__desc">{{portfolio.desc}}</div>
         <div class="post__line"></div>
         <div class="post__comment">
-            <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
+            <div id="comment" class="createComment createComment-{{portfolio.id}}">
+                <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
+                <input class="comment__btn" onclick="onClickNewComment({{ portfolio.id }})" type="submit" value="댓글 게시">
+            </div>
             {% for comment in comments %}
             <div class="comment comment-{{ comment.id }}">
                 <span>{{ comment.comment.writer }}</span>
                 <span>{{ comment.comment.content }}</span>
                 <span>{{ comment.comment.created_at }}</span>
-                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="댓글 삭제">
             </div>
             {% endfor %}
         </div>     
