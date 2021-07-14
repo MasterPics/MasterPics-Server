@@ -197,9 +197,9 @@ TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_HOST_USER = 'masterpics.official@gmail.com'
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-DEFAULT_FROM_MAIL = ''
+DEFAULT_FROM_MAIL = "Masterpic's"
