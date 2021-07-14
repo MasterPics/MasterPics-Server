@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q,Count
 import json
 
 # infinite loading
@@ -109,9 +109,12 @@ def place_list(request):
 
     # SORT
     if sort == 'pay':
-        places = places.order_by('-pay', '-created_at')
-    elif sort == 'recent':
+        places = places.order_by('-pay')
+    elif sort == 'save': #save 케이스 정렬 추가
         places = places.order_by('-created_at')
+    else:
+        places = places.order_by('-created_at')
+    
 
     if search:
         places = places.filter(
@@ -119,6 +122,7 @@ def place_list(request):
             Q(desc__icontains=search) |  # 내용검색
             Q(user__username__icontains=search)  # 질문 글쓴이검색
         ).distinct()
+    
 
     # infinite scroll
     places_per_page = 8
