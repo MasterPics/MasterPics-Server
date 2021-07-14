@@ -57,56 +57,59 @@
 
 <div class="line"></div>
 
-<div class="post-list">
-    <div class="post-list__group">
+<div class="list">
+    <div class="list__group grid">
         {% for portfolio in portfolios %}
-        <div class="post-list__item-wrapper">
-            <div class="post-list__item">
-                <!-- portfolio tumbnail -->
-                <div class="post-list__thumbnail">
+        <div class="list__item-wrapper grid-item">
+            <div class="list__item">
+                <!-- portfolio thumbnail -->
+                <div class="list__thumbnail">
                     <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
-                        <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
-                    </a>                    
+                        <figure class="list__image">
+                            <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
+                            <figcaption>
+                                <div class="list__tags-info">
+                                    {% for tag in tags %}
+                                    <p class="list__tags">
+                                        #{{ tag.name }} 
+                                    </p>
+                                    {% endfor %}
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </a>
                 </div>
                 <!-- portfolio title -->
-                <div class="post-list__title">
+                <div class="list__title">
                     <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">{{portfolio.title}}</a>
                 </div>
-                <div class="post-list__info">
+                <div class="list__info">
                     <!-- portfolio user -->
-                    <div class="post-list__user">
+                    <div class="list__user">
                         {% if portfolio.user == request_user %}
                         <a href="{% url 'profile:mypage' %}">
-                            {% if user.image  %}
-                            <img class="post-list__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                            {% else %}
-                            <img class="post-list__user-img"
-                                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
-                            <div class="post-list__user-info">
-                                <div class="post-list__user-name">{{portfolio.user.username}}</div>
-                                <div class="post-list__user-category">{{portfolio.user.category}}</div>
-                            </div>
-                        </a>
                         {% else %}
                         <a href="{% url 'profile:others_profile' portfolio.user.user_identifier %}">
+                        {% endif %}
                             {% if user.image  %}
-                            <img class="post-list__user-img" src="{{portfolio.user.image.url}}" alt="img">
+                            <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
                             {% else %}
-                            <img class="post-list__user-img"
+                            <img class="list__user-img"
                                 src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
                                 alt="img">
                             {% endif %}
-                            <div class="post-list__user-info">
-                                <div class="post-list__user-name">{{portfolio.user.username}}</div>
-                                <div class="post-list__user-category">{{portfolio.user.category}}</div>
+                            <div class="list__user-info">
+                                <div class="list__user-name">{{portfolio.user.username}}</div>
+                                <div class="list__user-category">{{portfolio.user.category}}</div>
                             </div>
                         </a>
-                        {% endif %}
                     </div>
                     <!-- portfolio like, view_count, save -->
-                    <div class="post-list__post-info">
+                    <div class="list__post-info">
+                        <div class="eye">
+                            <i class="far fa-eye"></i>
+                            <span class="view__content">{{portfolio.view_count}}</span>
+                        </div>
                         <div class="like like-{{portfolio.id}}">
                             {% if request_user in portfolio.like_users.all %}
                             <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
@@ -116,10 +119,6 @@
                                 value="like"></i>
                             {% endif %}
                             <span class="like__content">{{ portfolio.like_users.count }}</span>
-                        </div>
-                        <div class="eye">
-                            <i class="far fa-eye"></i>
-                            <span class="view__content">{{portfolio.view_count}}</span>
                         </div>
                         <div class="save save-{{portfolio.id}}">
                             {% if request_user in portfolio.save_users.all %}
@@ -151,7 +150,6 @@
 <button onclick="topFunction()" id="myBtn" title="Go to top">
     <i class="fas fa-arrow-up"></i>
 </button>
-
 {% endblock content%}
 
 
