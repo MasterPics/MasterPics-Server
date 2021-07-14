@@ -69,9 +69,7 @@
 
         <div class="place-images">
             <div class="image-box">
-            {% for thumbnail in Place %}
-                <img src="{{ thumbnail.image.url }}" alt="image">
-            {% endfor %}
+                <img src="{{ place.thumbnail.image.url }}" alt="image">
             </div>
             <div class="image-list"></div>
         </div>
