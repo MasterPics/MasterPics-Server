@@ -136,55 +136,123 @@
   border-bottom: solid 1px #a3a3a3;
 }
 /******************* portfolio-list ******************/
-.post-list {
+.list {
   width: 80%;
   margin: 0 auto;
   margin-top: 40px;
 }
-.post-list__item {
-  width: 251px;
+.list__item-wrapper {
+  width: 246px;
   margin-bottom: 25px;
 }
-.post-list__thumbnail {
+.list__thumbnail {
   margin-bottom: 10px;
 }
-.post-list__thumbnail img {
+figure.list__image {
+  position: relative;
+  overflow: hidden;
   width: 100%;
+  color: #ffffff;
+  background-color: #000000;
   border-radius: 5px;
 }
-.post-list__title {
+figure.list__image * {
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+figure.list__image img {
+  backface-visibility: hidden;
+  vertical-align: top;
+  width: 100%;
+}
+figure.list__image:after,
+figure.list__image figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+figure.list__image:after {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.65);
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+  opacity: 0;
+}
+figure.list__image figcaption {
+  z-index: 1;
+  overflow: hidden;
+}
+figure.list__image .list__tags-info {
+  overflow: hidden;
+  height: 24%;
+  position: absolute;
+  top: 40%;
+  padding: 0 28px;
+}
+figure.list__image .list__tags {
+  font-size: 14px;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  opacity: 0;
+  -webkit-transform: translateX(-40px);
+  transform: translateX(-40px);
+  overflow: hidden;
+  color: #ffffff;
+  margin: 2px;
+  float: left;
+}
+figure.list__image:hover img,
+figure.list__image.hover img {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  -webkit-opacity: 0.5;
+  opacity: 0.5;
+}
+figure.list__image:hover:after,
+figure.list__image.hover:after {
+  opacity: 1;
+}
+figure.list__image:hover p,
+figure.list__image.hover p {
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+  opacity: 1;
+}
+.list__title {
   margin-bottom: 10px;
   width: 251px;
 }
-.post-list__title a {
+.list__title a {
   font-size: 14px;
   color: #000000;
 }
-.post-list__info {
+.list__info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.post-list__user > a {
+.list__user > a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.post-list__user-img {
+.list__user-img {
   border-radius: 100%;
   width: 27px;
   height: 27px;
   margin-right: 10px;
 }
-.post-list__user-name {
+.list__user-name {
   font-size: 11px;
   color: #000000;
 }
-.post-list__user-category {
+.list__user-category {
   font-size: 8px;
   color: #a6a6a6;
 }
-.post-list__post-info {
+.list__post-info {
   display: flex;
   justify-content: space-between;
 }
