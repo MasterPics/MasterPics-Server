@@ -20,13 +20,36 @@
     <div class="place-list-grid">
         <!--search-->
         <div class="place-search">
-            <input type="text" class="search" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
+            <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
             <button class="btn_search" type="button" id="">찾기</button>
+        </div>
+        <div style="display:none;">
+            <form id="searchForm" method="get" action="{% url 'place:place_list' %}">
+                <!--category-->
+                <input type="hidden" id="category" name="category" value="{{ category }}">
+                <!--sort-->
+                <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
+                <!--search-->
+                <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+            </form>
         </div>
 
         <!--filter-->
         <div class="place-filter">
-            <!--sort-->
+
+            <!-- 상호무페이 -->
+            <div class="pay">
+                <label for="no_pay">상호 무페이</label>
+                <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
+            </div>
+            
+            <!--내 위치 주변-->
+            <div class="around">
+                <label for="around_me">내 위치 주변</label>
+                <input type="checkbox" class="around_me" name="around_me" value="around_me">
+            </div>
+
+            <!--sort https://wikidocs.net/71806-->
             <div class="sort-box">
                 <select name="" id="" class="form-control sort ">
                     <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
@@ -39,18 +62,6 @@
                         가격순
                     </option>
                 </select>
-            </div>
-
-            <!-- 상호무페이 -->
-            <div class="pay">
-                <label for="no_pay">상호 무페이</label>
-                <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
-            </div>
-            
-            <!--내 위치 주변-->
-            <div class="around">
-                <label for="around_me">내 위치 주변</label>
-                <input type="checkbox" class="around_me" name="around_me" value="around_me">
             </div>
             
         </div>
@@ -104,15 +115,12 @@
 
     {% if places.has_next %}
         <a href="?page={{places.next_page_number}}">다음</a>
-    {% endif %}
-
-
-        
+    {% endif %}        
 </div>
 
 
 {% endblock content %}
-
+</div>
 
 
 <!--js-->

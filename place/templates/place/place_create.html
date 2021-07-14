@@ -36,7 +36,6 @@
             <hr>
             <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 {% csrf_token %}
-
                 <div class="place-form">
                     {% for field in place_form.visible_fields %}
                     <div class="form-group {{ field.name }}">

@@ -71,10 +71,9 @@ body{
 .place-filter{
   grid-column: 2;
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
+  justify-content: flex-end;
   font-size:0.8rem;
-  width:34vw;
 }
 .pay{
   margin:0 15px;
@@ -94,7 +93,7 @@ body{
   padding:0.8rem;
 }
 .sort-box{
-  margin-right: 0;
+  margin-left: 15px;
 }
 .sort{
   padding:0.5rem 1.1rem;

@@ -61,6 +61,9 @@ INSTALLED_APPS = [
 
     # User -> django-phone-field
     'phone_field',
+
+    #pagination
+    'el_pagination',
 ]
 
 MIDDLEWARE = [

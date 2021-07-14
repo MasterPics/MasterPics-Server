@@ -11,12 +11,12 @@ class Place(models.Model):
     user = models.ForeignKey(
         to=User, related_name="posts", on_delete=models.CASCADE)
     thumbnail = models.ForeignKey(Images, related_name="place_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
-    #이미지 여러개가 아니에요!!
+    
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
-    #tag가 없어요!!!
+   
 
     # specific field
     location = models.ForeignKey(

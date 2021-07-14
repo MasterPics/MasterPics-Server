@@ -66,15 +66,18 @@ const onClickLink = (category) => {
 }
 
 //search
-const searchButton = document.querySelector('.btn_search')
-searchButton.addEventListener('click', () => {
-    const searchClassInput = document.querySelector('.search')
-    const searchIdInput = document.querySelector('#search')
-    const searchForm = document.querySelector('#searchForm')
-    searchIdInput.value = searchClassInput.value
-    searchForm.submit()
-})
+$(document).ready(function(){
+    $(".page-link").on('click', function() {
+        $("#page").val($(this).data("page"));
+        $("#searchForm").submit();
+    });
 
+    $("#btn_search").on('click', function() {
+        $("#search").val($(".search").val());
+        $("#page").val(1);   //검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#searchForm").submit();
+    });
+});
 
 //sort
 const sortClassInput = document.querySelector('.sort')

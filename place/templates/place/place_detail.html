@@ -23,8 +23,9 @@
             <p class="user-category">{{place.user.category}}</p>
         </div>
         <div class="place-location-map">
-            {{place.location}}
+            <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
         </div>
+
         <div class="likeSave">
             <div class="like">
                 <i class="far fa-heart"></i>
@@ -32,9 +33,9 @@
             </div>
             <div class="save">
                 {% if request.user in place.save_users.all %}
-                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="fas fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% else %}
-                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="far fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
                 <p class="save__content">{{ place.save_users.count }}</p>
             </div>
@@ -68,7 +69,9 @@
 
         <div class="place-images">
             <div class="image-box">
-                <img src="{{ place.thumbnail.image.url }}" alt="image">
+            {% for thumbnail in Place %}
+                <img src="{{ thumbnail.image.url }}" alt="image">
+            {% endfor %}
             </div>
             <div class="image-list"></div>
         </div>
@@ -87,7 +90,11 @@
                     <span class="comment-writer">{{ comment.comment.writer }}</span>
                     <span class="comment-content">{{ comment.comment.content }}</span>
                     <span class="comment-created">{{ comment.comment.created_at }}</span>
-                    <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                    
+                    {% if request.user == comment.comment.writer %} 
+                        <span>수정</span> 
+                        <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -103,5 +110,6 @@
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
 {% endblock script %}

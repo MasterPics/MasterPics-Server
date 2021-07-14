@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 import json
 
 # infinite loading
@@ -12,7 +13,6 @@ from core.forms import *
 # from place app
 from .models import *
 from .forms import *
-
 
 @login_required
 def place_create(request):
