@@ -34,8 +34,14 @@
     <div class="portfolio_title">{{portfolio.title}}</div>
     
 
-
+    <!-- test -->
+    {% for tag in tags %}
+      <div>{{tag}}</div>
+    {% endfor %}
     
+
+
+    {% comment %}
     <div class="portfolio_detail">
         <div class="detail_left">
             <!-- carousel, next/previous controls -->
@@ -59,7 +65,7 @@
             <!-- desc, tag, date -->
             <div class="portfolio_content">{{portfolio.desc}}</div>
             <div class="portfolio_tags">
-                {% for tag in tags %}
+                {% for tag in portfolio.tags %}
                 <a href="" class="portfolio_tag tag-button">
                     #{{ tag.name }} 
                 </a>
@@ -105,7 +111,7 @@
 
 
             <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
-            {% for comment in comments %}
+            {% for comment in portfolio.comments %}
             <div class="comment comment-{{ comment.id }}">
                 <span>{{ comment.comment.writer }}</span>
                 <span>{{ comment.comment.content }}</span>
@@ -138,6 +144,8 @@
             </div>
         </div>
     </div>
+    {% endcomment %}
+    
 </div>
 {% endblock content %}
 
