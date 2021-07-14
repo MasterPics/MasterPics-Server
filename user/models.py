@@ -94,6 +94,7 @@ class User(AbstractUser):
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
     user_identifier = models.CharField(max_length=100, blank=True, null=True)
+    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username', 'email',]

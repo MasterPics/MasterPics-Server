@@ -82,14 +82,15 @@ def place_update(request, pk):
         place_form = PlaceForm(request.POST, request.FILES, instance=place)
         location_form = LocationForm(request.POST, instance=place.location)
         if place_form.is_valid() and location_form.is_valid():
-            place = place_form.save(commit=False)
+            place_update = place_form.save(commit=False)
             location = location_form.save(commit=False)
             location.save()
-            place.location = location
-            place.image = request.FILES.get('image')
-            place.save()
+            place_update.location = location
+            print(place_form.image)
+            place_update.image = request.FILES.get('image')
+            place_update.image.save()
+            place_update.save()
             return redirect('place:place_detail', place.pk)
-
     else:
         place_form = PlaceForm(instance=place)
         location_form = LocationForm(instance=place.location)
