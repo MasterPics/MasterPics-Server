@@ -118,6 +118,9 @@ def portfolio_detail(request, pk):
         'portfolio_owner': portfolio.user,
         'num_of_imgs': len(portfolio.images.all()),
         'comments': portfolio.comments.all(),
+        'like_users': portfolio.like_users.all(),
+        'bookmark_users': portfolio.bookmark_users.all()
+        
     }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
