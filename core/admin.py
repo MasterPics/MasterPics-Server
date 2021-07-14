@@ -18,8 +18,8 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Information)
 class InformationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'like_counter']
-    list_display_links = ['id', 'like_counter']
+    list_display = ['id', 'like_count']
+    list_display_links = ['id', 'like_count']
 
 
 @admin.register(Images)

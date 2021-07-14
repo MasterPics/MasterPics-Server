@@ -180,8 +180,8 @@ def portfolio_create(request):
                 if not i:
                     portfolio.thumbnail = image_obj.image
                     portfolio.save()
-                else:
-                    i += 1
+                # else:
+                #     i += 1
 
             messages.success(request, "posted!")
 
@@ -231,13 +231,15 @@ def portfolio_like(request):
         portfolio_id = data["portfolio_id"]
         portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
         request_user = request.user
-        is_liked = request_user in portfolio.like_users.all()
+        information = portfolio.portfolio_information.information
+        liked_users = information.like_users.all()
+        is_liked = request_user in liked_users
         if is_liked:
-            portfolio.like_users.remove(
-                get_object_or_404(User, pk=request_user.pk))
+            information.like_users.remove(request_user)
+            information.like_counter -= 1
         else:
-            portfolio.like_users.add(
-                get_object_or_404(User, pk=request_user.pk))
+            information.like_users.add(request_user)
+            information.like_counter += 1
         is_liked = not is_liked
-        portfolio.save()
+        information.save()
         return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})

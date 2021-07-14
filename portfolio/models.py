@@ -63,7 +63,7 @@ class PortfolioComment(models.Model):
 
 
 class PortfolioInformation(models.Model):
-    portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
+    portfolio = models.OneToOneField(Portfolio, related_name='portfolio_information', on_delete=models.CASCADE)
     information = models.OneToOneField(
         Information, related_name='portfolioInformations', on_delete=models.CASCADE)
 

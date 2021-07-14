@@ -35,7 +35,7 @@ class Information(models.Model):
         to=User, related_name='save_users', blank=True)
     like_users = models.ManyToManyField(
         to=User, related_name='like_users', blank=True)
-    like_counter = models.PositiveIntegerField(default=0)
+    like_count = models.PositiveIntegerField(default=0)
     view_count = models.PositiveIntegerField(default=0)
 
 
