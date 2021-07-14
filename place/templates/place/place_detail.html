@@ -71,7 +71,9 @@
             <div class="image-box">
                 <img src="{{ place.thumbnail.image.url }}" alt="image">
             </div>
-            <div class="image-list"></div>
+            <div class="image-list">
+                <img src="{{ place.place_images.image.url }}" alt="images">
+            </div>
         </div>
 
         <p class="place-description">{{place.desc}}</p>
