@@ -60,17 +60,20 @@ def place_create(request):
 
 def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
-
+    tags = place.tags.all()
+    images = place.place_images.all()
     #comment 를 가져오는 쿼리
     comments = PlaceComment.get_comments(place)
 
     ctx = {
         'place': place,
         'comments': comments,
-        'request_user' : request.user
+        'request_user' : request.user,
+        'tags':tags,
+        'images':images,
     }
 
-    return render(request, 'place/place_detail.html', context=ctx)
+    return render(request,'place/place_detail.html', context=ctx)
 
 
 #TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
@@ -110,7 +113,7 @@ def place_list(request):
 
     # SORT
     if sort == 'pay':
-        places = places.order_by('-pay')
+        places = places.order_by('pay')
     elif sort == 'save': #save 케이스 정렬 추가
         places = places.order_by('-created_at')
     else:

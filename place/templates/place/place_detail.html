@@ -41,10 +41,12 @@
             </div>
         </div>
         <div class="place-tag">
-            <a href=""><span>#아방가르드</span></a>
-            <a href=""><span>#인공광</span></a>
-            <a href=""><span>#메이크업</span></a>
-            <a href=""><span>#무드</span></a>
+            {% for tag in tags %}
+                <a href="" class="portfolio_tag tag-button">
+                    #{{ tag.name }} 
+                </a>
+            {% endfor %}
+            
         </div>
     </section>
 
@@ -72,7 +74,14 @@
                 <img src="{{ place.thumbnail.image.url }}" alt="image">
             </div>
             <div class="image-list">
-                <img src="{{ place.place_images.image.url }}" alt="images">
+            {% for image in images %}
+                {% if image %}
+                <div class="image">
+                    <img src="{{ image.image.image.url }}" alt="images">
+                </div>
+                {% endif %}
+                
+            {% endfor %}
             </div>
         </div>
 
@@ -80,27 +89,44 @@
         
         <div class="place-comment">
             <div class="createComment createComment-{{place.id}}">
-                <input class="comment__value" type="text" placeholder="댓글을 작성해주세요.">
+                <input class="comment__value" type="text" placeholder="후기를 작성해주세요.">
                 <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="댓글 게시">
             </div>
             <div class="comments-{{ place.id }} comments">
                 {% for comment in comments %}
                 <div class="comment comment-{{ comment.id }}">
-                    <div class="comment-image"><img src={{comment.comment.writer.image.url}}</div>
-                    <span class="comment-writer">{{ comment.comment.writer }}</span>
-                    <span class="comment-content">{{ comment.comment.content }}</span>
-                    <span class="comment-created">{{ comment.comment.created_at }}</span>
+
+                    <div class="comment-content">
+                        <div class="comment-image"><img src={{comment.comment.writer.image.url}}/></div>
+                        <div>
+                            <span class="comment-writer">{{ comment.comment.writer }}</span>
+                            <span class="comment-created">{{ comment.comment.created_at }}</span>
+                            <p class="comment-text">{{ comment.comment.content }}</p>
+                        </div>
+                    </div>
                     
                     {% if request.user == comment.comment.writer %} 
-                        <span>수정</span> 
-                        <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                    <div class="modify-delete">
+                        <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
+                        <button class="delete" onclick="onClickDeleteComment({{ comment.id }}"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
+                    </div>
                     {% endif %}
                 </div>
+                <hr>
                 {% endfor %}
             </div>
         </div>
-
+        <div class="place-pagenation">
+            {% if place.get_previous %}
+                <a href="?page={{places.previous_page_number}}">이전글</a>
+            {% endif %}
+            <a href="{% url 'place:place_list' %}">목록보기</a>
+            {% if place.get_next %}
+                <a href="?page={{places.next_page_number}}">다음글</a>
+            {% endif %}        
+        </div>
     </section>
+    
 </main>
    
 

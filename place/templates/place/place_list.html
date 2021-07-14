@@ -21,7 +21,7 @@
         <!--search-->
         <div class="place-search">
             <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
-            <button class="btn_search" type="button" id="">찾기</button>
+            <button class="btn_search" type="button" id="btn_search">찾기</button>
         </div>
         <div style="display:none;">
             <form id="searchForm" method="get" action="{% url 'place:place_list' %}">
@@ -59,13 +59,12 @@
                         인기순
                     </option>
                     <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
-                        가격순
+                        낮은가격순
                     </option>
                 </select>
             </div>
             
         </div>
-                            <a href="{% url 'place:place_detail' place.pk %}">
     <hr>
         <!-- 게시글 목록-->
         {% for place in places %}
