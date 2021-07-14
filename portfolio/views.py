@@ -241,3 +241,27 @@ def portfolio_like(request):
         is_liked = not is_liked
         portfolio.save()
         return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})
+
+
+
+############################### comment ###############################
+@csrf_exempt
+def portfolio_comment_create(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        portfolio_id = data['id']
+        comment_value = data['value']
+        portfolio = Portfolio.objects.get(id=portfolio_id)
+        comment = Comment.objects.create(writer=request.user, content=comment_value)
+        PortfolioComment.objects.create(comment=comment, portfolio=portfolio)
+        return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
+
+
+@csrf_exempt
+def portfolio_comment_delete(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        comment_id = data['commentId']
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return JsonResponse({'comment_id': comment_id})

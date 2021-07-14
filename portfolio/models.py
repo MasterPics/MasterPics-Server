@@ -55,7 +55,10 @@ class PortfolioComment(models.Model):
     @classmethod
     def get_comments(cls, target):
         try:
-            comments = PortfolioComment.objects.filter(portfolio=target)
+            portfolioComments = PortfolioComment.objects.filter(portfolio=target)
+            comments = []
+            for portfolioComment in portfolioComments:
+                comments.append(portfolioComment.comment)
         except:
             comments = None
         finally:
