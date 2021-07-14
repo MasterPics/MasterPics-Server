@@ -1,3 +1,4 @@
+import place
 from django.db import models
 from core.models import *
 from user.models import User
@@ -56,7 +57,10 @@ class PlaceComment(models.Model):
     @classmethod
     def get_comments(cls, target):
         try:
-            comments = PlaceComment.objects.filter(place=target)
+            placeComments = PlaceComment.objects.filter(place=target)
+            comments = []
+            for placeComment in placeComments:
+                comments.append(placeComment.comment)
         except:
             comments = None
         finally:
