@@ -11,9 +11,9 @@
     <div class="container">
         <div>{{mypage_owner.username}}</div>
         <div>
-            {% for saved_posts in saved_posts %}
+            {% for tagged_portfolio in tagged_portfolios %}
                 <div>
-                    {{ saved_posts.title }}
+                    {{ tagged_portfolio.title }}
                 </div>
             {% endfor %}
         </div>

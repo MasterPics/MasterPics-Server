@@ -1,0 +1,20 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<body>
+    <div>
+        <div class='header'>
+            MasterPic's 비밀번호 변경 이메일 인증 발송
+        </div>
+        <div class='body'>
+            <div class='content'>
+                MasterPic's 비밀번호 변경 인증을 위한 이메일입니다. <br>
+                아래의 인증번호를 입력하여 이메일 인증을 완료해주세요.
+            </div>
+            <div class='smtp_email_auth'>
+                {{ auth_num }}
+            </div>
+        </div>
+    </div>           
+</body>
+</html>
+{% endautoescape %}

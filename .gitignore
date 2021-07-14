@@ -307,3 +307,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows,venv
 
+# secrets.json
+secrets.json
