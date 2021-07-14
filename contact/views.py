@@ -110,20 +110,25 @@ def contact_list(request):
 
 
 def contact_detail(request, pk):
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = Contact.objects.get(pk=pk)
     # contact_information = ContactInformation.objects.get(
     #     contact=contact)
 
-    # comment 를 가져오는 쿼리
-    comments = ContactComment.get_comments(contact)
+    # # comment 를 가져오는 쿼리
+    # comments = ContactComment.get_comments(contact)
 
     # contact_information.information.view_count += 1
     # contact_information.information.save()
 
     ctx = {
         'contact': contact,
-        'request_user': request.user,
-        'comments': comments,
+        'images': contact.images.all(),
+        'tags': contact.tags.all(),
+        'contact_owner': contact.user,
+        'num_of_imgs': len(contact.images.all()),
+        'comments': contact.comments.all(),
+        'like_users': contact.like_users.all(),
+        'bookmark_users': contact.bookmark_users.all()
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -176,6 +181,8 @@ def contact_create(request):
             contact.is_closed = False
             contact.location = location
             contact.save()
+            contact_form.save_m2m()
+            
             contact.image = request.FILES.get('images')
 
             for i, image in enumerate(request.FILES.getlist('images')):

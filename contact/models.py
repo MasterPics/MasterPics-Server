@@ -20,8 +20,9 @@ class Contact(models.Model):
     # common field
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(
-        upload_to=uuid_name_upload_to, verbose_name="Image")
+    thumbnail = models.ForeignKey(Images, related_name="contact_thumbnail", on_delete=models.CASCADE, blank=True, null=True, default=None)
+    # thumbnail = models.ImageField(
+    #     upload_to=uuid_name_upload_to, verbose_name="Image")
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,6 +39,14 @@ class Contact(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
+
+    # user app의 mypage에서 사용할 때 필요하다면 (상황보고) related_name 모두 contact와 관련되게 수정하기
+    # MTM fields
+    like_users = models.ManyToManyField(User, related_name='like_contacts', through='ContactLike')
+    bookmark_users = models.ManyToManyField(User, related_name='bookmark_contacts', through='ContactBookmark')
+    tags = TaggableManager(verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedContact')
+    comments = models.ManyToManyField(Comment, through='ContactComment')
+    images = models.ManyToManyField(Images, through='ContactImages')
 
     tags = TaggableManager(
         verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through=TaggedContact)
@@ -57,15 +66,24 @@ class Contact(models.Model):
     def classname(self):
         return self.__class__.__name__
 
-    def save(self, *args, **kwargs):
-        compressed_img = compress(self.thumbnail)
-        self.thumbnail = compressed_img
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     compressed_img = compress(self.thumbnail)
+    #     self.thumbnail = compressed_img
+    #     super().save(*args, **kwargs)
+
+
+class ContactLike(models.Model):
+    user = models.ForeignKey(User, related_name='contact_like_users', on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, related_name='like_contacts', on_delete=models.CASCADE)
+
+class ContactBookmark(models.Model):
+    user = models.ForeignKey(User, related_name='contact_bookmark_users', on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, related_name='bookmark_contacts', on_delete=models.CASCADE)
 
 
 class ContactComment(models.Model):
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, related_name='comment_contacts', on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, related_name='contact_comments', on_delete=models.CASCADE)
 
     @classmethod
     def get_comments(cls, contact):
@@ -83,6 +101,6 @@ class ContactInformation(models.Model):
         Information, related_name='contactInformations', on_delete=models.CASCADE)
 
 class ContactImages(models.Model):
-    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    image = models.ForeignKey(Images, related_name='contact_images', on_delete=models.CASCADE)
     contact = models.ForeignKey(to=Contact, null=True, blank=True,
                                   related_name='contact_images', on_delete=models.CASCADE)
