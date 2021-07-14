@@ -47,13 +47,13 @@ const modifyDeleteComment = (comment_id) => {
     targetCommentContainer.remove();
 }
 
-const onClickDeleteComment = async (comment_id) => {
+const onClickDeleteComment = async (commentId) => {
     const url = `/contact/comment_delete/`;
 
     const {
         data
     } = await axios.post(url, {
-        comment_id
+        commentId
     })
     modifyDeleteComment(data.comment_id);
 }

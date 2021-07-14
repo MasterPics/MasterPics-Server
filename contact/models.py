@@ -70,7 +70,10 @@ class ContactComment(models.Model):
     @classmethod
     def get_comments(cls, contact):
         try:
-            comments = ContactComment.objects.filter(contact=contact)
+            contactComments = ContactComment.objects.filter(contact=contact)
+            comments = []
+            for contactComment in contactComments:
+                comments.append(contactComment.comment)
         except:
             comments = None
         finally:

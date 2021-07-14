@@ -94,9 +94,9 @@
     <div class="comments-{{ contact.id }} comments">
         {% for comment in comments %}
         <div class="comment comment-{{ comment.id }}">
-            <span>{{ comment.comment.writer }}</span>
-            <span>{{ comment.comment.content }}</span>
-            <span>{{ comment.comment.created_at }}</span>
+            <span>{{ comment.writer }}</span>
+            <span>{{ comment.content }}</span>
+            <span>{{ comment.created_at }}</span>
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
         </div>
         {% endfor %}
