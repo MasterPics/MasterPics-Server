@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import *
 
 
-
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'title']
@@ -15,10 +14,10 @@ class PortfolioCommentAdmin(admin.ModelAdmin):
     list_display_links = ['portfolio', 'comment']
 
 
-@admin.register(PortfolioInformation)
-class PortfolioInformationAdmin(admin.ModelAdmin):
-    list_display = ['portfolio', 'information']
-    list_display_links = ['portfolio', 'information']
+# @admin.register(PortfolioInformation)
+# class PortfolioInformationAdmin(admin.ModelAdmin):
+#     list_display = ['portfolio', 'information']
+#     list_display_links = ['portfolio', 'information']
 
 # @admin.register(Participant)
 # class PortfolioParticipantAdmin(admin.ModelAdmin):
