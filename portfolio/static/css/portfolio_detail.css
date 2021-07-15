@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   height: 100%;
-  weight: 100%;
+  width: 100%;
   font-family: "NanumSquare", sans-serif;
 }
 .container {
@@ -12,9 +12,13 @@ body {
   justify-content: center;
   margin-bottom: 0;
 }
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
 /*********************** side-bar **************************/
 .side-bar {
-  float: left;
+  margin-right: 25px;
 }
 .side-bar__user-info,
 .side-bar__info,
@@ -23,7 +27,6 @@ body {
   border-radius: 3px;
   padding: 20px 50px;
   margin: 20px 0;
-  margin-right: 20px;
   width: 190px;
 }
 .side-bar__user-info {
@@ -83,11 +86,13 @@ body {
   padding: 5px 20px;
   float: left;
   margin: 3px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /*********************** post **************************/
 .post {
-  width: 80%;
-  float: right;
+  width: 800px;
 }
 .post__title-wrapper {
   display: flex;
@@ -127,7 +132,7 @@ body {
   font-size: 14px;
 }
 /*********************** carousel **************************/
-.post__images-wapper {
+.post__images-wrapper {
   box-sizing: border-box;
 }
 .slides {
@@ -154,11 +159,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  padding-top: 20px;
 }
 .img-container {
-  width: 100%;
-  height: 100px;
+  width: 800px;
+  height: 127px;
   overflow: hidden;
   overflow-x: auto;
   display: flex;
@@ -178,9 +183,8 @@ body {
 }
 .under-bar img {
   width: 16.66%;
-  height: 100px;
+  height: 100%;
   object-fit: cover;
-  float: left;
 }
 .under-bar img:hover {
   cursor: pointer;
