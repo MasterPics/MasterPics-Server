@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-from core.models import Comment, Information, Images
+from core.models import Comment, Images
 from django.shortcuts import get_object_or_404
 
 
@@ -33,24 +33,48 @@ class Portfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
+
+    # MTM fields
+    like_users = models.ManyToManyField(
+        User, related_name='likes', through='PortfolioLike')
+    bookmark_users = models.ManyToManyField(
+        User, related_name='bookmarks', through='PortfolioBookmark')
     tags = TaggableManager(
-        verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through=TaggedPortfolio)
+        verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedPortfolio')
+    participants = models.ManyToManyField(User, through='Participants')
+    comments = models.ManyToManyField(Comment, through='PortfolioComment')
+    images = models.ManyToManyField(Images, through='PortfolioImages')
 
     def classname(self):
         return self.__class__.__name__
 
 
+class PortfolioLike(models.Model):
+    user = models.ForeignKey(
+        User, related_name='portfolio_like_users', on_delete=models.CASCADE)
+    portfolio = models.ForeignKey(
+        Portfolio, related_name='like_portfolios', on_delete=models.CASCADE)
+
+
+class PortfolioBookmark(models.Model):
+    user = models.ForeignKey(
+        User, related_name='portfolio_bookmark_users', on_delete=models.CASCADE)
+    Portfolio = models.ForeignKey(
+        Portfolio, related_name='bookmark_portfolios', on_delete=models.CASCADE)
+
+
 class Participants(models.Model):
     portfolio = models.ForeignKey(
-        to=Portfolio, related_name='participants', on_delete=models.CASCADE)
+        to=Portfolio, related_name='portfolio_participants', on_delete=models.CASCADE)
     participant = models.ForeignKey(
         to=User, related_name='participants', on_delete=models.CASCADE)
 
 
 class PortfolioComment(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     comment = models.ForeignKey(
-        Comment, on_delete=models.CASCADE, blank=True, null=True)
+        Comment, on_delete=models.CASCADE, related_name='portfolio_comments', blank=True, null=True)
+    portfolio = models.ForeignKey(
+        Portfolio, related_name='comment_portfolios', on_delete=models.CASCADE)
 
     @classmethod
     def get_comments(cls, target):
@@ -62,17 +86,18 @@ class PortfolioComment(models.Model):
             return comments
 
 
-class PortfolioInformation(models.Model):
-    portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
-    information = models.OneToOneField(
-        Information, related_name='portfolioInformations', on_delete=models.CASCADE)
+class PortfolioImages(models.Model):
+    image = models.ForeignKey(
+        Images, related_name='portfolio_images', on_delete=models.CASCADE)
+    portfolio = models.ForeignKey(to=Portfolio, null=True, blank=True,
+                                  related_name='portfolio_images', on_delete=models.CASCADE)
+
+
+# class PortfolioInformation(models.Model):
+#     portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
+#     information = models.OneToOneField(
+#         Information, related_name='portfolioInformations', on_delete=models.CASCADE)
 
 # class PortfolioParticipant(models.Model):
 #     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 #     participant = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
-class PortfolioImages(models.Model):
-    image = models.ForeignKey(Images, on_delete=models.CASCADE)
-    portfolio = models.ForeignKey(to=Portfolio, null=True, blank=True,
-                                  related_name='portfolio_images', on_delete=models.CASCADE)
