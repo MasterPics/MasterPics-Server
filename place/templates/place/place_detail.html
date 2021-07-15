@@ -37,7 +37,7 @@
                 {% else %}
                     <i class="far fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
-                <p class="save__content">{{ place.save_users.count }}</p>
+                <p class="save__content">24{{ place.save_users.count }}</p>
             </div>
         </div>
         <div class="place-tag">
@@ -65,7 +65,7 @@
         <hr>
         
         <div class="place-detail-info">
-            <span><i class="fas fa-map-marker-alt"></i>{{ place.location }}</span>
+            <span><i class="fas fa-map-marker-alt"></i><p id="address">{{ place.location.address }}</p></span>
             <span>{{ place.created_at }}</span>
         </div>
 
@@ -95,7 +95,6 @@
             <div class="comments-{{ place.id }} comments">
                 {% for comment in comments %}
                 <div class="comment comment-{{ comment.id }}">
-
                     <div class="comment-content">
                         <div class="comment-image"><img src={{comment.comment.writer.image.url}}/></div>
                         <div>
@@ -120,7 +119,7 @@
             {% if place.get_previous %}
                 <a href="?page={{places.previous_page_number}}">이전글</a>
             {% endif %}
-            <a href="{% url 'place:place_list' %}">목록보기</a>
+            <a href="{% url 'place:place_list' %}">전체글보기</a>
             {% if place.get_next %}
                 <a href="?page={{places.next_page_number}}">다음글</a>
             {% endif %}        
@@ -138,4 +137,5 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
+
 {% endblock script %}

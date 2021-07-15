@@ -72,6 +72,7 @@ def place_detail(request, pk):
         'tags':tags,
         'images':images,
     }
+    
 
     return render(request,'place/place_detail.html', context=ctx)
 

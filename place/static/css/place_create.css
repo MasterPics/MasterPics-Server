@@ -11,29 +11,41 @@
 label {
   display: none;
 }
-
-
-.form-group {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-}
-
-.col-sm-10{
+.form-horizontal{
   width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.place-form input,
+.desc textarea,
+.location-form input{
+  width:100%;
+  padding:0.5rem;
+  font-size:0.8rem;
 }
 
+.location-lat{
+  display:none;
+}
+.location-lon{
+  display:none;
+}
+.images input{
+  padding:0;
+  margin:5px 0 10px 0;
+}
 .title input,
 .desc textarea,
+.location-form input,
 .location textarea,
 .pay input,
 .start_date input,
-.end_date input {
+.end_date input,
+.tags input {
   border: 0;
-  padding: 1px;
-  font-size: 1.1em;
   border: solid 1px #ccc;
-  margin-top: 4px;
-  width: 80%;
+  margin: 5px 0;
   border-radius: 3px;
 }
 
