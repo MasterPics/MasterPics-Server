@@ -77,15 +77,9 @@
                         <p class="place-desc">{{place.desc}}</p>
                     </a>
                     <div class="place-tag">
-                        <button><a href="">#아방가르드</a></button>
-                        <button><a href="">#인공광</a></button>
-                        <button><a href="">#메이크업</a></button>
-                        <button><a href="">#무드</a></button>
-                        <!-- 추가 -->
                         {% for tag in tags %}
                             <button><a href="">#{{ tag.name }} </a></button>
                         {% endfor %}
-                        <!---->
                     </div>
                     <div class="user-info">
                         <div class="place-user">    

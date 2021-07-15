@@ -67,6 +67,7 @@
         <div class="place-detail-info">
             <span><i class="fas fa-map-marker-alt"></i><p id="address">{{ place.location.address }}</p></span>
             <span>{{ place.created_at }}</span>
+            <input type="hidden" id="map_address" name="map_address" value="{{ place.location.address }}"/>
         </div>
 
         <div class="place-images">

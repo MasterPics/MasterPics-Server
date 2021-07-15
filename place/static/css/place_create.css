@@ -24,13 +24,13 @@ label {
   padding:0.5rem;
   font-size:0.8rem;
 }
-
+/*
 .location-lat{
   display:none;
 }
 .location-lon{
   display:none;
-}
+}*/
 .images input{
   padding:0;
   margin:5px 0 10px 0;

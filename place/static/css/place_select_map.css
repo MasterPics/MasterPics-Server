@@ -60,12 +60,12 @@ form{
 
 }
 .search-btn{
-  width:32px;
   height: 32px;
   background:#5200FF;
   color:white;
   border:none;
   border-radius: 5px;
+  padding:0.5rem;
 }
 
 .search-btn i{
