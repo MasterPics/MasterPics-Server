@@ -16,11 +16,17 @@ from taggit.managers import TaggableManager
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소
-    lat = models.FloatField(blank=True)  # 위도
-    lon = models.FloatField(blank=True)  # 경도
+    lat = models.FloatField(blank=True, null=True)  # 위도
+    lon = models.FloatField(blank=True, null=True)  # 경도
 
     def __str__(self):
         return self.address
+
+    def to_json(self):
+        return {"address": self.address,
+                "lat": self.lat,
+                "lon": self.lon
+                }
 
 
 class Tag(TagBase):

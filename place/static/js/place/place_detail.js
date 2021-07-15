@@ -18,7 +18,7 @@ var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
 
-geocoder.addressSearch("서울특별시 강동구 둔촌동 590-1", function(result, status) {
+geocoder.addressSearch(address, function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
      if (status === kakao.maps.services.Status.OK) {

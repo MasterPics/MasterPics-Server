@@ -9,8 +9,6 @@ from django.utils import timezone
 from core.models import *
 
 # for hashtag
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
 
 # TODO 전체참여자를 participant로 넣고 중계 모델 만들기
 # TODO class Participants portfolio 1개 participant 1명
