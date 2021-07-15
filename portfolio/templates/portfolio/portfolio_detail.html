@@ -84,23 +84,16 @@
             <div></div>
             <div class="post__date">{{portfolio.created_at}}</div>
         </div>
-        <div class="post__images-wapper">    
+        <div class="post__images-wrapper">    
             <!-- Container for the image gallery -->
             <div class="slides">
                 <!-- Images with number text -->
-                <div class="mySlides">
-                    <div class="numbertext">1 / {{num_of_imgs|add:"1"}}</div>
-                    <img src="{{portfolio.thumbnail.image.url}}">
-                    <!-- Next and previous buttons -->
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                </div>
                 {% for image in images %}
                 {% if image %}
                 <div class="mySlides">
-                    <div class="numbertext"> {{forloop.counter|add:"1"}} / {{num_of_imgs|add:"1"}}</div>
+                    <div class="numbertext"> {{forloop.counter}} / {{num_of_imgs}}</div>
                     <img src="{{image.image.image.url}}">
-                    <!-- Next and previous buttons -->
+                    <!-- Next and previous buttons-->
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
@@ -109,10 +102,9 @@
                 <!-- Images with under bar-->
                 <div class="under-bar">
                     <div class="img-container">
-                        <img class="demo" src="{{portfolio.thumbnail.image.url}}" onclick="currentSlide(1)" alt="img">
                         {% for image in images %}
                             {% if image %}
-                            <img class="demo" src="{{image.image.image.url}}" onclick="currentSlide({{forloop.counter}}+1)" alt="img">
+                            <img class="demo" src="{{image.image.image.url}}" onclick="currentSlide({{forloop.counter}})" alt="img">
                             {% endif %}
                         {% endfor %}
                     </div>
