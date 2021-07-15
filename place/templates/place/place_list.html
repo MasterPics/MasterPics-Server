@@ -78,7 +78,7 @@
 
                         <div>
                             {% if place.user == request_user %}
-                                <a href="{% url 'profile:profile' %}">
+                                <a href="{% url 'profile:mypage' %}">
                             {% else %}
                                 <a href="{% url 'profile:others_profile' place.user.user_identifier %}">
                             {% endif %}
