@@ -70,17 +70,25 @@ const modifyNewComment = (place_id, comment_id, value) => {
 }
 
 const onClickNewComment = async (id) => {
-    const url = `/place/${id}/comment_create/`;
-    const value = document.querySelector(`.createComment-${id} .comment__value`);
-    const value_text = value.value
-    const {
-        data
-    } = await axios.post(url, {
-        id,
-        value: value_text
-    })
+    try{
+        const url = `/place/comment_create/`;
+        const value = document.querySelector(`.createComment-${id} .comment__value`);
+        const value_text = value.value
+        const {
+            data
+        } = await axios.post(url, {
+            id,
+            value: value_text
+        })
 
-    modifyNewComment(id, data.comment_id, data.value);
+        modifyNewComment(id, data.comment_id, data.value);
+
+        const cmt = document.querySelector('.comment__value')
+        cmt.value = ''
+    }   catch (error) {
+        console.log(error)
+    }
+
 }
 
 const modifyDeleteComment = (comment_id) => {
@@ -89,13 +97,13 @@ const modifyDeleteComment = (comment_id) => {
     targetCommentContainer.remove();
 }
 
-const onClickDeleteComment = async (comment_id) => {
-    const url = `/place/${comment_id}/comment_delete/`;
+const onClickDeleteComment = async (commentId) => {
+    const url = `/place/comment_delete/`;
 
     const {
         data
     } = await axios.post(url, {
-        comment_id
+        commentId
     })
     modifyDeleteComment(data.comment_id);
 }

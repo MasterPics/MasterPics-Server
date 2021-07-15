@@ -181,8 +181,7 @@ def place_comment_create(request):
         place_id = data['id']
         comment_value = data['value']
         place = Place.objects.get(id=place_id)
-        comment = Comment.objects.create(writer=request.user, content=comment_value)
-        PlaceComment.objects.create(comment=comment, place=place)
+        comment = Comment.objects.create(writer=request.user, post=place, content=comment_value)
         return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value})
 
 
