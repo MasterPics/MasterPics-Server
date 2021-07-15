@@ -9,6 +9,9 @@ import os
 from uuid import uuid4
 from django.utils import timezone
 
+from taggit.models import TagBase
+
+
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소
@@ -46,3 +49,14 @@ class Images(models.Model):
         compressed_img = compress(self.image)
         self.image = compressed_img
         super().save(*args, **kwargs)
+
+
+class Tag(TagBase):
+
+    slug = models.SlugField(
+        verbose_name='slug',
+        unique=True,
+        max_length=100,
+        allow_unicode=True,
+    )
+
