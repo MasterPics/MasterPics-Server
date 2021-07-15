@@ -1,3 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+body{
+  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/*header*/
+.place-header{
+  background-image: url("../img/place-header.png");
+  background-repeat: no-repeat;
+  width:100vw;
+  height: 40vh;
+  background-size:cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.place-header-content{
+  margin:10%;
+  color:white;
+}
+
+.place-header-content p{
+  margin:1.6rem 0;
+  line-height:1.6rem;
+}
+
+.register-btn{
+  background-color: rgba(0,0,0,0);
+  border-radius: 100px;
+  border: 1px solid white;
+  padding:1rem;
+}
+.register-btn a{
+  color:white;
+  text-decoration: none;
+}
+
+/*컨텐츠*/
+.place-list{
+  margin:5% 0;
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+.place-list-grid{
+  display:grid;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+  grid-templates-rows:repeat(2,100%);
+  gird-templates-columns:repeat(5,100%);
+}
+
+/*폼,필터*/
+.place-search{
+  grid-column:1;
+  display:inline;
+  width:35rem;
+}
+.place-filter{
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size:0.8rem;
+}
+.pay{
+  margin:0 15px;
+}
+.search{
+  width:80%;
+  padding:0.8rem;
+  color:gray;
+  border:1px solid #cfcfcf;
+  border-radius: 10px;
+}
+.btn_search{
+  background-color:#5200ff;
+  color:white;
+  border:none;
+  border-radius: 10px;
+  padding:0.8rem;
+}
+.sort-box{
+  margin-left: 15px;
+}
+.sort{
+  text-align: center;
+  padding:0.5rem 1.1rem;
+  font-size:0.7rem;
+  border-radius: 10px;
+}
+
+
+/*구분선*/
+
+hr{
+  grid-column: span 2;
+  margin:3% 0;
+}
+
+/*컨텐츠 목록*/
+
+.place-content{
+  display: flex;
+  align-items: center;
+  margin:1.5rem;
+}
+.place-thumbnail{
+  width:250px; 
+  height:197px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+.place-content-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  margin-left:1rem;
+  width:270px;
+}
+
+.place-content-title a{
+  text-decoration: none;
+  color:black;
+}
+
+.place-title{
+  font-weight:bold;
+  font-size:1.1rem;
+}
+.place-address{
+  margin-top:0.7rem;
+}
+.place-desc{
+  margin-top:0.7rem;
+  font-size:0.9rem;
+  color:#6b6b6b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap:break-word; 
+  line-height: 1.2rem;
+  height: 2.4rem;
+}
+.place-tag{
+  display: inline-block;
+  margin:1rem 0;
+}
+.place-tag button{
+  border:1px solid #5200ff;
+  border-radius: 10px;
+  background-color:rgba(0, 0, 0, 0);
+  padding:0.5rem;
+  font-size: 0.5rem;
+  margin-right:2px;
+  margin-top:2px;
+}
+.place-tag a{
+  text-decoration: none;
+  color:#5200ff;
+}
+.user-info{
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+}
+.place-user{
+  display:flex;
+  align-items:center;
+  font-size:0.9rem;
+  margin-left: 0.5rem;
+}
+.user-name{
+  margin-left:0.5rem;
+}
+.user-category{
+  color:#a6a6a6;
+  font-size:0.5rem;
+  margin-top:0.3rem;
+}
+.user-image{
+  width:40px;
+  height:40px;
+  border-radius:100px;
+  object-fit:cover;
+}
+.place-like-count{
+  margin-left:1.2rem;
+  font-size:0.9rem;
+}
+.place-like-count i{
+  font-size:1.2rem;
+  color:#a2a2a2;
+}
+.place-like-count span{
+  margin-left:0.2rem;
+  color:#4f4f4f;
+}
+.place-save{
+  font-size:1.2rem;
+  color:#a2a2a2;
+}
+
+/*pagenation*/
+
+.place-pagenation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:0.9rem;
+  margin-bottom:2rem;
+}
+
+
 /* 무한스크롤 */
 
 .loading,
@@ -52,7 +280,9 @@
   }
 }
 
-/* Contact List CSS */
+
+/* Contact List CSS 
+
 a {
   text-decoration: none;
   color: black;
@@ -125,7 +355,7 @@ a {
   margin-right: 10px;
 }
 */
-
+/*
 .bar .btn_search {
   padding: 6px;
   border: solid 1px #ccc;
@@ -173,8 +403,8 @@ a {
 }
 
 .item_top img {
-  /* display: flex;
-  justify-content: center; */
+  display: flex;
+  justify-content: center; 
   width: 80%;
   align-content: center;
 }
@@ -186,7 +416,7 @@ a {
   padding: 5px 10px;
   border-top: #ccc 1px solid;
 }
-
+*/
 /* hover */
 
 .infinite-item {

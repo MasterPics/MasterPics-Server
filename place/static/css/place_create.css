@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.container{
+  position: relative;
+}
+label {
+  display: none;
+}
+.form-horizontal{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.place-form input,
+.desc textarea,
+.location-form input{
+  width:100%;
+  padding:0.5rem;
+  font-size:0.8rem;
+}
+/*
+.location-lat{
+  display:none;
+}
+.location-lon{
+  display:none;
+}*/
+.images input{
+  padding:0;
+  margin:5px 0 10px 0;
+}
+.title input,
+.desc textarea,
+.location-form input,
+.location textarea,
+.pay input,
+.start_date input,
+.end_date input,
+.tags input {
+  border: 0;
+  border: solid 1px #ccc;
+  margin: 5px 0;
+  border-radius: 3px;
+}
+
+.title input:focus,
+.desc textarea:focus,
+.location textarea:focus,
+.pay input:focus,
+.start_date input:focus,
+.end_date input:focus {
+  outline: none !important;
+  border-color: #719ece;
+  box-shadow: 0 0 10px #719ece;
+}
+
+select {
+  border: 0;
+  padding: 1px;
+  font-size: 1.1rem;
+  border: solid 1px #ccc;
+  margin-top: 5px;
+  width: 50%;
+  border-radius: 3px;
+}
+
+.is_closed input {
+  margin-top: 8px;
+}
+
+input.btn {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  padding: 5px 10px;
+  margin-left: 60px;
+}
+
+input.btn:hover {
+  cursor: pointer;
+}
+
+.place_create_form{
+  position: absolute;
+  top:0;
+  left:0;
+  padding:3.5rem;
+  z-index: 1000;
+  width:500px;
+  height: 100vh;
+  background-color: #FCFCFC;
+}
+.place_create_form p{
+  font-size: 0.8rem;
+  margin:1.2rem 0;
+}
+
+.place_create_form form{
+  margin:1.2rem 0;
+}
+
+.submit-btn{
+  width:100%;
+  font-size:1.01rem;
+  color:white;
+  background: #5200FF;
+  border-radius: 5px;
+  border: none;
+  padding:1rem;
+  margin:1rem 0;
+}
