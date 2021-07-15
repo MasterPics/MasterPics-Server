@@ -78,7 +78,7 @@
             {% for image in images %}
                 {% if image %}
                 <div class="image">
-                    <img src="{{ image.image.image.url }}" alt="images">
+                    <img src="{{ image.image.url }}" alt="images">
                 </div>
                 {% endif %}
                 
@@ -137,6 +137,11 @@
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
+<script type="text/javascript"> 
+    var address = "{{place.location.address}}"
+    var lat = {{place.location.lat}}
+    var lon = {{place.location.lon}}
+</script>
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
 
 {% endblock script %}
