@@ -33,6 +33,14 @@ class Place(models.Model):
     pay = models.PositiveIntegerField()
     free = models.BooleanField(default=False)
 
+    # user app의 mypage에서 사용할 때 필요하다면 (상황보고) related_name 모두 place와 관련되게 수정하기
+    # MTM fields
+    like_users = models.ManyToManyField(User, related_name='like_places', through='PlaceLike')
+    bookmark_users = models.ManyToManyField(User, related_name='bookmark_places', through='PlaceBookmark')
+    tags = TaggableManager(verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedContact')
+    comments = models.ManyToManyField(Comment, through='PlaceComment')
+    images = models.ManyToManyField(Images, through='PlaceImages')
+
     tags = TaggableManager(
         verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through=TaggedPlace)
 
@@ -48,10 +56,18 @@ class Place(models.Model):
             'tag_str': ' '.join([tag.tag for tag in tags.all()])
         }
 
+class PlaceLike(models.Model):
+    user = models.ForeignKey(User, related_name='place_like_users', on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, related_name='like_places', on_delete=models.CASCADE)
+
+class PlaceBookmark(models.Model):
+    user = models.ForeignKey(User, related_name='place_bookmark_users', on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, related_name='bookmark_places', on_delete=models.CASCADE)
+
 
 class PlaceComment(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, related_name='comment_places', on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, related_name='place_comments', on_delete=models.CASCADE)
 
     @classmethod
     def get_comments(cls, target):

@@ -59,15 +59,21 @@ def place_create(request):
 
 
 def place_detail(request, pk):
-    place = get_object_or_404(Place, pk=pk)
+    place = Place.objects.get(pk=pk)
+    # place = get_object_or_404(Place, pk=pk)
 
-    #comment 를 가져오는 쿼리
-    comments = PlaceComment.get_comments(place)
+    # #comment 를 가져오는 쿼리
+    # comments = PlaceComment.get_comments(place)
 
     ctx = {
         'place': place,
-        'comments': comments,
-        'request_user' : request.user
+        'images': place.images.all(),
+        'tags': place.tags.all(),
+        'place_owner': place.user,
+        'num_of_imgs': len(place.images.all()),
+        'comments': place.comments.all(),
+        'like_users': place.like_users.all(),
+        'bookmark_users': place.bookmark_users.all(),
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
