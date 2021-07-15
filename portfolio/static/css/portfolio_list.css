@@ -4,7 +4,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
-  height: 50%;
+  height: 300px;
   padding: 0 150px;
 }
 .info__title {
@@ -32,8 +32,7 @@
 .filter {
   width: 80%;
   margin: 0 auto;
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: 20px;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -183,12 +182,13 @@ figure.list__image:after {
 figure.list__image figcaption {
   z-index: 1;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 figure.list__image .list__tags-info {
   overflow: hidden;
   height: 24%;
-  position: absolute;
-  top: 40%;
   padding: 0 28px;
 }
 figure.list__image .list__tags {
