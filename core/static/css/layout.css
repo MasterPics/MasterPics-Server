@@ -190,9 +190,7 @@ nav a {
   display: flex;
   cursor: pointer;
 }
-.alliance{
-  color: #5200FF;
-}
+
 .footer__right .insta::before{
   width: 5px;
 }
