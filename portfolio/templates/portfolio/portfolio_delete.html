@@ -6,14 +6,40 @@
 {% endblock stylesheet %}
 
 {% block content %}
-<div class="container">
-    <div class="portfolio_delete">
-        <h1>Portfolio delete</h1><br>
-        <form action="{% url 'portfolio:portfolio_delete' portfolio.pk %}" method="POST">
-            {% csrf_token %}
-            <p>정말로 삭제하시겠습니까?</p>
-            <input class="delete_btn" type="submit" value="삭제"/>
-        </form>
+<div class="wrapper">
+    <div class="delete">
+        <h1 class="delete__text">Portfolio 삭제하기</h1>
+        <div class="delete__user">
+            {% if request.user.image  %}
+            <img class="delete__user-img" src="{{request.user.image.url}}" alt="img">
+            {% else %}
+            <img class="delete__user-img"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="img">
+            {% endif %}
+            <div class="delete__user-name">{{request.user.username}}</div>
+            <p class="delete__user-category">{{request.user.category}}</p>
+        </div>
+    </div>          
+    
+    <div class="line"></div>
+
+    <p class="form__text">정말로 삭제하시겠습니까?</p>
+
+    <div class="delete__img">
+        {% for image in portfolio.portfolio_images.all %}
+        {% if image %}
+        <img class="demo" src="{{image.image.image.url}}" alt="img">
+        {% endif %}
+    {% endfor %}
     </div>
+
+    <form action="{% url 'portfolio:portfolio_delete' portfolio.pk %}" method="POST">
+        {% csrf_token %}
+        
+        <div class="form__btn">
+            <input class="form__submit" type="submit" value="삭제하기"/>
+        </div>
+    </form>
 </div>
 {% endblock content%}
