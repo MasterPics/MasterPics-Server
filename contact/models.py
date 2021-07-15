@@ -41,3 +41,4 @@ class Contact(PostBase):
         compressed_img = compress(self.thumbnail)
         self.thumbnail = compressed_img
         super().save(*args, **kwargs)
+
