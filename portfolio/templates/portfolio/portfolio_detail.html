@@ -10,7 +10,8 @@
 {% if portfolio_owner == request.user %}
     <a class="choose_profile" href="{% url 'profile:mypage' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% else %}
-    {% comment %} <a class="choose_profile" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a> {% endcomment %}
+
+    <a class="choose_profile" href="{% url 'profile:others_profile' portfolio.user.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% endif %}
 </div>
 
@@ -81,18 +82,15 @@
                 <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
                     value="like"></i>
                 {% endif %}
-                {% comment %}
                 <span class="like__content">{{ portfolio.like_users.count }}</span>  
-                {% endcomment %}
                 
             </div>
         
             <div class="toright">
                 <div class="eye">
                     <i class="far fa-eye"></i>
-                    {% comment %}
                     <span class="view__content">{{portfolio.view_count}}</span>  
-                    {% endcomment %}
+
                     
                 </div>
                 <div class="save save-{{portfolio.id}}">
@@ -103,9 +101,7 @@
                     <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
                         value="save"></i>
                     {% endif %}
-                    {% comment %}
-                    <span class="save__content">{{ portfolio.save_users.count }}</span>  
-                    {% endcomment %}
+                    <span class="save__content">{{ portfolio.bookmark_users.count }}</span>  
                     
                 </div>
             </div>
