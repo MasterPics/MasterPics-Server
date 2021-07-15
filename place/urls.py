@@ -13,7 +13,7 @@ urlpatterns = [
     path('<int:pk>/delete/',
          view=views.place_delete, name='place_delete'),
 
-     #TODO place update시 사진 그대로 가져오기
+    # TODO place update시 사진 그대로 가져오기
     path('<int:pk>/update/',
          view=views.place_update, name='place_update'),
 

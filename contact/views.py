@@ -176,7 +176,22 @@ def contact_create(request):
             contact.is_closed = False
             contact.location = location
             contact.save()
-            contact.image = request.FILES.get('image')
+            contact.image = request.FILES.get('images')
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = ContactImages()
+                image_obj.contact_id = contact.id
+                image_obj.image = Images()
+                image_obj.image.image = image
+                image_obj.image.save()
+                image_obj.save()
+
+                if not i:
+                    contact.thumbnail = image_obj.image
+                    contact.save()
+                else:
+                    i += 1
 
             return redirect('contact:contact_detail', contact.pk)
 

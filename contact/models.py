@@ -84,3 +84,8 @@ class ContactInformation(models.Model):
     contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
     information = models.OneToOneField(
         Information, related_name='contactInformations', on_delete=models.CASCADE)
+
+class ContactImages(models.Model):
+    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    contact = models.ForeignKey(to=Contact, null=True, blank=True,
+                                  related_name='contact_images', on_delete=models.CASCADE)
