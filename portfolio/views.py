@@ -230,8 +230,7 @@ def portfolio_comment_create(request):
         portfolio_id = data['id']
         comment_value = data['value']
         portfolio = Portfolio.objects.get(id=portfolio_id)
-        comment = Comment.objects.create(writer=request.user, content=comment_value)
-        PortfolioComment.objects.create(comment=comment, portfolio=portfolio)
+        comment = Comment.objects.create(writer=request.user, post=portfolio, content=comment_value)
         return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
 
 
