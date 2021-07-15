@@ -6,8 +6,6 @@ import json
 from django.shortcuts import get_object_or_404
 
 
-
-
 class Contact(PostBase):
 
     user = models.ForeignKey(
@@ -15,7 +13,7 @@ class Contact(PostBase):
 
     file_attach = models.FileField()
     location = models.ForeignKey(
-        Location, on_delete=models.CASCADE, default=None, blank=True)
+        to=Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField()
     pay_negotiation = models.BooleanField(default=False)
     free = models.BooleanField(default=False)
@@ -23,7 +21,6 @@ class Contact(PostBase):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
-
 
     def to_json(self):
         return {
@@ -44,4 +41,3 @@ class Contact(PostBase):
         compressed_img = compress(self.thumbnail)
         self.thumbnail = compressed_img
         super().save(*args, **kwargs)
-

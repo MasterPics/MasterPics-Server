@@ -19,7 +19,7 @@ from taggit.models import TaggedItemBase
 class Portfolio(PostBase):
 
     user = models.ForeignKey(
-        to="user.User", related_name="user_portfolios", on_delete=models.CASCADE)
+        to="user.User", related_name="portfolios", on_delete=models.CASCADE)
     participants = models.ManyToManyField(
         to='user.User', through='Participants')
 

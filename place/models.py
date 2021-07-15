@@ -1,6 +1,6 @@
 from django.db import models
 from core.models import *
-from user.models import User
+
 from core.utils import uuid_name_upload_to
 from django.shortcuts import get_object_or_404
 

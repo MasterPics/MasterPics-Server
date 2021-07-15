@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 from .utils import uuid_name_upload_to, compress
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import redirect
@@ -20,18 +21,6 @@ class Location(models.Model):
 
     def __str__(self):
         return self.address
-
-
-class Images(models.Model):
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        compressed_img = compress(self.image)
-        self.image = compressed_img
-        super().save(*args, **kwargs)
 
 
 class Tag(TagBase):
@@ -59,7 +48,6 @@ class PostBase(models.Model):
         User, related_name='bookmarks', through='PostBookmark')
     tags = TaggableManager(
         verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedPost')
-    images = models.ManyToManyField(Images, through='PostImages')
 
     # foreing key
     thumbnail = models.ForeignKey('Images', related_name="thumbnail",
@@ -67,6 +55,20 @@ class PostBase(models.Model):
 
     def classname(self):
         return self.__class__.__name__
+
+
+class Images(models.Model):
+    post = models.ForeignKey(
+        to=PostBase, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(
+        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.image)
+        self.image = compressed_img
+        super().save(*args, **kwargs)
 
 
 class PostLike(models.Model):
@@ -83,13 +85,6 @@ class PostBookmark(models.Model):
         to=PostBase, related_name='post_post_bookmark', on_delete=models.CASCADE)
 
 
-class PostImages(models.Model):
-    image = models.ForeignKey(
-        Images, related_name='image_post_images', on_delete=models.CASCADE)
-    post = models.ForeignKey(to=PostBase, null=True, blank=True,
-                             related_name='post_post_images', on_delete=models.CASCADE)
-
-
 class TaggedPost(TaggedItemBase):
     content_object = models.ForeignKey(PostBase, on_delete=models.CASCADE)
     tag = models.ForeignKey(
@@ -101,7 +96,7 @@ class Comment(models.Model):
     writer = models.ForeignKey(
         User, related_name="writer_set", on_delete=models.PROTECT)
     post = models.ForeignKey(
-        to=PostBase, related_name='post_comments', on_delete=models.CASCADE)
+        to=PostBase, related_name='comments', on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

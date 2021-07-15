@@ -86,30 +86,8 @@ def portfolio_list(request):
 
 
 def portfolio_detail(request, pk):
+
     portfolio = Portfolio.objects.get(pk=pk)
-    # images = portfolio.images.all()
-
-    # portfolio_information = PortfolioInformation.objects.get(
-    #     portfolio=portfolio)
-
-    # images = portfolio.portfolio_images.all()
-
-    # # TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
-    # num_of_imgs = images.count
-
-    # tags = portfolio.tags.all()
-
-    # # comment 를 가져오는 쿼리
-    # comments = PortfolioComment.get_comments(portfolio)
-
-    # portfolio_owner = portfolio.user  # 게시글 작성자
-    # request_user = request.user  # 로그인한 유저
-
-    # portfolio_information.information.view_count += 1
-    # portfolio_information.information.save()
-
-    for tag in portfolio.tags.all():
-        print(tag)
 
     ctx = {
         'portfolio': portfolio,
@@ -120,7 +98,7 @@ def portfolio_detail(request, pk):
         'comments': portfolio.comments.all(),
         'like_users': portfolio.like_users.all(),
         'bookmark_users': portfolio.bookmark_users.all()
-        
+
     }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
@@ -173,22 +151,17 @@ def portfolio_create(request):
             portfolio.save()
             form.save_m2m()
 
-            portfolio.image = request.FILES.get('images')
-
+            print(request.FILES.getlist('images'))
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = PortfolioImages()
-                image_obj.portfolio_id = portfolio.id
-                image_obj.image = Images()
-                image_obj.image.image = image
-                image_obj.image.save()
+                image_obj = Images()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                image_obj.image = image
                 image_obj.save()
 
                 if not i:
-                    portfolio.thumbnail = image_obj.image
+                    portfolio.thumbnail = image_obj
                     portfolio.save()
-                # else:
-                #     i += 1
 
             messages.success(request, "posted!")
 
