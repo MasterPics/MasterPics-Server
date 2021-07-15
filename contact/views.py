@@ -110,19 +110,11 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    # contact_information = ContactInformation.objects.get(
-    #     contact=contact)
-
-    # comment 를 가져오는 쿼리
-    comments = Comment.objects.filter(post=contact)
-
-    # contact_information.information.view_count += 1
-    # contact_information.information.save()
 
     ctx = {
         'contact': contact,
         'request_user': request.user,
-        'comments': comments,
+        'comments': contact.comments.all()
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 

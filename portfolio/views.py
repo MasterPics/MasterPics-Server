@@ -89,12 +89,15 @@ def portfolio_list(request):
 def portfolio_detail(request, pk):
 
     portfolio = Portfolio.objects.get(pk=pk)
+    portfolio.view_count += 1
+    portfolio.save()
+    parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
         'portfolio': portfolio,
         'images': portfolio.images.all(),
         'tags': portfolio.tags.all(),
-        'comments': portfolio.comments.all(),
+        'comments': parent_comments,
         'like_users': portfolio.like_users.all(),
         'bookmark_users': portfolio.bookmark_users.all()
     }
@@ -163,15 +166,6 @@ def portfolio_create(request):
 
             messages.success(request, "posted!")
 
-            # 자동으로 comment 와 information 생성
-
-            # information = Information.objects.create()
-
-            # portfolio_information = PortfolioInformation.objects.create(
-            #     portfolio=portfolio,
-            #     information=information
-            # )
-
             return redirect('portfolio:portfolio_detail', portfolio.pk)
         else:
             print(form.errors)
@@ -190,12 +184,12 @@ def portfolio_save(request):
         portfolio_id = data["portfolio_id"]
         portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
         request_user = request.user
-        is_saved = request_user in portfolio.save_users.all()
+        is_saved = request_user in portfolio.bookmark_users.all()
         if is_saved:
-            portfolio.save_users.remove(
+            portfolio.bookmark_users.remove(
                 get_object_or_404(User, pk=request_user.pk))
         else:
-            portfolio.save_users.add(
+            portfolio.bookmark_users.add(
                 get_object_or_404(User, pk=request_user.pk))
         is_saved = not is_saved
         portfolio.save()
