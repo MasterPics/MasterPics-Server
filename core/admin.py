@@ -16,10 +16,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'writer', 'created_at']
 
 
-@admin.register(Information)
-class InformationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'like_counter']
-    list_display_links = ['id', 'like_counter']
+
 
 
 @admin.register(Images)
