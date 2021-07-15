@@ -12,7 +12,7 @@ class LocationForm(forms.ModelForm):
                 attrs={'class': 'form-control location location-address',
                        'id': 'location-address',
                        'style': 'width:100%; margin:0 auto;',
-                       'placeholder': ''}
+                       'placeholder': '주소를 입력하세요.(OO시 OO구 OO동 상세주소)'} #placeholder 추가.
             ),
             'lat': forms.TextInput(
                 attrs={'class': 'form-control location location-lat',
