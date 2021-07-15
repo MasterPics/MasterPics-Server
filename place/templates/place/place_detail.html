@@ -60,6 +60,14 @@
                     <button class="delete"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
                 </div>
             {% endif %}
+    <!--Comment-->
+    <div class="comments-{{ place.id }} comments">
+        {% for comment in comments %}
+        <div class="comment comment-{{ comment.id }}">
+            <span>{{ comment.writer }}</span>
+            <span>{{ comment.content }}</span>
+            <span>{{ comment.created_at }}</span>
+            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
         </div>
 
         <hr>

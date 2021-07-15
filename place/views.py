@@ -14,6 +14,10 @@ from core.forms import *
 from .models import *
 from .forms import *
 
+# for Comment, Save
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required
 def place_create(request):
@@ -171,3 +175,28 @@ def place_select(request):
         'form': form,
     }
     return render(request, 'place/place_select.html', context=ctx)
+
+
+
+
+
+############################### comment ###############################
+@csrf_exempt
+def place_comment_create(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data['id']
+        comment_value = data['value']
+        place = Place.objects.get(id=place_id)
+        comment = Comment.objects.create(writer=request.user, post=place, content=comment_value)
+        return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value})
+
+
+@csrf_exempt
+def place_comment_delete(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        comment_id = data['commentId']
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return JsonResponse({'comment_id': comment_id})
