@@ -3,37 +3,471 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/main_list.css' %}">
+<script src="{% static 'js/RandomMagazine.js' %}"></script>
+<script src="{% static 'js/MagazineCard.js' %}"></script>
+
 {% endblock stylesheet %}
 
 {% block content %}
 <!-- header -->
-<div class="wrapper">
-  <div class="main">
-    <span>P</span>
-    <span>H</span>
-    <a href="#header"><span class="letter"></span></a>
-    <span>I</span>
-    <span>N</span>
-    <span>G</span>
+
+<div class = "LandingBanner_1_bg">
+  <div class="LandingBanner_1">
+      <div class="logo">
+        <h1>MasterPic's</h1>
+        <h5>Find everything for your Masterpiece</h5>
+      </div>
+      <h1 class ="logo_back_m">M</h1>
+      <h1 class ="logo_back_p">Pic's</h1>
+    
+          <div class="card_container-0">
+            <img src="media/Rectangle 146.jpg">
+          </div>
+          <div class="card_container-1">
+            <img src="media/Rectangle 404.jpg">
+          </div>
+          <div class="card_container-2">  
+            <img src="media/Rectangle 145.jpg">
+          </div>
+          <div class="card_container-3">  
+            <img src= "media/Rectangle 124.jpg">
+          </div>
+
+      <div class="categories">
+        <div draggable class="category model">
+          Model
+        </div>
+        <div draggable class="category stylist">
+          Stylist
+        </div>
+        <div draggable class="category photographer">
+          Photographer
+        </div>
+        <div draggable class="category hair-makeup">
+          Hair&makeup
+        </div>
+      </div>
   </div>
-  <div style="margin-top:20px; text-align:center;  font-size:smaller ">SINCE 2021</div>
 </div>
 
-<div id="header" class="carousel-wrapper">
-  <div class="carousel">
+<!--AboutUs-->
 
-    <div class="carousel__photo initial">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">ABOUT US</p>
-        <div class="jb"><i class="fas fa-square-full"><a href="#"></a></i></div>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">개인작업을 위한 컨택트 및 포트폴리오 웹사이트 </p>
-        <p style="font-size:0.8rem;">contact for portfolio, portfolio for contact</p>
-        <p>포잉은 상호무페이를 권장하며, 개인작업을 통한 아티스트들 간의 <br> 성장 과정을 함께하는 것을 목표로 합니다.</p>
-      </div>
+<div class="AboutUs">
+  <div class="title-content">
+    <h1>ABOUT US</h1>
+    
+    <div class="goal">
+              마스터픽스는 촬영 관련 직군의 아티스트들이 인지도나 지인 기반이 아닌,
+              <br />
+              시안 및 포트폴리오를 기반으로 컨택트 할 수 있도록 도와주는
+              서비스입니다.
+              <br />
+              상호무페이의 개인작업을 권장하며, 아티스트들 간의 성장 과정을 함께하는
+              것을 목표로 하고 있습니다.
+              <br />
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="AboutUsMainContent">
+        <div class="container">
+          <div class="title">Contact</div>
+          <div class="desc">작업을 위한 시안 기반의 컨택트를 진행해보세요.</div>
+          <ul class="link"><a href="{% url 'contact:contact_list' %}">
+            바로가기</a>
+          </ul>
+        </div>
     </div>
 
+    <div class="AboutUsMainContent">
+        <div class="container">
+          <div class="title">Portfolio</div>
+          <div class="desc">다양한 아티스트들과 작업물을 공유해보세요.</div>
+          <ul class="link"><a href="{% url 'portfolio:portfolio_list' %}">
+            바로가기</a>
+          </ul>
+        </div>
+    </div>
+      
+    <div class="AboutUsMainContent">
+        <div class="container">
+          <div class="title">Reference</div>
+          <div class="desc">다양한 키워드의 레퍼런스를 통해 영감을 얻어보세요.</div>
+          <ul class="link"><a href="{% url 'reference:reference_local_list' %}">
+            바로가기</a>
+          </ul>
+        </div>
+    </div>
+
+    <div class="AboutUsMainContent">
+        <div class="container">
+          <div class="title">Place</div>
+          <div class="desc">원하는 무드의 키워드로 촬영을 위한 공간을 탐색하세요.</div>
+          <ul class="link"><a href="{% url 'place:place_list' %}">
+            바로가기</a>
+          </ul>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--RandomMagazine-->
+
+<div class = "RandomMagazine_bg">
+  <div class="RandomMagazine">
+          <div class="card_container-0">
+            <div class="magazine_img"><img src="media/Rectangle 130.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지{{user.username}}</span>
+                <div class="user_category">안녕{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                334{{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                1068{{meta.view}}
+                </div>   
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  65{{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+          
+          <div class="card_container-1">
+            <div class="magazine_img"><img src="media/Rectangle 159.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+
+          <div class="card_container-2">  
+            <div class="magazine_img"><img src="media/Rectangle 160.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+
+          <div class="card_container-3">  
+            <div class="magazine_img"><img src="media/Rectangle 161.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+
+          <div class="card_container-4">  
+            <div class="magazine_img"><img src="media/Rectangle 402.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+
+
+        <div class="text-0">
+          <h1>Random Magazine</h1>
+          <h2>with passionate artists</h2>
+          <p>
+            마스터픽스 아티스트들의 다양한 포트폴리오 작업물을 <br />
+            확인하세요.
+          </p>
+        </div>
+
+        <div class="text-1">
+          contact and portfolio website <br />
+          for passionate artists. <br />
+          masterpic's provides <br />
+          web services for <br />
+          personal photo work.
+        </div>
+
+        <div class="magazine_more">
+              <div>
+                <a href="{% url 'portfolio:portfolio_list' %}">View more <br />
+                MasterPic’s Artists</a>
+              </div>
+              <a href="{% url 'portfolio:portfolio_list' %}"><img src="media/Group 19.svg"></a>
+        </div>
+  </div>
+</div>
+
+<!--Randomcontact_bg-->
+
+<div class = "Randomcontact_bg">
+  <div class="RandomContact">
+          <div class="card_container-0">
+            <div class="magazine_img"><img src="media/Rectangle 130.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지{{user.username}}</span>
+                <div class="user_category">안녕{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <span class="date">2021.05.10{{meta.date}}</span>
+                <div class="pay">상호무페이{{meta.pay}}</div>
+              </div>
+          </div>
+          
+          <div class="card_container-1">
+            <div class="magazine_img"><img src="media/Rectangle 159.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <span class="date">2021.05.10{{meta.date}}</span>
+                <div class="pay">상호무페이{{meta.pay}}</div>
+              </div>
+          </div>
+
+          <div class="card_container-2">  
+            <div class="magazine_img"><img src="media/Rectangle 160.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <span class="date">2021.05.10{{meta.date}}</span>
+                <div class="pay">상호무페이{{meta.pay}}</div>
+              </div>
+          </div>
+
+          <div class="card_container-3">  
+            <div class="magazine_img"><img src="media/Rectangle 161.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="user_container">
+                <span class="username">신현지</span>
+                <div class="user_category">{{user.category}}</div>
+              </div>
+
+              <div class="meta_container">
+                <span class="date">2021.05.10{{meta.date}}</span>
+                <div class="pay">상호무페이{{meta.pay}}</div>
+              </div>
+          </div>
+
+          <div class="text-0">
+            <h1>Contact</h1>
+            <p>
+              함께 작업할 아티스트를 마스터픽스에서 찾아보세요.
+            </p>
+          </div>
+
+          <div class="contact_more">
+              <div>
+                <a href="{% url 'contact:contact_list' %}">View more <br />
+                Contact Post</a>
+              </div>
+              <a href="{% url 'contact:contact_list' %}"><img src="media/Group 19.svg"></a>
+        </div>
+  </div>
+</div>
+
+<!--RandomPlace-->
+
+<div class = "RandomPlace_bg">
+  <div class="RandomPlace">
+          <div class="card_container-0">
+            <div class="magazine_img"><img src="media/Rectangle 130.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="place_container">
+                <span class="placename">신현지{{place.placename}}</span>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                334{{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                1068{{meta.view}}
+                </div>   
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  65{{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+          
+          <div class="card_container-1">
+            <div class="magazine_img"><img src="media/Rectangle 159.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="place_container">
+                <span class="placename">신현지{{place.placename}}</span>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>
+
+          <div class="card_container-2">  
+            <div class="magazine_img"><img src="media/Rectangle 160.jpg"></div>
+              <div class="info_container">
+                <h2 class="title">제목</h2>
+              </div>
+
+              <div class="place_container">
+                <span class="placename">신현지{{place.placename}}</span>
+              </div>
+
+              <div class="meta_container">
+                <div class="like">
+                <i class="fas fa-heart"></i>
+                {{meta.like}}
+                </div>
+                <div class="view">
+                <i class="fas fa-eye"></i>
+                {{meta.view}}
+                </div>
+                <div class="bookmark">
+                  <i class="fas fa-bookmark"></i>
+                  {{meta.bookmark}}
+                </div>
+              </div>
+          </div>   
+
+        <div class="text-0">
+          <h1>Place Collection</h1>
+          <p>
+            마스터픽스 회원들이 추천하는 촬영 장소들을 알아보세요.
+          </p>
+        </div>
+
+        <div class="place_more">
+              <div>
+                <a href="{% url 'place:place_list' %}">View more <br />
+                Placce</a>
+              </div>
+              <a href="{% url 'place:place_list' %}"><img src="media/Group 19.svg"></a>
+        </div>
+  </div>
+</div>
+
+<!--
     <div class="carousel__photo">
       <div class="about_left">
         <p class="first" style="font-size:2rem; ">CONTACT</p>
@@ -101,7 +535,10 @@
   </div>
 </div>
 
+-->
+
 <!-- random template -->
+<!--
 <div id="magazine">
   <div class="title">
     <P>PH</P>
@@ -161,6 +598,7 @@
 
   </div>
 </div>
-
+-->
 
 {% endblock content%}
+
