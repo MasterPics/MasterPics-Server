@@ -1,6 +1,3 @@
-# from portfolio.models import PortfolioInformation
-from place.models import PlaceInformation
-from contact.models import ContactInformation
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.decorators import login_required
@@ -16,8 +13,6 @@ from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChange
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-# from portfolio.models import Portfolio, PortfolioInformation
-from core.models import Information
 from django.contrib.auth import update_session_auth_hash
 
 # ----------------------smtp-------------------------------
