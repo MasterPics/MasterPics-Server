@@ -69,7 +69,7 @@
                             <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
                             <figcaption>
                                 <div class="list__tags-info">
-                                    {% for tag in tags %}
+                                    {% for tag in portfolio.tags.all %}
                                     <p class="list__tags">
                                         #{{ tag.name }} 
                                     </p>
