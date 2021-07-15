@@ -101,5 +101,6 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    parent_comment = models.ForeignKey(to='self', on_delete=models.PROTECT)
+    parent_comment = models.ForeignKey(
+        to='self', related_name='child_comments', on_delete=models.PROTECT, null=True)
     deleted = models.BooleanField(default=False)
