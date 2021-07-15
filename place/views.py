@@ -33,20 +33,16 @@ def place_create(request):
             place.location = location
             place.save()
 
-            place.image = request.FILES.get('image')
             for i, image in enumerate(request.FILES.getlist('images')):
-                image_obj = PlaceImages()
-                image_obj.place_id = place.id
-                image_obj.image = Images()
-                image_obj.image.image = image
-                image_obj.image.save()
+
+                image_obj = Images()
+                image_obj.post = Place.objects.get(id=place.id)
+                image_obj.image = image
                 image_obj.save()
 
                 if not i:
-                    place.thumbnail = image_obj.image
+                    place.thumbnail = image_obj
                     place.save()
-                else:
-                    i += 1
 
             return redirect('place:place_detail', place.pk)
 
@@ -65,19 +61,15 @@ def place_create(request):
 def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
 
-    #comment 를 가져오는 쿼리
-    comments = PlaceComment.get_comments(place)
-
     ctx = {
         'place': place,
-        'comments': comments,
-        'request_user' : request.user
+        'comments': place.comments.all(),
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
 
 
-#TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
+# TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
 @login_required
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
