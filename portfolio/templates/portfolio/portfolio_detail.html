@@ -40,13 +40,13 @@
         <!-- carousel, next/previous controls -->
         <div class="slides">
             <div class="mySlides fade">
-                <div class="numbertext">1 / {{num_of_imgs }}</div>
+                <div class="numbertext">1 / {{ images.count }}</div>
                     <div class="img_container"><img src="{{portfolio.thumbnail.image.url}}"></div>
             </div>
             {% for image in images %}
                 {% if image %}
                     <div class="mySlides fade">
-                        <div class="numbertext"> {{forloop.counter }} / {{num_of_imgs }}</div>
+                        <div class="numbertext"> {{forloop.counter }} / {{ images.count }}</div>
                         <div class="img_container"><img src="{{image.image.url}}"></div>
                     </div>
                 {% endif %}
@@ -71,7 +71,6 @@
             <!-- <div class="portfolio_content"> {{portfolio.updated_at}}</div> -->
         </div>
 
-        commen
         <!-- like, view_count, save -->
         <div class="portfolio_info">
             <div class="like like-{{portfolio.id}}">

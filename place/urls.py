@@ -17,6 +17,4 @@ urlpatterns = [
     path('<int:pk>/update/',
          view=views.place_update, name='place_update'),
 
-    path('select/', view=views.place_select,
-         name='place_select'),  # TODO : 나중에 삭제할 것
 ]

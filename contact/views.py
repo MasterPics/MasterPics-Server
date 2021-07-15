@@ -104,7 +104,6 @@ def contact_list(request):
         'sort': sort,
         'category': category,
         'search': search,
-        'request_user': request.user,
     }
     return render(request, 'contact/contact_list.html', context=context)
 

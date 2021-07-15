@@ -40,6 +40,7 @@ class PostBase(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     desc = models.TextField()
+    view_count = models.IntegerField(default=0)
 
     # MTM fields
     like_users = models.ManyToManyField(

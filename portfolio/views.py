@@ -79,7 +79,8 @@ def portfolio_list(request):
     except EmptyPage:
         portfolios = paginator.page(paginator.num_pages)
 
-    context = {'portfolios': portfolios, 'request_user': request.user, 'sort': sort,
+    context = {'portfolios': portfolios,
+               'sort': sort,
                'category': category, }
 
     return render(request, 'portfolio/portfolio_list.html', context=context)
@@ -93,12 +94,9 @@ def portfolio_detail(request, pk):
         'portfolio': portfolio,
         'images': portfolio.images.all(),
         'tags': portfolio.tags.all(),
-        'portfolio_owner': portfolio.user,
-        'num_of_imgs': len(portfolio.images.all()),
         'comments': portfolio.comments.all(),
         'like_users': portfolio.like_users.all(),
         'bookmark_users': portfolio.bookmark_users.all()
-
     }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
