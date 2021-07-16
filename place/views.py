@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q, Count
+from django.db.models import Q,Count
 import json
 
 # infinite loading
@@ -64,19 +64,20 @@ def place_create(request):
 
 def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
-
+    
     ctx = {
         'place': place,
         'tags': place.tags.all(),
         'images': place.images.all(),
         'comments': place.comments.all(),
-}
+    }
+    
 
-    return render(request, 'place/place_detail.html', context=ctx)
+    return render(request,'place/place_detail.html', context=ctx)
 
 
 # TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
-@ login_required
+@login_required
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
 
@@ -113,10 +114,11 @@ def place_list(request):
     # SORT
     if sort == 'pay':
         places = places.order_by('pay')
-    elif sort == 'save':  # save 케이스 정렬 추가
+    elif sort == 'save': #TODO : 좋아요 구현 후 좋아요 많은 순 정렬 추가
         places = places.order_by('-created_at')
     else:
         places = places.order_by('-created_at')
+    
 
     if search:
         places = places.filter(
@@ -124,6 +126,7 @@ def place_list(request):
             Q(desc__icontains=search) |  # 내용검색
             Q(user__username__icontains=search)  # 질문 글쓴이검색
         ).distinct()
+    
 
     # infinite scroll
     places_per_page = 8
@@ -146,7 +149,7 @@ def place_list(request):
     return render(request, 'place/place_list.html', context=ctx)
 
 
-@ login_required
+@login_required
 def place_delete(request, pk):
 
     place = get_object_or_404(Place, pk=pk)

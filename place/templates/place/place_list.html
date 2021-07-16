@@ -43,11 +43,11 @@
                 <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
             </div>
             
-            <!--내 위치 주변-->
+            <!--내 위치 주변
             <div class="around">
                 <label for="around_me">내 위치 주변</label>
                 <input type="checkbox" class="around_me" name="around_me" value="around_me">
-            </div>
+            </div>-->
 
             <!--sort https://wikidocs.net/71806-->
             <div class="sort-box">
@@ -74,12 +74,18 @@
                     <a href="{% url 'place:place_detail' place.pk %}">
                         <p class="place-title">{{place.title}}</p>
                         <p class="place-address">{{place.location}}</p>
-                        <p class="place-desc">{{place.desc}}</p>
+                        <p class="place-pay">
+                            {% if place.pay == 0 %}
+                            pay: 상호무페이
+                            {% else %}
+                            pay: {{place.pay}}원
+                            {% endif %}
+                        </p>
                     </a>
                     <div class="place-tag">
-                        {% for tag in tags %}
-                            <button><a href="">#{{ tag.name }} </a></button>
-                        {% endfor %}
+                    {% for tag in place.tags.all %}  
+                    <button><a href="">#{{ tag.name }} </a></button>
+                    {% endfor %}    
                     </div>
                     <div class="user-info">
                         <div class="place-user">    
@@ -91,10 +97,11 @@
                         </div>
                         <div class="place-like-count">
                             <i class="far fa-heart"></i>
-                            <span>1244</span>
+                            <span>{{place.like_users.count}}</span>
                         </div>
-                        <div class="place-save">
+                        <div class="place-save-count">
                             <i class="far fa-bookmark"></i>
+                            <span>{{place.bookmark_users.count}}</span>
                         </div>
                     </div>
                 </div>
