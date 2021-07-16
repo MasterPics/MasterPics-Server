@@ -1,5 +1,5 @@
 const modifyNewComment = (portfolio_id, comment_id, value) => {
-    const CommentContainer = document.querySelector(`.comments-${portfolio_id}`);
+    const CommentContainer = document.querySelector(`.comments__container-${portfolio_id}`);
     console.log(CommentContainer)
 
     const tempContainer = document.createElement("div");
@@ -47,13 +47,13 @@ const modifyDeleteComment = (comment_id) => {
     targetCommentContainer.remove();
 }
 
-const onClickDeleteComment = async (comment_id) => {
+const onClickDeleteComment = async (commentId) => {
     const url = `/portfolio/comment_delete/`;
 
     const {
         data
     } = await axios.post(url, {
-        comment_id
+        commentId
     })
     modifyDeleteComment(data.comment_id);
 }
