@@ -197,14 +197,20 @@ def mypage(request):
     return render(request, 'profile/mypage.html', ctx)
 
 # mypage / 포트폴리오 / 나의 포트폴리오
-# TODO : 아마 필요없을듯, 추후 삭제
+@csrf_exempt
 def mypage_portfolio(request):
-    ctx = {
-        'portfolios': request.user.portfolios.all(),
-        'contacts' : request.user.contacts.all(),
-    }
+    portfolios_query = request.user.portfolios.all()
+    portfolios = []
+    for portfolio in portfolios_query:
+        portfolios.append({
+            'id': portfolio.id,
+            'title': portfolio.title,
+            'like_count': portfolio.like_users.count(),
+            'view_count': portfolio.view_count,
+            'thumbnail_url': portfolio.thumbnail.image.url
+        })
 
-    return render(request, 'profile/mypage_portfolio.html', ctx)
+    return JsonResponse({"portfolios": portfolios})
         
 
 # mypage / 포트폴리오 / 태그된 목록
@@ -225,22 +231,27 @@ def mypage_portfolio_tagged(request):
 
 
 # mypage / 게시글 / 컨택트
-# TODO : 아마 필요없을듯, 추후 삭제
 def mypage_post_contact(request):
-    ctx = {
-        'portfolios': request.user.portfolios.all(),
-        'contacts' : request.user.contacts.all(),
-    }
+    contacts_query = request.user.contacts.all()
+    contacts = []
+    for contact in contacts_query:
+        contacts.append({
+            'id': contact.id,
+            'title': contact.title,
+            'like_count': contact.like_users.count(),
+            'view_count': contact.view_count,
+            'thumbnail_url': contact.thumbnail.image.url
+        })
 
-    return render(request, 'profile/mypage_post_contact.html', ctx)
+    return JsonResponse({"contacts": contacts})
 
 
 # mypage / 게시글 / 플레이스
 @csrf_exempt
 def mypage_post_place(request):
-    user_places = request.user.places.all()
+    places_query = request.user.places.all()
     places = []
-    for place in user_places:
+    for place in places_query:
         places.append({
             'id': place.id,
             'title': place.title,
