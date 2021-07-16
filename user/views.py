@@ -383,20 +383,16 @@ def password_change(request):
 
 
 # TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
-def others_profile(request, pk):
+def others_mypage(request, pk):
     profile_owner = get_object_or_404(User, user_identifier=pk)
-    portfolios = profile_owner.portfolios.all()
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
 
     ctx = {
         'profile_owner': profile_owner,
-        'portfolios': portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
+        'portfolios': profile_owner.portfolios.all(),
+        'contacts': profile_owner.contacts.all()
     }
 
-    return render(request, 'profile/profile_others.html', context=ctx)
+    return render(request, 'profile/mypage_others.html', context=ctx)
 
 
 # ----recovery password 관련----

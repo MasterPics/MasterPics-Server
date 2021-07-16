@@ -22,7 +22,7 @@ urlpatterns = [
      path('social_user_more_info/', view=views.social_user_more_info, name='social_user_more_info'),
 
      #TODO 다른 사람꺼 보기
-     path('others/<str:pk>', view=views.others_profile, name='others_profile'),
+     path('others/<str:pk>', view=views.others_mypage, name='others_mypage'),
 
      # smpt
      path('smtp_sending_success/', view=views.smtp_sending_success, name='smtp_sending_success'),
