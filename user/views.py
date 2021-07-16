@@ -210,16 +210,15 @@ def mypage_portfolio(request):
 # mypage / 포트폴리오 / 태그된 목록
 @csrf_exempt
 def mypage_portfolio_tagged(request):
-    taggeds = request.user.participant_participants.all()
+    tagged_portfolios_query = Portfolio.objects.filter(participants=request.user)
     tagged_portfolios = []       # request.user 태그된 portfolio 객체들
-    for tagged in taggeds:
-        portfolio = tagged.portfolio
+    for portfolio in tagged_portfolios_query:
         tagged_portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
             'like_count': portfolio.like_users.count(),
             'view_count': portfolio.view_count,
-            'thumbnail': portfolio.thumbnail
+            'thumbnail_url': portfolio.thumbnail.image.url
             })
 
     return JsonResponse({"tagged_portfolios": tagged_portfolios})
@@ -247,7 +246,7 @@ def mypage_post_place(request):
             'title': place.title,
             'like_count': place.like_users.count(),
             'view_count': place.view_count,
-            'thumbnail': place.thumbnail
+            'thumbnail_url': place.thumbnail.image.url
         })
 
     return JsonResponse({"places": places})
