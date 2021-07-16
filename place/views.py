@@ -68,6 +68,7 @@ def place_detail(request, pk):
     ctx = {
         'place': place,
         'tags': place.tags.all(),
+        'images': place.images.all(),
         'comments': place.comments.all(),
 }
 
