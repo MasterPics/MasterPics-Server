@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/login.css' %}">
+{% endblock stylesheet %} 
+
 {% block content %}
 <div class="login__container">
     <div class="login__logo">
@@ -9,7 +13,7 @@
             To. 현지
             로고 들어가는 곳. 지금은 로고 사진이 없어서 src 빈칸으로 둠
         {% endcomment %}
-        <img src="" alt="MasterPic's_logo">
+       MasterPic's
     </div>
 
     <div class="login__body">
@@ -35,7 +39,19 @@
                 </div>
             {% endfor %}
 
-            {% if error %}
+            {% if messages %}
+                {% for msg in messages%}
+                    {% if msg.tags == 'success' %}
+                        <div class='login__form-success'>
+                            {{ msg }}
+                        </div>
+                    {% else %}
+                        <div class='login__form-error'>
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% elif error %}
                 <div class='login__form-error'>
                     {{ error }}
                 </div>
@@ -44,6 +60,7 @@
             <input type="submit" class="submit_btn " value="로그인" />
         </form>
     </div>
+ 
 
     <div class="sub-login__container">
         {% comment %}
@@ -67,16 +84,17 @@
             </a>
         </div>
     </div>
-
-
+    <hr style="width:24%; height:1.5px; border:none;background-color:B4B4B4;">
     {% comment %} 소셜 로그인 {% endcomment %}
+
+    </br>
     <div class="social-login__container">
         <div class="social-login__title">
             소셜 로그인
         </div>
         <div class="social-login__body">
-            <li><a href="{% url 'google_login' %}">google</a></li>
-            <li><a href="{% url 'naver_login' %}">naver</a></li>
+            <li><img src="media/Rectangle 142.svg"><a href="{% url 'google_login' %}">구글 로그인</a></li>
+            <li><img src="media/Rectangle 280.svg"><a href="{% url 'naver_login' %}">네이버 로그인</a></li>
         </div>
     </div>
 </div>

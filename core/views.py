@@ -4,3 +4,4 @@ from django.shortcuts import render
 def main_list(request):
     ctx = {}
     return render(request, 'core/main_list.html', context=ctx)
+    

@@ -11,14 +11,22 @@
 
 {% block content %}
 <div class="choose">
-    <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+    {% if contact.user == request_user %}
+    <a class="choose_profile" href="{% url 'profile:mypage' %}">
+        <div class="btn"><span class="noselect">Show Profile</span></div>
+    </a>
+    {% else %}
+    <a class="choose_profile" href="{% url 'profile:others_profile' contact.user.user_identifier %}">
+        <div class="btn"><span class="noselect">Show Profile</span></div>
+    </a>
+    {% endif %}
 </div>
-    
+
 <!-- 게시글 작성자 정보 -->
 <div class="container_8">
     <div class="user">
         <div class="user_img">
-            {% if contact.user.image  %}
+            {% if contact.user.image %}
             <img class="profile_image" src="{{contact.user.image.url}}" alt="profile_image">
             {% else %}
             <img class="profile_image"
@@ -82,13 +90,14 @@
         <input class="comment__value" type="text" placeholder="댓글 달기...">
         <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="게시">
     </div>
+    <!--TODO Ajax 표현 시 유저 이름도 보이도록 해야 함-->
     <div class="comments-{{ contact.id }} comments">
-        {% for comment in contact.contact_comments.all %}
+        {% for comment in comments %}
         <div class="comment comment-{{ comment.id }}">
-            <span style="line-height: 1.8em;">{{ comment.content }}</span>
-            {% if request.user == comment.contact.user %}
+            <span>{{ comment.writer }}</span>
+            <span>{{ comment.content }}</span>
+            <span>{{ comment.created_at }}</span>
             <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
-            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -108,5 +117,5 @@
 
 {% block script %}
 <script src="{% static 'js/contact_save.js' %}"></script>
-<script src="{% static 'js/contact_comment.js' %}"></script>    
+<script src="{% static 'js/contact_comment.js' %}"></script>
 {% endblock script %}

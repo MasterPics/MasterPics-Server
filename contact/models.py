@@ -1,28 +1,23 @@
 from django.db import models
-from .utils import uuid_name_upload_to
+from .utils import uuid_name_upload_to, compress
 from user.models import User
-from core.models import Location, Comment, Information
+from core.models import *
 import json
+from django.shortcuts import get_object_or_404
 
-class Contact(models.Model):
-    # common field
+
+class Contact(PostBase):
+
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
-    title = models.CharField(max_length=30)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    desc = models.TextField()
 
-    # specific field
     file_attach = models.FileField()
     location = models.ForeignKey(
-        Location, on_delete=models.CASCADE, default=None, blank=True)
+        to=Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField()
     pay_negotiation = models.BooleanField(default=False)
     free = models.BooleanField(default=False)
 
-    # TODO decorator 추가하기 지민아 화이팅
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
@@ -42,10 +37,7 @@ class Contact(models.Model):
     def classname(self):
         return self.__class__.__name__
 
-class ContactComment(models.Model):
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
-class ContactInformation(models.Model):
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    information = models.OneToOneField(Information, related_name='contactInformations', on_delete=models.CASCADE)
+    # def save(self, *args, **kwargs):
+    #     compressed_img = compress(self.thumbnail)
+    #     self.thumbnail = compressed_img
+    #     super().save(*args, **kwargs)

@@ -2,7 +2,7 @@ from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 
 
 # local signup
@@ -12,6 +12,13 @@ class SignupForm(UserCreationForm):
         fields = ('is_ToS', 'user_id', 'username', 'email',)
         # labels = {'is_ToS' : '약관 동의'}
         # help_texts = {'is_ToS' : "약관에 동의해야합니다."}
+    
+    # smtp
+    def save(self, commit=True):
+        user = super(SignupForm, self).save(commit=False)
+        user.is_active = False
+        user.save()
+        return user
 
 # local login
 class LoginForm(forms.ModelForm):
@@ -57,3 +64,36 @@ class ProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': field + " form",
                 'id': 'form-id', })
+
+
+
+# ----recovery password 관련----
+class RecoveryPwForm(forms.Form):
+    user_id = forms.CharField(widget=forms.TextInput,)
+    username = forms.CharField(widget=forms.TextInput,)
+    email = forms.EmailField(widget=forms.EmailInput,)
+
+    class Meta:
+        fields = ('user_id', 'username', 'email',)
+
+    def __init__(self, *args, **kwargs):
+        super(RecoveryPwForm, self).__init__(*args, **kwargs)
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].widget.attrs.update({
+            'id': 'pw_form_id',
+        })
+        self.fields['username'].label = '이름'
+        self.fields['username'].widget.attrs.update({
+            'id': 'pw_form_name',
+        })
+        self.fields['email'].label = '이메일'
+        self.fields['email'].widget.attrs.update({
+            'id': 'pw_form_email',
+        })
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password2'].label = '새 비밀번호 확인'

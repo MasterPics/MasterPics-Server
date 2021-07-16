@@ -6,7 +6,15 @@
 {% endblock stylesheet %}
 
 {% block content %}
-<div>
+<section class="reference-header">
+    <h2>Reference</h2>
+    <p>촬영을 위한 레퍼런스들을 검색하고 영감을 얻을 수 있는 레퍼런스들을 저장해보세요!</p>
+    <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
+    </div>
+</section>
+<section class="reference-content">
     <div class="grid">
         {% for tag in tags %}
         <div class="grid-item">
@@ -53,7 +61,7 @@
         <div class="loading" style="display: none;">Loading...</div>
     </a>
     {% endif %}
-</div>
+</section>
 {% endblock content %}
 
 

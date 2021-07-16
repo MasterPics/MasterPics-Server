@@ -5,125 +5,148 @@
 <link rel="stylesheet" href="{% static 'css/portfolio_detail.css' %}">
 {% endblock stylesheet %}
 
+
 {% block content %}
-<div class="choose">
-    <a class="choose_profile" href="{% url 'profile:profile' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
+<div class="wrapper">
+    <div class="side-bar">
+        <div class="side-bar__user-info">
+            {% if portfolio_owner == request_user %}
+            <a class="side-bar__user" href="{% url 'profile:mypage' %}">
+            {% else %}
+            <a class="side-bar__user" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}">
+            {% endif %}
+                <div class="side-bar__text">
+                    게시자
+                </div>
+                {% if portfolio_owner.image  %}
+                <img class="side-bar__user-img" src="{{portfolio_owner.image.url}}" alt="img">
+                {% else %}
+                <img class="side-bar__user-img"
+                    src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                    alt="img">
+                {% endif %}
+                <div class="side-bar__user-name">{{portfolio_owner.username}}</div>
+                <div class="side-bar__user-category">{{portfolio_owner.category}}</div>
+            </a>
+        </div>
+        <!-- like, view_count, save -->
+        <div class="side-bar__info">
+            <div class="eye">
+                <i class="far fa-eye"></i>
+                <span class="view__content">{{portfolio.view_count}}</span>
+            </div>
+            <div class="like like-{{portfolio.id}}">
+                {% if request_user in portfolio.like_users.all %}
+                <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                    value="like"></i>
+                {% else %}
+                <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                    value="like"></i>
+                {% endif %}
+                <span class="like__content">{{ portfolio.like_users.count }}</span>
+            </div>
+            <div class="save save-{{portfolio.id}}">
+                {% if request_user in portfolio.save_users.all %}
+                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
+                    value="save"></i>
+                {% else %}
+                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
+                    value="save"></i>
+                {% endif %}
+                <span class="save__content">{{ portfolio.save_users.count }}</span>
+            </div>
+        </div>
+        <!-- tags -->
+        {% if tags %}
+        <div class="side-bar__tags-info">
+            {% for tag in tags %}
+            <a href="" class="side-bar__tags">
+                #{{ tag.name }} 
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="post">
+        <div class="post__title-wrapper">
+            <h1 class="post__title">{{portfolio.title}}</h1>
+            <div class="post__edit">
+                <!-- 게시글 작성자만 수정/삭제 가능 -->
+                {% if request_user.pk == portfolio_owner.pk %}
+                <a class="post__edit-btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">수정</a>
+                <a class="post__edit-btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post__line"></div>
+        <div class="post__info-wrapper">
+            <div></div>
+            <div class="post__date">{{portfolio.created_at}}</div>
+        </div>
+        <div class="post__images-wrapper">    
+            <!-- Container for the image gallery -->
+            <div class="slides">
+                <!-- Images with number text -->
+                {% for image in images %}
+                {% if image %}
+                <div class="mySlides">
+                    <div class="numbertext"> {{forloop.counter}} / {{num_of_imgs}}</div>
+                    <img src="{{image.image.image.url}}">
+                    <!-- Next and previous buttons-->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <!-- Images with under bar-->
+                <div class="under-bar">
+                    <div class="img-container">
+                        {% for image in images %}
+                            {% if image %}
+                            <img class="demo" src="{{image.image.image.url}}" onclick="currentSlide({{forloop.counter}})" alt="img">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="post__desc">{{portfolio.desc}}</div>
+        <div class="post__line"></div>
+        <div class="post__comment">
+            <div id="comment" class="createComment createComment-{{portfolio.id}}">
+                <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
+                <input class="comment__btn" onclick="onClickNewComment({{ portfolio.id }})" type="submit" value="댓글 게시">
+            </div>
+            <div class="comments__container-{{portfolio.id}}">
+                {% for comment in comments %}
+                <div class="comment comment-{{ comment.id }}">
+                    <span>{{ comment.writer }}</span>
+                    <span>{{ comment.content }}</span>
+                    <span>{{ comment.created_at }}</span>
+                    <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="댓글 삭제">
+                </div>
+                {% endfor %}
+            </div>
+        </div>     
+        <div class="post__line"></div>
+        <div class="post__list-btn">
+            <a href="{% url 'portfolio:portfolio_list'%}">목록보기</a> 
+        </div>
+    </div>
 </div>
 
-<div class="container_4">
-    <!-- 게시글 작성자 정보 -->
-    <div class="user">
-        <div class="user_img">
-            {% if portfolio_owner.image  %}
-            <img class="profile_image" src="{{portfolio_owner.image.url}}" alt="profile_image">
-            {% else %}
-            <img class="profile_image"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="profile_image">
-            {% endif %}
-        </div>
-        <div class="portfolio_owner">User: {{portfolio_owner.username}}</div>
-        <div class="portfolio_owner">Category: {{portfolio_owner.category}}</div>
-    </div>
-
-
-    <div class="portfolio_title">{{portfolio.title}}</div>
     
+
     
-    <div class="portfolio_detail">
-        <div class="detail_left">
-            <!-- carousel, next/previous controls -->
-            <div class="slides">
-                <div class="mySlides fade">
-                    <div class="numbertext">1 / {{num_of_imgs|add:"1"}}</div>
-                    <div class="img_container"><img src="{{portfolio.thumbnail.url}}"></div>
-                </div>
-                {% for image in images %}
-                {% if image %}
-                <div class="mySlides fade">
-                    <div class="numbertext"> {{forloop.counter|add:"1"}} / {{num_of_imgs|add:"1"}}</div>
-                    <div class="img_container"><img src="{{image.image.url}}"></div>
-                </div>
-                {% endif %}
-                {% endfor %}
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-
-            <!-- desc, tag, date -->
-            <div class="portfolio_content">{{portfolio.desc}}</div>
-            <div class="portfolio_tags">
-                {% for tag in tags %}
-                <a href="" class="portfolio_tag tag-button">
-                    #{{ tag.name }} 
-                </a>
-                {% endfor %}
-            </div>
-            <div class="portfolio_date">
-                <!-- TODO 날짜기준 -->
-                <div class="portfolio_content">{{portfolio.created_at}}</div>
-                <!-- <div class="portfolio_content"> {{portfolio.updated_at}}</div> -->
-            </div>
-
-            <!-- like, view_count, save -->
-            <div class="portfolio_info">
-                <div class="like like-{{portfolio.id}}">
-                    {% if request_user in portfolio.like_users.all %}
-                    <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
-                        value="like"></i>
-                    {% else %}
-                    <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
-                        value="like"></i>
-                    {% endif %}
-                    <span class="like__content">{{ portfolio.like_users.count }}</span>
-                </div>
-            
-                <div class="toright">
-                    <div class="eye">
-                        <i class="far fa-eye"></i>
-                        <span class="view__content">{{portfolio.view_count}}</span>
-                    </div>
-                    <div class="save save-{{portfolio.id}}">
-                        {% if request_user in portfolio.save_users.all %}
-                        <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
-                            value="save"></i>
-                        {% else %}
-                        <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
-                            value="save"></i>
-                        {% endif %}
-                        <span class="save__content">{{ portfolio.save_users.count }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 게시글 작성자만 수정/삭제 가능 -->
-            {% if request_user.username == portfolio_owner.username %}
-            <div class="portfolio_button">
-                <a class="edit_btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">게시물 수정</a>
-                <a class="delete_btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- carousel, thumbnail image controls -->
-        <div class="detail_right">
-            <div class="img_container">
-                <img class="demo" src="{{portfolio.thumbnail.url}}" onclick="currentSlide(1)" alt="img">
-                {% for image in images %}
-                {% if image %}
-                <img class="demo" src="{{image.image.url}}" onclick="currentSlide({{forloop.counter}}+1)" alt="img">
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock content %}
+
+
 
 {% block script %}
 <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_like.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_save.js' %}"></script>
-
-
+<script type="text/javascript" src="{% static 'js/portfolio_comment.js' %}"></script>
 {% endblock script %}

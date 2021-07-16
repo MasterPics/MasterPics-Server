@@ -145,7 +145,7 @@ function displayPlaces(places) {
     }
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
     listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    menuEl.scrollTop = 10;
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
     userMarker.setPosition(map.getCenter());
@@ -156,7 +156,7 @@ function getListItem(index, places) {
     let el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
+                '   <h6>' + places.place_name + '</h6>';
     if (places.road_address_name) {
         itemStr += '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';
