@@ -141,8 +141,6 @@ def logout(request):
         return redirect('core:main_list')
 
 # social sign up 시 -> 추가 정보 입력받기
-
-
 def social_user_more_info(request):
     if request.method == 'POST':
         form = SocialUserInfoForm(request.POST, instance=request.user)
@@ -186,8 +184,6 @@ def withdrawal(request):
 
 
 # ----mypage 관련----
-# TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
-#         -> 파라미터에 user_identifier 추가, mypage_owner 바꾸기
 def mypage(request):
     ctx = {
         'portfolios': request.user.portfolios.all(),
@@ -195,6 +191,20 @@ def mypage(request):
     }
 
     return render(request, 'profile/mypage.html', ctx)
+
+
+# TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
+def others_mypage(request, pk):
+    profile_owner = get_object_or_404(User, user_identifier=pk)
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'portfolios': profile_owner.portfolios.all(),
+        'contacts': profile_owner.contacts.all()
+    }
+
+    return render(request, 'profile/mypage_others.html', context=ctx)
+    
 
 # mypage / 포트폴리오 / 나의 포트폴리오
 @csrf_exempt
@@ -380,19 +390,6 @@ def password_change(request):
             'form': form,
         }
         return render(request, 'profile/password_change.html', ctx)
-
-
-# TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
-def others_mypage(request, pk):
-    profile_owner = get_object_or_404(User, user_identifier=pk)
-
-    ctx = {
-        'profile_owner': profile_owner,
-        'portfolios': profile_owner.portfolios.all(),
-        'contacts': profile_owner.contacts.all()
-    }
-
-    return render(request, 'profile/mypage_others.html', context=ctx)
 
 
 # ----recovery password 관련----
