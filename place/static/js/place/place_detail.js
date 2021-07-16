@@ -88,7 +88,6 @@ const modify = (place_id, is_saved) => {
 
 }
 
-
 const modifyNewComment = (place_id, comment_id, value) => {
     const CommentContainer = document.querySelector(`.comments-${place_id}`);
     console.log(CommentContainer)
@@ -96,15 +95,42 @@ const modifyNewComment = (place_id, comment_id, value) => {
     const tempContainer = document.createElement("div");
     tempContainer.className = `comment comment-${comment_id}`;
 
+    const commentContent = document.createElement("div")
+    commentContent.className = `comment-content`;
 
-    tempContainer.textContent = value;
+    const commentImage = document.createElement("div")
+    commentImage.className = `comment-image`;
+    const commentUserImage = document.createElement("img")
+    commentUserImage.setAttribute('src',userImage);
+    commentImage.appendChild(commentUserImage);
+
+    const commentInfo = document.createElement("div")
+    const commentWriter =  document.createElement("span")
+    commentWriter.className = `comment-writer`;
+    commentWriter.textContent = writer;
+
+    const commentCreated =  document.createElement("span")
+    commentCreated.className = `comment-created`;
+    commentCreated.textContent = "방금 전";
+
+    const commentText =  document.createElement("p")
+    commentText.className = `comment-text`;
+    commentText.textContent = value;
 
     const deleteBtn = document.createElement("input");
-    deleteBtn.className = "comment-btn";
+    deleteBtn.className = "delete";
     deleteBtn.setAttribute("type", "submit");
     deleteBtn.setAttribute("value", "삭제");
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
+    commentInfo.appendChild(commentWriter)
+    commentInfo.appendChild(commentCreated)
+    commentInfo.appendChild(commentText)
+
+    commentContent.appendChild(commentImage)
+    commentContent.appendChild(commentInfo)
+
+    tempContainer.appendChild(commentContent)
     tempContainer.appendChild(deleteBtn);
     CommentContainer.appendChild(tempContainer);
 }

@@ -116,6 +116,7 @@
             <!-- 댓글 리스트 -->
             <div class="comments-{{ place.id }} comments">
                 {% for comment in comments %}
+
                 <div class="comment comment-{{ comment.id }}">
                     <div class="comment-content">
                         <div class="comment-image"><img src={{comment.writer.image.url}}/></div>
@@ -128,12 +129,11 @@
                     <!-- 댓글 수정&삭제 버튼 -->
                     {% if request.user == comment.writer %} 
                     <div class="modify-delete">
-                        <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-                        <button class="delete" onclick="onClickDeleteComment({{ comment.id }}"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
+                        <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
+                        <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제"/>
                     </div>
                     {% endif %}
                 </div>
-                <hr>
                 {% endfor %}
             </div>
         </div>
@@ -157,28 +157,31 @@
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <!-- Initialize Swiper -->
-    <script>
-      var swiper = new Swiper(".mySwiper", {
-        spaceBetween: 0,
-        slidesPerView: 5,
-        freeMode: false,
-        watchSlidesVisibility: true,
-        watchSlidesProgress: true,
-      });
-      var swiper2 = new Swiper(".mySwiper2", {
-        spaceBetween: 10,
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        thumbs: {
-          swiper: swiper,
-        },
-      });
-    </script>
+<!-- Swiper api -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 0,
+    slidesPerView: 5,
+    freeMode: false,
+    watchSlidesVisibility: true,
+    watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+    spaceBetween: 10,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    thumbs: {
+        swiper: swiper,
+    },
+    });
+</script>
+
+<!--map api,variable-->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript">
     var address = "{{place.location.address}}";
@@ -186,6 +189,13 @@
     var lon = {{place.location.lon}}
 </script>
 
+<!--comment variable-->
+<script>
+    var userImage = '{{request.user.image.url}}'
+    var writer = '{{request.user}}'
+</script>
+
+<!-- detail js -->
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
 
 {% endblock script %}
