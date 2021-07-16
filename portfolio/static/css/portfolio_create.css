@@ -6,7 +6,7 @@ body {
   font-family: "NanumSquare", sans-serif;
 }
 .container {
-  width: 65%;
+  width: 75%;
   margin: 50px auto;
 }
 /*******************************************************/
@@ -110,7 +110,7 @@ form {
   border-radius: 3px;
   display: flex;
   align-items: center;
-  padding: 5px 90px;
+  padding: 5px 130px;
 }
 .form__upload-text {
   color: #1e1e1e;
@@ -142,7 +142,7 @@ form {
   border-radius: 3px;
   height: 190px;
   width: 100%;
-  padding: 6px 16px;
+  padding: 4px;
   overflow: hidden;
   overflow-y: auto;
 }
