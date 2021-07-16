@@ -2,9 +2,26 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/local_signup.css' %}">
+{% endblock stylesheet %} 
+
 {% block content %}
 <div class="signup__container">
+    <div class="login__logo">
+        {% comment %}
+            To. 현지
+            로고 들어가는 곳. 지금은 로고 사진이 없어서 src 빈칸으로 둠
+        {% endcomment %}
+        MasterPic's
+    </div>
+    
+    <!--
     <div class="ToS__body">
+        {% comment %}
+            To. 현지
+            약관 내용이 여기 들어가는게 좋을 것 같아서 일단 여기 뒀는데, 디자인팀과의 회의 후에 정해지면 다시 말해줄게!!ㅎㅎ
+        {% endcomment %}
         <span class="ToS__title">
             개인정보 수집 및 이용에 대한 안내
         </span>
@@ -12,11 +29,15 @@
         <br>
         마스터픽스 사용을 위해 그냥 동의해주세요
     </div>
+    -->
 
     <div class="signup__body">
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form.visible_fields %}
+            {% if field.id_for_label == 'id_is_ToS' %}
+
+            {% else %}
                 <div class="form-field-group {{ field.name }}_group">
                     <label for="{{ field.id_for_label }}" class="col-sm-2 {{ field.name }} ">{{ field.label }}</label>
                     <div class='col-sm-10 {{ field.name }}'>
@@ -37,7 +58,19 @@
                         {% endif %}
                     </div>
                 </div>
+            {% endif %}
             {% endfor %}
+
+            <!--Tos 분리-->
+            <div class="form__group {{ field.name }}}">
+                <div class="form__label">
+                    <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
+                </div>
+                <div class="form__input">
+                    {{form.is_ToS}}
+                </div>
+            </div>
+
 
             <input type="submit" class="submit_btn " value="가입하기" />
         </form>

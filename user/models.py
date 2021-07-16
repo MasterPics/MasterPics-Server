@@ -12,45 +12,7 @@ from hashid_field import HashidField, HashidAutoField
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.contrib.auth.hashers import make_password, is_password_usable
-
-
-# Create your models here.
-
-# from django.contrib.auth.models import BaseUserManager
-
-
-# class MyUserManager(BaseUserManager):
-#     """
-#     A custom user manager to deal with emails as unique identifiers for auth
-#     instead of usernames. The default that's used is "UserManager"
-#     """
-
-#     def _create_user(self, email, password, **extra_fields):
-#         """
-#         Creates and saves a User with the given email and password.
-#         """
-#         if not email:
-#             raise ValueError('The Email must be set')
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, **extra_fields)
-#         user.set_password(password)
-#         user.save()
-#         return user
-
-#     def create_superuser(self, email, password, **extra_fields):
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-#         extra_fields.setdefault('is_active', True)
-
-#         if extra_fields.get('is_staff') is not True:
-#             raise ValueError('Superuser must have is_staff=True.')
-#         if extra_fields.get('is_superuser') is not True:
-#             raise ValueError('Superuser must have is_superuser=True.')
-#         return self._create_user(email, password, **extra_fields)
-
-
-
-# ------------------------new--------------------------------
+ 
 
 # User field
 from phone_field import PhoneField
@@ -80,13 +42,13 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    user_id = models.CharField(max_length=20, unique=True)     # user id
-    username = models.CharField(max_length=20, unique=False)    # user name (본명 혹은 예명)
-    email = models.EmailField('email address', unique=True)
+    user_id = models.CharField(max_length=20, unique=True, verbose_name='아이디')     # user id
+    username = models.CharField(max_length=20, unique=False, verbose_name='사용자 이름')    # user name (본명 혹은 예명)
+    email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
-    category = models.CharField(max_length=20, choices=CATEGORY)
+    category = models.CharField(max_length=20, choices=CATEGORY, default='otheruse')
     image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
-    desc = models.TextField(blank=True)
+    desc = models.TextField(blank=True, verbose_name='프로필 소개')
     phone = PhoneField(blank=True)
     phone_public = models.BooleanField(default=True)
     instagram = models.CharField(max_length=20, blank=True)
@@ -94,6 +56,7 @@ class User(AbstractUser):
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
     user_identifier = models.CharField(max_length=100, blank=True, null=True)
+    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username', 'email',]

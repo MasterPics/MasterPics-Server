@@ -9,17 +9,14 @@ import datetime
 class ContactForm(forms.ModelForm):
     # 해당 모델 자체의 정보를 담는 네임스페이스 클래스
     # https://stackoverflow.com/questions/57241617/what-is-exactly-meta-in-django
+    images = forms.ImageField(
+            widget=forms.ClearableFileInput(attrs={'multiple': True}))  # 다중이미지
+            
     class Meta:
+
         model = Contact
-        fields = ('title', 'desc', 'pay', 'start_date', 'end_date', 'thumbnail',
-                  'file_attach')
-        labels = {
-            'title': '제목',
-            'desc': '설명',
-            'pay': '페이',
-            'start_date': '날짜',
-            'end_date': '',
-        }
+        fields = ('title', 'desc', 'start_date', 'end_date', 
+                  'file_attach', 'pay', 'tags')
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
             'desc': forms.Textarea(
