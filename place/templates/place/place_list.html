@@ -74,7 +74,13 @@
                     <a href="{% url 'place:place_detail' place.pk %}">
                         <p class="place-title">{{place.title}}</p>
                         <p class="place-address">{{place.location}}</p>
-                        <p class="place-desc">{{place.desc}}</p>
+                        <p class="place-pay">
+                            {% if place.pay == 0 %}
+                            pay: 상호무페이
+                            {% else %}
+                            pay: {{place.pay}}원
+                            {% endif %}
+                        </p>
                     </a>
                     <div class="place-tag">
                     {% for tag in place.tags.all %}  
@@ -93,8 +99,9 @@
                             <i class="far fa-heart"></i>
                             <span>{{place.like_users.count}}</span>
                         </div>
-                        <div class="place-save">
+                        <div class="place-save-count">
                             <i class="far fa-bookmark"></i>
+                            <span>{{place.bookmark_users.count}}</span>
                         </div>
                     </div>
                 </div>
