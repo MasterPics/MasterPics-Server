@@ -186,89 +186,71 @@ def withdrawal(request):
 # TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
 #         -> 파라미터에 user_identifier 추가, mypage_owner 바꾸기
 def mypage(request):
-    return redirect('profile:mypage_portfolio')
+    ctx = {
+        'portfolios': request.user.portfolios.all(),
+        'contacts' : request.user.contacts.all(),
+    }
+
+    return render(request, 'profile/mypage.html', ctx)
 
 # mypage / 포트폴리오 / 나의 포트폴리오
-
-
+# TODO : 아마 필요없을듯, 추후 삭제
 def mypage_portfolio(request):
-    mypage_owner = request.user
-    portfolios = mypage_owner.portfolios.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
     ctx = {
-        'mypage_owner': mypage_owner,
-        'portfolios': portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
+        'portfolios': request.user.portfolios.all(),
+        'contacts' : request.user.contacts.all(),
     }
 
     return render(request, 'profile/mypage_portfolio.html', ctx)
+        
 
 # mypage / 포트폴리오 / 태그된 목록
-
-
+@csrf_exempt
 def mypage_portfolio_tagged(request):
-    mypage_owner = request.user
-    # mypage_owner 태그된 participant 객체들
-    taggeds = mypage_owner.participants.all()
-    tagged_portfolios = []       # mypage_owner 태그된 portfolio 객체들
+    taggeds = request.user.participant_participants.all()
+    tagged_portfolios = []       # request.user 태그된 portfolio 객체들
     for tagged in taggeds:
-        tagged_portfolios.append(tagged.portfolio)
+        portfolio = tagged.portfolio
+        tagged_portfolios.append({
+            'id': portfolio.id,
+            'title': portfolio.title,
+            'like_count': portfolio.like_users.count(),
+            'view_count': portfolio.view_count,
+            'thumbnail': portfolio.thumbnail
+            })
 
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    return JsonResponse({"tagged_portfolios": tagged_portfolios})
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'tagged_portfolios': tagged_portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_portfolio_tagged.html', ctx)
 
 # mypage / 게시글 / 컨택트
-
-
+# TODO : 아마 필요없을듯, 추후 삭제
 def mypage_post_contact(request):
-    mypage_owner = request.user
-    contacts = mypage_owner.contacts.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
     ctx = {
-        'mypage_owner': mypage_owner,
-        'contacts': contacts,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
+        'portfolios': request.user.portfolios.all(),
+        'contacts' : request.user.contacts.all(),
     }
 
     return render(request, 'profile/mypage_post_contact.html', ctx)
 
+
 # mypage / 게시글 / 플레이스
-
-
+@csrf_exempt
 def mypage_post_place(request):
-    mypage_owner = request.user
-    places = mypage_owner.places.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    user_places = request.user.places.all()
+    places = []
+    for place in user_places:
+        places.append({
+            'id': place.id,
+            'title': place.title,
+            'like_count': place.like_users.count(),
+            'view_count': place.view_count,
+            'thumbnail': place.thumbnail
+        })
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'places': places,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_post_place.html', ctx)
+    return JsonResponse({"places": places})
 
 
 # mypage / 저장 목록 / 포트폴리오
-
-
 def mypage_bookmark_portfolio(request):
     mypage_owner = request.user
     # bookmarked_informations = mypage_owner.save_users.all()      # mypage_owner가 bookmark한 information 객체들
