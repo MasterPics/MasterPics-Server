@@ -199,7 +199,10 @@ def mypage(request):
 # mypage / 포트폴리오 / 나의 포트폴리오
 @csrf_exempt
 def mypage_portfolio(request):
-    portfolios_query = request.user.portfolios.all()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    portfolios_query = mypage_owner.portfolios.all()
     portfolios = []
     for portfolio in portfolios_query:
         portfolios.append({
@@ -216,7 +219,10 @@ def mypage_portfolio(request):
 # mypage / 포트폴리오 / 태그된 목록
 @csrf_exempt
 def mypage_portfolio_tagged(request):
-    tagged_portfolios_query = Portfolio.objects.filter(participants=request.user)
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    tagged_portfolios_query = Portfolio.objects.filter(participants=mypage_owner)
     tagged_portfolios = []       # request.user 태그된 portfolio 객체들
     for portfolio in tagged_portfolios_query:
         tagged_portfolios.append({
@@ -232,7 +238,10 @@ def mypage_portfolio_tagged(request):
 
 # mypage / 게시글 / 컨택트
 def mypage_post_contact(request):
-    contacts_query = request.user.contacts.all()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    contacts_query = mypage_owner.contacts.all()
     contacts = []
     for contact in contacts_query:
         contacts.append({
@@ -249,7 +258,10 @@ def mypage_post_contact(request):
 # mypage / 게시글 / 플레이스
 @csrf_exempt
 def mypage_post_place(request):
-    places_query = request.user.places.all()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    places_query = mypage_owner.places.all()
     places = []
     for place in places_query:
         places.append({
@@ -267,7 +279,10 @@ def mypage_post_place(request):
 # mypage / 저장 목록 / 포트폴리오
 @csrf_exempt
 def mypage_bookmark_portfolio(request):
-    bookmarked_portfolios_query = Portfolio.objects.filter(bookmark_users=request.user)
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_portfolios_query = Portfolio.objects.filter(bookmark_users=mypage_owner)
     bookmarked_portfolios = []
     for portfolio in bookmarked_portfolios_query:
         bookmarked_portfolios.append({
@@ -285,7 +300,10 @@ def mypage_bookmark_portfolio(request):
 # mypage / 저장 목록 / 컨택트
 @csrf_exempt
 def mypage_bookmark_contact(request):
-    bookmarked_contacts_query = Contact.objects.filter(bookmark_users=request.user)
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_contacts_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_contacts = []
     for contact in bookmarked_contacts_query:
         bookmarked_contacts.append({
@@ -303,7 +321,10 @@ def mypage_bookmark_contact(request):
 # mypage / 저장 목록 / 플레이스
 @csrf_exempt
 def mypage_bookmark_place(request):
-    bookmarked_places_query = Contact.objects.filter(bookmark_users=request.user)
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_places_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_places = []
     for place in bookmarked_places_query:
         bookmarked_places.append({
