@@ -57,33 +57,49 @@ const modify = (place_id, is_saved) => {
     }
 
 }
-//category
-const onClickLink = (category) => {
-    const categoryIdInput = document.querySelector('#category')
-    categoryIdInput.value = category
+//filter
+$(".no_pay").on('change', function() {
+        $("#no_pay").val($(this).val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    });
+/*
+const onClickLink = (filter) => {
+    const filterIdInput = document.querySelector('#filter')
+    filterIdInput.value = filter
     const searchForm = document.querySelector('#searchForm')
     searchForm.submit()
-}
+}*/
 
 //search
-const searchButton = document.querySelector('.btn_search')
-searchButton.addEventListener('click', () => {
-    const searchClassInput = document.querySelector('.search')
-    const searchIdInput = document.querySelector('#search')
-    const searchForm = document.querySelector('#searchForm')
-    searchIdInput.value = searchClassInput.value
-    searchForm.submit()
-})
+$(document).ready(function(){
+    $(".page-link").on('click', function() {
+        $("#page").val($(this).data("page"));
+        $("#searchForm").submit();
+    });
 
+    $("#btn_search").on('click', function() {
+        $("#search").val($(".search").val());
+        $("#page").val(1);   //검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#searchForm").submit();
+    });
+
+    $(".sort").on('change', function() {
+        $("#sort").val($(this).val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    });
+});
 
 //sort
+/*
 const sortClassInput = document.querySelector('.sort')
 sortClassInput.addEventListener('input', (e) => {
     const sortIdInput = document.querySelector('#sort')
     const searchForm = document.querySelector('#searchForm')
     sortIdInput.value = e.target.value
     searchForm.submit()
-})
+})*/
 
 
 function modal(id) {
