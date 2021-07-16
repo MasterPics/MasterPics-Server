@@ -197,21 +197,18 @@ def contact_map(request):
 def contact_comment_create(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        contact_id = data["id"]
-        comment_value = data["value"]
+        contact_id = data['id']
+        comment_value = data['value']
         contact = Contact.objects.get(id=contact_id)
-        comment = Comment.objects.create(
-            writer=request.user, content=comment_value)
-        contactcomment = ContactComment.objects.create(
-            comment=comment, contact=contact)
-        return JsonResponse({'contact_id': contact_id, 'comment_id': contactcomment.id, 'value': comment_value})
+        comment = Comment.objects.create(writer=request.user, post=contact, content=comment_value)
+        return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
 
 
 @csrf_exempt
 def contact_comment_delete(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        comment_id = data["comment_id"]
+        comment_id = data['commentId']
         comment = Comment.objects.get(id=comment_id)
         comment.delete()
         return JsonResponse({'comment_id': comment_id})

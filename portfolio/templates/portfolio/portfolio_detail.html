@@ -10,6 +10,7 @@
 {% if portfolio_owner == request.user %}
     <a class="choose_profile" href="{% url 'profile:mypage' %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% else %}
+
     <a class="choose_profile" href="{% url 'profile:others_profile' portfolio.user.user_identifier %}"><div class="btn"><span class="noselect">Show Profile</span></div></a>
 {% endif %}
 </div>
@@ -107,16 +108,21 @@
         </div>
 
 
-
-        <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
-        {% for comment in comments %}
-        <div class="comment comment-{{ comment.id }}">
-            <span>{{ comment.comment.writer }}</span>
-            <span>{{ comment.comment.content }}</span>
-            <span>{{ comment.comment.created_at }}</span>
-            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
-        </div>
-        {% endfor %}
+            <div id="comment" class="createComment createComment-{{portfolio.id}}">
+                <input class="comment__value" type="text" placeholder="댓글 달기...">
+                <input class="comment__btn" onclick="onClickNewComment({{ portfolio.id }})" type="submit" value="게시">
+            </div>
+            <!--PortFolio Comments 적절한 위치에 배치해야 합니다.-->
+            <div class="comments-{{ portfolio.id }} comments">
+                {% for comment in comments %}
+                <div class="comment comments-{{ comment.id }}">
+                    <span>{{ comment.writer }}</span>
+                    <span>{{ comment.content }}</span>
+                    <span>{{ comment.created_at }}</span>
+                    <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                </div>
+                {% endfor %}
+            </div>
 
 
 
@@ -153,6 +159,7 @@
 <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_like.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_save.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/portfolio_comment.js' %}"></script>
 
 
 {% endblock script %}

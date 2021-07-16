@@ -1,9 +1,10 @@
-const modifyNewComment = (contact_id, comment_id, value) => {
-    const CommentContainer = document.querySelector(`.comments-${contact_id}`);
-    console.log(CommentContainer)
+const modifyNewComment = (portfolio_id, comment_id, value) => {
+    console.log(portfolio_id, comment_id, value);
+    const commentContainer = document.querySelector(`.comments-${portfolio_id}`);
+    console.log(commentContainer)
 
     const tempContainer = document.createElement("div");
-    tempContainer.className = `comment comment-${comment_id}`;
+    tempContainer.className = `comment comments-${comment_id}`;
 
 
     tempContainer.textContent = value;
@@ -15,13 +16,13 @@ const modifyNewComment = (contact_id, comment_id, value) => {
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
     tempContainer.appendChild(deleteBtn);
-    CommentContainer.appendChild(tempContainer);
+    commentContainer.appendChild(tempContainer);
 
 }
 
 const onClickNewComment = async (id) => {
     try{
-        const url = `/contact/comment_create/`;
+        const url = `/portfolio/comment_create/`;
         const value = document.querySelector(`.createComment-${id} .comment__value`);
         const value_text = value.value
         const {
@@ -43,12 +44,13 @@ const onClickNewComment = async (id) => {
 
 const modifyDeleteComment = (comment_id) => {
 
-    const targetCommentContainer = document.querySelector(`.comment-${comment_id}`);
+    const targetCommentContainer = document.querySelector(`.comments-${comment_id}`);
+    console.log(targetCommentContainer)
     targetCommentContainer.remove();
 }
 
 const onClickDeleteComment = async (commentId) => {
-    const url = `/contact/comment_delete/`;
+    const url = `/portfolio/comment_delete/`;
 
     const {
         data
