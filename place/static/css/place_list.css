@@ -156,6 +156,10 @@ hr{
   line-height: 1.2rem;
   height: 2.4rem;
 }
+.place-pay{
+  font-size:0.9rem;
+  color:#6b6b6b;
+}
 .place-tag{
   display: inline-block;
   margin:1rem 0;

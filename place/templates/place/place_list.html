@@ -43,11 +43,11 @@
                 <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
             </div>
             
-            <!--내 위치 주변-->
+            <!--내 위치 주변
             <div class="around">
                 <label for="around_me">내 위치 주변</label>
                 <input type="checkbox" class="around_me" name="around_me" value="around_me">
-            </div>
+            </div>-->
 
             <!--sort https://wikidocs.net/71806-->
             <div class="sort-box">
@@ -77,9 +77,9 @@
                         <p class="place-desc">{{place.desc}}</p>
                     </a>
                     <div class="place-tag">
-                        {% for tag in tags %}
-                            <button><a href="">#{{ tag.name }} </a></button>
-                        {% endfor %}
+                    {% for tag in place.tags.all %}  
+                    <button><a href="">#{{ tag.name }} </a></button>
+                    {% endfor %}    
                     </div>
                     <div class="user-info">
                         <div class="place-user">    
@@ -91,7 +91,7 @@
                         </div>
                         <div class="place-like-count">
                             <i class="far fa-heart"></i>
-                            <span>1244</span>
+                            <span>{{place.like_users.count}}</span>
                         </div>
                         <div class="place-save">
                             <i class="far fa-bookmark"></i>
