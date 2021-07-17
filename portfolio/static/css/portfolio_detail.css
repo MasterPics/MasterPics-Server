@@ -1,334 +1,282 @@
-/*show profile btn*/
-
-* {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    color: black;
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "NanumSquare", sans-serif;
 }
-
-.btn {
-    width: 150px;
-    height: 50px;
-    border: 1px solid #333;
-    font-family: "Cinzel", serif;
-    font-size: 15px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 0;
-    transition: 1s;
+.container {
+  width: 85%;
+  margin: 80px auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
 }
-
-.btn::before,
-.btn::after {
-    position: absolute;
-    background: #fff;
-    z-index: -1;
-    transition: 1s;
-    content: "";
+.wrapper {
+  display: flex;
+  justify-content: center;
 }
-
-.btn::before {
-    height: 50px;
-    width: 130px;
+/*********************** side-bar **************************/
+.side-bar {
+  margin-right: 25px;
 }
-
-.btn::after {
-    width: 150px;
-    height: 30px;
+.side-bar__user-info,
+.side-bar__info,
+.side-bar__tags-info {
+  border: solid 1px #cacaca;
+  border-radius: 3px;
+  padding: 20px 50px;
+  margin: 20px 0;
+  width: 190px;
 }
-
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.side-bar__user-info {
+  margin-top: 0;
 }
-
-.btn:hover::before {
-    width: 0px;
-    background: #fff;
+.side-bar__user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.btn:hover::after {
-    height: 0px;
-    background: #fff;
+.side-bar__text {
+  font-size: 11px;
+  color: #b0b0b0;
+  margin-bottom: 12px;
 }
-
-.btn:hover {
-    background: #fff;
+.side-bar__user-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  margin-bottom: 12px;
 }
-
-.choose a,
-.profile_button a {
-    color: black;
+.side-bar__user-name {
+  font-size: 14px;
+  color: #363636;
+  margin-bottom: 12px;
 }
-
-.choose {
-    display: flex;
-    justify-content: center;
-    margin: 40px auto;
-    margin-top: 60px;
+.side-bar__user-category {
+  text-align: center;
+  font-size: 11px;
+  color: #575757;
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  width: 80px;
+  padding: 2px;
 }
-
-
+.side-bar__info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+.side-bar__info .like > i:hover,
+.save > i:hover {
+  cursor: pointer;
+  color: #5200ff;
+}
+.side-bar__tags-info {
+  padding: 15px 10px;
+  overflow: hidden;
+}
+.side-bar__tags {
+  overflow: hidden;
+  width: 74px;
+  color: #5200ff;
+  font-size: 11px;
+  border: solid 1px #5200ff;
+  border-radius: 13px;
+  padding: 5px 20px;
+  float: left;
+  margin: 3px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*********************** post **************************/
+.post {
+  width: 800px;
+}
+.post__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+.post__title {
+  font-size: 20px;
+  color: #1e1e1e;
+}
+.post__edit-btn {
+  font-size: 13px;
+  color: #888888;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+.post__edit-btn:last-child {
+  margin-right: 15px;
+}
+.post__line {
+  width: 100%;
+  margin-bottom: 10px;
+  border-bottom: solid 1px #6d6d6d;
+}
+.post__info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.post__date {
+  color: #6d6d6d;
+  font-size: 14px;
+}
 /*********************** carousel **************************/
-
-/*container&grid*/
-
-
-.container_4 {
-    display: grid;
-    margin: 10px auto;
-    padding: 10px;
-    max-width: 70%;
+.post__images-wrapper {
+  box-sizing: border-box;
 }
-
-.container_4>div {
-    padding: 10px;
-}
-
-.container_4 .user {
-    display: flex;
-    align-items: center;
-    border-bottom: rgb(180, 180, 180) 1px solid;
-}
-
-.container_4 .user div {
-    margin-right: 10px;
-}
-
-.container_4 .user .user_img {
-    width: 60px;
-    height: 60px;
-    border-radius: 100%;
-    margin-right: 10px;
-}
-
-.user_img .profile_image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.portfolio_title {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    font-size: 1.1rem;
-    font-weight: bolder;
-}
-
-
-.portfolio_detail {
-    display: grid;
-    grid-template-columns: 1fr 0.3fr;
-    justify-content: center;
-    align-items: start;
-}
-
-.detail_left {
-    display: grid;
-    padding: 0 10px;
-
-}
-
-.detail_left>div {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-
-
 .slides {
-    position: relative;
-    display: flex;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-
-
 .mySlides {
-    display: grid;
-    justify-content: center;
+  position: relative;
+  margin-top: 40px;
+  width: 100%;
+  height: 400px;
+  background-color: #f6f6f6;
 }
-
-.mySlides>div {
-    margin-bottom: 10px;
+.mySlides img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
 }
-
-.mySlides .img_container {
-    width: 580px;
-    height: 580px;
-    margin: 0 auto;
+.under-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
 }
-
-.mySlides .img_container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.img-container {
+  width: 800px;
+  height: 127px;
+  overflow: hidden;
+  overflow-x: auto;
+  display: flex;
+  justify-content: flex-start;
 }
-
-
-img {
-    margin: 0 auto;
-
+.img-container::-webkit-scrollbar {
+  height: 6px;
 }
-
-.portfolio_content {
-    line-height: 1.8em;
+.img-container::-webkit-scrollbar-track {
+  background-color: #fafafa;
 }
-
-.portfolio_tags {
-    line-height: 1.75em;
+.img-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #000000, #b6b6b6);
 }
-
-.portfolio_date {
-    display: flex;
-    justify-content: flex-end;
-    border-bottom: rgb(180, 180, 180) 1px solid;
+.img-container::-webkit-scrollbar-button {
+  display: none;
 }
-
-.portfolio_info {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    font-size: 1.3rem;
+.under-bar img {
+  width: 16.66%;
+  height: 100%;
+  object-fit: cover;
 }
+.under-bar img:hover {
+  cursor: pointer;
 
-.portfolio_info i:hover {
-    cursor: pointer;
-    color: #333;
+  transform: scale(1.05);
+  -o-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+
+  transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -webkit-transition: transform 0.2s;
 }
-
-.detail_right {
-    margin-left: 15px;
-    padding: 0 5px;
-    height: 600px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.detail_right .img_container {
-    display: grid;
-    justify-content: center;
-    width: 90%;
-    margin: 0 auto;
-}
-
-.detail_right .img_container {
-    display: grid;
-    justify-content: center;
-    width: 90%;
-    margin: 0 auto;
-}
-
-.detail_right .img_container img {
-    width: 100%;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.detail_right .img_container img:hover {
-    box-shadow: 0 0 10px #000000;
-    cursor: pointer;
-    cursor:pointer;
-
-    transform:scale(1.1); /* 마우스 오버시 이미지 크기를 1.1 배만큼 확대시킨다. */
-
-    -o-transform:scale(1.1); 
-    -moz-transform:scale(1.1);
-
-    -webkit-transform:scale(1.1);
-
-
-    transition: transform .2s;  
-    -o-transition: transform .2s;
-    -moz-transition: transform .2s;
-    -webkit-transition: transform .2s;
-
-
-
-출처: https://inforyou.tistory.com/18 [a battle with myself]
-}
-
-
-
-/* Next & previous buttons */
 .prev,
 .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -50px;
-    padding: 5px;
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    font-size: 20px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    -webkit-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  padding: 10px;
+  top: 45%;
+  color: #c4c4c4;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: 0.6s ease;
 }
-
 .prev {
-    left: 0;
+  left: 0;
 }
-
-/* Position the "next button" to the right */
 .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
+  right: 0;
+  border-radius: 3px 0 0 3px;
 }
-
-/* On hover, add a black background color with a little bit see-through */
 .prev:hover,
 .next:hover {
-    color: #333
+  color: #5200ff;
 }
-
-/* Number text (1/3 etc) */
 .numbertext {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #707070;
-    font-size: 12px;
+  color: #6d6d6d;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: -30px;
+  right: 0;
 }
-
-
-
-.portfolio_button {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5%;
-    padding: 2px;
-    border-bottom: none;
+/***********************************************************/
+.post__desc {
+  font-size: 13px;
+  color: #1e1e1e;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
-
-.portfolio_button .edit_btn {
-    border: 1px solid black;
-    padding: 5px;
-    margin-right: 10px;
+/***********************************************************/
+.post__comment {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
-
-.portfolio_button .delete_btn {
-    border: 1px solid black;
-    padding: 5px;
-
+.post__comment #comment {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-
-.toright{
-    display: flex;
+.post__comment .comment__value {
+  width: 100%;
+  height: 60px;
+  margin-right: 20px;
+  padding: 10px;
+  border: 1px solid #bcbcbc;
+  color: #767676;
+  font-size: 13px;
+  border-radius: 0;
 }
-
-.toright .eye{
-    margin-right:10px;
+.post__comment .comment__btn {
+  height: 60px;
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 0;
+  font-size: 13px;
+  color: #ffffff;
+  background-color: #5200ff;
+  font-weight: lighter;
+  cursor: pointer;
+}
+/***********************************************************/
+.post__list-btn {
+  margin: 30px auto;
+  width: 50px;
+  font-size: 13px;
+  color: #505050;
+}
+.post__list-btn a:active {
+  color: #5200ff;
 }

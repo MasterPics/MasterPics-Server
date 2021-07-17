@@ -1,10 +1,9 @@
 const modifyNewComment = (portfolio_id, comment_id, value) => {
-    console.log(portfolio_id, comment_id, value);
-    const commentContainer = document.querySelector(`.comments-${portfolio_id}`);
-    console.log(commentContainer)
+    const CommentContainer = document.querySelector(`.comments__container-${portfolio_id}`);
+    console.log(CommentContainer)
 
     const tempContainer = document.createElement("div");
-    tempContainer.className = `comment comments-${comment_id}`;
+    tempContainer.className = `comment comment-${comment_id}`;
 
 
     tempContainer.textContent = value;
@@ -16,7 +15,7 @@ const modifyNewComment = (portfolio_id, comment_id, value) => {
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
     tempContainer.appendChild(deleteBtn);
-    commentContainer.appendChild(tempContainer);
+    CommentContainer.appendChild(tempContainer);
 
 }
 
@@ -44,8 +43,7 @@ const onClickNewComment = async (id) => {
 
 const modifyDeleteComment = (comment_id) => {
 
-    const targetCommentContainer = document.querySelector(`.comments-${comment_id}`);
-    console.log(targetCommentContainer)
+    const targetCommentContainer = document.querySelector(`.comment-${comment_id}`);
     targetCommentContainer.remove();
 }
 
