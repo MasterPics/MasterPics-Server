@@ -29,11 +29,15 @@
 
         <!-- 좋아요&북마크 정보 -->
         <div class="likeSave">
-            <div class="like">
-                <i class="far fa-heart"></i>
-                <p>{{place.like_users.count}}</p>
+            <div class="like like-{{place.id}}">
+                {% if request.user in place.like_users.all %}
+                    <i class="fas fa-hearat" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                {% else %}
+                    <i class="far fa-heart" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                {% endif %}
+                <p class="like__content">{{ place.like_users.count }}</p>
             </div>
-            <div class="save">
+            <div class="save save-{{place.id}}">
                 {% if request.user in place.save_users.all %}
                     <i class="fas fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% else %}
@@ -149,7 +153,6 @@
                 <a href="?page={{places.next_page_number}}">다음글</a>
             {% endif %}        
         </div>
-    {% endfor %}
     </section>
     
 </main>
