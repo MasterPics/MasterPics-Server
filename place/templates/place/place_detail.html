@@ -149,6 +149,7 @@
                 <a href="?page={{places.next_page_number}}">다음글</a>
             {% endif %}        
         </div>
+    {% endfor %}
     </section>
     
 </main>
@@ -197,5 +198,7 @@
 
 <!-- detail js -->
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
+<script src="{% static 'js/place_bookmark.js' %}"></script>
+<script src="{% static 'js/place_like.js' %}"></script>
 
 {% endblock script %}
