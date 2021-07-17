@@ -21,8 +21,7 @@ const onClickLike = async (place_id) => {
 const modifyLike = (place_id, is_liked) => {
     const like = document.querySelector(`.like-${place_id} i`);
     const like_content = document.querySelector(`.like-${place_id} .like__content`)
-    const num = like_content.innerText; // portfolio.like_users.count
-    console.log(num)
+    const num = like_content.innerText
     if (is_liked === true) {
 
         like.className = "fas fa-heart";

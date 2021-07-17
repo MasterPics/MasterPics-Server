@@ -20,10 +20,9 @@ const onClickSave = async (place_id) => {
 }
 
 const modifySave = (place_id, is_bookmarked) => {
-    const save = document.querySelector(`.save-${portfolio_id} i`);
+    const save = document.querySelector(`.save-${place_id} i`);
     const save_content = document.querySelector(`.save-${place_id} .save__content`)
-    const num = save_content.innerText; // portfolio.save_users.count
-    console.log(num)
+    const num = save_content.innerText;
     if (is_bookmarked === true) {
 
         save.className = "fas fa-bookmark";

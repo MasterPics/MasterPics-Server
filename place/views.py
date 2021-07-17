@@ -193,17 +193,18 @@ def place_bookmark(request):
         data = json.loads(request.body)
         place_id = data["place_id"]
         place = get_object_or_404(Place, pk=place_id)
-        is_bookmarked = request.user in place.save_users.all()
+        is_bookmarked = request.user in place.bookmark_users.all()
         if is_bookmarked:
             place.bookmark_users.remove(
                 get_object_or_404(User, pk=request.user.pk))
         else:
-            place.save_users.add(get_object_or_404(User, pk=request.user.pk))
+            place.bookmark_users.add(
+                get_object_or_404(User, pk=request.user.pk))
         is_bookmarked = not is_bookmarked
     return JsonResponse({
-            'place_id': place_id,
-            'is_bookmarked': is_bookmarked
-        })
+        'place_id': place_id,
+        'is_bookmarked': is_bookmarked
+    })
 
 
 ############################### comment ###############################
