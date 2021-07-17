@@ -16,7 +16,7 @@
         <div class="btn"><span class="noselect">Show Profile</span></div>
     </a>
     {% else %}
-    <a class="choose_profile" href="{% url 'profile:others_profile' contact.user.user_identifier %}">
+    <a class="choose_profile" href="{% url 'profile:others_mypage' contact.user.user_identifier %}">
         <div class="btn"><span class="noselect">Show Profile</span></div>
     </a>
     {% endif %}

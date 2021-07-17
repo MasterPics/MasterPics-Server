@@ -17,7 +17,7 @@
         {% if place.user == request_user %}
             <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user.username}}</a>
         {% else %}
-            <a class="user-name" href="{% url 'profile:others_profile' place.user.user_identifier %}">{{place.user.username}}</a>
+            <a class="user-name" href="{% url 'profile:others_mypage' place.user.user_identifier %}">{{place.user.username}}</a>
         {% endif %}
             <p class="user-category">{{place.user.category}}</p>
         </div>
