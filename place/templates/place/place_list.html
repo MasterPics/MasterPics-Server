@@ -95,27 +95,29 @@
                                 <p class="user-category">{{place.user.category}}</p>
                             </div>
                         </div>
+                        
+                        <div class="like-save">
+                            <div class="place-like-count like-{{place.id}}">
+                                {% if request_user in place.like_users.all %}
+                                <i class="fas fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% else %}
+                                <i class="far fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% endif %}
+                                <span class="like__content">{{ place.like_users.count }}</span>
+                            </div>
+                            <div class="place-save save-{{place.id}}">
+                                {% if request_user in place.save_users.all %}
+                                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% endif %}
+                                <span class="save__content" style="display:none">{{ place.bookmark_users.count }}</span>
 
-                        <div class="place-like-count like-{{place.id}}">
-                            {% if request_user in place.like_users.all %}
-                            <i class="fas fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
-                                value="like"></i>
-                            {% else %}
-                            <i class="far fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
-                                value="like"></i>
-                            {% endif %}
-                            <span class="like__content">{{ place.like_users.count }}</span>
-                        </div>
-                        <div class="place-save save-{{place.id}}">
-                            {% if request_user in place.save_users.all %}
-                            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
-                            {% else %}
-                            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
-                            {% endif %}
-                            <span class="save__content">{{ place.bookmark_users.count }}</span>
-
+                            </div>
                         </div>
                     </div>
                 </div>
