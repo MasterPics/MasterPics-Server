@@ -29,7 +29,7 @@ def contact_save(request):
         contact_id = data["contact_id"]
         contact = get_object_or_404(Contact, pk=contact_id)
         is_saved = request.user in contact.save_users.all()
-        if(is_saved):
+        if is_saved:
             contact.save_users.remove(
                 get_object_or_404(User, pk=request.user.pk))
         else:
@@ -200,7 +200,8 @@ def contact_comment_create(request):
         contact_id = data['id']
         comment_value = data['value']
         contact = Contact.objects.get(id=contact_id)
-        comment = Comment.objects.create(writer=request.user, post=contact, content=comment_value)
+        comment = Comment.objects.create(
+            writer=request.user, post=contact, content=comment_value)
         return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
 
 
