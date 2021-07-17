@@ -9,11 +9,30 @@
 
 {% block content %}
     <div class="container">
-        <div>{{mypage_owner.username}}</div>
+        <div>{{request.user.username}}</div>
         <div>
             {% for portfolio in portfolios %}
                 <div>
                     {{ portfolio.title }}
+                </div>
+                <div>
+                    {{ portfolio.like_users.count }}
+                </div>
+                <div>
+                    {{ portfolio.bookmark_users.count }}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            {% for contact in contacts %}
+                <div>
+                    {{ contact.title }}
+                </div>
+                <div>
+                    {{ contact.like_users.count }}
+                </div>
+                <div>
+                    {{ contact.bookmark_users.count }}
                 </div>
             {% endfor %}
         </div>
