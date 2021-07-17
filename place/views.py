@@ -70,7 +70,7 @@ def place_detail(request, pk):
         'tags': place.tags.all(),
         'images': place.images.all(),
         'comments': place.comments.all(),
-}
+    }
 
     return render(request, 'place/place_detail.html', context=ctx)
 
@@ -162,23 +162,48 @@ def place_delete(request, pk):
         return render(request, 'place/place_delete.html', context=ctx)
 
 
-def place_map(request):
-    places = Place.objects.all()
-    ctx = {
-        'places_json': json.dumps([places.to_json() for place in places])
-    }
-    return render(request, 'place/place_map.html', context=ctx)
+@csrf_exempt
+def place_like(request):
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data["place_id"]
+        place = get_object_or_404(Place, pk=place_id)
+        is_liked = request.user in place.like_users.all()
+
+        if is_liked:
+            place.like_users.remove(
+                get_object_or_404(User, pk=request.user.pk)
+            )
+        else:
+            place.like_users.add(
+                get_object_or_404(User, pk=request.user.pk)
+            )
+        is_liked = not is_liked
+        place.save()
+        return JsonResponse({
+            "place_id": place_id,
+            "is_liked": is_liked
+        })
 
 
-def place_select(request):
-    form = LocationForm()
-    ctx = {
-        'form': form,
-    }
-    return render(request, 'place/place_select.html', context=ctx)
-
-
-
+@csrf_exempt
+def place_bookmark(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data["place_id"]
+        place = get_object_or_404(Place, pk=place_id)
+        is_bookmarked = request.user in place.save_users.all()
+        if is_bookmarked:
+            place.bookmark_users.remove(
+                get_object_or_404(User, pk=request.user.pk))
+        else:
+            place.save_users.add(get_object_or_404(User, pk=request.user.pk))
+        is_bookmarked = not is_bookmarked
+    return JsonResponse({
+            'place_id': place_id,
+            'is_bookmarked': is_bookmarked
+        })
 
 
 ############################### comment ###############################
@@ -189,7 +214,8 @@ def place_comment_create(request):
         place_id = data['id']
         comment_value = data['value']
         place = Place.objects.get(id=place_id)
-        comment = Comment.objects.create(writer=request.user, post=place, content=comment_value)
+        comment = Comment.objects.create(
+            writer=request.user, post=place, content=comment_value)
         return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value})
 
 
