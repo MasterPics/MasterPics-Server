@@ -124,14 +124,18 @@ main{
     align-items: center;
     justify-content: space-between;
 }
-.modify-delete button{
+.modify-delete button,
+.delete,
+.modify{
     border:none;
     border-radius: 3px;
     background-color: #E7E7E7;
     font-size: 0.6rem;
     padding:0.2rem 0.4rem;
 }
-.modify-delete a{
+.modify-delete a,
+.delete a,
+.modify a{
     color:#6d6d6d;
 }
 .place-detail hr{
