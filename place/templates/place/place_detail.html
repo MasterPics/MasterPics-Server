@@ -31,17 +31,19 @@
         <div class="likeSave">
             <div class="like like-{{place.id}}">
                 {% if request.user in place.like_users.all %}
-                    <i class="fas fa-hearat" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="fas fa-heart" type="submit" onClick="onClickLike({{ place.id }})" name="type" value="save"></i>
                 {% else %}
-                    <i class="far fa-heart" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="far fa-heart" type="submit" onClick="onClickLike({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
                 <p class="like__content">{{ place.like_users.count }}</p>
             </div>
             <div class="save save-{{place.id}}">
                 {% if request.user in place.save_users.all %}
-                    <i class="fas fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                value="save"></i>
                 {% else %}
-                    <i class="far fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                value="save"></i>
                 {% endif %}
                 <p class="save__content">{{ place.bookmark_users.count }}</p>
             </div>

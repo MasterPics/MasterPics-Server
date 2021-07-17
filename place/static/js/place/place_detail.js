@@ -37,7 +37,7 @@ geocoder.addressSearch(address, function(result, status) {
     } 
 });  
 
-//Save
+/*
 const onClickSave = async (place_id) => {
     console.log("save?");
     try {
@@ -87,7 +87,7 @@ const modify = (place_id, is_saved) => {
     }
 
 }
-
+*/
 const modifyNewComment = (place_id, comment_id, value) => {
     const CommentContainer = document.querySelector(`.comments-${place_id}`);
     console.log(CommentContainer)
