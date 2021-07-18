@@ -60,7 +60,7 @@
         {% if tags %}
         <div class="side-bar__tags-info">
             {% for tag in tags %}
-            <a href="{% url 'reference:reference_list' %}" class="side-bar__tags">
+            <a href="{% url 'reference:reference_list' %}?search={{tag.name}}" class="side-bar__tags">
                 #{{ tag.name }} 
             </a>
             {% endfor %}
