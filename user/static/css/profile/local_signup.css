@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 /*layout*/
 
@@ -111,4 +112,9 @@ body{
   width: 15px;
   margin-left: 94%;
   margin-top: -30px;
+}
+
+input[type="password"] {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
 }

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 /*layout*/
 
@@ -21,6 +22,8 @@ nav a {
 body{
   height: 100%;
 }
+
+/*login*/
 
 .login__container {
   width: 100%;
@@ -74,7 +77,7 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 150px;
+  height: 165px;
   padding-top: 8px;
   padding-bottom: 8px;
   width: 30%;
@@ -112,7 +115,7 @@ body{
 }
 
 .sub-login__container .to-find__container {
-  width: 180px;
+  width: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,3 +161,16 @@ a:visited { text-decoration: none; }
 a:hover { text-decoration: none; }
 a:focus { text-decoration: none; }
 a:active { text-decoration: none; }
+
+input[type="password"] {
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+/*login sucess*/
+
+.login__form-success{
+    font-size: 10px;
+    margin: 5px auto;
+}
+
