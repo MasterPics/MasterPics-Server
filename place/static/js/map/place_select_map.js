@@ -25,8 +25,8 @@ let markers = []; // 마커를 담을 배열입니다
 let infowindow = new kakao.maps.InfoWindow({zIndex:1}); // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 
 let userMarker;
-let userMarkerSrc = 'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-Free-Download-PNG.png', // 출발 마커이미지의 주소입니다    
-    userMarkerSize = new kakao.maps.Size(35, 40), // 출발 마커이미지의 크기입니다 
+let userMarkerSrc = 'https://i.imgur.com/rsjHKsd.png', // 출발 마커이미지의 주소입니다    
+    userMarkerSize = new kakao.maps.Size(35, 70), // 출발 마커이미지의 크기입니다 
     userMarkerOption = { 
         offset: new kakao.maps.Point(17, 43) // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
     };
