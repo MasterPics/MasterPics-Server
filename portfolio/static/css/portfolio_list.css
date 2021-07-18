@@ -1,26 +1,29 @@
 /******************* info ******************/
-.info {
+.header {
   background-image: url("./portfolio_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
-  height: 300px;
+  height: 280px;
   padding: 0 150px;
+  width: 100vw;
 }
-.info__title {
+.header__title {
   margin-bottom: 20px;
-  padding-top: 70px;
+  padding-top: 50px;
   font-size: 24px;
   color: #191919;
 }
-.info__desc {
+.header__desc {
   color: #000000;
-  font-size: 18px;
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 600;
 }
-.info__desc:last-of-type {
-  margin-bottom: 35px;
+.header__desc:last-of-type {
+  margin-bottom: 40px;
 }
-.info__create-btn {
+.header__create-btn {
   width: 150px;
   padding: 15px;
   color: #5200ff;
@@ -223,6 +226,9 @@ figure.list__image.hover p {
 .list__title {
   margin-bottom: 10px;
   width: 251px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .list__title a {
   font-size: 14px;
@@ -256,17 +262,11 @@ figure.list__image.hover p {
   display: flex;
   justify-content: space-between;
 }
-.like,
-.eye,
-.save {
-  font-size: 17px;
-}
 .like > .far,
 .eye > .far,
 .save > .far {
-  color: #aaaaaa;
+  color: #888888;
 }
-
 .like,
 .eye {
   margin-right: 5px;
@@ -278,6 +278,16 @@ figure.list__image.hover p {
 .like > .fas,
 .save > .fas {
   color: #5200ff;
+}
+.like,
+.eye,
+.save {
+  font-size: 14px;
+}
+.like__content,
+.save__content,
+.view__content {
+  font-size: 14px;
 }
 /******************* infinite scroll ******************/
 .loading,

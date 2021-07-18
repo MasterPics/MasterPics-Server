@@ -72,6 +72,29 @@ body {
   cursor: pointer;
   color: #5200ff;
 }
+.eye,
+.like,
+.save {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.eye i,
+.like i,
+.save i {
+  margin-bottom: 5px;
+}
+.like > .fas,
+.save > .fas {
+  color: #5200ff;
+}
+.like > .far,
+.eye > .far,
+.save > .far {
+  color: #888888;
+}
 .side-bar__tags-info {
   padding: 15px 10px;
   overflow: hidden;
@@ -242,12 +265,16 @@ body {
 /***********************************************************/
 .post__comment {
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 .post__comment #comment {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 30px;
+}
+.post__comment input:focus {
+  outline: none !important;
 }
 .post__comment .comment__value {
   width: 100%;
@@ -256,7 +283,7 @@ body {
   padding: 10px;
   border: 1px solid #bcbcbc;
   color: #767676;
-  font-size: 13px;
+  font-size: 12px;
   border-radius: 0;
 }
 .post__comment .comment__btn {
@@ -264,11 +291,58 @@ body {
   padding: 10px 15px;
   border: 0;
   border-radius: 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #ffffff;
   background-color: #5200ff;
   font-weight: lighter;
   cursor: pointer;
+}
+.comment__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.comment__item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.comment__writer-img img {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  margin-right: 20px;
+}
+.comment__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.comment__top-info {
+  width: 100%;
+  margin-bottom: 3px;
+}
+.comment__writer {
+  font-size: 14px;
+  color: #1e1e1e;
+  font-weight: 600;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+.comment__date {
+  color: #888888;
+  font-size: 11px;
+}
+.comment__text {
+  font-size: 13px;
+  color: #1e1e1e;
+}
+.comment__delete-btn {
+  font-size: 11px;
+  color: #747474;
+  background-color: #ffffff;
+  border: none;
 }
 /***********************************************************/
 .post__list-btn {
@@ -276,7 +350,4 @@ body {
   width: 50px;
   font-size: 13px;
   color: #505050;
-}
-.post__list-btn a:active {
-  color: #5200ff;
 }

@@ -64,6 +64,7 @@ class PostBase(models.Model):
         return self.__class__.__name__
 
 
+# TODO: 다중 이미지 최대 제한
 class Images(models.Model):
     post = models.ForeignKey(
         to=PostBase, related_name='images', on_delete=models.CASCADE)
