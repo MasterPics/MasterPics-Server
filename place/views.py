@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q, Count
+from django.db.models import Q,Count
 import json
 
 # infinite loading
@@ -64,19 +64,19 @@ def place_create(request):
 
 def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
-
+    
     ctx = {
         'place': place,
         'tags': place.tags.all(),
         'images': place.images.all(),
         'comments': place.comments.all(),
-}
+    }
 
-    return render(request, 'place/place_detail.html', context=ctx)
+    return render(request,'place/place_detail.html', context=ctx)
 
 
 # TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
-@ login_required
+@login_required
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
 
@@ -113,10 +113,11 @@ def place_list(request):
     # SORT
     if sort == 'pay':
         places = places.order_by('pay')
-    elif sort == 'save':  # save 케이스 정렬 추가
+    elif sort == 'save': #TODO : 좋아요 구현 후 좋아요 많은 순 정렬 추가
         places = places.order_by('-created_at')
     else:
         places = places.order_by('-created_at')
+    
 
     if search:
         places = places.filter(
@@ -124,6 +125,7 @@ def place_list(request):
             Q(desc__icontains=search) |  # 내용검색
             Q(user__username__icontains=search)  # 질문 글쓴이검색
         ).distinct()
+    
 
     # infinite scroll
     places_per_page = 8
@@ -146,7 +148,7 @@ def place_list(request):
     return render(request, 'place/place_list.html', context=ctx)
 
 
-@ login_required
+@login_required
 def place_delete(request, pk):
 
     place = get_object_or_404(Place, pk=pk)
@@ -162,23 +164,49 @@ def place_delete(request, pk):
         return render(request, 'place/place_delete.html', context=ctx)
 
 
-def place_map(request):
-    places = Place.objects.all()
-    ctx = {
-        'places_json': json.dumps([places.to_json() for place in places])
-    }
-    return render(request, 'place/place_map.html', context=ctx)
+@csrf_exempt
+def place_like(request):
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data["place_id"]
+        place = get_object_or_404(Place, pk=place_id)
+        is_liked = request.user in place.like_users.all()
+
+        if is_liked:
+            place.like_users.remove(
+                get_object_or_404(User, pk=request.user.pk)
+            )
+        else:
+            place.like_users.add(
+                get_object_or_404(User, pk=request.user.pk)
+            )
+        is_liked = not is_liked
+        place.save()
+        return JsonResponse({
+            "place_id": place_id,
+            "is_liked": is_liked
+        })
 
 
-def place_select(request):
-    form = LocationForm()
-    ctx = {
-        'form': form,
-    }
-    return render(request, 'place/place_select.html', context=ctx)
-
-
-
+@csrf_exempt
+def place_bookmark(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data["place_id"]
+        place = get_object_or_404(Place, pk=place_id)
+        is_bookmarked = request.user in place.bookmark_users.all()
+        if is_bookmarked:
+            place.bookmark_users.remove(
+                get_object_or_404(User, pk=request.user.pk))
+        else:
+            place.bookmark_users.add(
+                get_object_or_404(User, pk=request.user.pk))
+        is_bookmarked = not is_bookmarked
+    return JsonResponse({
+        'place_id': place_id,
+        'is_bookmarked': is_bookmarked
+    })
 
 
 ############################### comment ###############################
@@ -189,7 +217,8 @@ def place_comment_create(request):
         place_id = data['id']
         comment_value = data['value']
         place = Place.objects.get(id=place_id)
-        comment = Comment.objects.create(writer=request.user, post=place, content=comment_value)
+        comment = Comment.objects.create(
+            writer=request.user, post=place, content=comment_value)
         return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value})
 
 

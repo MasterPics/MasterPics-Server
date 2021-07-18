@@ -89,7 +89,7 @@
                         {% if portfolio.user == request_user %}
                         <a href="{% url 'profile:mypage' %}">
                         {% else %}
-                        <a href="{% url 'profile:others_profile' portfolio.user.user_identifier %}">
+                        <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
                             {% if user.image  %}
                             <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
