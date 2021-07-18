@@ -6,9 +6,9 @@
     var sel_files = [];
     
     // 이미지와 체크 박스를 감싸고 있는 div 속성
-    var div_style = 'display:inline-block;position:relative;padding:4px 2px;overflow:hidden;';
+    var div_style = 'display:inline-block;position:relative;padding:4px;overflow:hidden;';
     // 미리보기 이미지 속성
-    var img_style = 'width:75px;height:75px;z-index:none;margin:1px;object-fit:cover;';
+    var img_style = 'width:76px;height:76px;z-index:none;margin:1px;object-fit:cover;';
     // 이미지안에 표시되는 체크박스의 속성
     var chk_style = 'width:14px;height:14px;position:absolute;right:10px;top:10px;'
                   + 'font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;';

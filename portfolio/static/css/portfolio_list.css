@@ -262,15 +262,10 @@ figure.list__image.hover p {
   display: flex;
   justify-content: space-between;
 }
-.like,
-.eye,
-.save {
-  font-size: 17px;
-}
 .like > .far,
 .eye > .far,
 .save > .far {
-  color: #aaaaaa;
+  color: #888888;
 }
 .like,
 .eye {
@@ -284,7 +279,15 @@ figure.list__image.hover p {
 .save > .fas {
   color: #5200ff;
 }
-.like__content {
+.like,
+.eye,
+.save {
+  font-size: 14px;
+}
+.like__content,
+.save__content,
+.view__content {
+  font-size: 14px;
 }
 /******************* infinite scroll ******************/
 .loading,
