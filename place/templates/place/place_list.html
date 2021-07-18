@@ -40,7 +40,7 @@
             <!-- 상호무페이 -->
             <div class="pay">
                 <label for="no_pay">상호 무페이</label>
-                <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
+                <input type="checkbox" id="no_pay" class="no_pay" name="no_pay" {% if no_pay == True %}checked{% endif %}>
             </div>
             
             <!--내 위치 주변
@@ -55,7 +55,7 @@
                     <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
                         최신순
                     </option>
-                    <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                    <option value="like" {% if sort == 'like' %}selected{% endif %}>
                         인기순
                     </option>
                     <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
