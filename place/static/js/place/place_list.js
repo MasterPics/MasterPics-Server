@@ -1,27 +1,29 @@
-var infinite = new Waypoint.Infinite({
-    element: $('.infinite-container')[0],
-    onBeforePageLoad: function () {
-        $('.loading').show();
-    },
-    onAfterPageLoad: function ($items) {
-        $('.loading').hide();
-    }
+//no_pay(free)
+$(function () {
+    var test = localStorage.input === 'true' ? true : false;
+    $('.no_pay').prop('checked', test || false);
 });
+$('.no_pay').on('click', function () {
+    localStorage.input = $(this).is(':checked');
+});
+const nopayClassInput = document.querySelector('.no_pay')
+const nopayIdInput = document.querySelector('#no_pay')
 
-
-//filter
-$(".no_pay").on('change', function() {
-        $("#no_pay").val($(this).val());
-        $("#page").val(1);
-        $("#searchForm").submit();
-    });
-/*
-const onClickLink = (filter) => {
-    const filterIdInput = document.querySelector('#filter')
-    filterIdInput.value = filter
+if (localStorage.input === 'true') {
+    nopayIdInput.value = true
+} else {
+    nopayIdInput.value = false
+}
+nopayClassInput.addEventListener('click', () => {
+    const nopayIdInput = document.querySelector('#no_pay')
     const searchForm = document.querySelector('#searchForm')
+    if (localStorage.input === 'true') {
+        nopayIdInput.value = true
+    } else {
+        nopayIdInput.value = false
+    }
     searchForm.submit()
-}*/
+})
 
 //search
 $(document).ready(function(){
@@ -35,16 +37,20 @@ $(document).ready(function(){
         $("#page").val(1);   //검색버튼을 클릭할 경우 1페이지부터 조회한다.
         $("#searchForm").submit();
     });
+});
 
+//sort
+$(document).ready(function(){
     $(".sort").on('change', function() {
         $("#sort").val($(this).val());
         $("#page").val(1);
         $("#searchForm").submit();
     });
-});
+})
 
-//sort
+
 /*
+//sort
 const sortClassInput = document.querySelector('.sort')
 sortClassInput.addEventListener('input', (e) => {
     const sortIdInput = document.querySelector('#sort')
@@ -53,7 +59,7 @@ sortClassInput.addEventListener('input', (e) => {
     searchForm.submit()
 })*/
 
-
+/*
 function modal(id) {
     var zIndex = 9999;
     var modal = document.getElementById(id);
@@ -106,3 +112,4 @@ document.getElementById('popup_open_btn').addEventListener('click', function() {
     // 모달창 띄우기
     modal('my_modal');
 });
+*/

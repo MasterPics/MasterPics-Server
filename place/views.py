@@ -109,12 +109,20 @@ def place_list(request):
     places = Place.objects.all()
     sort = request.GET.get('sort', 'recent')
     search = request.GET.get('search', '')
+    no_pay = request.GET.get('no_pay')
+
+    # 상호무페이
+    #0718 상호무페이 필터링 추가
+    if no_pay == 'true':
+        places = Place.objects.all().filter(pay=0).distinct()
+    else:
+        places = Place.objects.all()
 
     # SORT
     if sort == 'pay':
         places = places.order_by('pay')
-    elif sort == 'save': #TODO : 좋아요 구현 후 좋아요 많은 순 정렬 추가
-        places = places.order_by('-created_at')
+    elif sort == 'like': #0718 like순 정렬 추가
+        places = places.order_by('-like_users')
     else:
         places = places.order_by('-created_at')
     
@@ -123,7 +131,8 @@ def place_list(request):
         places = places.filter(
             Q(title__icontains=search) |  # 제목검색
             Q(desc__icontains=search) |  # 내용검색
-            Q(user__username__icontains=search)  # 질문 글쓴이검색
+            Q(user__username__icontains=search) |  # 질문 글쓴이검색
+            Q(location__address__icontains=search)  #0718 주소검색
         ).distinct()
     
 
