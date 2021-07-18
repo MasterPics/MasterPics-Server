@@ -4,6 +4,7 @@ const modifyNewComment = (portfolio_id, comment_id, value) => {
 
     const tempContainer = document.createElement("div");
     tempContainer.className = `comment comment-${comment_id}`;
+    tempContainer.setAttribute("style", "font-size: 13px;olor: #1e1e1e;");
 
 
     tempContainer.textContent = value;
@@ -11,7 +12,8 @@ const modifyNewComment = (portfolio_id, comment_id, value) => {
     const deleteBtn = document.createElement("input");
     deleteBtn.className = "comment-btn";
     deleteBtn.setAttribute("type", "submit");
-    deleteBtn.setAttribute("value", "삭제");
+    deleteBtn.setAttribute("value", "댓글삭제");
+    deleteBtn.setAttribute("style", " font-size: 11px;color: #747474;background-color: #ffffff;border: none;")
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
     tempContainer.appendChild(deleteBtn);
