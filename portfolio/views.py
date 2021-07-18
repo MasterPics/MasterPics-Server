@@ -79,41 +79,27 @@ def portfolio_list(request):
     except EmptyPage:
         portfolios = paginator.page(paginator.num_pages)
 
-    context = {'portfolios': portfolios, 'request_user': request.user, 'sort': sort,
+    context = {'portfolios': portfolios,
+               'sort': sort,
                'category': category, }
 
     return render(request, 'portfolio/portfolio_list.html', context=context)
 
 
 def portfolio_detail(request, pk):
+
     portfolio = Portfolio.objects.get(pk=pk)
-    portfolio_information = PortfolioInformation.objects.get(
-        portfolio=portfolio)
-
-    images = portfolio.portfolio_images.all()
-
-    # TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
-    num_of_imgs = images.count
-
-    tags = portfolio.tags.all()
-
-    # comment 를 가져오는 쿼리
-    comments = PortfolioComment.get_comments(portfolio)
-
-    portfolio_owner = portfolio.user  # 게시글 작성자
-    request_user = request.user  # 로그인한 유저
-
-    portfolio_information.information.view_count += 1
-    portfolio_information.information.save()
+    portfolio.view_count += 1
+    portfolio.save()
+    parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
         'portfolio': portfolio,
-        'images': images,
-        'tags': tags,
-        'portfolio_owner': portfolio_owner,
-        'request_user': request_user,
-        'num_of_imgs': num_of_imgs,
-        'comments': comments,
+        'images': portfolio.images.all(),
+        'tags': portfolio.tags.all(),
+        'comments': parent_comments,
+        'like_users': portfolio.like_users.all(),
+        'bookmark_users': portfolio.bookmark_users.all()
     }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
@@ -166,33 +152,19 @@ def portfolio_create(request):
             portfolio.save()
             form.save_m2m()
 
-            portfolio.image = request.FILES.get('images')
-
+            print(request.FILES.getlist('images'))
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = PortfolioImages()
-                image_obj.portfolio_id = portfolio.id
-                image_obj.image = Images()
-                image_obj.image.image = image
-                image_obj.image.save()
+                image_obj = Images()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                image_obj.image = image
                 image_obj.save()
 
                 if not i:
-                    portfolio.thumbnail = image_obj.image
+                    portfolio.thumbnail = image_obj
                     portfolio.save()
-                else:
-                    i += 1
 
             messages.success(request, "posted!")
-
-            # 자동으로 comment 와 information 생성
-
-            information = Information.objects.create()
-
-            portfolio_information = PortfolioInformation.objects.create(
-                portfolio=portfolio,
-                information=information
-            )
 
             return redirect('portfolio:portfolio_detail', portfolio.pk)
         else:
@@ -212,12 +184,12 @@ def portfolio_save(request):
         portfolio_id = data["portfolio_id"]
         portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
         request_user = request.user
-        is_saved = request_user in portfolio.save_users.all()
+        is_saved = request_user in portfolio.bookmark_users.all()
         if is_saved:
-            portfolio.save_users.remove(
+            portfolio.bookmark_users.remove(
                 get_object_or_404(User, pk=request_user.pk))
         else:
-            portfolio.save_users.add(
+            portfolio.bookmark_users.add(
                 get_object_or_404(User, pk=request_user.pk))
         is_saved = not is_saved
         portfolio.save()
