@@ -66,7 +66,7 @@ class PostBase(models.Model):
 
 class Images(models.Model):
     post = models.ForeignKey(
-        to=PostBase, related_name='images', on_delete=models.DO_NOTHING)
+        to=PostBase, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
     created_at = models.DateTimeField(auto_now_add=True)
