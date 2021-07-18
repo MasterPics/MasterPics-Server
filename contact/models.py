@@ -36,8 +36,3 @@ class Contact(PostBase):
 
     def classname(self):
         return self.__class__.__name__
-
-    # def save(self, *args, **kwargs):
-    #     compressed_img = compress(self.thumbnail)
-    #     self.thumbnail = compressed_img
-    #     super().save(*args, **kwargs)
