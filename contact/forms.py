@@ -18,6 +18,11 @@ class ContactForm(forms.ModelForm):
         fields = ('title', 'desc', 'start_date', 'end_date', 
                   'file_attach', 'pay', 'tags')
         widgets = {
+            'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
+            'desc': forms.Textarea(
+                attrs={'placeholder': '설명을 작성하세요.'}),
+            'pay': forms.NumberInput(attrs={'placeholder': '페이를 입력하세요.   원'}),
+
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
             'end_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
         }

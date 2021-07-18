@@ -1,5 +1,5 @@
-const modifyNewComment = (contact_id, comment_id, value) => {
-    const CommentContainer = document.querySelector(`.comments-${contact_id}`);
+const modifyNewComment = (portfolio_id, comment_id, value) => {
+    const CommentContainer = document.querySelector(`.comments__container-${portfolio_id}`);
     console.log(CommentContainer)
 
     const tempContainer = document.createElement("div");
@@ -21,7 +21,7 @@ const modifyNewComment = (contact_id, comment_id, value) => {
 
 const onClickNewComment = async (id) => {
     try{
-        const url = `/contact/comment_create/`;
+        const url = `/portfolio/comment_create/`;
         const value = document.querySelector(`.createComment-${id} .comment__value`);
         const value_text = value.value
         const {
@@ -48,7 +48,7 @@ const modifyDeleteComment = (comment_id) => {
 }
 
 const onClickDeleteComment = async (commentId) => {
-    const url = `/contact/comment_delete/`;
+    const url = `/portfolio/comment_delete/`;
 
     const {
         data

@@ -3,54 +3,65 @@
 {% load static %}
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/place_detail.css' %}">
-
-
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 {% endblock stylesheet %}
 
 {% block content %}
-<!-- 카테고리 왼쪽에 -->
 <main>
+    <!-- 왼쪽 박스들: 게시물 정보 -->
     <section class="info-box">
+        <!-- 유저 프로필 -->
         <div class="user-profile">
             <p class="writer">게시자</p>
+            <img class="user-image" src={{place.user.image.url}}/>
         {% if place.user == request_user %}
-                <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
-                <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user}}</a>
+            <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user.username}}</a>
         {% else %}
-                <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
-                <a class="user-name" href="{% url 'profile:others_profile' place.user.user_identifier %}">{{place.user}}</a>
+            <a class="user-name" href="{% url 'profile:others_mypage' place.user.user_identifier %}">{{place.user.username}}</a>
         {% endif %}
             <p class="user-category">{{place.user.category}}</p>
         </div>
+
+        <!-- 게시물 지도 -->
         <div class="place-location-map">
             <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
         </div>
 
+        <!-- 좋아요&북마크 정보 -->
         <div class="likeSave">
-            <div class="like">
-                <i class="far fa-heart"></i>
-                <p>24</p>
-            </div>
-            <div class="save">
-                {% if request.user in place.save_users.all %}
-                    <i class="fas fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+            <div class="like like-{{place.id}}">
+                {% if request.user in place.like_users.all %}
+                    <i class="fas fa-heart" type="submit" onClick="onClickLike({{ place.id }})" name="type" value="save"></i>
                 {% else %}
-                    <i class="far fa-bookmark" type="submit" onClick="onClickSave({{ place.id }})" name="type" value="save"></i>
+                    <i class="far fa-heart" type="submit" onClick="onClickLike({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
-                <p class="save__content">24{{ place.save_users.count }}</p>
+                <p class="like__content">{{ place.like_users.count }}</p>
+            </div>
+            <div class="save save-{{place.id}}">
+                {% if request.user in place.save_users.all %}
+                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                value="save"></i>
+                {% else %}
+                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                value="save"></i>
+                {% endif %}
+                <p class="save__content">{{ place.bookmark_users.count }}</p>
             </div>
         </div>
+
+        <!-- 태그 리스트 -->
         <div class="place-tag">
             {% for tag in tags %}
                 <a href="" class="portfolio_tag tag-button">
                     #{{ tag.name }} 
                 </a>
             {% endfor %}
-            
         </div>
     </section>
 
+    <!-- 오른쪽 박스들 : 게시물 콘텐츠 -->
     <section class="place-detail">
+        <!-- 제목 및 게시물 수정/삭제 버튼-->
         <div class="place-detail-header">
             <h2>{{ place.title }}</h2>
 
@@ -63,59 +74,78 @@
         </div>
 
         <hr>
-        
+
+        <!-- 주소 & 날짜-->
         <div class="place-detail-info">
             <span><i class="fas fa-map-marker-alt"></i><p id="address">{{ place.location.address }}</p></span>
             <span>{{ place.created_at }}</span>
             <input type="hidden" id="map_address" name="map_address" value="{{ place.location.address }}"/>
         </div>
 
-        <div class="place-images">
-            <div class="image-box">
-                <img src="{{ place.thumbnail.image.url }}" alt="image">
-            </div>
-            <div class="image-list">
-            {% for image in images %}
-                {% if image %}
-                <div class="image">
+        <!-- 큰 이미지 박스 -->
+        <div class="place-images swiper-container mySwiper2">
+            <div class="swiper-wrapper">
+            {% for image in images  %}
+                <div class="image-box swiper-slide">
                     <img src="{{ image.image.url }}" alt="images">
                 </div>
-                {% endif %}
-                
             {% endfor %}
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
         </div>
 
+        <!-- 이미지 리스트 -->
+        <div thumbsSlider="" class="swiper-container mySwiper">
+            <div class="image-list swiper-wrapper">
+                {% for image in images %}
+                <div class="image swiper-slide">
+                    <img src="{{ image.image.url }}" alt="images">
+                </div>
+                {% endfor %}
+            
+            </div>
+        </div>
+
+        <!-- 글 내용 -->
         <p class="place-description">{{place.desc}}</p>
         
+        <!-- 댓글 -->
+        <hr>
         <div class="place-comment">
+            <!-- 댓글 작성창 -->
             <div class="createComment createComment-{{place.id}}">
                 <input class="comment__value" type="text" placeholder="후기를 작성해주세요.">
                 <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="댓글 게시">
             </div>
+
+            <!-- 댓글 리스트 -->
             <div class="comments-{{ place.id }} comments">
                 {% for comment in comments %}
+
                 <div class="comment comment-{{ comment.id }}">
                     <div class="comment-content">
-                        <div class="comment-image"><img src={{comment.comment.writer.image.url}}/></div>
+                        <div class="comment-image"><img src={{comment.writer.image.url}}/></div>
                         <div>
-                            <span class="comment-writer">{{ comment.comment.writer }}</span>
-                            <span class="comment-created">{{ comment.comment.created_at }}</span>
-                            <p class="comment-text">{{ comment.comment.content }}</p>
+                            <span class="comment-writer">{{ comment.writer }}</span>
+                            <span class="comment-created">{{ comment.created_at }}</span>
+                            <p class="comment-text">{{ comment.content }}</p>
                         </div>
                     </div>
-                    
-                    {% if request.user == comment.comment.writer %} 
+                    <!-- 댓글 수정&삭제 버튼 -->
+                    {% if request.user == comment.writer %} 
                     <div class="modify-delete">
-                        <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-                        <button class="delete" onclick="onClickDeleteComment({{ comment.id }}"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
+                        <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
+                        <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제"/>
                     </div>
                     {% endif %}
                 </div>
-                <hr>
                 {% endfor %}
             </div>
         </div>
+        <hr>
+
+        <!-- 페이지 이동 -->
         <div class="place-pagenation">
             {% if place.get_previous %}
                 <a href="?page={{places.previous_page_number}}">이전글</a>
@@ -125,23 +155,56 @@
                 <a href="?page={{places.next_page_number}}">다음글</a>
             {% endif %}        
         </div>
+    
     </section>
     
 </main>
-   
-
-
 {% endblock content%}
 
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- Swiper api -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 0,
+    slidesPerView: 5,
+    freeMode: false,
+    watchSlidesVisibility: true,
+    watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+    spaceBetween: 10,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    thumbs: {
+        swiper: swiper,
+    },
+    });
+</script>
+
+<!--map api,variable-->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
-<script type="text/javascript"> 
-    var address = "{{place.location.address}}"
+<script type="text/javascript">
+    var address = "{{place.location.address}}";
     var lat = {{place.location.lat}}
     var lon = {{place.location.lon}}
 </script>
+
+<!--comment variable-->
+<script>
+    var userImage = '{{request.user.image.url}}'
+    var writer = '{{request.user}}'
+</script>
+
+<!-- detail js -->
 <script type="text/javascript" src="{% static 'js/place/place_detail.js' %}"></script>
+<script src="{% static 'js/place_bookmark.js' %}"></script>
+<script src="{% static 'js/place_like.js' %}"></script>
 
 {% endblock script %}
