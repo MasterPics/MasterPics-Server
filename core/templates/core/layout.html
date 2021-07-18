@@ -49,7 +49,7 @@
           <!-- <li><a href="{% url 'google_login' %}">google</li>
           <li><a href="{% url 'naver_login' %}">naver</li> -->
           <li><a href="{% url 'profile:login' %}">Log In/Sign Up</a></li>
-          <li><a href="{% url 'account_login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
+          <li><a href="{% url 'profile:login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
           {% else %}
         <!--
           <form method="post" action="{% url 'account_logout' %}">
