@@ -52,7 +52,7 @@
         <!-- 태그 리스트 -->
         <div class="place-tag">
             {% for tag in tags %}
-                <a href="" class="portfolio_tag tag-button">
+                <a href="{% url 'reference:reference_list' %}?search={{tag.name}}" class="portfolio_tag tag-button">
                     #{{ tag.name }} 
                 </a>
             {% endfor %}
