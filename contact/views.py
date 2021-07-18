@@ -28,16 +28,16 @@ def contact_save(request):
         data = json.loads(request.body)
         contact_id = data["contact_id"]
         contact = get_object_or_404(Contact, pk=contact_id)
-        is_saved = request.user in contact.save_users.all()
+        is_saved = request.user in contact.bookmark_users.all()
         if is_saved:
-            contact.save_users.remove(
+            contact.bookmark_users.remove(
                 get_object_or_404(User, pk=request.user.pk))
         else:
-            contact.save_users.add(get_object_or_404(User, pk=request.user.pk))
+            contact.bookmark_users.add(
+                get_object_or_404(User, pk=request.user.pk))
         is_saved = not is_saved
         contact.save()
         return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
-
 
 def contact_list(request):
     contacts = Contact.objects.all()
