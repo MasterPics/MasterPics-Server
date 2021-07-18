@@ -90,7 +90,7 @@
 
 
     const onClickFindPW = () => {
-        const url = '/profile/recovery/pw/find/';
+        const url = '/profile/recovery/pw/send_email/';
         axios.post(url, {
             'user_id': user_id,
             'username': username,
@@ -105,7 +105,7 @@
                                         <form>
                                             <div>
                                                 <label for="input_auth_num">
-                                                    인증코드 입력 (<span id="timeset"></span>)
+                                                    인증코드 입력 <span id="timeset"></span>
                                                 </label>
                                                 <input type="text" id="input_auth_num" onkeyup="getAuthNum()"/>
                                             </div>
@@ -114,7 +114,7 @@
                                             인증확인
                                         </button>
                                     </div>`;
-            countdown("#timeset", 20, 0);            
+            countdown("#timeset", 5, 0);            
         })
         .catch(function (error) {
             if (user_id == "" || username == "" || email == "") {
