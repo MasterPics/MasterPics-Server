@@ -12,8 +12,8 @@
     <p class="header__desc">주변에서 개인작업을 위한</p>
     <p class="header__desc">아티스트의 시안을 찾아보세요!</p>
     <p class="header__desc-more">별도의 수수료 없이 MasterPic’s 내 아티스트들과 컨택할 수 있습니다.</p>
-    <a class="header__create-btn" href="{% url 'contact:contact_create' %}">컨택트 등록하기 ></a>
-    <a class="header__create-btn" href="#">내 주변 아티스트 찾기 ></a>
+    <a class="header__create-btn" href="{% url 'contact:contact_create' %}">컨택트 등록하기</a>
+    <a class="header__create-btn" href="#">내 주변 아티스트 찾기</a>
 </div>
 
 <div class="filter">
@@ -24,11 +24,14 @@
         <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
         <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
     </div>
+    <!-- 상호무페이 -->
+    <div class="filter__nopay">
+        <label for="no_pay">상호무페이</label><br>
+        <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
+    </div>
     <div class="filter__search">
         <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'>
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary btn_search" type="button" id=""><i class="fas fa-search"></i></button>
-        </div>
+        <button class="btn btn-outline-secondary btn_search" type="button" id=""><i class="fas fa-search"></i></button>
     </div>
     <div class="filter__sort">
         <select name="" id="" class="form-control sort ">
@@ -56,11 +59,6 @@
             <input type="hidden" id="no_pay" name="no_pay" value="{{no_pay}}">
         </form>
     </div>
-    <!-- 상호무페이 -->
-    <div class="pay">
-        <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
-        <label for="no_pay">상호 무페이</label><br>
-    </div>
 </div>
 
 <div class="line"></div>
@@ -71,14 +69,14 @@
         <div class="list__item-wrapper grid-item">
             <div class="list__item">
                 <!-- contact pay, date-->
-                <div class="list___top-info">
+                <div class="list__top-info">
                     <div class="list__pay">
-                        {% if contact.free or contact.pay == 0 %}
-                        <div class="list__pay-text">상호무페이</div>
-                        {% elif contact_negotiation %}
+                        {% if contact.pay_negotiation %}
                         <div class="list__pay-text">페이협의</div>
                         {% elif contact.pay %}
                         <div class="list__pay-text">{{ contact.pay }} 원</div>
+                        {% elif contact.free or contact.pay == 0 %}
+                        <div class="list__pay-text">상호무페이</div>
                         {% endif %}
                     </div>
                     <div class="list__date">
@@ -140,13 +138,14 @@
                             <span class="comment__content">{{ contact.comments.count }}</span>
                         </div>
                         <div class="save save-{{contact.id}}">
-                            {% if request_user in contact.save_users.all %}
+                            {% if request.user in contact.bookmark_users.all %}
                             <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
                                 value="save"></i>
                             {% else %}
                             <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
                                 value="save"></i>
                             {% endif %}
+                            <span class="save__content">{{ contact.bookmark_users.count }}</span>
                         </div>
                     </div>
                 </div>
