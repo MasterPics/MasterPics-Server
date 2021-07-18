@@ -101,18 +101,17 @@
                 {% endfor %}
                 <!-- Images with under bar-->
                 <div class="under-bar">
+                {% for image in images %}
+                    {% if image %}
                     <div class="img-container">
-                        {% for image in images %}
-                            {% if image %}
-                            <img class="demo" src="{{image.image.url}}" onclick="currentSlide({{forloop.counter}})" alt="img">
-                            {% endif %}
-                        {% endfor %}
+                        <img class="demo" src="{{image.image.url}}" onclick="currentSlide({{forloop.counter}})" alt="img">
                     </div>
+                        {% endif %}
+                {% endfor %}
                 </div>
             </div>
         </div>
         <div class="post__desc">{{portfolio.desc}}</div>
-        <div class="post__line"></div>
         <div class="post__comment">
             <div id="comment" class="createComment createComment-{{portfolio.id}}">
                 <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
