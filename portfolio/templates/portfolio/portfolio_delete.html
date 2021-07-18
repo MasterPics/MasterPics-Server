@@ -30,7 +30,9 @@
     <div class="delete__img">
         {% for image in portfolio.images.all %}
         {% if image %}
-        <img class="demo" src="{{image.image.url}}" alt="img">
+        <div class="img-container">
+            <img class="demo" src="{{image.image.url}}" alt="img">
+        </div>
         {% endif %}
     {% endfor %}
     </div>

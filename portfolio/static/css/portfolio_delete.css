@@ -60,19 +60,20 @@ body {
 }
 .delete__img {
   width: 90%;
-  height: 150px;
+  height: 127px;
   margin: 60px auto;
   overflow: hidden;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  white-space: nowrap;
+  text-align: center;
+}
+.img-container {
+  display: inline-block;
+  margin-right: 10px;
+  width: calc(92% * 0.2);
 }
 .delete__img img {
-  display: inline-block;
-  margin-right: -4px;
-  width: calc(92% * 0.2);
+  width: 100%;
   height: 100%;
-  margin-right: 12px;
   object-fit: cover;
 }
 
