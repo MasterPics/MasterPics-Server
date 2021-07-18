@@ -5,7 +5,11 @@ body {
   overflow-x: hidden;
 }
 
-
+a { text-decoration: none; color: black; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:focus { text-decoration: none; }
+a:active { text-decoration: none; }
 
 /*LOADING*/
 #loading {
@@ -159,9 +163,9 @@ nav a {
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid CACACA;
-  padding: 15px 30px;
+  padding: 30px 30px;
   font-size: 15px;
-  background-color: F5F5F5;
+  background-color: #F5F5F5;
 }
 
 .footer__left{
@@ -194,9 +198,7 @@ nav a {
 .alliance{
   color: #5200FF;
 }
-.footer__right .insta::before{
-  width: 5px;
-}
+
 
 /*LOADING*/
 #loading {

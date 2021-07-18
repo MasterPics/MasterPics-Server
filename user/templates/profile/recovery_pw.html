@@ -2,33 +2,46 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/recovery_pw.css' %}">
+{% endblock stylesheet %}
+
 {% block content %}
-<div>
+<div class="modify__container">
     {% csrf_token %}
-    <div>
-        <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
-        <div onkeyup='getUserId()'>
-            {{ form.user_id }}
+    <div class="modify__body">
+        <div class="password_recovery_title">
+        비밀번호를 잊어버리셨나요?
         </div>
-    </div>
-    <div>
-        <label name="label_username" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-        <div onkeyup="getUsername()">
-            {{ form.username }}
+        <div class="password_recovery_info">
+            <p>메일 주소를 입력하면 비밀번호를 재설정할 수 있는 이메일이 전송됩니다.</p>
         </div>
-    </div>
-    <div>
-        <label name="label_email" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-        <div onkeyup="getEmail()">
-            {{ form.email }}
+        <div>
+            <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
+            <div onkeyup='getUserId()'>
+                {{ form.user_id }}
+            </div>
         </div>
-    </div>
+        <div>
+            <label name="label_username" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            <div onkeyup="getUsername()">
+                {{ form.username }}
+            </div>
+        </div>
+        <div>
+            <label name="label_email" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            <div onkeyup="getEmail()">
+                {{ form.email }}
+            </div>
+        </div>
 
-    <div id="div_find_pw">
-        <button id="find_pw" name="recovery_pw" onclick="onClickFindPW()">비밀번호찾기</button>
-    </div>
+        <div id="div_find_pw">
+            <button id="find_pw" name="recovery_pw" onclick="onClickFindPW()">이메일 전송</button>
+            <input type="button" class="undo_btn " value="취소" /><a href='#'></a>
+        </div>
 
-    <div id="result_pw"></div>
+        <div id="result_pw"></div>
+    </div>
 </div>
 
 
@@ -87,21 +100,21 @@
         .then(function (response) {
             alert('회원님의 이메일로 인증코드를 발송하였습니다.');
             var result_pw = document.querySelector('#result_pw');
-            result_pw.innerHTML = `<<hr>
-                                    <div>
+            result_pw.innerHTML = `
+                                    <div class="modify__body__after">
                                         <form>
                                             <div>
                                                 <label for="input_auth_num">
-                                                    인증번호 입력 (<span id="timeset"></span>)
+                                                    인증코드 입력 (<span id="timeset"></span>)
                                                 </label>
                                                 <input type="text" id="input_auth_num" onkeyup="getAuthNum()"/>
                                             </div>
                                         </form>`+
                                         `<button type="submit" name="auth_confirm" id="id_auth_confirm" onclick="authConfirm()">
-                                            <i class="fas fa-check"></i>인증확인
+                                            인증확인
                                         </button>
                                     </div>`;
-            countdown("#timeset", 5, 0);            
+            countdown("#timeset", 20, 0);            
         })
         .catch(function (error) {
             if (user_id == "" || username == "" || email == "") {
