@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+/*layout*/
 
 #nav {
-  background-color: F4F4F4;
+  background-color: #F4F4F4;
 }
 
 nav {
@@ -13,8 +16,16 @@ nav a {
   color: black;
 }
 
+#footer{
+    background-color: #C4C4C4;
+}
+
+body{
+  height: 100%;
+}
+
 .container{
-  background-color: F4F4F4;
+  background-color: #F4F4F4;
 }
 
 .signup__container{
@@ -61,11 +72,14 @@ nav a {
   font-weight: 500;
   line-height: 25px;
   font-family: 'Noto Sans KR', sans-serif;
+  
 }
 
 .signup__body form input {
     width: 100%;
     height: 35px;
+    border: 1px solid #CFCFCF;
+    padding-left: 10px;
 }
 
 .signup__body form > .submit_btn {
@@ -84,6 +98,9 @@ nav a {
     font-family: 'Noto Sans KR', sans-serif;
   }
   
+.signup__body form > .submit_btn:hover{
+  background-color: #5200ff;
+}
 .id_is_ToS{
   display: flex;
   align-items: flex-end;
@@ -95,4 +112,9 @@ nav a {
   width: 15px;
   margin-left: 94%;
   margin-top: -30px;
+}
+
+input[type="password"] {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
 }

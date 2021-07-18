@@ -3,9 +3,6 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/main_list.css' %}">
-<script src="{% static 'js/RandomMagazine.js' %}"></script>
-<script src="{% static 'js/MagazineCard.js' %}"></script>
-
 {% endblock stylesheet %}
 
 {% block content %}
@@ -18,7 +15,6 @@
         <h5>Find everything for your Masterpiece</h5>
       </div>
       <h1 class ="logo_back_m">M</h1>
-      <h1 class ="logo_back_p">Pic's</h1>
     
           <div class="card_container-0">
             <img src="media/Rectangle 146.jpg">
@@ -117,30 +113,32 @@
 <div class = "RandomMagazine_bg">
   <div class="RandomMagazine">
           <div class="card_container-0">
-            <div class="magazine_img"><img src="media/Rectangle 130.jpg"></div>
-              <div class="info_container">
-                <h2 class="title">제목</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">신현지{{user.username}}</span>
-                <div class="user_category">안녕{{user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                334{{meta.like}}
+              {% for portfolio in portfolios %}
+              <div class="magazine_img"><img src="{{portfolio.user.image.url}}" alt='img'></div>
+                <div class="info_container">
+                  <h2 class="title"><a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">{{portfolio.title}}</a></h2>
                 </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                1068{{meta.view}}
-                </div>   
-                <div class="bookmark">
-                  <i class="fas fa-bookmark"></i>
-                  65{{meta.bookmark}}
+
+                <div class="user_container">
+                  <span class="username">{{portfolio.user.username}}</span>
+                  <div class="user_category">{{portfolio.user.category}}</div>
                 </div>
-              </div>
+
+                <div class="meta_container">
+                  <div class="like">
+                  <i class="fas fa-heart"></i>
+                  334{{portfolio.like_users.count}}
+                  </div>
+                  <div class="view">
+                  <i class="fas fa-eye"></i>
+                  1068{{portfolio.view_count}}
+                  </div>   
+                  <div class="bookmark">
+                    <i class="fas fa-bookmark"></i>
+                    65{{portfolio.bookmark_users.count}}
+                  </div>
+                </div>
+              {% endfor %}
           </div>
           
           <div class="card_container-1">

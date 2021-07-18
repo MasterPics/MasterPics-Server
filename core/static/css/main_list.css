@@ -16,6 +16,7 @@ a:active { text-decoration: none; }
 
 .LandingBanner_1_bg {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,44 +24,18 @@ a:active { text-decoration: none; }
 }
 
 .LandingBanner_1 {
-  width: 1200px;
-  /*display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  */
   display: grid;
   grid-template-areas: "card-0 . . card-3" " text-1 . . card-3" "card-1 text-2 card-2 card-3";
   align-items: flex-start;
+  height: 100%;
 }
-
-
-/*
-.LandingBanner_1 .text_container {
-  pointer-events: none;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-direction: column;
-}
-*/
-
-/*
-.LandingBanner_1 .text_container > * {
-  color: white;
-  font-family: "DM Serif Display", serif;
-}
-*/
 
 .LandingBanner_1 .logo {
   grid-area: text-1;
   color: #ffffff;
-  margin-left: 10%;
-  margin-top: 10%;
+  margin-top: 50px;
   z-index: 1;
+  margin-left: 80px;
 }
 
 .LandingBanner_1 .logo h1{
@@ -72,7 +47,7 @@ a:active { text-decoration: none; }
 
 .LandingBanner_1 .logo h5{
   font-size: 22px;
-  margin-top: 1%;
+  margin-top: 10px;
   font-family: 'Noto Serif', serif;
   font-style: italic;
   font-weight: 100;
@@ -84,24 +59,11 @@ a:active { text-decoration: none; }
   word-spacing: 2px;
 }
 
-/*
-.LandingBanner_1 .logo_back_p {
-  grid-area: text-0;
-  font-size: 180px;
-  color: 212121;
-  transform: rotate(270deg);
-  margin-top: 25%;
-  font-family: 'DM Serif Display', serif;
-  font-weight: 200;
-}
-*/
-
 .LandingBanner_1 .logo_back_m {
   grid-area: text-1;
   font-size: 180px;
   color: 212121;
-  margin-left: -5%;
-  margin-top: 3%;
+  margin-top: 20px;
   font-family: 'DM Serif Display', serif;
   font-weight: 200;
 }
@@ -112,8 +74,8 @@ a:active { text-decoration: none; }
   grid-area: card-0;
   display: flex;
   position: relative;
-  margin-top: 15% ;
-  margin-left: -15%;
+  margin-top: 50px ;
+  margin-left: -10px;
 }
 
 .LandingBanner_1 .card_container-0 img{
@@ -125,8 +87,8 @@ a:active { text-decoration: none; }
   grid-area: card-1;
   display: flex;
   position: relative;
-  margin-right: 20%;
-  margin-top: 9%;
+  margin-right: 200px;
+  margin-top: 50px;
 }
 
 .LandingBanner_1 .card_container-1 img{
@@ -138,8 +100,8 @@ a:active { text-decoration: none; }
   grid-area: card-2;
   display: flex;
   position: relative;
-  margin-top: -10%;
-  margin-left: 50%;
+  margin-top: -20px;
+  margin-left: 80px;
   z-index: 2;
 }
 
@@ -151,8 +113,8 @@ a:active { text-decoration: none; }
 .LandingBanner_1 .card_container-3 {
   grid-area: card-3;
   position: relative;
-  margin-top: 20%;
-  margin-left: -20%;
+  margin-top: 100px;
+  margin-left: -50px;
   z-index: 1;
 }
 
@@ -178,8 +140,8 @@ a:active { text-decoration: none; }
   height: min-content;
   transform-origin: right top;
   position: absolute;
-  right: 0%;
-  bottom: -4%;
+  right: 0;
+  bottom: -20px;
   font-size: 11px;
   font-family: 'Roboto', sans-serif;
 }
@@ -191,8 +153,8 @@ a:active { text-decoration: none; }
   transform-origin: left top;
   transform: rotate(270deg);
   position: absolute;
-  left: -45%;
-  top: 60%;
+  right: 200px;
+  top: 300px;
   font-size: 180px;
   font-family: 'DM Serif Display', serif;
   z-index: -1;
@@ -208,8 +170,8 @@ a:active { text-decoration: none; }
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-top: auto;
-  margin-top: -15%;
+  margin-top: 20px;
+  margin-right: 50px;
 }
 .LandingBanner_1 .categories > div {
   font-family: 'DM Serif Display', serif;
