@@ -10,6 +10,9 @@ import hashlib
 
 # ----------------------new-------------------------------
 from .forms import SignupForm, LoginForm, ProfileModifyForm, LocalPasswordChangeForm, SocialUserInfoForm
+from portfolio.models import Portfolio, Participants
+from contact.models import Contact
+from place.models import Place
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -138,8 +141,6 @@ def logout(request):
         return redirect('core:main_list')
 
 # social sign up 시 -> 추가 정보 입력받기
-
-
 def social_user_more_info(request):
     if request.method == 'POST':
         form = SocialUserInfoForm(request.POST, instance=request.user)
@@ -183,193 +184,169 @@ def withdrawal(request):
 
 
 # ----mypage 관련----
-# TODO : 현재는 모든 유저가 자신의 프로필만 볼 수 있게 되어있음 -> 다른 사람의 프로필도 볼 수 있게 고치기
-#         -> 파라미터에 user_identifier 추가, mypage_owner 바꾸기
 def mypage(request):
-    return redirect('profile:mypage_portfolio')
+    ctx = {
+        'portfolios': request.user.portfolios.all(),
+        'contacts' : request.user.contacts.all(),
+    }
+
+    return render(request, 'profile/mypage.html', ctx)
+
+
+# TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
+def others_mypage(request, pk):
+    profile_owner = get_object_or_404(User, user_identifier=pk)
+
+    ctx = {
+        'profile_owner': profile_owner,
+        'portfolios': profile_owner.portfolios.all(),
+        'contacts': profile_owner.contacts.all()
+    }
+
+    return render(request, 'profile/mypage_others.html', context=ctx)
+    
 
 # mypage / 포트폴리오 / 나의 포트폴리오
-
-
+@csrf_exempt
 def mypage_portfolio(request):
-    mypage_owner = request.user
-    portfolios = mypage_owner.portfolios.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    portfolios_query = mypage_owner.portfolios.all()
+    portfolios = []
+    for portfolio in portfolios_query:
+        portfolios.append({
+            'id': portfolio.id,
+            'title': portfolio.title,
+            'like_count': portfolio.like_users.count(),
+            'view_count': portfolio.view_count,
+            'thumbnail_url': portfolio.thumbnail.image.url
+        })
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'portfolios': portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_portfolio.html', ctx)
+    return JsonResponse({"portfolios": portfolios})
+        
 
 # mypage / 포트폴리오 / 태그된 목록
-
-
+@csrf_exempt
 def mypage_portfolio_tagged(request):
-    mypage_owner = request.user
-    # mypage_owner 태그된 participant 객체들
-    taggeds = mypage_owner.participants.all()
-    tagged_portfolios = []       # mypage_owner 태그된 portfolio 객체들
-    for tagged in taggeds:
-        tagged_portfolios.append(tagged.portfolio)
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    tagged_portfolios_query = Portfolio.objects.filter(participants=mypage_owner)
+    tagged_portfolios = []       # request.user 태그된 portfolio 객체들
+    for portfolio in tagged_portfolios_query:
+        tagged_portfolios.append({
+            'id': portfolio.id,
+            'title': portfolio.title,
+            'like_count': portfolio.like_users.count(),
+            'view_count': portfolio.view_count,
+            'thumbnail_url': portfolio.thumbnail.image.url
+            })
 
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    return JsonResponse({"tagged_portfolios": tagged_portfolios})
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'tagged_portfolios': tagged_portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_portfolio_tagged.html', ctx)
 
 # mypage / 게시글 / 컨택트
-
-
 def mypage_post_contact(request):
-    mypage_owner = request.user
-    contacts = mypage_owner.contacts.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    contacts_query = mypage_owner.contacts.all()
+    contacts = []
+    for contact in contacts_query:
+        contacts.append({
+            'id': contact.id,
+            'title': contact.title,
+            'like_count': contact.like_users.count(),
+            'view_count': contact.view_count,
+            'thumbnail_url': contact.thumbnail.image.url
+        })
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'contacts': contacts,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
+    return JsonResponse({"contacts": contacts})
 
-    return render(request, 'profile/mypage_post_contact.html', ctx)
 
 # mypage / 게시글 / 플레이스
-
-
+@csrf_exempt
 def mypage_post_place(request):
-    mypage_owner = request.user
-    places = mypage_owner.places.all()
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    places_query = mypage_owner.places.all()
+    places = []
+    for place in places_query:
+        places.append({
+            'id': place.id,
+            'title': place.title,
+            'like_count': place.like_users.count(),
+            'view_count': place.view_count,
+            'thumbnail_url': place.thumbnail.image.url
+        })
 
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'places': places,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
+    return JsonResponse({"places": places})
 
-    return render(request, 'profile/mypage_post_place.html', ctx)
 
 
 # mypage / 저장 목록 / 포트폴리오
-
-
+@csrf_exempt
 def mypage_bookmark_portfolio(request):
-    mypage_owner = request.user
-    # bookmarked_informations = mypage_owner.save_users.all()      # mypage_owner가 bookmark한 information 객체들
-    # bookmarked_portfolios = []        # mypage_owner bookmark한 portfolio 객체들
-    # for info in bookmarked_informations:
-    #     bookmarked_portfolios.append(info.portfolioInformations.portfolio)  # info가 portfolioInformation이 아닌 다른 곳(contactInformation, placeInformation)에
-    #                                                                         # 연결되어있으면 오류 발생. portfolioInformations가 없다고 나옴
-
-    # TODO : manyTomany 쿼리 필터 공부하기 -> 코드 효율적으로 수정 필요
-    bookmarked_informations = Information.objects.filter(
-        save_users=mypage_owner)     # mypage_owner가 bookmark한 information 객체들
-    portfolioInformations = PortfolioInformation.objects.all(
-    )                          # 모든 portfolioInformation 객체들
-    # mypage_owner가 bookmark한 portfolio 객체들
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_portfolios_query = Portfolio.objects.filter(bookmark_users=mypage_owner)
     bookmarked_portfolios = []
-    for portfolioInformation in portfolioInformations:
-        for information in bookmarked_informations:
-            if portfolioInformation.information == information:
-                bookmarked_portfolios.append(portfolioInformation.portfolio)
-
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'bookmarked_portfolios': bookmarked_portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_bookmark_portfolio.html', ctx)
+    for portfolio in bookmarked_portfolios_query:
+        bookmarked_portfolios.append({
+            'id': portfolio.id,
+            'title': portfolio.title,
+            'like_count': portfolio.like_users.count(),
+            'view_count': portfolio.view_count,
+            'thumbnail_url': portfolio.thumbnail.image.url,
+            'is_bookmark': True
+        })
+    
+    return JsonResponse({"bookmarked_portfolios": bookmarked_portfolios})
 
 
 # mypage / 저장 목록 / 컨택트
-
-
+@csrf_exempt
 def mypage_bookmark_contact(request):
-    mypage_owner = request.user
-    # bookmarked_informations = mypage_owner.save_users.all()
-    # bookmarked_contacts = []
-    # for info in bookmarked_informations:
-    #     bookmarked_contacts.append(info.contactInformations.contact)
-
-    # TODO : manyTomany 쿼리 필터 공부하기 -> 코드 효율적으로 수정 필요
-    bookmarked_informations = Information.objects.filter(
-        save_users=mypage_owner)     # mypage_owner가 bookmark한 information 객체들
-    contactInformations = ContactInformation.objects.all(
-    )                          # 모든 portfolioInformation 객체들
-    # mypage_owner가 bookmark한 portfolio 객체들
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_contacts_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_contacts = []
-    for contactInformation in contactInformations:
-        for information in bookmarked_informations:
-            if contactInformation.information == information:
-                bookmarked_contacts.append(contactInformation.contact)
-
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'bookmarked_contacts': bookmarked_contacts,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_bookmark_contact.html', ctx)
+    for contact in bookmarked_contacts_query:
+        bookmarked_contacts.append({
+            'id': contact.id,
+            'title': contact.title,
+            'like_count': contact.like_users.count(),
+            'view_count': contact.view_count,
+            'thumbnail_url': contact.thumbnail.image.url,
+            'is_bookmark': True
+        })
+    
+    return JsonResponse({"bookmarked_contacts": bookmarked_contacts})
 
 
 # mypage / 저장 목록 / 플레이스
-
-
+@csrf_exempt
 def mypage_bookmark_place(request):
-    mypage_owner = request.user
-    # bookmarked_informations = mypage_owner.save_users.all()
-    # bookmarked_contacts = []
-    # for info in bookmarked_informations:
-    #     bookmarked_contacts.append(info.contactInformations.contact)
-
-    # TODO : manyTomany 쿼리 필터 공부하기 -> 코드 효율적으로 수정 필요
-    bookmarked_informations = Information.objects.filter(
-        save_users=mypage_owner)     # mypage_owner가 bookmark한 information 객체들
-    # 모든 portfolioInformation 객체들
-    placeInformations = PlaceInformation.objects.all()
-    # mypage_owner가 bookmark한 portfolio 객체들
+    data = json.loads(request.body)
+    mypage_owner_id = data["userId"]
+    mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
+    bookmarked_places_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_places = []
-    for placeInformation in placeInformations:
-        for information in bookmarked_informations:
-            if placeInformation.information == information:
-                bookmarked_places.append(placeInformation.place)
-
-    portfolio_count = mypage_owner.portfolios.count()
-    contact_count = mypage_owner.contacts.count()
-
-    ctx = {
-        'mypage_owner': mypage_owner,
-        'bookmarked_places': bookmarked_places,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/mypage_bookmark_place.html', ctx)
+    for place in bookmarked_places_query:
+        bookmarked_places.append({
+            'id': place.id,
+            'title': place.title,
+            'like_count': place.like_users.count(),
+            'view_count': place.view_count,
+            'thumbnail_url': place.thumbnail.image.url,
+            'is_bookmark': True
+        })
+    
+    return JsonResponse({"bookmarked_places": bookmarked_places})
 
 
 # ----profile 관련----
@@ -413,23 +390,6 @@ def password_change(request):
             'form': form,
         }
         return render(request, 'profile/password_change.html', ctx)
-
-
-# TODO Superuser는 생성하면 hash값이 비어있음 -> 직접 입력해주거나 슈퍼 유저는 DB 관리용으로만 글을 써야함
-def others_profile(request, pk):
-    profile_owner = get_object_or_404(User, user_identifier=pk)
-    portfolios = profile_owner.portfolios.all()
-    portfolio_count = profile_owner.portfolios.count()
-    contact_count = profile_owner.contacts.count()
-
-    ctx = {
-        'profile_owner': profile_owner,
-        'portfolios': portfolios,
-        'portfolio_count': portfolio_count,
-        'contact_count': contact_count,
-    }
-
-    return render(request, 'profile/profile_others.html', context=ctx)
 
 
 # ----recovery password 관련----

@@ -1,10 +1,10 @@
 const modifyNewComment = (portfolio_id, comment_id, value) => {
-    console.log(portfolio_id, comment_id, value);
-    const commentContainer = document.querySelector(`.comments-${portfolio_id}`);
-    console.log(commentContainer)
+    const CommentContainer = document.querySelector(`.comments__container-${portfolio_id}`);
+    console.log(CommentContainer)
 
     const tempContainer = document.createElement("div");
-    tempContainer.className = `comment comments-${comment_id}`;
+    tempContainer.className = `comment comment-${comment_id}`;
+    tempContainer.setAttribute("style", "font-size: 13px;olor: #1e1e1e;");
 
 
     tempContainer.textContent = value;
@@ -12,11 +12,12 @@ const modifyNewComment = (portfolio_id, comment_id, value) => {
     const deleteBtn = document.createElement("input");
     deleteBtn.className = "comment-btn";
     deleteBtn.setAttribute("type", "submit");
-    deleteBtn.setAttribute("value", "삭제");
+    deleteBtn.setAttribute("value", "댓글삭제");
+    deleteBtn.setAttribute("style", " font-size: 11px;color: #747474;background-color: #ffffff;border: none;")
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
     tempContainer.appendChild(deleteBtn);
-    commentContainer.appendChild(tempContainer);
+    CommentContainer.appendChild(tempContainer);
 
 }
 
@@ -44,8 +45,7 @@ const onClickNewComment = async (id) => {
 
 const modifyDeleteComment = (comment_id) => {
 
-    const targetCommentContainer = document.querySelector(`.comments-${comment_id}`);
-    console.log(targetCommentContainer)
+    const targetCommentContainer = document.querySelector(`.comment-${comment_id}`);
     targetCommentContainer.remove();
 }
 
