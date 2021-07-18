@@ -2,10 +2,18 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/smtp_sending_success.css' %}">
+{% endblock stylesheet %} 
+
 {% block content %}
-    {% if messages %}
-        {% for msg in messages %}
-            {{ msg.message }}
-        {% endfor %}
-    {% endif %}
+    <div class="modify__container">
+        <div class="modify__body">
+            {% if messages %}
+                {% for msg in messages %}
+                    {{ msg.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock content%}
