@@ -15,7 +15,10 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ['id', 'writer', 'created_at']
     list_display_links = ['id', 'writer', 'created_at']
 
-
+@admin.register(PostBookmark)
+class PostBookmarkAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'post']
+    list_display_links = ['id', 'user', 'post']
 
 
 
