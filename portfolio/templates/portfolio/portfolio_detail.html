@@ -13,7 +13,7 @@
             {% if portfolio_owner == request_user %}
             <a class="side-bar__user" href="{% url 'profile:mypage' %}">
             {% else %}
-            <a class="side-bar__user" href="{% url 'profile:others_profile' portfolio_owner.user_identifier %}">
+            <a class="side-bar__user" href="{% url 'profile:others_mypage' portfolio_owner.user_identifier %}">
             {% endif %}
                 <div class="side-bar__text">
                     게시자

@@ -18,7 +18,7 @@
                 <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user}}</a>
         {% else %}
                 <img class="user-image" src={{place.user.image.url}} width="90px" height="90px"/>
-                <a class="user-name" href="{% url 'profile:others_profile' place.user.user_identifier %}">{{place.user}}</a>
+                <a class="user-name" href="{% url 'profile:others_mypage' place.user.user_identifier %}">{{place.user}}</a>
         {% endif %}
             <p class="user-category">{{place.user.category}}</p>
         </div>
