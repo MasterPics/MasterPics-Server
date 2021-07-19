@@ -110,11 +110,10 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-
+    comments = contact.comments.all()
     ctx = {
         'contact': contact,
-        'request_user': request.user,
-        'comments': contact.comments.all()
+        'comments': comments
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -143,7 +142,9 @@ def contact_update(request, pk):
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
-        ctx = {'form': form}
+        location_form =LocationForm(instance=contact)
+        ctx = {'form':form,
+        'location_form':location_form}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
@@ -151,7 +152,6 @@ def contact_update(request, pk):
 
 @login_required
 def contact_create(request):
-
     if request.method == 'POST':
         contact_form = ContactForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
@@ -173,9 +173,7 @@ def contact_create(request):
                 if not i:
                     contact.thumbnail = image_obj
                     contact.save()
-
             return redirect('contact:contact_detail', contact.pk)
-
     else:
         ctx = {
             'contact_form': ContactForm(),
