@@ -155,7 +155,7 @@ form {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .form__location label {
   margin-right: 15px;
@@ -260,11 +260,11 @@ form {
   width: 100%;
   padding: 9px 10px;
   overflow: hidden;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .form__file-attach {
   padding-top: 10px;
-  margin-bottom: 58px;
+  margin-bottom: 60px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -328,7 +328,7 @@ form {
 }
 /*******************************************************/
 .form__btn {
-  margin-top: 60px;
+  margin-top: 30px;
   text-align: center;
 }
 .form__submit {
