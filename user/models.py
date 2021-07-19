@@ -47,7 +47,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
     category = models.CharField(max_length=20, choices=CATEGORY, default='otheruse')
-    image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='unnamed.png')
+    image = models.ImageField(upload_to=uuid_name_upload_to, blank=True, default='user/profile_photo/default/profile_default.png')
     desc = models.TextField(blank=True, verbose_name='프로필 소개')
     phone = PhoneField(blank=True)
     phone_public = models.BooleanField(default=True)
