@@ -36,6 +36,10 @@ from .utils import email_auth_num
 import json
 from .forms import CustomSetPasswordForm
 
+# ----------------------smtp-------------------------------
+from .decorators import allowed_user, required_login
+
+
 # ----login 관련----
 
 
@@ -184,6 +188,8 @@ def withdrawal(request):
 
 
 # ----mypage 관련----
+@required_login
+@allowed_user
 def mypage(request):
     ctx = {
         'portfolios': request.user.portfolios.all(),
@@ -247,6 +253,7 @@ def mypage_portfolio_tagged(request):
 
 
 # mypage / 게시글 / 컨택트
+@csrf_exempt
 def mypage_post_contact(request):
     data = json.loads(request.body)
     mypage_owner_id = data["userId"]
@@ -350,6 +357,8 @@ def mypage_bookmark_place(request):
 
 
 # ----profile 관련----
+@required_login
+@allowed_user
 def profile_modify(request):
     if request.method == 'POST':
         form = ProfileModifyForm(
@@ -371,7 +380,7 @@ def profile_modify(request):
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
 
-
+@required_login
 def password_change(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)
