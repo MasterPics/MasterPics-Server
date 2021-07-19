@@ -26,6 +26,16 @@ def is_ToS(value):
     if value == False:
         raise forms.ValidationError("약관에 동의해야 합니다.")
 
+def user_id(value):
+    user_id = value
+
+    # social signup 시의 오류 해결
+    if user_id == '':
+        return
+    
+    if User.objects.filter(user_id=user_id).exists():
+        raise forms.ValidationError('사용자의 아이디는 이미 존재합니다.')
+
 
 class User(AbstractUser):
     CATEGORY_PHOTOGRAPHER = 'photographer'
@@ -42,7 +52,7 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    user_id = models.CharField(max_length=20, unique=True, verbose_name='아이디')     # user id
+    user_id = models.CharField(max_length=20, verbose_name='아이디', validators=[user_id])     # user id
     username = models.CharField(max_length=20, unique=False, verbose_name='사용자 이름')    # user name (본명 혹은 예명)
     email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
@@ -56,12 +66,11 @@ class User(AbstractUser):
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
     user_identifier = models.CharField(max_length=100, blank=True, null=True)
-    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
+    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True, blank=True)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username', 'email',]
 
-    # objects = MyUserManager()
 
     def __str__(self):
         return self.user_id 
