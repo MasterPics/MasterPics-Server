@@ -4,17 +4,11 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
-/*
-var info = JSON.parse("{{places_json | escapejs }}")
-var location = info["location"]
-var address = loaction["address"]
-*/
 
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
-
 
 // 주소로 좌표를 검색합니다
 
@@ -43,7 +37,7 @@ geocoder.addressSearch(address, function(result, status) {
     } 
 });  
 
-//Save
+/*
 const onClickSave = async (place_id) => {
     console.log("save?");
     try {
@@ -93,8 +87,7 @@ const modify = (place_id, is_saved) => {
     }
 
 }
-
-
+*/
 const modifyNewComment = (place_id, comment_id, value) => {
     const CommentContainer = document.querySelector(`.comments-${place_id}`);
     console.log(CommentContainer)
@@ -102,15 +95,42 @@ const modifyNewComment = (place_id, comment_id, value) => {
     const tempContainer = document.createElement("div");
     tempContainer.className = `comment comment-${comment_id}`;
 
+    const commentContent = document.createElement("div")
+    commentContent.className = `comment-content`;
 
-    tempContainer.textContent = value;
+    const commentImage = document.createElement("div")
+    commentImage.className = `comment-image`;
+    const commentUserImage = document.createElement("img")
+    commentUserImage.setAttribute('src',userImage);
+    commentImage.appendChild(commentUserImage);
+
+    const commentInfo = document.createElement("div")
+    const commentWriter =  document.createElement("span")
+    commentWriter.className = `comment-writer`;
+    commentWriter.textContent = writer;
+
+    const commentCreated =  document.createElement("span")
+    commentCreated.className = `comment-created`;
+    commentCreated.textContent = "방금 전";
+
+    const commentText =  document.createElement("p")
+    commentText.className = `comment-text`;
+    commentText.textContent = value;
 
     const deleteBtn = document.createElement("input");
-    deleteBtn.className = "comment-btn";
+    deleteBtn.className = "delete";
     deleteBtn.setAttribute("type", "submit");
     deleteBtn.setAttribute("value", "삭제");
     deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
 
+    commentInfo.appendChild(commentWriter)
+    commentInfo.appendChild(commentCreated)
+    commentInfo.appendChild(commentText)
+
+    commentContent.appendChild(commentImage)
+    commentContent.appendChild(commentInfo)
+
+    tempContainer.appendChild(commentContent)
     tempContainer.appendChild(deleteBtn);
     CommentContainer.appendChild(tempContainer);
 }

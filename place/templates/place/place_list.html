@@ -40,14 +40,14 @@
             <!-- 상호무페이 -->
             <div class="pay">
                 <label for="no_pay">상호 무페이</label>
-                <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
+                <input type="checkbox" id="no_pay" class="no_pay" name="no_pay" {% if no_pay == True %}checked{% endif %}>
             </div>
             
-            <!--내 위치 주변-->
+            <!--내 위치 주변
             <div class="around">
                 <label for="around_me">내 위치 주변</label>
                 <input type="checkbox" class="around_me" name="around_me" value="around_me">
-            </div>
+            </div>-->
 
             <!--sort https://wikidocs.net/71806-->
             <div class="sort-box">
@@ -55,7 +55,7 @@
                     <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
                         최신순
                     </option>
-                    <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                    <option value="like" {% if sort == 'like' %}selected{% endif %}>
                         인기순
                     </option>
                     <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
@@ -74,12 +74,18 @@
                     <a href="{% url 'place:place_detail' place.pk %}">
                         <p class="place-title">{{place.title}}</p>
                         <p class="place-address">{{place.location}}</p>
-                        <p class="place-desc">{{place.desc}}</p>
+                        <p class="place-pay">
+                            {% if place.pay == 0 %}
+                            pay: 상호무페이
+                            {% else %}
+                            pay: {{place.pay}}원
+                            {% endif %}
+                        </p>
                     </a>
                     <div class="place-tag">
-                        {% for tag in tags %}
-                            <button><a href="">#{{ tag.name }} </a></button>
-                        {% endfor %}
+                    {% for tag in place.tags.all %}  
+                    <button><a href="{% url 'reference:reference_list' %}?search={{tag.name}}">#{{ tag.name }} </a></button>
+                    {% endfor %}    
                     </div>
                     <div class="user-info">
                         <div class="place-user">    
@@ -89,12 +95,29 @@
                                 <p class="user-category">{{place.user.category}}</p>
                             </div>
                         </div>
-                        <div class="place-like-count">
-                            <i class="far fa-heart"></i>
-                            <span>1244</span>
-                        </div>
-                        <div class="place-save">
-                            <i class="far fa-bookmark"></i>
+                        
+                        <div class="like-save">
+                            <div class="place-like-count like-{{place.id}}">
+                                {% if request_user in place.like_users.all %}
+                                <i class="fas fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% else %}
+                                <i class="far fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% endif %}
+                                <span class="like__content">{{ place.like_users.count }}</span>
+                            </div>
+                            <div class="place-save save-{{place.id}}">
+                                {% if request_user in place.save_users.all %}
+                                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% endif %}
+                                <span class="save__content" style="display:none">{{ place.bookmark_users.count }}</span>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,6 +160,9 @@
 
 <script type="text/javascript" src="{% static 'js/map/place_list_map.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/place/place_list.js' %}"></script>
+
+<script src="{% static 'js/place_bookmark.js' %}"></script>
+<script src="{% static 'js/place_like.js' %}"></script>
 {% endblock script %}
 
         

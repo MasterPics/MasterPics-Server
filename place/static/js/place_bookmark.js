@@ -1,29 +1,29 @@
-const onClickSave = async (portfolio_id) => {
+const onClickSave = async (place_id) => {
     try {
         const options = {
-            url: '/portfolio/save/',
+            url: '/place/bookmark/',
             method: 'POST',
             data: {
-                portfolio_id: portfolio_id,
+                place_id: place_id,
             }
         }
         const response = await axios(options)
         const responseOK = response && response.status === 200 && response.statusText === 'OK'
         if (responseOK) {
             const data = response.data
-            modifySave(data.portfolio_id, data.is_saved)
+            //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
+            modifySave(data.place_id, data.is_bookmarked)
         }
     } catch (error) {
         console.log(error)
     }
 }
 
-const modifySave = (portfolio_id, is_saved) => {
-    const save = document.querySelector(`.save-${portfolio_id} i`);
-    const save_content = document.querySelector(`.save-${portfolio_id} .save__content`)
-    const num = save_content.innerText; // portfolio.bookmark_users.count
-    console.log(num)
-    if (is_saved === true) {
+const modifySave = (place_id, is_bookmarked) => {
+    const save = document.querySelector(`.save-${place_id} i`);
+    const save_content = document.querySelector(`.save-${place_id} .save__content`)
+    const num = save_content.innerText;
+    if (is_bookmarked === true) {
 
         save.className = "fas fa-bookmark";
 
@@ -35,4 +35,5 @@ const modifySave = (portfolio_id, is_saved) => {
         const count = Number(num) - 1;
         save_content.innerHTML = count
     }
+
 }

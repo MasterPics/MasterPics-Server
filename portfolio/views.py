@@ -58,7 +58,7 @@ def portfolio_list(request):
             'like_users')).order_by('-num_save', '-updated_at')
     elif sort == 'save':
         portfolios = portfolios.annotate(num_save=Count(
-            'save_users')).order_by('-num_save', '-updated_at')
+            'bookmark_users')).order_by('-num_save', '-updated_at')
 
     # Search
     if search:
