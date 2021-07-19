@@ -3,165 +3,146 @@
 
 
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'css/place/place_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/place_list.css' %}">
 {% endblock stylesheet %}
 
 
 {% block content %}
-
-
-<div class="place_list">
-    <!--category-->
-    <div class="placelist_left">
-        
+<section class="place-header">
+    <div class="place-header-content">
+        <h2>Place</h2>
+        <p>키워드 검색을 통해 나의 시안과 예산에 맞는 촬영 공간을 찾아보고,<br>내가 아는 촬영 장소들을 사람들과 공유해보세요!</p>
+        <button class="register-btn"><a href="{% url 'place:place_create' %}">장소 등록하러 가기</a><button>
     </div>
+</section>
 
-    <div class="placelist_right">
-        <div class="bar">
+<section class="place-list">
+    <div class="place-list-grid">
+        <!--search-->
+        <div class="place-search">
+            <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
+            <button class="btn_search" type="button" id="btn_search">찾기</button>
+        </div>
+        <div style="display:none;">
+            <form id="searchForm" method="get" action="{% url 'place:place_list' %}">
+                <!--category-->
+                <input type="hidden" id="no_pay" name="no_pay" value="{{ no_pay }}">
+                <!--sort-->
+                <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
+                <!--search-->
+                <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+            </form>
+        </div>
 
-            <!--search-->
-            <div class="input-group">
-                <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
-                </div>
+        <!--filter-->
+        <div class="place-filter">
+
+            <!-- 상호무페이 -->
+            <div class="pay">
+                <label for="no_pay">상호 무페이</label>
+                <input type="checkbox" id="no_pay" class="no_pay" name="no_pay" {% if no_pay == True %}checked{% endif %}>
             </div>
+            
+            <!--내 위치 주변
+            <div class="around">
+                <label for="around_me">내 위치 주변</label>
+                <input type="checkbox" class="around_me" name="around_me" value="around_me">
+            </div>-->
 
-            <!--sort-->
-            <div class="sort">
+            <!--sort https://wikidocs.net/71806-->
+            <div class="sort-box">
                 <select name="" id="" class="form-control sort ">
                     <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
                         최신순
                     </option>
-                    <!-- <option value="save" {% if sort == 'save' %}selected{% endif %}>
-                        저장순
-                    </option> -->
+                    <option value="like" {% if sort == 'like' %}selected{% endif %}>
+                        인기순
+                    </option>
                     <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
-                        가격순
+                        낮은가격순
                     </option>
                 </select>
             </div>
-
-
-            <!--contact_create-->
-            <div class="place_create">
-                {% if request.user.is_authenticated %}
-                <a class="update_btn" href="{% url 'place:place_create' %}"><i class="far fa-plus-square"></i></a>
-                {% endif %}
-            </div>
-
             
-            <!-- 모달...어렵네... 지도가 어려운건가 -->
-            <!-- <div class="contact_map"> 
-                <div id="my_modal">
-                    <div id="map"></div>
-                    <br />
-                    <a class="modal_close_btn">닫기</a>
-                </div>
-
-                <button id="popup_open_btn">위치 확인하기</button>
-            </div> -->
-            <button id="popup_open_btn">
-                <a href="{% url 'place:place_map' %}">위치 확인하기</a>
-            </button>
         </div>
-
-
-        <!--contact_list-->
-        <div class="content">
-            <!---->
-            <div class="infinite-container">
-                {% for place in places %}
-
-                <div class="infinite-item">
-                    <div class="item_top place-{{place.pk}}">
-                        <div>
-                            <!-- user_img -->
-                            User : {{ place.user }}
-                        </div>
-                        <a href="{% url 'place:place_detail' place.pk %}">
-                            <div>{{ place.title }}</div>
-                        </a>
-                        <div class="thumbnail_desc">
-                            <img src="{{ place.thumbnail.url }}" alt="">
-                            <div class="desc">
-                                <!-- desc ... -->
+    <hr>
+        <!-- 게시글 목록-->
+        {% for place in places %}
+            <div class="place-content">
+                <img class="place-thumbnail" src="{{ place.thumbnail.image.url }}"/>
+                <div class="place-content-title">
+                    <a href="{% url 'place:place_detail' place.pk %}">
+                        <p class="place-title">{{place.title}}</p>
+                        <p class="place-address">{{place.location}}</p>
+                        <p class="place-pay">
+                            {% if place.pay == 0 %}
+                            pay: 상호무페이
+                            {% else %}
+                            pay: {{place.pay}}원
+                            {% endif %}
+                        </p>
+                    </a>
+                    <div class="place-tag">
+                    {% for tag in place.tags.all %}  
+                    <button><a href="{% url 'reference:reference_list' %}?search={{tag.name}}">#{{ tag.name }} </a></button>
+                    {% endfor %}    
+                    </div>
+                    <div class="user-info">
+                        <div class="place-user">    
+                            <img class="user-image" src="{{place.user.image.url}}">
+                            <div class="user-name">
+                                <p class="user-nickname">{{place.user}}</p>
+                                <p class="user-category">{{place.user.category}}</p>
                             </div>
                         </div>
-                        <div class="pay_date">
-                            {% if place.pay == 0 %}
-                            Pay : 상호 무페이
-                            {% else %}
-                            Pay : {{ place.pay }}원
-                            {% endif %}
-                            <!-- 촬영날짜나 isclosed check되었으면 마감알림 -->
+                        
+                        <div class="like-save">
+                            <div class="place-like-count like-{{place.id}}">
+                                {% if request_user in place.like_users.all %}
+                                <i class="fas fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% else %}
+                                <i class="far fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
+                                    value="like"></i>
+                                {% endif %}
+                                <span class="like__content">{{ place.like_users.count }}</span>
+                            </div>
+                            <div class="place-save save-{{place.id}}">
+                                {% if request_user in place.save_users.all %}
+                                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
+                                    value="save"></i>
+                                {% endif %}
+                                <span class="save__content" style="display:none">{{ place.bookmark_users.count }}</span>
+
+                            </div>
                         </div>
                     </div>
-
-                    <div class="item_bottom">
-                        <div class="comment">
-                            <i class="far fa-comment-dots"></i>
-                            <span class="comment__content">{{ place.place_comments.count }}</span>
-                        </div>
-
-                        <div class="save save-{{place.id}}">
-                            {% if request.user in place.save_users.all %}
-                            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
-                            {% else %}
-                            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
-                            {% endif %}
-                            <span class="save__content">{{ place.save_users.count }}</span>
-                        </div>
-
-                    </div>
-
-
-                    <!--
-                    <div class="caption">
-                        <div class="caption-content">
-                            <p>더 알아보기<i style="font-size: 1em;" class="fas fa-search"></i> </p>
-                        </div>
-                    </div>
-                    -->
                 </div>
-
-                {% endfor %}
             </div>
-
-
-            <!-- 무한로딩 보류 -->
-            {% if places.has_next %}
-            <a class="infinite-more-link" href="?page={{ places.next_page_number }}">
-                <div class="loading" style="display: none;">Loading...</div>
-            </a>
-            {% endif %}
-
-            <!--filter form-->
-            <div style="height: 0;">
-                <form id="searchForm" method="get" action="{% url 'place:place_list' %}">
-                    <!--category-->
-                    <input type="hidden" id="category" name="category" value="{{ category }}">
-                    <!--sort-->
-                    <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
-                    <!--search-->
-                    <input type="hidden" id="sort" name="sort" value="{{ sort }}">
-                </form>
-            </div>
-        </div>
-
-
-       
-
-
-        
-
+        {% endfor %}
     </div>
+</section>
+<div class="place-pagenation">
+    <!-- 수정할 예정 : https://cjh5414.github.io/django-pagination/ 
+        EL pagination digg style -->
+    <span>
+    {% if places.has_previous %}
+        <a href="?page={{places.previous_page_number}}">이전</a>
+    {% endif %}
 
-    <div>
+    Page {{places.number}} of {{places.paginator.num_pages}}</span>
+
+    {% if places.has_next %}
+        <a href="?page={{places.next_page_number}}">다음</a>
+    {% endif %}        
+</div>
+
+
 {% endblock content %}
-
+</div>
 
 
 <!--js-->
@@ -179,6 +160,9 @@
 
 <script type="text/javascript" src="{% static 'js/map/place_list_map.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/place/place_list.js' %}"></script>
+
+<script src="{% static 'js/place_bookmark.js' %}"></script>
+<script src="{% static 'js/place_like.js' %}"></script>
 {% endblock script %}
 
         

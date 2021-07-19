@@ -1,22 +1,18 @@
+import place
 from django.db import models
-from core.models import Location, Comment, Information
-from user.models import User
-from core.utils import uuid_name_upload_to
+from core.models import *
 
-class Place(models.Model):
+from core.utils import uuid_name_upload_to
+from django.shortcuts import get_object_or_404
+
+
+class Place(PostBase):
     # common field
     user = models.ForeignKey(
-        to=User, related_name="posts", on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to=uuid_name_upload_to)
-    title = models.CharField(max_length=30)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    desc = models.TextField()
+        to=User, related_name="places", on_delete=models.CASCADE)
 
-    # specific field
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, default=None, blank=True)
-    # fee
     pay = models.PositiveIntegerField()
     free = models.BooleanField(default=False)
 
@@ -25,17 +21,10 @@ class Place(models.Model):
             'user': self.user,
             'thumbnail': self.thumbnail.url,
             'title': self.title,
+
             'location': self.location,
             'lat': self.location.lat,
             'lon': self.location.lon,
             'pay': self.location.pay,
-            'tag_str': ' '.join([tag.tag for tag in tags.all()])
+            'tag_str': ' '.join([tag.tag for tag in self.tags.all()])
         }
-
-class PlaceComment(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
-class PlaceInformation(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    information = models.ForeignKey(Information, on_delete=models.CASCADE)

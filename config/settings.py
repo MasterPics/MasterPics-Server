@@ -13,20 +13,40 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 
+# smtp
+import json
+from django.core.exceptions import ImproperlyConfigured
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# smtp
+secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mikvg^#cy6isjbn!q4(=s3+2m9mu-kr^41yl(i)_zj7!qwhik&'
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 
 # Application definition
@@ -58,6 +78,12 @@ INSTALLED_APPS = [
 
     # taggit
     'taggit',
+
+    # User -> django-phone-field
+    'phone_field',
+
+    # pagination
+    'el_pagination',
 ]
 
 MIDDLEWARE = [
@@ -150,10 +176,32 @@ AUTH_USER_MODEL = 'user.User'
 
 
 # social login
+# 인증관련 설정
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 SITE_ID = 1
+LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = None
 
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = 'portfolio.utils.hashtag_splitter'
 TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'
+
+
+# smtp
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_HOST_USER = 'masterpics.official@gmail.com'
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_MAIL = "Masterpic's"

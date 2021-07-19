@@ -18,4 +18,7 @@ urlpatterns = [
      #save to bookmark
      path('save/', view=views.portfolio_save,
          name='portfolio_save'),
+
+    path('comment_create/', view=views.portfolio_comment_create, name='portfolio_comment_create'),
+    path('comment_delete/', view=views.portfolio_comment_delete, name='portfolio_comment_delete'),
 ]

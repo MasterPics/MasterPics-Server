@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHOING</title>
+  <title>MasterPics</title>
   
   <!-- FONTS -->
   <script src="https://kit.fontawesome.com/0b02921f0e.js" crossorigin="anonymous"></script>
@@ -33,47 +33,60 @@
 
   <head>
     <nav id="nav">
-      <div class="nav_left">
-        <div class="nav__logo">
-          <a href="{% url 'core:main_list' %}"><i class="fas fa-camera"></i> PHOING</a>
-        </div>
-        <ul class="nav__menu">
-          <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
-          <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
-          <li><a href="{% url 'reference:reference_local_list' %}">Reference</a></li>
-          <li><a href="{% url 'place:place_list' %}">Place</a></li>
-        </ul>
-      </div>
-
-      <ul class="nav__profile" style="float: right;">
-
-        {% if not user.is_authenticated %}
-
-        <li><a href="{% url 'account_login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
-        <li><a href="{% url 'account_login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
-        {% else %}
-
-        {% url 'profile:profile_detail' user.id as profile_path %}
-
-
-  
-
-        <form method="post" action="{% url 'account_logout' %}">
-          {% csrf_token %}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-          {% endif %}
-          <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
-            style="margin-right: 10px;"></input>
-        </form>
-
-        <li><a href=" {% url 'profile:profile_detail' user.id %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
-        </li>
-
-        {% endif %}
-
+      
+      <ul class="nav__logo">
+        <li><a href="{% url 'core:main_list' %}"> MasterPic's</a></li>
       </ul>
-      <a href="#" class="nav__toggleBtn"><i class="fas fa-bars"></i></a>
+      <ul class="nav__menu">
+        <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
+        <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
+        <li><a href="{% url 'reference:reference_list' %}">Reference</a></li>
+        <li><a href="{% url 'place:place_list' %}">Place</a></li>
+        
+        <ul class="nav__profile">
+          {% if not user.is_authenticated %}
+
+          <!-- <li><a href="{% url 'google_login' %}">google</li>
+          <li><a href="{% url 'naver_login' %}">naver</li> -->
+          <li><a href="{% url 'profile:login' %}">Log In/Sign Up</a></li>
+          <li><a href="{% url 'profile:login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
+          {% else %}
+        <!--
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+              style="margin-right: 10px;"></input>
+
+              <form method='post' action="{% url 'profile:logout' %}">
+              {% csrf_token %}
+              <button type='submit'>로그아웃</button>
+              </form>
+          </form>
+        -->
+
+          <li class="user_dropdown">
+            <button class="dropbtn"> {{user.username}} </button>
+            <div class="dropdown-content">
+              <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
+              <a>
+                <form method="post" action="{% url 'account_logout' %}">
+                  {% csrf_token %}
+                  {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                  {% endif %}
+                  <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                    style="margin-right: 10px;"></input>
+                </form>
+              </a>
+            </div>
+          </li>
+
+          {% endif %}
+        </ul>
+      </ul>
     </nav>
   </head>
   <section class="container">
@@ -82,14 +95,20 @@
   </section>
   <footer id="footer">
     <ul class="footer__left">
-      <li class="footer__logo">PHOING</li>
-      <li>Copyright PHOING All right reserved</li>
-      <li><a href="#">개인정보처리방침</a></li>
+      <li class="footer__logo">MasterPic's</li>
+      <li class="info"><a href="#">이용약관</a></li>
+      <li class="info"><a href="#">개인정보처리방침</a></li>
+    </ul>
+    <ul class="footer__center">
+      <li class="mpright">© MasterPic’s. 2021 All Rights Reserved.</a></li>
     </ul>
     <ul class="footer__right">
-      <li><i class="fab fa-instagram"></i></li>
+      <li class="alliance"><a href="#">제휴문의</a></li>
+      <!--
+      <li class="insta"><i class="fab fa-instagram"></i></li>
       <li><i class="fab fa-facebook-square"></i></li>
       <li><i class="fab fa-youtube-square"></i></li>
+      -->
     </ul>
   </footer>
   
