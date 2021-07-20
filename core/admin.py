@@ -15,6 +15,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ['id', 'writer', 'created_at']
     list_display_links = ['id', 'writer', 'created_at']
 
+
 @admin.register(PostBookmark)
 class PostBookmarkAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'post']
@@ -26,7 +27,8 @@ class LocationAdmin(admin.ModelAdmin):
     list_display = ['image', 'created_at']
     list_display_links = ['image', 'created_at']
 
-@admin.register(MiddleImage)
+
+@admin.register(PostImage)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ['image', 'post']
     list_display_links = ['image', 'post']

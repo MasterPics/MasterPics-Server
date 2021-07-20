@@ -155,15 +155,15 @@ def portfolio_create(request):
             print(request.FILES.getlist('images'))
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                middle_image_obj = MiddleImage()
-                middle_image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
                 img = Image.objects.create(image=image)
                 img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
-                    portfolio.thumbnail = middle_image_obj.image
+                    portfolio.thumbnail = image_obj.image
                     portfolio.save()
 
             messages.success(request, "posted!")
@@ -217,7 +217,6 @@ def portfolio_like(request):
         return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})
 
 
-
 ############################### comment ###############################
 @csrf_exempt
 def portfolio_comment_create(request):
@@ -226,7 +225,8 @@ def portfolio_comment_create(request):
         portfolio_id = data['id']
         comment_value = data['value']
         portfolio = Portfolio.objects.get(id=portfolio_id)
-        comment = Comment.objects.create(writer=request.user, post=portfolio, content=comment_value)
+        comment = Comment.objects.create(
+            writer=request.user, post=portfolio, content=comment_value)
         return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
 
 

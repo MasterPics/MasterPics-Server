@@ -39,6 +39,7 @@ def contact_save(request):
         contact.save()
         return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
 
+
 def contact_list(request):
     contacts = Contact.objects.all()
 
@@ -142,9 +143,9 @@ def contact_update(request, pk):
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
-        location_form =LocationForm(instance=contact)
-        ctx = {'form':form,
-        'location_form':location_form}
+        location_form = LocationForm(instance=contact)
+        ctx = {'form': form,
+               'location_form': location_form}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
@@ -165,15 +166,15 @@ def contact_create(request):
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                middle_image_obj = MiddleImage()
-                middle_image_obj.post = Contact.objects.get(id=contact.id)
+                image_obj = PostImage()
+                image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
                 img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
-                    contact.thumbnail = middle_image_obj.image
+                    contact.thumbnail = image_obj.image
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
     else:
