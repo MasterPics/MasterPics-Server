@@ -60,7 +60,7 @@ class LocalPasswordChangeForm(PasswordChangeForm):
 class SocialUserInfoForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('user_id', 'username', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
+        fields = ('user_id', 'username', 'email', 'is_ToS',)
 
 
 class ProfileForm(forms.ModelForm):

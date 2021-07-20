@@ -187,6 +187,7 @@ LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = None
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]  # id unique관련 경고 비활성화
 
 
 # taggit

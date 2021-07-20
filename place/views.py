@@ -40,9 +40,9 @@ def place_create(request):
                 image_obj = PostImage()
                 image_obj.post = Place.objects.get(id=place.id)
                 img = Image.objects.create(image=image)
-                img.save()
-                image_obj.image = img
-                image_obj.save()
+                #img.save()
+                middle_image_obj.image = img
+                middle_image_obj.save()
 
                 if not i:
                     place.thumbnail = image_obj.image
@@ -90,7 +90,6 @@ def place_update(request, pk):
             location = location_form.save(commit=False)
             location.save()
             place_update.location = location
-            print(place_form.image)
             place_update.image = request.FILES.get('image')
             place_update.image.save()
             place_update.save()

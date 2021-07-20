@@ -13,6 +13,9 @@ from django.utils import timezone
 from taggit.models import TagBase, TaggedItemBase
 from taggit.managers import TaggableManager
 
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소
@@ -83,6 +86,10 @@ class PostImage(models.Model):
     post = models.ForeignKey(
         to=PostBase, related_name='post_image_images', on_delete=models.CASCADE)
     image = models.ForeignKey(to=Image, on_delete=models.CASCADE)
+
+@receiver(post_delete, sender=MiddleImage)
+def file_delete_action(sender, instance, **kwargs):
+    instance.image.delete(False)
 
 
 class PostLike(models.Model):
