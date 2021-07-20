@@ -28,12 +28,13 @@ def contact_save(request):
         data = json.loads(request.body)
         contact_id = data["contact_id"]
         contact = get_object_or_404(Contact, pk=contact_id)
-        is_saved = request.user in contact.save_users.all()
+        is_saved = request.user in contact.bookmark_users.all()
         if is_saved:
-            contact.save_users.remove(
+            contact.bookmark_users.remove(
                 get_object_or_404(User, pk=request.user.pk))
         else:
-            contact.save_users.add(get_object_or_404(User, pk=request.user.pk))
+            contact.bookmark_users.add(
+                get_object_or_404(User, pk=request.user.pk))
         is_saved = not is_saved
         contact.save()
         return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
@@ -110,11 +111,10 @@ def contact_list(request):
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-
+    comments = contact.comments.all()
     ctx = {
         'contact': contact,
-        'request_user': request.user,
-        'comments': contact.comments.all()
+        'comments': comments
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -143,7 +143,9 @@ def contact_update(request, pk):
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
-        ctx = {'form': form}
+        location_form = LocationForm(instance=contact)
+        ctx = {'form': form,
+               'location_form': location_form}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
@@ -151,7 +153,6 @@ def contact_update(request, pk):
 
 @login_required
 def contact_create(request):
-
     if request.method == 'POST':
         contact_form = ContactForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
@@ -165,17 +166,17 @@ def contact_create(request):
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = Images()
+                image_obj = PostImage()
                 image_obj.post = Contact.objects.get(id=contact.id)
-                image_obj.image = image
+                img = Image.objects.create(image=image)
+                img.save()
+                image_obj.image = img
                 image_obj.save()
 
                 if not i:
-                    contact.thumbnail = image_obj
+                    contact.thumbnail = image_obj.image
                     contact.save()
-
             return redirect('contact:contact_detail', contact.pk)
-
     else:
         ctx = {
             'contact_form': ContactForm(),
