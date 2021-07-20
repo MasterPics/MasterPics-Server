@@ -89,13 +89,9 @@
                         {% else %}
                         <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
-                            {% if user.image  %}
+
                             <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                            {% else %}
-                            <img class="list__user-img"
-                                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
+                            
                             <div class="list__user-info">
                                 <div class="list__user-name">{{portfolio.user.username}}</div>
                                 <div class="list__user-category">{{portfolio.user.category}}</div>
