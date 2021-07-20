@@ -66,8 +66,6 @@ class PostBase(models.Model):
 
 # TODO: 다중 이미지 최대 제한
 class Images(models.Model):
-    post = models.ForeignKey(
-        to=PostBase, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -77,6 +75,11 @@ class Images(models.Model):
         compressed_img = compress(self.image)
         self.image = compressed_img
         super().save(*args, **kwargs)
+
+class MiddleImages(models.Model):
+    post = models.ForeignKey(
+        to=PostBase, related_name='images', on_delete=models.CASCADE)
+    image = models.ForeignKey(to=Images, on_delete=models.CASCADE)
 
 
 class PostLike(models.Model):
