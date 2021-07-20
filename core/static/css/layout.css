@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
 
 body {
   overflow-x: hidden;
@@ -26,10 +26,6 @@ a:active { text-decoration: none; }
   font-family: "Cabin Condensed", sans-serif;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
-
 svg {
   font-weight: bold;
   max-width: 600px;
@@ -55,6 +51,7 @@ nav {
 
 nav a {
   color: #fff;
+  font-family: 'DM Serif Display', serif;
 }
 
 .here{
@@ -95,9 +92,15 @@ nav a {
   z-index: 100;
 }
 
+.nav_logo_img{
+  width: 30px;
+  justify-content: center;
+  margin-right: 5px;
+  background-image: url("./mp_logo.png");
+}
 
 .nav__logo {
-  font-family: "DM Serif Display", serif;
+  font-family: 'DM Serif Display', serif;
   display: flex;
   align-items: center;
   font-size: 30px;
@@ -110,6 +113,11 @@ nav a {
   align-items: center;
   justify-content: space-between;
   margin-left: auto;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.nav__menu a{
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nav__menu li {
@@ -118,6 +126,10 @@ nav a {
   margin-right: 70px;
   font-family: "Prata", serif;
   font-size: 14px;
+}
+
+.nav__profile a{
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nav__profile li {
@@ -132,7 +144,7 @@ nav a {
 .nav__profile .here {
   background: none;
   border: none;
-  font-family: "NanumSquare", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 14px;
 }
 .nav__profile .here:active {
@@ -148,10 +160,19 @@ nav a {
   color: white;
   border: none;
   background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .user_dropdown {
   position: relative;
+}
+
+.user_img{
+  width: 20px;
+  margin-left: 5px;
 }
 
 .dropdown-content {

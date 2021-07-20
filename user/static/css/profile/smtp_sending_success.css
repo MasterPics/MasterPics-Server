@@ -37,7 +37,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 35%;
+    width: 30%;
     height: 50%;
     line-height: 40px;
     padding-left: 20px;
@@ -46,4 +46,29 @@ body{
     font-size: 21px;
     margin-top: 3px;
     font-weight: 500;
+}
+
+.email_title {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-bottom: 10px;
+    margin-top: 60px;
+}
+
+.email_info {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.email_end{
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #5200FF;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
