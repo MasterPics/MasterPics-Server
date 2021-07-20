@@ -165,13 +165,15 @@ def contact_create(request):
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = Images()
-                image_obj.post = Contact.objects.get(id=contact.id)
-                image_obj.image = image
-                image_obj.save()
+                middle_image_obj = MiddleImages()
+                middle_image_obj.post = Contact.objects.get(id=contact.id)
+                img = Images.objects.create(image=image)
+                img.save()
+                middle_image_obj.image = img
+                middle_image_obj.save()
 
                 if not i:
-                    contact.thumbnail = image_obj
+                    contact.thumbnail = middle_image_obj.image
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
     else:

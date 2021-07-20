@@ -155,13 +155,15 @@ def portfolio_create(request):
             print(request.FILES.getlist('images'))
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = Images()
-                image_obj.post = Portfolio.objects.get(id=portfolio.id)
-                image_obj.image = image
-                image_obj.save()
+                middle_image_obj = MiddleImages()
+                middle_image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                img = Images.objects.create(image=image)
+                img.save()
+                middle_image_obj.image = img
+                middle_image_obj.save()
 
                 if not i:
-                    portfolio.thumbnail = image_obj
+                    portfolio.thumbnail = middle_image_obj.image
                     portfolio.save()
 
             messages.success(request, "posted!")
