@@ -21,6 +21,10 @@ from phone_field import PhoneField
 from django import forms
 from django.core.exceptions import ValidationError
 
+# User image uuid-upload
+from .utils import user_uuid_name_upload_to
+
+
 # User validators 
 def is_ToS(value):
     if value == False:
@@ -47,7 +51,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
     category = models.CharField(max_length=20, choices=CATEGORY, default='otheruse')
-    image = models.ImageField(upload_to='user/profile_photo/%Y/%m/%d/', blank=True, default='user/profile_photo/default/profile_default.png')
+    image = models.ImageField(upload_to=user_uuid_name_upload_to, blank=True, default='user/profile_photo/default/profile_default.png')
     desc = models.TextField(blank=True, verbose_name='프로필 소개')
     phone = PhoneField(blank=True)
     phone_public = models.BooleanField(default=True)
