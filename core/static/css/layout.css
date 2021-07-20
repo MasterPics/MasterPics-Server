@@ -213,26 +213,6 @@ button {
   background-color: transparent;
 }
 
-/*
-.nav__profile li {
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-}
-
-
-.nav__menu li a:hover {
-  color: purple;
-  cursor: pointer;
-}
-
-.nav__profile a:hover i {
-  color: purple;
-  cursor: pointer;
-}
-
-*/
-
 /*footer*/
 
 #footer {
