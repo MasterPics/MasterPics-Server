@@ -21,8 +21,12 @@ class PostBookmarkAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'user', 'post']
 
 
-
 @admin.register(Images)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ['image', 'created_at']
     list_display_links = ['image', 'created_at']
+
+@admin.register(MiddleImages)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ['image', 'post']
+    list_display_links = ['image', 'post']
