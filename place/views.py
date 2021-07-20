@@ -37,13 +37,15 @@ def place_create(request):
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = Images()
-                image_obj.post = Place.objects.get(id=place.id)
-                image_obj.image = image
-                image_obj.save()
+                middle_image_obj = MiddleImage()
+                middle_image_obj.post = Place.objects.get(id=place.id)
+                img = Image.objects.create(image=image)
+                img.save()
+                middle_image_obj.image = img
+                middle_image_obj.save()
 
                 if not i:
-                    place.thumbnail = image_obj
+                    place.thumbnail = middle_image_obj.image
                     place.save()
 
             print(place.tags.all())

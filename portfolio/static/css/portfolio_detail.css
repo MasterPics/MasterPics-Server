@@ -19,6 +19,7 @@ body {
 /*********************** side-bar **************************/
 .side-bar {
   margin-right: 25px;
+  width: 190px;
 }
 .side-bar__user-info,
 .side-bar__info,
@@ -27,7 +28,7 @@ body {
   border-radius: 3px;
   padding: 20px 50px;
   margin: 20px 0;
-  width: 190px;
+  width: 100%;
 }
 .side-bar__user-info {
   margin-top: 0;
@@ -115,7 +116,7 @@ body {
 }
 /*********************** post **************************/
 .post {
-  width: 800px;
+  width: 60vw;
 }
 .post__title-wrapper {
   display: flex;
@@ -170,6 +171,7 @@ body {
   width: 100%;
   height: 400px;
   background-color: #f6f6f6;
+  margin-bottom: 20px;
 }
 .mySlides img {
   width: 100%;
@@ -178,38 +180,38 @@ body {
   margin: 0 auto;
 }
 .under-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-}
-.img-container {
-  width: 800px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
   height: 127px;
+  background-color: #f6f6f6;
   overflow: hidden;
   overflow-x: auto;
-  display: flex;
-  justify-content: flex-start;
+  white-space: nowrap;
 }
-.img-container::-webkit-scrollbar {
+.under-bar::-webkit-scrollbar {
   height: 6px;
 }
-.img-container::-webkit-scrollbar-track {
+.under-bar::-webkit-scrollbar-track {
   background-color: #fafafa;
 }
-.img-container::-webkit-scrollbar-thumb {
+.under-bar::-webkit-scrollbar-thumb {
   background: linear-gradient(to right, #000000, #b6b6b6);
 }
-.img-container::-webkit-scrollbar-button {
+.under-bar::-webkit-scrollbar-button {
   display: none;
 }
-.under-bar img {
-  width: 16.66%;
+.img-container {
+  display: inline-block;
+  margin-right: -4px;
+  width: calc(100% * 0.2);
+}
+.img-container img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.under-bar img:hover {
+.img-container img:hover {
   cursor: pointer;
 
   transform: scale(1.05);

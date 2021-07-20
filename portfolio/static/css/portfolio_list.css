@@ -289,6 +289,9 @@ figure.list__image.hover p {
 .view__content {
   font-size: 14px;
 }
+.save__content {
+  display: none;
+}
 /******************* infinite scroll ******************/
 .loading,
 .loading:after {

@@ -53,22 +53,27 @@ body {
   text-align: center;
   color: #6d6d6d;
   font-size: 13px;
-  margin: 50px 0;
+  margin: 10px 0;
+}
+.form__text:first-of-type {
+  margin-top: 50px;
 }
 .delete__img {
-  width: 600px;
-  height: 150px;
-  margin: 30px auto;
-  margin-bottom: 90px;
+  width: 90%;
+  height: 127px;
+  margin: 60px auto;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  white-space: nowrap;
+  text-align: center;
+}
+.img-container {
+  display: inline-block;
+  margin-right: 10px;
+  width: calc(92% * 0.2);
 }
 .delete__img img {
-  width: 120px;
-  height: 120px;
-  margin: 0 5px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
