@@ -90,6 +90,7 @@ def portfolio_detail(request, pk):
 
     portfolio = Portfolio.objects.get(pk=pk)
     portfolio.view_count += 1
+
     portfolio.save()
     parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
@@ -111,6 +112,9 @@ def portfolio_delete(request, pk):
     owner = portfolio.user  # 게시글 작성자
     if request.method == 'POST':
         portfolio.delete()
+        for image in portfolio.images.all():
+            image.delete()
+
         messages.success(request, "삭제되었습니다.")
 
         return redirect('portfolio:portfolio_list')
@@ -158,7 +162,7 @@ def portfolio_create(request):
                 middle_image_obj = MiddleImage()
                 middle_image_obj.post = Portfolio.objects.get(id=portfolio.id)
                 img = Image.objects.create(image=image)
-                img.save()
+                #img.save()
                 middle_image_obj.image = img
                 middle_image_obj.save()
 

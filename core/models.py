@@ -76,10 +76,12 @@ class Image(models.Model):
         self.image = compressed_img
         super().save(*args, **kwargs)
 
+
 class MiddleImage(models.Model):
     post = models.ForeignKey(
         to=PostBase, related_name='images', on_delete=models.CASCADE)
     image = models.ForeignKey(to=Image, on_delete=models.CASCADE)
+
 
 
 class PostLike(models.Model):
