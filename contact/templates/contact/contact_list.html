@@ -116,7 +116,7 @@
                         {% if contact.user == request.user %}
                         <a href="{% url 'profile:mypage' %}">
                         {% else %}
-                        <a href="{% url 'profile:others_profile' contact.user.user_identifier %}">
+                        <a href="{% url 'profile:others_mypage' contact.user.user_identifier %}">
                         {% endif %}
                             {% if user.image  %}
                             <img class="list__user-img" src="{{contact.user.image.url}}" alt="img">
