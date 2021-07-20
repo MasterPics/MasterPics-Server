@@ -27,7 +27,7 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ['image', 'created_at']
     list_display_links = ['image', 'created_at']
 
-@admin.register(MiddleImage)
-class MiddleImageAdmin(admin.ModelAdmin):
+@admin.register(PostImage)
+class PostImageAdmin(admin.ModelAdmin):
     list_display = ['image', 'post']
     list_display_links = ['image', 'post']

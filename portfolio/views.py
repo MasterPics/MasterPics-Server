@@ -117,7 +117,7 @@ def portfolio_delete(request, pk):
     owner = portfolio.user  # 게시글 작성자
     if request.method == 'POST':
         portfolio.delete()
-        for image in portfolio.images.all():
+        for image in portfolio.post_image_images.all():
             image.delete()
 
         messages.success(request, "삭제되었습니다.")
@@ -168,8 +168,8 @@ def portfolio_create(request):
                 image_obj.post = Portfolio.objects.get(id=portfolio.id)
                 img = Image.objects.create(image=image)
                 #img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
                     portfolio.thumbnail = image_obj.image

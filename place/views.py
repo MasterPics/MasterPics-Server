@@ -41,8 +41,8 @@ def place_create(request):
                 image_obj.post = Place.objects.get(id=place.id)
                 img = Image.objects.create(image=image)
                 #img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
                     place.thumbnail = image_obj.image

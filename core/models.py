@@ -87,7 +87,7 @@ class PostImage(models.Model):
         to=PostBase, related_name='post_image_images', on_delete=models.CASCADE)
     image = models.ForeignKey(to=Image, on_delete=models.CASCADE)
 
-@receiver(post_delete, sender=MiddleImage)
+@receiver(post_delete, sender=PostImage)
 def file_delete_action(sender, instance, **kwargs):
     instance.image.delete(False)
 
