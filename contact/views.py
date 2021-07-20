@@ -176,6 +176,12 @@ def contact_create(request):
                     contact.thumbnail = middle_image_obj.image
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
+        
+        #TODO Else 문 로직 정리해줘야함 
+        else:
+            return redirect("contact:contact_list")
+
+
     else:
         ctx = {
             'contact_form': ContactForm(),
