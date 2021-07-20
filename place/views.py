@@ -90,7 +90,6 @@ def place_update(request, pk):
             location = location_form.save(commit=False)
             location.save()
             place_update.location = location
-            print(place_form.image)
             place_update.image = request.FILES.get('image')
             place_update.image.save()
             place_update.save()
