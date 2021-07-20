@@ -22,11 +22,11 @@ class PostBookmarkAdmin(admin.ModelAdmin):
 
 
 @admin.register(Image)
-class LocationAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin):
     list_display = ['image', 'created_at']
     list_display_links = ['image', 'created_at']
 
 @admin.register(MiddleImage)
-class LocationAdmin(admin.ModelAdmin):
+class MiddleImageAdmin(admin.ModelAdmin):
     list_display = ['image', 'post']
     list_display_links = ['image', 'post']

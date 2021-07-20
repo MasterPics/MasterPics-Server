@@ -90,8 +90,13 @@ def portfolio_detail(request, pk):
 
     portfolio = Portfolio.objects.get(pk=pk)
     portfolio.view_count += 1
-
     portfolio.save()
+
+    print("Helo")
+    for image in portfolio.images.all():
+        print(image.image)
+
+
     parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
