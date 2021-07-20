@@ -1,16 +1,7 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: "NanumSquare", sans-serif;
-}
-.container {
+.wrapper {
   width: 65%;
   margin: 50px auto;
   height: 80%;
-}
-.wrapper {
 }
 /*******************************************************/
 .delete {
