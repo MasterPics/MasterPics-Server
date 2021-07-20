@@ -169,14 +169,20 @@ def contact_create(request):
                 image_obj = PostImage()
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
-                img.save()
-                image_obj.image = img
-                image_obj.save()
+                #img.save()
+                middle_image_obj.image = img
+                middle_image_obj.save()
 
                 if not i:
                     contact.thumbnail = image_obj.image
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
+        
+        #TODO Else 문 로직 정리해줘야함 
+        else:
+            return redirect("contact:contact_list")
+
+
     else:
         ctx = {
             'contact_form': ContactForm(),
