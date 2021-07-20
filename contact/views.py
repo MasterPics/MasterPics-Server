@@ -165,9 +165,9 @@ def contact_create(request):
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                middle_image_obj = MiddleImages()
+                middle_image_obj = MiddleImage()
                 middle_image_obj.post = Contact.objects.get(id=contact.id)
-                img = Images.objects.create(image=image)
+                img = Image.objects.create(image=image)
                 img.save()
                 middle_image_obj.image = img
                 middle_image_obj.save()

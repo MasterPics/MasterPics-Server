@@ -57,7 +57,7 @@ class PostBase(models.Model):
         verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedPost')
 
     # foreing key
-    thumbnail = models.ForeignKey('Images', related_name="thumbnail",
+    thumbnail = models.ForeignKey('Image', related_name="thumbnail",
                                   on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     def classname(self):
@@ -65,7 +65,7 @@ class PostBase(models.Model):
 
 
 # TODO: 다중 이미지 최대 제한
-class Images(models.Model):
+class Image(models.Model):
     image = models.ImageField(
         upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -76,10 +76,10 @@ class Images(models.Model):
         self.image = compressed_img
         super().save(*args, **kwargs)
 
-class MiddleImages(models.Model):
+class MiddleImage(models.Model):
     post = models.ForeignKey(
         to=PostBase, related_name='images', on_delete=models.CASCADE)
-    image = models.ForeignKey(to=Images, on_delete=models.CASCADE)
+    image = models.ForeignKey(to=Image, on_delete=models.CASCADE)
 
 
 class PostLike(models.Model):
