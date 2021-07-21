@@ -138,9 +138,20 @@ def portfolio_update(request, pk):
             portfolio.user = request.user
             portfolio.save()
             portfolio.tags.clear()
-
             form.save_m2m()
-            portfolio.image = request.FILES.get('image')
+            
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     portfolio.thumbnail = image_obj.image
+                #     portfolio.save()
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
     else:

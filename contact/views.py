@@ -136,9 +136,28 @@ def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, instance=contact)
-        if form.is_valid():
-            contact.image = request.FILES.get('image')
-            contact = form.save()
+        location_form = LocationForm(request.POST, instance=contact.location)
+
+        if form.is_valid() and location_form.is_valid():
+            contact = form.save(commit=False)
+            location = location_form.save(commit=False)
+            location.save()
+            contact.user = request.user
+            contact.location = location
+            contact.save()
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Contact.objects.get(id=contact.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     contact.thumbnail = image_obj.image
+                #     contact.save()
 
             return redirect('contact:contact_detail', contact.pk)
     else:
@@ -170,8 +189,8 @@ def contact_create(request):
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
                 #img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
                     contact.thumbnail = image_obj.image
