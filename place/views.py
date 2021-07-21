@@ -104,9 +104,9 @@ def place_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                if not i:
-                    place_update.thumbnail = image_obj.image
-                    place_update.save()
+                # if not i:
+                #     place_update.thumbnail = image_obj.image
+                #     place_update.save()
                     
             return redirect('place:place_detail', place.pk)
     else:

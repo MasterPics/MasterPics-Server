@@ -149,9 +149,9 @@ def portfolio_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                if not i:
-                    portfolio.thumbnail = image_obj.image
-                    portfolio.save()
+                # if not i:
+                #     portfolio.thumbnail = image_obj.image
+                #     portfolio.save()
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
     else:
