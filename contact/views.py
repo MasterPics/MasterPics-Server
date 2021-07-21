@@ -170,8 +170,8 @@ def contact_create(request):
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
                 #img.save()
-                middle_image_obj.image = img
-                middle_image_obj.save()
+                image_obj.image = img
+                image_obj.save()
 
                 if not i:
                     contact.thumbnail = image_obj.image
