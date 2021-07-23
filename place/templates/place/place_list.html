@@ -84,7 +84,7 @@
                     </a>
                     <div class="place-tag">
                     {% for tag in place.tags.all %}  
-                    <button><a href="">#{{ tag.name }} </a></button>
+                    <button><a href="{% url 'reference:reference_list' %}?search={{tag.name}}">#{{ tag.name }} </a></button>
                     {% endfor %}    
                     </div>
                     <div class="user-info">
