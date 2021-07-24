@@ -11,9 +11,13 @@
 <div class="wrapper">
     <!-- 프로필 정보 -->
     <div class="profile">
-        <a class="profile__edit" href="#">
-            <i class="fas fa-ellipsis-v"></i>
-        </a>
+        <div class="profile__edit">
+            <div id="Dropdown" class="profile__edit-content">
+                <a href="{% url 'profile:password_change' %}">비밀번호 변경</a>
+                <a href="{% url 'profile:withdrawal' %}">회원 탈퇴</a>
+            </div>
+            <div onclick="profileEdit()" class="profile__edit-btn">.<br>.<br>.</div>
+        </div>
         <div class="profile__info">
             <div class="profile__id">
                 {{request.user.user_id}}
@@ -30,19 +34,19 @@
         </div>
         <a class="profile__update" href="{% url 'profile:profile_modify' %}">프로필 수정</a>
         <div class="profile__info-more">
-            {% if request.user.email %}
+            {% if request.user.email_public %}
             <div class="profile__email">
                 <span class="profile__text">E-mail</span>
                 <span class="profile__info-text">{{ request.user.email }}</span>
             </div>
             {% endif %}
-            {% if request.user.phone %}
+            {% if request.user.phone_public %}
             <div class="profile__phone">
                 <span class="profile__text">Phone</span>
                 <span class="profile__info-text">{{ request.user.phone }}</span>
             </div>
             {% endif %}
-            {% if request.user.instagram %}
+            {% if request.user.instagram_public %}
             <div class="profile__instagram">
                 <span class="profile__text">Instagram</span>
                 <span class="profile__info-text">{{ request.user.instagram }}</span>
@@ -122,11 +126,12 @@
 {% block script %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="{% static 'js/mypage_save.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_portfolio.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_my_post.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_my_place.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_saved_post.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_saved_contact.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_saved_place.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_save.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_portfolio.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_my_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_my_place.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_saved_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_saved_contact.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_saved_place.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_profile.js' %}"></script>
 {% endblock script %}
