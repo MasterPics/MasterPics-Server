@@ -210,7 +210,7 @@ def others_mypage(request, pk):
 @csrf_exempt
 def mypage_portfolio(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     portfolios_query = mypage_owner.portfolios.all()
     portfolios = []
@@ -230,7 +230,7 @@ def mypage_portfolio(request):
 @csrf_exempt
 def mypage_portfolio_tagged(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     tagged_portfolios_query = Portfolio.objects.filter(participants=mypage_owner)
     tagged_portfolios = []       # request.user 태그된 portfolio 객체들
@@ -247,9 +247,10 @@ def mypage_portfolio_tagged(request):
 
 
 # mypage / 게시글 / 컨택트
+@csrf_exempt
 def mypage_post_contact(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     contacts_query = mypage_owner.contacts.all()
     contacts = []
@@ -257,8 +258,8 @@ def mypage_post_contact(request):
         contacts.append({
             'id': contact.id,
             'title': contact.title,
-            'like_count': contact.like_users.count(),
-            'view_count': contact.view_count,
+            'comment_count': contact.comments.count(),
+            'bookmark_count': contact.bookmark_users.count(),
             'thumbnail_url': contact.thumbnail.image.url
         })
 
@@ -269,7 +270,7 @@ def mypage_post_contact(request):
 @csrf_exempt
 def mypage_post_place(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     places_query = mypage_owner.places.all()
     places = []
@@ -277,8 +278,8 @@ def mypage_post_place(request):
         places.append({
             'id': place.id,
             'title': place.title,
-            'like_count': place.like_users.count(),
-            'view_count': place.view_count,
+            'comment_count': place.comments.count(),
+            'bookmark_count': place.bookmark_users.count(),
             'thumbnail_url': place.thumbnail.image.url
         })
 
@@ -290,7 +291,7 @@ def mypage_post_place(request):
 @csrf_exempt
 def mypage_bookmark_portfolio(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     bookmarked_portfolios_query = Portfolio.objects.filter(bookmark_users=mypage_owner)
     bookmarked_portfolios = []
@@ -311,7 +312,7 @@ def mypage_bookmark_portfolio(request):
 @csrf_exempt
 def mypage_bookmark_contact(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     bookmarked_contacts_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_contacts = []
@@ -319,8 +320,7 @@ def mypage_bookmark_contact(request):
         bookmarked_contacts.append({
             'id': contact.id,
             'title': contact.title,
-            'like_count': contact.like_users.count(),
-            'view_count': contact.view_count,
+            'comment_count': contact.comments.count(),
             'thumbnail_url': contact.thumbnail.image.url,
             'is_bookmark': True
         })
@@ -332,16 +332,15 @@ def mypage_bookmark_contact(request):
 @csrf_exempt
 def mypage_bookmark_place(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
-    bookmarked_places_query = Contact.objects.filter(bookmark_users=mypage_owner)
+    bookmarked_places_query = Place.objects.filter(bookmark_users=mypage_owner)
     bookmarked_places = []
     for place in bookmarked_places_query:
         bookmarked_places.append({
             'id': place.id,
             'title': place.title,
-            'like_count': place.like_users.count(),
-            'view_count': place.view_count,
+            'comment_count': place.comments.count(),
             'thumbnail_url': place.thumbnail.image.url,
             'is_bookmark': True
         })
@@ -361,13 +360,13 @@ def profile_modify(request):
             ctx = {
                 'form': form,
             }
-            return render(request, 'profile/profile_modify.html', ctx)
+            return render(request, 'profile/profile_update.html', ctx)
     elif request.method == 'GET':
         form = ProfileModifyForm(instance=request.user)
         ctx = {
             'form': form,
         }
-        return render(request, 'profile/profile_modify.html', ctx)
+        return render(request, 'profile/profile_update.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
 
