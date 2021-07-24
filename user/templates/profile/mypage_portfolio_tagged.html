@@ -9,11 +9,15 @@
 
 {% block content %}
     <div class="container">
-        <div>{{mypage_owner.username}}</div>
+        <div>{{request.user.username}}</div>
         <div>
             {% for tagged_portfolio in tagged_portfolios %}
                 <div>
+                    {{ tagged_portfolio.id }}
                     {{ tagged_portfolio.title }}
+                    {{ tagged_portfolio.like_count }}
+                    {{ tagged_portfolio.view_count }}
+                    {{ tagged_portfolio.thumbnail }}
                 </div>
             {% endfor %}
         </div>

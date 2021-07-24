@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # smtp
-secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json 파일 위치를 명시
+secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
 
 with open(secret_file) as f:
     secrets = json.loads(f.read())
+
 
 def get_secret(setting, secrets=secrets):
     try:
@@ -81,7 +82,7 @@ INSTALLED_APPS = [
     # User -> django-phone-field
     'phone_field',
 
-    #pagination
+    # pagination
     'el_pagination',
 ]
 
@@ -174,7 +175,6 @@ MEDIA_URL = "/media/"
 AUTH_USER_MODEL = 'user.User'
 
 
-
 # social login
 # 인증관련 설정
 AUTHENTICATION_BACKENDS = (
@@ -187,7 +187,7 @@ LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = None
-
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]  # id unique관련 경고 비활성화
 
 
 # taggit

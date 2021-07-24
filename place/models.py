@@ -21,7 +21,7 @@ class Place(PostBase):
             'user': self.user,
             'thumbnail': self.thumbnail.url,
             'title': self.title,
-            
+
             'location': self.location,
             'lat': self.location.lat,
             'lon': self.location.lon,

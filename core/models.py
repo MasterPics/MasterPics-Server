@@ -13,6 +13,9 @@ from django.utils import timezone
 from taggit.models import TagBase, TaggedItemBase
 from taggit.managers import TaggableManager
 
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소
@@ -39,6 +42,19 @@ class Tag(TagBase):
     )
 
 
+# TODO: 다중 이미지 최대 제한
+class Image(models.Model):
+    image = models.ImageField(
+        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        compressed_img = compress(self.image)
+        self.image = compressed_img
+        super().save(*args, **kwargs)
+
+
 class PostBase(models.Model):
 
     # meta info
@@ -55,27 +71,25 @@ class PostBase(models.Model):
         User, related_name='bookmarks', through='PostBookmark')
     tags = TaggableManager(
         verbose_name='tags', help_text='해시태그를 입력해주세요', blank=True, through='TaggedPost')
+    images = models.ManyToManyField(
+        Image, related_name='images', through='PostImage')
 
     # foreing key
-    thumbnail = models.ForeignKey('Images', related_name="thumbnail",
+    thumbnail = models.ForeignKey('Image', related_name="thumbnail",
                                   on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     def classname(self):
         return self.__class__.__name__
 
 
-class Images(models.Model):
+class PostImage(models.Model):
     post = models.ForeignKey(
-        to=PostBase, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, null=True, verbose_name='Image')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+        to=PostBase, related_name='post_image_images', on_delete=models.CASCADE)
+    image = models.ForeignKey(to=Image, on_delete=models.CASCADE)
 
-    def save(self, *args, **kwargs):
-        compressed_img = compress(self.image)
-        self.image = compressed_img
-        super().save(*args, **kwargs)
+@receiver(post_delete, sender=PostImage)
+def file_delete_action(sender, instance, **kwargs):
+    instance.image.delete(False)
 
 
 class PostLike(models.Model):
