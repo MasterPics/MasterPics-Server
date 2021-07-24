@@ -25,11 +25,14 @@
     <div class="line"></div>
 
     <p class="form__text">정말로 삭제하시겠습니까?</p>
+    <p class="form__text">삭제한 Portfolio는 되돌릴 수 없습니다.</p>
 
     <div class="delete__img">
-        {% for image in portfolio.portfolio_images.all %}
+        {% for image in portfolio.images.all %}
         {% if image %}
-        <img class="demo" src="{{image.image.image.url}}" alt="img">
+        <div class="img-container">
+            <img class="demo" src="{{image.image.url}}" alt="img">
+        </div>
         {% endif %}
     {% endfor %}
     </div>
