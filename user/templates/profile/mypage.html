@@ -67,34 +67,43 @@
     <div class="post">
         <div class="post__local-bar">
             <ul>
-                <li id="post__portfolio" type="submit" onclick="onClickPortfolio({{ request.user.user_identifier }})">포트폴리오</li>
-                <li id="post__my-post">게시글</li>
-                <li id="post__saved">저장 목록</li>
+                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio({{ request.user.user_identifier }})">포트폴리오</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost({{ request.user.user_identifier }})">게시글</li>
+                <li id="post__saved-post" type="submit" onclick="onClickSavedPost({{ request.user.user_identifier }})">저장 목록</li>
             </ul>
         </div>
         <div class="post__local-sub-bar">
-            <ul>
-                <li id="post__my-portfolio">나의 포트폴리오</li>
+            <ul id="post__portfolio-selected">
+                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio({{ request.user.user_identifier }})">나의 포트폴리오</li>
                 <li id="post__tagged-portfolio">태그된 목록</li>
+            </ul>
+            <ul class="post__not-selected" id="post__my-post-selected">
+                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost({{ request.user.user_identifier }})">컨택트</li>
+                <li id="post__my-place" onclick="onClickMyPlace({{ request.user.user_identifier }})">플레이스</li>
+            </ul>
+            <ul class="post__not-selected" id="post__saved-post-selected">
+                <li class="post__local-sub-bar-selected" id="post__saved-portfolio" onclick="onClickSavedPost({{ request.user.user_identifier }})">포트폴리오</li>
+                <li id="post__saved-contact" onclick="onClickSavedContact({{ request.user.user_identifier }})">컨택트</li>
+                <li id="post__saved-place" onclick="onClickSavedPlace({{ request.user.user_identifier }})">플레이스</li>
             </ul>
         </div>
         <div class="post__container">
-        <p class="post__var">{% for post in portfolios %}</p>
+        {% for portfolio in portfolios %}
             <div class="post__item">
-                <a href="{% url 'portfolio:portfolio_detail' post.pk %}"></a>
+                <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
                     <figure class="post__image">
-                        <img src="{{post.thumbnail.image.url}}" alt="thumbnail">
+                        <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
                         <figcaption>
                             <div class="post__info">
-                                <p class="post__title">{{ post.title }}</p>
+                                <p class="post__title">{{ portfolio.title }}</p>
                                 <div>
                                     <p class="post__like">
                                         <i class="fas fa-heart"></i>
-                                        <span>{{ post.like_users.count }}</span>
+                                        <span>{{portfolio.like_users.count}}</span>
                                     </p>
                                     <p class="post__view">
                                         <i class="far fa-eye"></i>
-                                        <span>{{post.view_count}}</span>
+                                        <span>{{portfolio.view_count}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -114,5 +123,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="{% static 'js/mypage_save.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mypage_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_portfolio.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_my_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_my_place.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_saved_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_saved_contact.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_saved_place.js' %}"></script>
 {% endblock script %}
