@@ -1,20 +1,39 @@
 {% autoescape off %}
 <!DOCTYPE html>
 <body>
-    <div>
-        <div class='header'>
-            MasterPic's 비밀번호 변경 이메일 인증 발송
-        </div>
-        <div class='body'>
-            <div class='content'>
-                MasterPic's 비밀번호 변경 인증을 위한 이메일입니다. <br>
-                아래의 인증번호를 입력하여 이메일 인증을 완료해주세요.
-            </div>
-            <div class='smtp_email_auth'>
+    <div style="background-color:E5E5E5;">
+        <table border="1px solid #CACACA" cellpadding="0" cellspacing="0" width="60%" height: "80%" rules="none" style= "margin: 40px auto;">
+            <tr>
+                <td class="modify__body" style="width: 60%;height: 50%;line-height: 40px; text-align:center; font-size: 21px;padding-top: 40px;font-weight: 600;">
+                    비밀번호 변경 이메일 인증 발송
+                </td>
+            </tr>
+            <tr>
+                <td class="content" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 20px;">
+                안녕하세요, {{user.username}}님. MasterPic's입니다
+                </td>
+            </tr>
+            <tr>
+                <td class="content" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 10px;">
+                    아래의 인증번호를 입력하여 이메일 인증을 완료해주세요.
+                </td>
+            </tr>
+            <tr>
+                <td class="smtp_email_auth" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 20px; color: #5200FF;">
                 {{ auth_num }}
-            </div>
-        </div>
-    </div>           
+                </td>
+            </tr>
+            <tr>
+                <td class="foot" style="font-size: 13px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 20px; color:#8F8F8F;">
+                Find everything for your Masterpiece, MasterPic's
+                </td>
+            </tr>
+            <tr>
+                <td class="foot" style="font-size: 13px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 20px;padding-bottom: 40px; color:#8F8F8F; text-decoration:none;">
+                www.masterpics.com
+                </td>
+            </tr>
+        </table>  
+    <div style="background-color:E5E5E5;">     
 </body>
-</html>
 {% endautoescape %}

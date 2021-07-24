@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'phone_field',
 
     #pagination
-    'el_pagination',
+    'el_pagination'
 ]
 
 MIDDLEWARE = [
