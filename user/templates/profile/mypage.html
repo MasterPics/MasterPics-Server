@@ -3,71 +3,116 @@
 {% load static %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/profile/profile_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile/mypage.css' %}">
 {% endblock stylesheet %}
 
 
 {% block content %}
-    <div class="container">
-        <div>{{request.user.username}}</div>
-        <div>
-            {% for portfolio in portfolios %}
-                <div>
-                    {{ portfolio.title }}
-                </div>
-                <div>
-                    {{ portfolio.like_users.count }}
-                </div>
-                <div>
-                    {{ portfolio.bookmark_users.count }}
-                </div>
-            {% endfor %}
+<div class="wrapper">
+    <!-- 프로필 정보 -->
+    <div class="profile">
+        <a class="profile__edit" href="#">
+            <i class="fas fa-ellipsis-v"></i>
+        </a>
+        <div class="profile__info">
+            <div class="profile__id">
+                {{request.user.user_id}}
+            </div>
+            {% if request.user.image %}
+            <img class="profile__img" src="{{request.user.image.url}}" alt="img">
+            {% else %}
+            <img class="profile__img"
+                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                alt="img">
+            {% endif %}
+            <div class="profile__name">{{ request.user.username }}</div>
+            <div class="profile__category">{{ request.user.category }}</div>
         </div>
-        <div>
-            {% for contact in contacts %}
-                <div>
-                    {{ contact.title }}
-                </div>
-                <div>
-                    {{ contact.like_users.count }}
-                </div>
-                <div>
-                    {{ contact.bookmark_users.count }}
-                </div>
-            {% endfor %}
+        <a class="profile__update" href="{% url 'profile:profile_modify' %}">프로필 수정</a>
+        <div class="profile__info-more">
+            {% if request.user.email %}
+            <div class="profile__email">
+                <span class="profile__text">E-mail</span>
+                <span class="profile__info-text">{{ request.user.email }}</span>
+            </div>
+            {% endif %}
+            {% if request.user.phone %}
+            <div class="profile__phone">
+                <span class="profile__text">Phone</span>
+                <span class="profile__info-text">{{ request.user.phone }}</span>
+            </div>
+            {% endif %}
+            {% if request.user.instagram %}
+            <div class="profile__instagram">
+                <span class="profile__text">Instagram</span>
+                <span class="profile__info-text">{{ request.user.instagram }}</span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="profile__line"></div>
+        <div class="profile__post-info">
+            <div class="profile__post-count">
+                <span class="profile__text">포트폴리오</span>
+            <span class="profile__text">{{ request.user.portfolios.count }} 게시물</span>
+            </div>
+            <div class="profile__post-count"> 
+                <span class="profile__text">컨택트</span>
+            <span class="profile__text">{{ request.user.contacts.count }} 게시물</span>
+            </div>
+        </div>
+        <span class="profile__desc">{{ request.user.desc }}</span>
+    </div>
+
+    <!-- 게시글 정보 -->
+    <div class="post">
+        <div class="post__local-bar">
+            <ul>
+                <li id="post__portfolio" type="submit" onclick="onClickPortfolio({{ request.user.user_identifier }})">포트폴리오</li>
+                <li id="post__my-post">게시글</li>
+                <li id="post__saved">저장 목록</li>
+            </ul>
+        </div>
+        <div class="post__local-sub-bar">
+            <ul>
+                <li id="post__my-portfolio">나의 포트폴리오</li>
+                <li id="post__tagged-portfolio">태그된 목록</li>
+            </ul>
+        </div>
+        <div class="post__container">
+        <p class="post__var">{% for post in portfolios %}</p>
+            <div class="post__item">
+                <a href="{% url 'portfolio:portfolio_detail' post.pk %}"></a>
+                    <figure class="post__image">
+                        <img src="{{post.thumbnail.image.url}}" alt="thumbnail">
+                        <figcaption>
+                            <div class="post__info">
+                                <p class="post__title">{{ post.title }}</p>
+                                <div>
+                                    <p class="post__like">
+                                        <i class="fas fa-heart"></i>
+                                        <span>{{ post.like_users.count }}</span>
+                                    </p>
+                                    <p class="post__view">
+                                        <i class="far fa-eye"></i>
+                                        <span>{{post.view_count}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </a>
+            </div>
+        {% endfor %}
         </div>
     </div>
+</div>
 {% endblock content%}
 
 
 
 {% block script %}
-<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script>
-    const contentBox = document.querySelector('.post__container');
-
-    const onClickMyPortfolio = async() => {
-        const url = '/profile/mypage/portfolio/my_portfolio/';
-        const {data} = await axios.get(url);
-        printMyPortfolio(data.portfolioList);
-    };
-
-    const printMyPortfolio = (portfolioList) => {
-        contentBox.innerHTML = '';
-        for(let i = 0; i < portfolioList.length; i++) {
-            // 각 portfolio의 pk, img링크, like_count, view_count 필요
-            const innerHtmlTemplate = `<div>
-                                            <a href='http://127.0.0.1:8000/portfolio/` + portfolioList[i].id + `'>`
-                                            + `<img src='` + portfolioList[i].thumbnail + `'>`
-                                            + `<div class='like_count'>` + portfolioList[i].like_count + `</div>`
-                                            + `<div class='view_count'>` + portfolioList[i].view_count + `</div>`
-                                        + `</div>`
-        }
-    }
-</script> -->
-
-<script type="text/javascript" src="{% static 'js/profile/profile_detail.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/profile/profile_detail_posts.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/profile/profile_detail_saves.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="{% static 'js/mypage_save.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage_post.js' %}"></script>
 {% endblock script %}
