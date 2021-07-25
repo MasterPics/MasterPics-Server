@@ -79,6 +79,9 @@
                             </div>
                         </div>
                         <div id='att_zone' class="form__img">
+                            {% for image in images %}
+                                <img src="{{image.image.image.url}}" alt="" style="width: 80px;">
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

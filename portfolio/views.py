@@ -156,9 +156,14 @@ def portfolio_update(request, pk):
         #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
         form = PortfolioForm(instance=portfolio)
-        form.images = portfolio.post_image_images.all()
+        images = portfolio.post_image_images.all()
+        temp = list(images)[0]
+        form.images = temp.image.image
         print(portfolio.post_image_images.all())
-        ctx = {'form': form, }
+        ctx = {
+            'form': form, 
+            'images': images
+        }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 
