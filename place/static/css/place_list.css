@@ -197,9 +197,9 @@ hr{
 }
 .place-tag button{
   border:1px solid #5200ff;
-  border-radius: 10px;
+  border-radius: 7px;
   background-color:rgba(0, 0, 0, 0);
-  padding:0.5rem;
+  padding:0.3rem 0.5rem;
   font-size: 0.5rem;
   margin-right:2px;
   margin-top:2px;
