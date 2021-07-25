@@ -30,7 +30,7 @@ def reference_list(request):
         ).distinct()
 
     # infinite scroll
-    portfolios_per_page = 30
+    portfolios_per_page = 16
     page = request.GET.get('page', 1)
     paginator = Paginator(portfolios, portfolios_per_page)
     try:

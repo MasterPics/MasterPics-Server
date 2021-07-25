@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from core.models import Image, PostImage, PostBase
 
 
 class PortfolioForm(forms.ModelForm):
