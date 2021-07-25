@@ -29,6 +29,7 @@
 
         <!-- 좋아요&북마크 정보 -->
         <div class="likeSave">
+            <!-- like -->
             <div class="like like-{{place.id}}">
                 {% if request.user in place.like_users.all %}
                     <i class="fas fa-heart" type="submit" onClick="onClickLike({{ place.id }})" name="type" value="save"></i>
@@ -37,13 +38,12 @@
                 {% endif %}
                 <p class="like__content">{{ place.like_users.count }}</p>
             </div>
+            <!-- save -->
             <div class="save save-{{place.id}}">
                 {% if request.user in place.save_users.all %}
-                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
+                    <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% else %}
-                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
-                                value="save"></i>
+                    <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
                 <p class="save__content">{{ place.bookmark_users.count }}</p>
             </div>
@@ -68,7 +68,11 @@
             {% if request.user.pk == place.user.pk %}
                 <div class="modify-delete">
                     <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-                    <button class="delete"><a href="{% url 'place:place_delete' place.pk %}">삭제</a></button>
+                    <form action="{% url 'place:place_delete' place.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input class="delete" type="submit" value="삭제" onclick="alert('게시물을 삭제하시겠습니까?');"/>
+                    </form>
+                
                 </div>
             {% endif %}
         </div>
