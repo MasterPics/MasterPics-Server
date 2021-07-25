@@ -56,17 +56,19 @@ article{
 
 /* ======reference list======*/
 .grid-container{
+    position: absolute;
+    left:2.15%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .grid{
+    position: none;
     display: grid;
     width:80vw;
-    grid-template-rows: repeat(4,1fr);
     grid-template-columns: repeat(4,1fr);
-    justify-content: center;
+    justify-items: center;
     align-items: center;
     grid-auto-flow: row;
 }
@@ -86,9 +88,10 @@ hr{
     width:100%;
     grid-column:span 4;
 }
-.grid-contents{
+.grid-item{
+    width:calc(100%/4.3);
     position:none;
-    margin: 0.8rem 0.5rem;
+    margin-bottom:1.7rem;
 }
 .item-info{
     display: flex;
@@ -120,14 +123,18 @@ hr{
 .portfolio_info i{
     color:#707070;
 }
-.like, .eye{
+.like, .eye, .save{
     display: flex;
     align-items: center;
-    margin-left:5px;
+    margin-left:7px;
 }
 .title p{
     font-size:14px;
-    margin:0.8rem 0;
+    margin:0.7rem 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .profile_image{
     width:27px;
@@ -162,17 +169,20 @@ hr{
     justify-content: center;
     align-items: center;
 }
+.thumbnail-hover p{
+    width:60%;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2rem;
+}
 .thumbnail_desc:hover .thumbnail-hover{
     opacity:1;
     transition: all 0.5s ease;
 }
-.thumbnail_desc .thumbnail-hover .save{
-    position: absolute;
-    bottom:0;
-    margin:1rem;
-    right:0;
-    font-size: 1.1rem;
-}
+
 .thumbnail_desc img{
     width:100%;
     height:calc(80vw/3);
