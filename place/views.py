@@ -185,7 +185,7 @@ def place_delete(request, pk):
 
     else:
         ctx = {'place': place}
-        return render(request, 'place/place_delete.html', context=ctx)
+        return render(request, 'place/place_detail.html', context=ctx)
 
 
 @csrf_exempt

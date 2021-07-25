@@ -99,12 +99,39 @@ body{
 }
 .sort-box{
   margin-left: 15px;
+  position: relative;
 }
 .sort{
   text-align: center;
   padding:0.5rem 1.1rem;
   font-size:0.7rem;
-  border-radius: 10px;
+  border:1px solid #cfcfcf;
+  color:#222;
+    /* 화살표 없애기 */
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+/* 화살표 없애기 */
+.sort::-ms-expand {
+  display: none;
+}
+/* 화살표 커스터마이징 */
+.sort-box > .select__arrow {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: #c4c4c4 transparent transparent transparent;
+}
+.sort-box > select option {
+  font-size: 10px;
+  color: #000000;
+}
+.sort-box > select:focus {
+  outline: none;
 }
 
 
@@ -170,9 +197,9 @@ hr{
 }
 .place-tag button{
   border:1px solid #5200ff;
-  border-radius: 10px;
+  border-radius: 7px;
   background-color:rgba(0, 0, 0, 0);
-  padding:0.5rem;
+  padding:0.3rem 0.5rem;
   font-size: 0.5rem;
   margin-right:2px;
   margin-top:2px;
