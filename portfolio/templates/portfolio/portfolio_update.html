@@ -80,16 +80,15 @@
                         </div>
                         <div id='att_zone' class="form__img">
                             {% for image in images %}
-                                <img src="{{image.image.image.url}}" alt="" style="width: 80px;">
+                                <div style="display:inline-block;position:relative;padding:3px;overflow:hidden;">
+                                    <img src="{{image.image.image.url}}" alt="" style="width:65px;height:65px;margin-right:1px;margin-bottom:4px;z-index:none;object-fit:cover;">
+                                    <input type="button" value="x" delfile="{{image.image.image.url}}" style="width:14px;height:14px;position:absolute;right:10px;top:10px;font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            {{ image_form }}
-
 
             <div class="form__btn">
                 <input class="form__submit" id="btnSubmit" type="submit" value="수정하기" />

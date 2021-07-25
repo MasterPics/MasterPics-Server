@@ -154,28 +154,9 @@ def portfolio_update(request, pk):
     else:
 
         form = PortfolioForm(instance=portfolio)
-        # image_form = PostImageForm(queryset=portfolio.post_image_images.all())
-        
-        
-        
         images = portfolio.post_image_images.all()
-        print(images)
-        
-        #for debugging
-        temp = list(images)[0]
-        print(temp)
-        print(temp.image.image)
-
-        print("img")
-
-        image_form = PostImageForm(instance=temp)
-        image_form.image = temp
-        print(image_form)
-        # form.images = temp.image.image.url
-        # print(portfolio.post_image_images.all())
         ctx = {
-            'form': form, 
-            'image_form' : image_form,
+            'form': form,
             'images': images
         }
         return render(request, 'portfolio/portfolio_update.html', ctx)
