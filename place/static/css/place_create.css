@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.container{
+  position: relative;
+}
+label {
+  display: none;
+}
+.free{
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+}
+.free label{
+  visibility: hidden;
+  display: block;
+  float: right;
+  height: 12px;
+  margin-right: 4px;
+}
+.free label::before{
+  visibility: visible;
+  content: '상호무페이';
+  font-size:12px;
+  color:black;
+  float: right;
+  height: 12px;
+  margin-right: 4px;
+}
+#id_free{
+  width:10%;
+}
+.form-horizontal{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.place-form input,
+.desc textarea,
+.location-form input{
+  width:100%;
+  padding:0.5rem;
+  font-size:0.8rem;
+}
+.place-form input::placeholder,
+.desc textarea::placeholder,
+.location-form input::placeholder{
+  font-size:0.7rem;
+}
+
+.location-lat{
+  display:none;
+}
+.location-lon{
+  display:none;
+}
+.images input{
+  padding:0;
+  margin:5px 0 10px 0;
+}
+.title input,
+.desc textarea,
+.location-form input,
+.location textarea,
+.pay input,
+.start_date input,
+.end_date input,
+.tags input {
+  border: 0;
+  border: solid 1px #ccc;
+  margin: 5px 0;
+  border-radius: 3px;
+}
+
+.title input:focus,
+.desc textarea:focus,
+.location textarea:focus,
+.pay input:focus,
+.start_date input:focus,
+.end_date input:focus {
+  outline: none !important;
+  border-color: #719ece;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.place_create_form{
+  position: absolute;
+  top:0;
+  left:0;
+  padding:3.5rem;
+  z-index: 1000;
+  width:500px;
+  height: 100vh;
+  background-color: #FCFCFC;
+}
+.place_create_form p{
+  font-size: 0.8rem;
+  margin:1.2rem 0;
+}
+
+.place_create_form form{
+  margin:1.2rem 0;
+}
+.place-form{
+  display: grid;
+  grid-template-areas:
+    "title title title title title"
+    "pay pay pay pay free"
+    "tags tags tags tags tags"
+    "desc desc desc desc desc"
+    "images images images images images";
+}
+.place-form .title{
+  grid-area: title;
+}
+.place-form .pay{
+  grid-area: pay;
+  width:110%;
+}
+.place-form .free{
+  grid-area: free;
+}
+.place-form .tags{
+  grid-area: tags;
+}
+.place-form .desc{
+  grid-area: desc;
+}
+.place-form .images{
+  grid-area: images;
+}
+
+
+.submit-btn{
+  width:100%;
+  font-size:1.01rem;
+  color:white;
+  background: #5200FF;
+  border-radius: 5px;
+  border: none;
+  padding:1rem;
+  margin:1rem 0;
+}

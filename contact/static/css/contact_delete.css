@@ -1,0 +1,72 @@
+.wrapper {
+  width: 65%;
+  margin: 50px auto;
+  height: 80%;
+}
+/*******************************************************/
+.delete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete__text {
+  font-size: 18px;
+  color: #000000;
+}
+.delete__user {
+  display: flex;
+  align-items: center;
+}
+.delete__user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+.delete__user-name {
+  font-size: 14px;
+  color: #1e1e1e;
+  margin-left: 10px;
+}
+.delete__user-category {
+  font-size: 12px;
+  color: #6b6b6b;
+  margin-left: 10px;
+}
+
+.line {
+  width: 100%;
+  padding-top: 15px;
+  margin-bottom: 36px;
+  border-bottom: solid 1.5px #a3a3a3;
+}
+/*******************************************************/
+.form__text {
+  text-align: center;
+  color: #6d6d6d;
+  font-size: 13px;
+  margin: 10px 0;
+}
+.form__text:first-of-type {
+  margin-top: 100px;
+}
+
+/*******************************************************/
+.form__btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+.form__submit {
+  background-color: #dbdbdb;
+  color: #1e1e1e;
+  border: none;
+  border-radius: 3px;
+  padding: 11px 30px;
+  font-size: 14px;
+  width: 110px;
+}
+.form__submit:hover {
+  background-color: #5200ff;
+  color: #ffffff;
+  cursor: pointer;
+}
