@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from .forms import *
-
+from core.forms import PostImageForm
 from core.models import Tag
-
-
-from core.models import *
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -155,10 +152,13 @@ def portfolio_update(request, pk):
 
         #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
+
         form = PortfolioForm(instance=portfolio)
-        form.images = portfolio.post_image_images.all()
-        print(portfolio.post_image_images.all())
-        ctx = {'form': form, }
+        images = portfolio.post_image_images.all()
+        ctx = {
+            'form': form,
+            'images': images
+        }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 

@@ -162,9 +162,11 @@ def contact_update(request, pk):
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
+        images = contact.post_image_images.all()
         location_form = LocationForm(instance=contact)
         ctx = {'form': form,
-               'location_form': location_form}
+               'location_form': location_form,
+               'images': images}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
