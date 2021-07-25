@@ -40,7 +40,7 @@
             </div>
             <!-- save -->
             <div class="save save-{{place.id}}">
-                {% if request.user in place.save_users.all %}
+                {% if request.user in place.bookmark_users.all %}
                     <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% else %}
                     <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>

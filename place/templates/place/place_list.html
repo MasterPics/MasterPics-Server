@@ -109,7 +109,7 @@
                                 <span class="like__content">{{ place.like_users.count }}</span>
                             </div>
                             <div class="place-save save-{{place.id}}">
-                                {% if request_user in place.save_users.all %}
+                                {% if request_user in place.bookmark_users.all %}
                                 <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
                                     value="save"></i>
                                 {% else %}
