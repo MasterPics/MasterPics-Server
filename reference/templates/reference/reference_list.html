@@ -25,24 +25,16 @@
             {% for portfolio in portfolios %}
             <div class="grid-contents">
                 <!-- 썸네일 -->
-                <div class="thumbnail_desc">
-                    <a class="thumbnail" href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
-                        <img class="thumbnail-img" src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
-                    </a>
-                    <div class="thumbnail-hover">
-                        <p>{{portfolio.desc}}</p>
-                        <!-- save count -->
-                        <div class="save save-{{portfolio.id}}">
-                            {% if request_user in portfolio.save_users.all %}
-                            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
-                                name="type" value="save"></i>
-                            {% else %}
-                            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
-                                name="type" value="save"></i>
-                            {% endif %}
-                        </div> 
+                <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
+                    <div class="thumbnail_desc">
+                        <div class="thumbnail">
+                            <img class="thumbnail-img" src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
+                        </div>
+                        <div class="thumbnail-hover">
+                            <p>{{portfolio.desc}}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
                 
                 
                 <a class="title" href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
@@ -80,6 +72,16 @@
                             <i class="far fa-eye"></i>
                             <span class="view__content">{{portfolio.view_count}}</span>
                         </div>
+                        <!-- save count -->
+                        <div class="save save-{{portfolio.id}}">
+                            {% if request_user in portfolio.save_users.all %}
+                            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
+                                name="type" value="save"></i>
+                            {% else %}
+                            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
+                                name="type" value="save"></i>
+                            {% endif %}
+                        </div> 
                     </div>
                 </div>
             </div>
