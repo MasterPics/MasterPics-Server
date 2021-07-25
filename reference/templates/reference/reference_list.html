@@ -19,11 +19,11 @@
     </header>
 
     <article>
-        <div class="grid">
-            <button class="category-btn">masterpics</button>
+    <button class="category-btn">masterpics</button>
             <hr>
+        <div class="grid">
             {% for portfolio in portfolios %}
-            <div class="grid-contents">
+            <div class="grid-content" style="position:none;">
                 <!-- 썸네일 -->
                 <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
                     <div class="thumbnail_desc">
@@ -105,6 +105,7 @@
 
 
 {% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="{% static 'js/reference_like.js' %}"></script>
 <script src="{% static 'js/reference_save.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>

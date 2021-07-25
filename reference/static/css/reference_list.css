@@ -86,7 +86,7 @@ hr{
     width:100%;
     grid-column:span 4;
 }
-.grid-contents{
+.grid-content{
     position:none;
     margin: 0.8rem 0.5rem;
 }
