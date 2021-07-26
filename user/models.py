@@ -7,17 +7,17 @@ from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 import urllib
 
-#For Hashing Password
+# For Hashing Password
 from hashid_field import HashidField, HashidAutoField
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.contrib.auth.hashers import make_password, is_password_usable
- 
+
 
 # User field
 from phone_field import PhoneField
 
-# User validators 
+# User validators
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -63,11 +63,11 @@ class User(AbstractUser):
     auth = models.CharField(max_length=10, verbose_name="인증번호", null=True, blank=True)
 
     USERNAME_FIELD = 'user_id'
-    REQUIRED_FIELDS = ['username', 'email',]
+    REQUIRED_FIELDS = ['username', 'email', ]
 
 
     def __str__(self):
-        return self.user_id 
+        return self.user_id
 
     def clean(self, *args, **kwargs):
         user_id = self.user_id

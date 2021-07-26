@@ -67,6 +67,9 @@ main{
     align-items: center;
     color:#6d6d6d;
 }
+.fas::before{
+    color:#5200ff;
+}
 .likeSave p{
     font-size:0.6rem;
     margin-top:0.6rem;
@@ -124,6 +127,10 @@ main{
     align-items: center;
     justify-content: space-between;
 }
+.modify-delete{
+    display: flex;
+    align-items: center;
+}
 .modify-delete button,
 .delete,
 .modify{
@@ -132,12 +139,14 @@ main{
     background-color: #E7E7E7;
     font-size: 0.6rem;
     padding:0.2rem 0.4rem;
+    margin:0 5px;
 }
 .modify-delete a,
-.delete a,
+.delete,
 .modify a{
     color:#6d6d6d;
 }
+
 .place-detail hr{
     margin:1rem 0;
 }
@@ -237,7 +246,7 @@ main{
 .comment-content{
     display: flex;
 }
-.comment-image{
+.comment-image img{
     width:40px;
     height:40px;
     border-radius: 100px;

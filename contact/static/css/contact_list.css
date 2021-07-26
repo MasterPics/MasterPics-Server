@@ -1,3 +1,6 @@
+.wrapper {
+  margin: 100px auto;
+}
 /******************* info ******************/
 .header {
   background-image: url("./contact_background.jpg");
@@ -61,6 +64,23 @@
   color: #4d4d4d;
   margin-right: 22px;
   font-weight: 600;
+}
+.filter__nopay {
+  font-size: 10px;
+  color: #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  float: right;
+  position: absolute;
+  right: 45%;
+}
+.filter__nopay label {
+  margin-right: 3px;
+}
+.filter__nopay input {
+  width: 13px;
+  height: 13px;
 }
 .filter__search,
 .filter__sort {
@@ -153,8 +173,10 @@
   margin-bottom: 25px;
 }
 .list__top-info {
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .list__pay-text {
   font-size: 11px;
@@ -163,6 +185,7 @@
 .list__date {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #000000;
   font-size: 11px;
 }
@@ -281,15 +304,12 @@ figure.list__image.hover p {
   display: flex;
   justify-content: space-between;
 }
-.comment .save {
-  font-size: 17px;
-}
 .comment > .far,
 .save > .far {
-  color: #aaaaaa;
+  color: #888888;
 }
 .comment {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .save {
   cursor: pointer;
@@ -297,9 +317,16 @@ figure.list__image.hover p {
 .save > .fas {
   color: #5200ff;
 }
+.comment,
+.save {
+  font-size: 14px;
+}
 .comment__content {
-  font-size: 10px;
+  font-size: 14px;
   color: #000000;
+}
+.save__content {
+  display: none;
 }
 /******************* infinite scroll ******************/
 .loading,
