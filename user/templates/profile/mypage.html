@@ -67,24 +67,24 @@
     <div class="post">
         <div class="post__local-bar">
             <ul>
-                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio({{ request.user.user_identifier }})">포트폴리오</li>
-                <li id="post__my-post" type="submit" onclick="onClickMyPost({{ request.user.user_identifier }})">게시글</li>
-                <li id="post__saved-post" type="submit" onclick="onClickSavedPost({{ request.user.user_identifier }})">저장 목록</li>
+                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio('{{ request.user.user_identifier }}')">포트폴리오</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ request.user.user_identifier }}')">게시글</li>
+                <li id="post__saved-post" type="submit" onclick="onClickSavedPost('{{ request.user.user_identifier }}')">저장 목록</li>
             </ul>
         </div>
         <div class="post__local-sub-bar">
             <ul id="post__portfolio-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio({{ request.user.user_identifier }})">나의 포트폴리오</li>
+                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio('{{ request.user.user_identifier }}')">나의 포트폴리오</li>
                 <li id="post__tagged-portfolio">태그된 목록</li>
             </ul>
             <ul class="post__not-selected" id="post__my-post-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost({{ request.user.user_identifier }})">컨택트</li>
-                <li id="post__my-place" onclick="onClickMyPlace({{ request.user.user_identifier }})">플레이스</li>
+                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost('{{ request.user.user_identifier }}')">컨택트</li>
+                <li id="post__my-place" onclick="onClickMyPlace('{{ request.user.user_identifier }}')">플레이스</li>
             </ul>
             <ul class="post__not-selected" id="post__saved-post-selected">
-                <li class="post__local-sub-bar-selected" id="post__saved-portfolio" onclick="onClickSavedPost({{ request.user.user_identifier }})">포트폴리오</li>
-                <li id="post__saved-contact" onclick="onClickSavedContact({{ request.user.user_identifier }})">컨택트</li>
-                <li id="post__saved-place" onclick="onClickSavedPlace({{ request.user.user_identifier }})">플레이스</li>
+                <li class="post__local-sub-bar-selected" id="post__saved-portfolio" onclick="onClickSavedPost('{{ request.user.user_identifier }}')">포트폴리오</li>
+                <li id="post__saved-contact" onclick="onClickSavedContact('{{ request.user.user_identifier }}')">컨택트</li>
+                <li id="post__saved-place" onclick="onClickSavedPlace('{{ request.user.user_identifier }}')">플레이스</li>
             </ul>
         </div>
         <div class="post__container">
