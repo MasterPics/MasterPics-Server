@@ -31,6 +31,7 @@ const listSavedContact = (bookmarked_contacts) => {
     postContainer.innerHTML='';
     for(let i=0; i<bookmarked_contacts.length; i++){
         postContainer.innerHTML+=`<div class="post__item">`+
+        `<a href=http://127.0.0.1:8000/contact/detail/${bookmarked_contacts[i].id}>`+
             `<figure class="post__image">`+
                 `<img src=${bookmarked_contacts[i].thumbnail_url}>`+
                 `<figcaption>`+
@@ -41,16 +42,19 @@ const listSavedContact = (bookmarked_contacts) => {
                                 `<i class="far fa-comment-dots"></i>`+
                                 `<span>${bookmarked_contacts[i].comment_count}</span>`+
                             `</p>`+
-                            `<p class="post__bookmark save save-${bookmarked_contacts[i].id}">`+
+                            `<p class="post__bookmark">`+
+                            `<i class="fas fa-bookmark"></i>`+
+                            `<span>${bookmarked_contacts[i].bookmark_count}</span>`+
                             `</p>`+
                         `</div>`+
                     `</div>`+
                 `</figcaption>`+
             `</figure>`+
-        `</div>`
+        `</a>`+
+    `</div>`
     }
 
-    // save 기능
+/*     // save 기능
     for(let i=0; i<bookmarked_contacts.length; i++){
         const save = document.querySelector(`.save-${bookmarked_contacts[i].id}`);
         if( bookmarked_contacts[i].is_bookmark === true ){
@@ -58,5 +62,5 @@ const listSavedContact = (bookmarked_contacts) => {
         } else {
             save.innerHTML = `<i class="far fa-bookmark" type="submit" onclick="onClickContactSave(${bookmarked_contacts[i].id})" name="type" value="save"></i>`
         }
-    }
+    } */
 }

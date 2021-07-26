@@ -31,6 +31,7 @@ const listSavedPlace = (bookmarked_places) => {
     postContainer.innerHTML='';
     for(let i=0; i<bookmarked_places.length; i++){
         postContainer.innerHTML+=`<div class="post__item">`+
+        `<a href=http://127.0.0.1:8000/place/detail/${bookmarked_places[i].id}>`+
             `<figure class="post__image">`+
                 `<img src=${bookmarked_places[i].thumbnail_url}>`+
                 `<figcaption>`+
@@ -41,16 +42,23 @@ const listSavedPlace = (bookmarked_places) => {
                                 `<i class="far fa-comment-dots"></i>`+
                                 `<span>${bookmarked_places[i].comment_count}</span>`+
                             `</p>`+
-                            `<p class="post__bookmark save save-${bookmarked_places[i].id}">`+
+                            `<p class="post__like">`+
+                            `<i class="fas fa-heart"></i>`+
+                            `<span>${bookmarked_places[i].like_count}</span>`+
+                            `</p>`+
+                            `<p class="post__bookmark">`+
+                                `<i class="fas fa-bookmark"></i>`+
+                                `<span>${bookmarked_places[i].bookmark_count}</span>`+
                             `</p>`+
                         `</div>`+
                     `</div>`+
                 `</figcaption>`+
             `</figure>`+
-        `</div>`
+        `</a>`+
+    `</div>`
     }
 
-    // save 기능
+/*     // save 기능
     for(let i=0; i<bookmarked_places.length; i++){
         const save = document.querySelector(`.save-${bookmarked_places[i].id}`);
         if( bookmarked_places[i].is_bookmark === true ){
@@ -58,5 +66,5 @@ const listSavedPlace = (bookmarked_places) => {
         } else {
             save.innerHTML = `<i class="far fa-bookmark" type="submit" onclick="onClickPlaceSave(${bookmarked_places[i].id})" name="type" value="save"></i>`
         }
-    }
+    } */
 }

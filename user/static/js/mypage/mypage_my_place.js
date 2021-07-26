@@ -40,6 +40,10 @@ const listMyPlace = (places) => {
                                         `<i class="far fa-comment-dots"></i>`+
                                         `<span>${places[i].comment_count}</span>`+
                                     `</p>`+
+                                    `<p class="post__like">`+
+                                    `<i class="fas fa-heart"></i>`+
+                                    `<span>${places[i].like_count}</span>`+
+                                    `</p>`+
                                     `<p class="post__bookmark">`+
                                         `<i class="fas fa-bookmark"></i>`+
                                         `<span>${places[i].bookmark_count}</span>`+

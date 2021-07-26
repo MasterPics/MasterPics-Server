@@ -44,13 +44,21 @@ const listMyPortfolio = (portfolios) => {
                         `<div class="post__info">`+
                             `<p class="post__title">${portfolios[i].title}</p>`+
                             `<div>`+
-                                `<p class="post__like">`+
-                                    `<i class="fas fa-heart"></i>`+
-                                    `<span>${portfolios[i].like_count}</span>`+
+                                `<p class="post__comment">`+
+                                `<i class="far fa-comment-dots"></i>`+
+                                `<span>${portfolios[i].comment_count}</span>`+
                                 `</p>`+
                                 `<p class="post__view">`+
                                     `<i class="far fa-eye"></i>`+
                                     `<span>${portfolios[i].view_count}</span>`+
+                                `</p>`+
+                                `<p class="post__like">`+
+                                    `<i class="fas fa-heart"></i>`+
+                                    `<span>${portfolios[i].like_count}</span>`+
+                                `</p>`+
+                                `<p class="post__bookmark">`+
+                                    `<i class="fas fa-bookmark"></i>`+
+                                    `<span>${portfolios[i].bookmark_count}</span>`+
                                 `</p>`+
                             `</div>`+
                         `</div>`+

@@ -212,15 +212,17 @@ def mypage_portfolio(request):
     data = json.loads(request.body)
     mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
-    portfolios_query = mypage_owner.portfolios.all()
+    portfolios_query = Portfolio.objects.filter(user=mypage_owner)
     portfolios = []
     for portfolio in portfolios_query:
         portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
+            'thumbnail_url': portfolio.thumbnail.image.url,
+            'comment_count': portfolio.comments.count(),
             'view_count': portfolio.view_count,
-            'thumbnail_url': portfolio.thumbnail.image.url
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count()
         })
 
     return JsonResponse({"portfolios": portfolios})
@@ -238,9 +240,11 @@ def mypage_portfolio_tagged(request):
         tagged_portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
+            'thumbnail_url': portfolio.thumbnail.image.url,
+            'comment_count': portfolio.comments.count(),
             'view_count': portfolio.view_count,
-            'thumbnail_url': portfolio.thumbnail.image.url
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count()
             })
 
     return JsonResponse({"tagged_portfolios": tagged_portfolios})
@@ -258,9 +262,9 @@ def mypage_post_contact(request):
         contacts.append({
             'id': contact.id,
             'title': contact.title,
+            'thumbnail_url': contact.thumbnail.image.url,
             'comment_count': contact.comments.count(),
-            'bookmark_count': contact.bookmark_users.count(),
-            'thumbnail_url': contact.thumbnail.image.url
+            'bookmark_count': contact.bookmark_users.count()
         })
 
     return JsonResponse({"contacts": contacts})
@@ -278,9 +282,10 @@ def mypage_post_place(request):
         places.append({
             'id': place.id,
             'title': place.title,
+            'thumbnail_url': place.thumbnail.image.url,
             'comment_count': place.comments.count(),
-            'bookmark_count': place.bookmark_users.count(),
-            'thumbnail_url': place.thumbnail.image.url
+            'like_count': place.like_users.count(),
+            'bookmark_count': place.bookmark_users.count()
         })
 
     return JsonResponse({"places": places})
@@ -299,10 +304,11 @@ def mypage_bookmark_portfolio(request):
         bookmarked_portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
-            'view_count': portfolio.view_count,
             'thumbnail_url': portfolio.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': portfolio.comments.count(),
+            'view_count': portfolio.view_count,
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_portfolios": bookmarked_portfolios})
@@ -320,9 +326,9 @@ def mypage_bookmark_contact(request):
         bookmarked_contacts.append({
             'id': contact.id,
             'title': contact.title,
-            'comment_count': contact.comments.count(),
             'thumbnail_url': contact.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': contact.comments.count(),
+            'bookmark_count': contact.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_contacts": bookmarked_contacts})
@@ -340,9 +346,10 @@ def mypage_bookmark_place(request):
         bookmarked_places.append({
             'id': place.id,
             'title': place.title,
-            'comment_count': place.comments.count(),
             'thumbnail_url': place.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': place.comments.count(),
+            'like_count': place.like_users.count(),
+            'bookmark_count': place.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_places": bookmarked_places})

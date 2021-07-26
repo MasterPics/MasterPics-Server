@@ -43,36 +43,44 @@ const listSavedPost = (bookmarked_portfolios) => {
     postContainer.innerHTML='';
     for(let i=0; i<bookmarked_portfolios.length; i++){
         postContainer.innerHTML+=`<div class="post__item">`+
-            `<figure class="post__image">`+
-                `<img src=${bookmarked_portfolios[i].thumbnail_url}>`+
-                `<figcaption>`+
-                    `<div class="post__info">`+
-                        `<p class="post__title">${bookmarked_portfolios[i].title}</p>`+
-                        `<div>`+
-                            `<p class="post__like">`+
-                                `<i class="fas fa-heart"></i>`+
-                                `<span>${bookmarked_portfolios[i].like_count}</span>`+
-                            `</p>`+
-                            `<p class="post__view">`+
-                                `<i class="far fa-eye"></i>`+
-                                `<span>${bookmarked_portfolios[i].view_count}</span>`+
-                            `</p>`+
-                            `<p class="post__bookmark save save-${bookmarked_portfolios[i].id}">`+
-                            `</p>`+
+            `<a href=http://127.0.0.1:8000/portfolio/${bookmarked_portfolios[i].id}>`+
+                `<figure class="post__image">`+
+                    `<img src=${bookmarked_portfolios[i].thumbnail_url}>`+
+                    `<figcaption>`+
+                        `<div class="post__info">`+
+                            `<p class="post__title">${bookmarked_portfolios[i].title}</p>`+
+                            `<div>`+
+                                `<p class="post__comment">`+
+                                `<i class="far fa-comment-dots"></i>`+
+                                `<span>${bookmarked_portfolios[i].comment_count}</span>`+
+                                `</p>`+
+                                `<p class="post__view">`+
+                                    `<i class="far fa-eye"></i>`+
+                                    `<span>${bookmarked_portfolios[i].view_count}</span>`+
+                                `</p>`+
+                                `<p class="post__like">`+
+                                    `<i class="fas fa-heart"></i>`+
+                                    `<span>${bookmarked_portfolios[i].like_count}</span>`+
+                                `</p>`+
+                                `<p class="post__bookmark">`+
+                                    `<i class="fas fa-bookmark"></i>`+
+                                    `<span>${bookmarked_portfolios[i].bookmark_count}</span>`+
+                                `</p>`+
+                            `</div>`+
                         `</div>`+
-                    `</div>`+
-                `</figcaption>`+
-            `</figure>`+
+                    `</figcaption>`+
+                `</figure>`+
+            `</a>`+
         `</div>`
     }
 
-    // save 기능
-    for(let i=0; i<bookmarked_portfolios.length; i++){
-        const save = document.querySelector(`.save-${bookmarked_portfolios[i].id}`);
-        if( bookmarked_portfolios[i].is_bookmark === true ){
-            save.innerHTML = `<i class="fas fa-bookmark" type="submit" onclick="onClickPortfolioSave(${bookmarked_portfolios[i].id})" name="type" value="save"></i>`
-        } else {
-            save.innerHTML = `<i class="far fa-bookmark" type="submit" onclick="onClickPortfolioSave(${bookmarked_portfolios[i].id})" name="type" value="save"></i>`
-        }
-    }
+    // // save 기능
+    // for(let i=0; i<bookmarked_portfolios.length; i++){
+    //     const save = document.querySelector(`.save-${bookmarked_portfolios[i].id}`);
+    //     if( bookmarked_portfolios[i].is_bookmark === true ){
+    //         save.innerHTML = `<i class="fas fa-bookmark" type="submit" onclick="onClickPortfolioSave(${bookmarked_portfolios[i].id})" name="type" value="save"></i>`
+    //     } else {
+    //         save.innerHTML = `<i class="far fa-bookmark" type="submit" onclick="onClickPortfolioSave(${bookmarked_portfolios[i].id})" name="type" value="save"></i>`
+    //     }
+    // }
 }
