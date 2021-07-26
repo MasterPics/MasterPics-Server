@@ -49,6 +49,7 @@ form {
   border-radius: 100%;
   margin-bottom: 15px;
   border: none;
+  object-fit: cover;
 }
 .form__upload {
   font-size: 14px;
