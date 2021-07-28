@@ -28,26 +28,30 @@
         </div>
         <a class="profile__update" href="{% url 'profile:profile_modify' %}">프로필 수정</a>
         <div class="profile__info-more">
-            {% if request.user.email_public %}
+            {% if request.user.email and request.user.email_public %}
             <div class="profile__email">
                 <span class="profile__text">E-mail</span>
                 <span class="profile__info-text">{{ request.user.email }}</span>
             </div>
             {% endif %}
-            {% if request.user.phone_public %}
+            {% if request.user.phone and request.user.phone_public %}
             <div class="profile__phone">
                 <span class="profile__text">Phone</span>
                 <span class="profile__info-text">{{ request.user.phone }}</span>
             </div>
             {% endif %}
-            {% if request.user.instagram_public %}
+            {% if request.user.instagram and request.user.instagram_public %}
             <div class="profile__instagram">
                 <span class="profile__text">Instagram</span>
                 <span class="profile__info-text">{{ request.user.instagram }}</span>
             </div>
             {% endif %}
         </div>
-        {% if request.user.email_public or request.user.phone_public or request.user.instagram_public %}
+        {% if request.user.email and request.user.email_public %}
+        <div class="profile__line"></div>
+        {% elif request.user.phone and request.user.phone_public %}
+        <div class="profile__line"></div>
+        {% elif request.user.instagram and request.user.instagram_public %}
         <div class="profile__line"></div>
         {% endif %}
         <div class="profile__post-info">
