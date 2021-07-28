@@ -3,7 +3,7 @@
 }
 /******************* header ******************/
 .header {
-  background-image: url("./contact_background.jpg");
+  background-image: url("../img/contact_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
@@ -79,8 +79,6 @@
   margin-right: 3px;
 }
 .filter__nopay input {
-  width: 13px;
-  height: 13px;
 }
 .filter__search,
 .filter__sort {
@@ -93,7 +91,7 @@
 .filter__sort > select {
   font-size: 10px;
   color: #000000;
-  padding: 8px 25px;
+  padding: 8px 20px;
   border: solid 1px #eeeeee;
   display: inline-block;
   position: relative;

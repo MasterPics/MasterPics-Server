@@ -3,7 +3,7 @@
 }
 /******************* header ******************/
 .header {
-  background-image: url("./portfolio_background.jpg");
+  background-image: url("../img/portfolio_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
