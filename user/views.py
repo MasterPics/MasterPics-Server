@@ -36,6 +36,10 @@ from .utils import email_auth_num
 import json
 from .forms import CustomSetPasswordForm
 
+# ----------------------smtp-------------------------------
+from .decorators import allowed_user, required_login
+
+
 # ----login 관련----
 
 
@@ -184,6 +188,8 @@ def withdrawal(request):
 
 
 # ----mypage 관련----
+@required_login
+@allowed_user
 def mypage(request):
     ctx = {
         'portfolios': request.user.portfolios.all(),
@@ -210,17 +216,19 @@ def others_mypage(request, pk):
 @csrf_exempt
 def mypage_portfolio(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
-    portfolios_query = mypage_owner.portfolios.all()
+    portfolios_query = Portfolio.objects.filter(user=mypage_owner)
     portfolios = []
     for portfolio in portfolios_query:
         portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
+            'thumbnail_url': portfolio.thumbnail.image.url,
+            'comment_count': portfolio.comments.count(),
             'view_count': portfolio.view_count,
-            'thumbnail_url': portfolio.thumbnail.image.url
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count()
         })
 
     return JsonResponse({"portfolios": portfolios})
@@ -230,7 +238,7 @@ def mypage_portfolio(request):
 @csrf_exempt
 def mypage_portfolio_tagged(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     tagged_portfolios_query = Portfolio.objects.filter(participants=mypage_owner)
     tagged_portfolios = []       # request.user 태그된 portfolio 객체들
@@ -238,18 +246,21 @@ def mypage_portfolio_tagged(request):
         tagged_portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
+            'thumbnail_url': portfolio.thumbnail.image.url,
+            'comment_count': portfolio.comments.count(),
             'view_count': portfolio.view_count,
-            'thumbnail_url': portfolio.thumbnail.image.url
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count()
             })
 
     return JsonResponse({"tagged_portfolios": tagged_portfolios})
 
 
 # mypage / 게시글 / 컨택트
+@csrf_exempt
 def mypage_post_contact(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     contacts_query = mypage_owner.contacts.all()
     contacts = []
@@ -257,9 +268,9 @@ def mypage_post_contact(request):
         contacts.append({
             'id': contact.id,
             'title': contact.title,
-            'like_count': contact.like_users.count(),
-            'view_count': contact.view_count,
-            'thumbnail_url': contact.thumbnail.image.url
+            'thumbnail_url': contact.thumbnail.image.url,
+            'comment_count': contact.comments.count(),
+            'bookmark_count': contact.bookmark_users.count()
         })
 
     return JsonResponse({"contacts": contacts})
@@ -269,7 +280,7 @@ def mypage_post_contact(request):
 @csrf_exempt
 def mypage_post_place(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     places_query = mypage_owner.places.all()
     places = []
@@ -277,9 +288,10 @@ def mypage_post_place(request):
         places.append({
             'id': place.id,
             'title': place.title,
+            'thumbnail_url': place.thumbnail.image.url,
+            'comment_count': place.comments.count(),
             'like_count': place.like_users.count(),
-            'view_count': place.view_count,
-            'thumbnail_url': place.thumbnail.image.url
+            'bookmark_count': place.bookmark_users.count()
         })
 
     return JsonResponse({"places": places})
@@ -290,7 +302,7 @@ def mypage_post_place(request):
 @csrf_exempt
 def mypage_bookmark_portfolio(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     bookmarked_portfolios_query = Portfolio.objects.filter(bookmark_users=mypage_owner)
     bookmarked_portfolios = []
@@ -298,10 +310,11 @@ def mypage_bookmark_portfolio(request):
         bookmarked_portfolios.append({
             'id': portfolio.id,
             'title': portfolio.title,
-            'like_count': portfolio.like_users.count(),
-            'view_count': portfolio.view_count,
             'thumbnail_url': portfolio.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': portfolio.comments.count(),
+            'view_count': portfolio.view_count,
+            'like_count': portfolio.like_users.count(),
+            'bookmark_count': portfolio.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_portfolios": bookmarked_portfolios})
@@ -311,7 +324,7 @@ def mypage_bookmark_portfolio(request):
 @csrf_exempt
 def mypage_bookmark_contact(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
     bookmarked_contacts_query = Contact.objects.filter(bookmark_users=mypage_owner)
     bookmarked_contacts = []
@@ -319,10 +332,9 @@ def mypage_bookmark_contact(request):
         bookmarked_contacts.append({
             'id': contact.id,
             'title': contact.title,
-            'like_count': contact.like_users.count(),
-            'view_count': contact.view_count,
             'thumbnail_url': contact.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': contact.comments.count(),
+            'bookmark_count': contact.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_contacts": bookmarked_contacts})
@@ -332,24 +344,26 @@ def mypage_bookmark_contact(request):
 @csrf_exempt
 def mypage_bookmark_place(request):
     data = json.loads(request.body)
-    mypage_owner_id = data["userId"]
+    mypage_owner_id = data["user_id"]
     mypage_owner = get_object_or_404(User, user_identifier=mypage_owner_id)
-    bookmarked_places_query = Contact.objects.filter(bookmark_users=mypage_owner)
+    bookmarked_places_query = Place.objects.filter(bookmark_users=mypage_owner)
     bookmarked_places = []
     for place in bookmarked_places_query:
         bookmarked_places.append({
             'id': place.id,
             'title': place.title,
-            'like_count': place.like_users.count(),
-            'view_count': place.view_count,
             'thumbnail_url': place.thumbnail.image.url,
-            'is_bookmark': True
+            'comment_count': place.comments.count(),
+            'like_count': place.like_users.count(),
+            'bookmark_count': place.bookmark_users.count(),
         })
     
     return JsonResponse({"bookmarked_places": bookmarked_places})
 
 
 # ----profile 관련----
+@required_login
+@allowed_user
 def profile_modify(request):
     if request.method == 'POST':
         form = ProfileModifyForm(
@@ -361,17 +375,17 @@ def profile_modify(request):
             ctx = {
                 'form': form,
             }
-            return render(request, 'profile/profile_modify.html', ctx)
+            return render(request, 'profile/profile_update.html', ctx)
     elif request.method == 'GET':
         form = ProfileModifyForm(instance=request.user)
         ctx = {
             'form': form,
         }
-        return render(request, 'profile/profile_modify.html', ctx)
+        return render(request, 'profile/profile_update.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
 
-
+@required_login
 def password_change(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)

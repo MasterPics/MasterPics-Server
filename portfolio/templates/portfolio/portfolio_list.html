@@ -56,7 +56,7 @@
 <div class="line"></div>
 
 <div class="list">
-    <div class="list__group grid">
+    <div class="list__container grid">
         {% for portfolio in portfolios %}
         <div class="list__item-wrapper grid-item">
             <div class="list__item">
@@ -89,13 +89,9 @@
                         {% else %}
                         <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
-                            {% if user.image  %}
+
                             <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                            {% else %}
-                            <img class="list__user-img"
-                                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
+                            
                             <div class="list__user-info">
                                 <div class="list__user-name">{{portfolio.user.username}}</div>
                                 <div class="list__user-category">{{portfolio.user.category}}</div>
