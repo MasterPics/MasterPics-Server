@@ -1,12 +1,6 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: "NanumSquare", sans-serif;
-}
-.container {
+.wrapper {
   width: 65%;
+  height: 100%;
   margin: 50px auto;
 }
 /*******************************************************/
@@ -27,6 +21,7 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 100%;
+  object-fit: cover;
 }
 .create__user-name {
   font-size: 14px;
@@ -54,7 +49,6 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  margin-bottom: 100px;
 }
 .form__left {
   width: 100%;
@@ -155,14 +149,11 @@ form {
 .form__btn {
   display: flex;
   justify-content: center;
-  position: absolute;
-  bottom: -10%;
-  left: 43%;
 }
 .form__submit {
-  background-color: #dbdbdb;
-  color: #1e1e1e;
-  border: none;
+  color: #5200ff;
+  border: 1px solid #5200ff;
+  background-color: #ffffff;
   border-radius: 3px;
   padding: 11px 30px;
   font-size: 14px;
