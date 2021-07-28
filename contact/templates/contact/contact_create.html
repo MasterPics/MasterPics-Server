@@ -13,13 +13,7 @@
     <div class="create">
         <h1 class="create__text">Contact 등록하기</h1>
         <div class="create__user">
-            {% if request.user.image  %}
             <img class="create__user-img" src="{{request.user.image.url}}" alt="img">
-            {% else %}
-            <img class="create__user-img"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="img">
-            {% endif %}
             <div class="create__user-name">{{request.user.username}}</div>
             <p class="create__user-category">{{request.user.category}}</p>
         </div>

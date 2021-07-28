@@ -18,13 +18,7 @@
                 <div class="side-bar__text">
                     게시자
                 </div>
-                {% if portfolio.user.image %}
                 <img class="side-bar__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                {% else %}
-                <img class="side-bar__user-img"
-                    src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                    alt="img">
-                {% endif %}
                 <div class="side-bar__user-name">{{portfolio.user.username}}</div>
                 <div class="side-bar__user-category">{{portfolio.user.category}}</div>
             </a>
@@ -123,12 +117,7 @@
                     <div class="comment__wrapper">
                         <div class="comment__item">
                             <div class="comment__writer-img">
-                                {% if comment.writer.image %}
                             <img src="{{comment.writer.image.url}}" alt="img">
-                            {% else %}
-                            <img src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
                             </div>
                             <div class="comment__content">
                                 <div class="comment__top-info">

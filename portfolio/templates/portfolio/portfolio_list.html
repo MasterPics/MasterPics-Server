@@ -89,9 +89,7 @@
                         {% else %}
                         <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
-
                             <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                            
                             <div class="list__user-info">
                                 <div class="list__user-name">{{portfolio.user.username}}</div>
                                 <div class="list__user-category">{{portfolio.user.category}}</div>

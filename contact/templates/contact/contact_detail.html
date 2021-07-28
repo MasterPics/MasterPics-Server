@@ -19,13 +19,7 @@
                 <div class="side-bar__text">
                     게시자
                 </div>
-                {% if contact.user.image %}
                 <img class="side-bar__user-img" src="{{contact.user.image.url}}" alt="img">
-                {% else %}
-                <img class="side-bar__user-img"
-                    src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                    alt="img">
-                {% endif %}
                 <div class="side-bar__user-name">{{contact.user.username}}</div>
                 <div class="side-bar__user-category">{{contact.user.category}}</div>
             </a>
@@ -103,6 +97,7 @@
             </div>
         </div>
         <div class="post__wrapper">
+            {% if contact.images.all %}
             <div class="post__images-wrapper">
                 <div class="post__images-text">Mood Board</div>    
                 <!-- Container for the image gallery -->
@@ -131,6 +126,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="post__content">
                 <div class="post__desc">{{contact.desc}}</div>
                 <div class="post__file"><a href="{{ contact.file_attach.url }}">시안 첨부파일 보기</a></div>
@@ -147,12 +143,7 @@
                     <div class="comment__wrapper">
                         <div class="comment__item">
                             <div class="comment__writer-img">
-                                {% if comment.writer.image %}
                             <img src="{{comment.writer.image.url}}" alt="img">
-                            {% else %}
-                            <img src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
                             </div>
                             <div class="comment__content">
                                 <div class="comment__top-info">

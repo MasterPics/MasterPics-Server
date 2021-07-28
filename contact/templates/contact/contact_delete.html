@@ -10,13 +10,7 @@
     <div class="delete">
         <h1 class="delete__text">Contact 삭제하기</h1>
         <div class="delete__user">
-            {% if request.user.image  %}
             <img class="delete__user-img" src="{{request.user.image.url}}" alt="img">
-            {% else %}
-            <img class="delete__user-img"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="img">
-            {% endif %}
             <div class="delete__user-name">{{request.user.username}}</div>
             <p class="delete__user-category">{{request.user.category}}</p>
         </div>

@@ -308,6 +308,7 @@
   height: 35px;
   border-radius: 100%;
   margin-right: 20px;
+  object-fit: cover;
 }
 .comment__content {
   display: flex;
