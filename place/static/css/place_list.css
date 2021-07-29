@@ -272,6 +272,62 @@ hr{
   margin-bottom:2rem;
 }
 
+@media screen and (max-width:480px){
+  .place-header-content h2{
+    font-size:1.2rem;
+  }
+  .place-header-content p{
+    font-size:0.8rem;
+    margin:1rem 0;
+  }
+  .register-btn{
+    font-size: 0.7rem;
+    padding:0.8rem;
+  }
+  .place-list-grid{
+    width:95vw;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .place-search{
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .place-search input{
+    width:80%;
+  }
+  .place-filter{
+    margin-top:1rem;
+    font-size: 0.5rem;
+  }
+  .sort-box{
+    margin:0;
+  }
+  .sort{
+    padding: 0.4rem 0.8rem;
+    font-size: 0.5rem;
+  }
+  hr{
+    width:100%;
+    margin:1rem 0;
+  }
+  .place-content{
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    margin:0;
+  }
+  .place-thumbnail{
+    width:100%;
+  }
+  .place-content-title{
+    width:95%;
+    margin: 1rem 0 2.2rem 0;
+  }
+}
 
 /* 무한스크롤 */
 
