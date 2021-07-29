@@ -51,8 +51,10 @@
                         </div>
                     </div>
                     {% else %}
-                    {%endif%}
+                    {% endif %}
                     {% endfor %}
+
+                    <!-- Pay Form -->
                     <div class="form__group {{ form.pay.name }}">
                         <div class="form__label">
                             <label for="pay">페이</label>
@@ -67,6 +69,8 @@
                         </div>
                         <div class="pay__text">원</div>
                     </div>
+
+                    <!-- Date Form -->
                     <div class="form__date">
                         <div class="form__label">
                             <label for="start_date">날짜</label>
@@ -98,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- location form -->
+                    <!-- Location Form -->
                     {% for field in location_form.visible_fields %}
                     {% if field.id_for_label == 'location-lat' %}
                     {% elif field.id_for_label == 'location-lon' %}
@@ -135,7 +139,7 @@
                     </div>
                 </div>
                 <div class="form__right">
-                    <!-- for image form -->
+                    <!-- Image Form -->
                     <div id="image_preview" class="form__group {{ form.images.name }}">
                         <div class="form__label">
                             <label for="id_images">이미지 (최대 10장)</label>
@@ -165,6 +169,8 @@
                             {% endfor %}
                         </div>
                     </div>
+
+                    <!-- File Form -->
                     <div class="form__file-attach form__group {{ form.file_attach.name }}">
                         <div class="form__label">
                             <label for="id_file_attach">시안 첨부파일</label>
@@ -185,6 +191,8 @@
                             {% endfor %}
                         </div>
                     </div>
+
+                    <!-- Tags Form -->
                     <div class="form__tags form__group {{ form.tags.name }}">
                         <div class="form__label">
                             {{ form.tags.label}}

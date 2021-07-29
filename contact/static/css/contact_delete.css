@@ -21,6 +21,7 @@
   width: 30px;
   height: 30px;
   border-radius: 100%;
+  object-fit: cover;
 }
 .delete__user-name {
   font-size: 14px;
