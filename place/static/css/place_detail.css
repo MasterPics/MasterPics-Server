@@ -56,7 +56,16 @@ main{
     margin:1rem 0;
     border:1px solid #cacaca;
 }
-
+.place-pay-box{
+    height: 77px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#5200ff;
+    border:1px solid #cacaca;
+    background-color:white;
+    font-size: 0.8rem;
+}
 .likeSave{
     margin:1rem 0;
     height:77px;
@@ -162,6 +171,10 @@ main{
     display:flex;
     align-items: center;
 }
+/* .pay-info{
+    margin-right: 0.4rem;
+    color:#5200ff;
+} */
 .place-detail-info i{
     color:#5200ff;
     font-size: 1rem;
@@ -261,6 +274,8 @@ main{
 }
 .comment-text{
     font-size: 0.9rem;
+    line-height:1.2rem;
+    width:90%;
     color:#1E1E1E;
     margin-top:0.6rem;
 }
@@ -276,4 +291,43 @@ main{
 }
 a{
     color:#1E1E1E;
+}
+
+@media screen and (max-width:480px){
+ main{
+     flex-direction: column-reverse;
+ }   
+ .place-detail{
+     width:100%;
+ }
+ .place-detail-header h2{
+     font-size: 1.3rem;
+ }
+ .place-images, .mySwiper2{
+     height:330px;
+ }
+ .place-images .image-list, .mySwiper{
+     height: 100px;
+ }
+ .image-box, .swiper-slide, .swiper-slide-active{
+     width:100%;
+ }
+ .image .swiper-slide .swiper-slide-visible .swiper-slide-active .swiper-slide-thumb-active{
+     width:calc(100%/3);
+ }
+ 
+ .comment__value{
+     width:80%;
+ }
+ .comment__btn{
+     width:18%;
+     font-size:0.7rem;
+ }
+ .place-pagenation{
+     margin: 1.5rem 0;
+ }
+ .info-box{
+     width:100%;
+     margin:0;
+ }
 }
