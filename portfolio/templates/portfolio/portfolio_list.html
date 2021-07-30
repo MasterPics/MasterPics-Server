@@ -15,41 +15,45 @@
 </div>
 
 <div class="filter">
-    <div class="filter__category">
-        <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
-        <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
-        <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
-        <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
-        <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
+    <div class="filter__left">
+        <div class="filter__category">
+            <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
+            <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
+            <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
+            <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
+            <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
+        </div>
     </div>
-    <div class="filter__search">
-        <input  type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'/>
-        <button type="submit" id="submit" class="btn btn-outline-secondary btn_search" ><i class="fas fa-search"></i></button>
-    </div>
-    <div class="filter__sort">
-        <select name="" id="" class="form-control sort ">
-            <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
-                최신순
-            </option>
-            <option value="view" {% if sort == 'view' %}selected{% endif %}>
-                조회순
-            </option>
-            <option value="like" {% if sort == 'like' %}selected{% endif %}>
-                좋아요순
-            </option>
-            <option value="save" {% if sort == 'save' %}selected{% endif %}>
-                저장순
-            </option>
-        </select>
-        <div class="select__arrow"></div>
-    </div>
-  
-    <div style="height: 0;">
-        <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
-            <input type="hidden" id="category" name="category" value="{{ category }}">
-            <input type="hidden" id="sort" name="sort" value="{{ sort }}">
-            <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
-        </form>
+    <div class="filter__right">
+        <div class="filter__search">
+            <input  type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'/>
+            <button type="submit" id="submit" class="btn btn-outline-secondary btn_search" ><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter__sort">
+            <select name="" id="" class="form-control sort ">
+                <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
+                    최신순
+                </option>
+                <option value="view" {% if sort == 'view' %}selected{% endif %}>
+                    조회순
+                </option>
+                <option value="like" {% if sort == 'like' %}selected{% endif %}>
+                    좋아요순
+                </option>
+                <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                    저장순
+                </option>
+            </select>
+            <div class="select__arrow"></div>
+        </div>
+      
+        <div style="height: 0;">
+            <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
+                <input type="hidden" id="category" name="category" value="{{ category }}">
+                <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+                <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
+            </form>
+        </div>
     </div>
 </div>
 

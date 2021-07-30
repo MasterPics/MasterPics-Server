@@ -45,13 +45,15 @@
   margin: 0 auto;
   padding-top: 20px;
   overflow: hidden;
-  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 90px;
 }
-.filter__category {
-  float: left;
+.filter__right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .filter__category > span a {
   font-size: 14px;
@@ -65,36 +67,28 @@
   margin-right: 22px;
   font-weight: 600;
 }
-.filter__nopay {
+.filter__checkbox {
   font-size: 10px;
   color: #000000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  float: right;
-  position: absolute;
-  right: 45%;
+  margin-right: 10px;
 }
-.filter__nopay label {
+.filter__checkbox label {
   margin-right: 3px;
 }
-.filter__nopay input {
-}
-.filter__search,
 .filter__sort {
-  float: right;
-}
-.filter__sort {
-  position: absolute;
-  right: 0;
+  position: relative;
 }
 .filter__sort > select {
+  width: 90px;
   font-size: 10px;
   color: #000000;
-  padding: 8px 20px;
+  padding: 8px 15px;
   border: solid 1px #eeeeee;
-  display: inline-block;
-  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
   /* 화살표 없애기 */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -108,7 +102,7 @@
 .filter__sort > .select__arrow {
   position: absolute;
   top: 12px;
-  right: 10px;
+  right: 13px;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -124,10 +118,9 @@
   outline: none;
 }
 .filter__search {
-  position: absolute;
-  right: 110px;
   display: flex;
   justify-content: center;
+  margin-right: 10px;
 }
 .filter__search input {
   border: solid 1px #cfcfcf;
