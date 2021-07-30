@@ -64,6 +64,9 @@ form {
 .form__label {
   font-size: 14px;
 }
+.form__label label {
+  width: 100%;
+}
 .title,
 .desc,
 .tags {
@@ -134,8 +137,8 @@ form {
   justify-content: space-between;
   align-items: center;
 }
-.start_date label {
-  margin-right: 15px;
+.start_date .form__label {
+  width: 14%;
 }
 .start_date input,
 .end_date input {
@@ -158,58 +161,27 @@ form {
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.form__location label {
-  margin-right: 15px;
+.form__location .form__label {
+  width: 14%;
+}
+.form__location .form__input {
+  width: 100%;
 }
 #location-address {
   width: 100%;
   font-size: 0.7rem;
-  padding: 6px 110px;
+  padding: 6px 0px;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  text-align: start;
+  text-align: center;
   margin: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .map_wrap {
-  height: 200px;
-  position: relative;
-}
-#map {
-  width: 100%;
   height: 30%;
-  z-index: 1;
-}
-#menu_wrap {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  height: 100%;
-}
-.option {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-#keyword {
-  font-size: 11px;
-  color: #999999;
-  border: 1px solid #c4c4c4;
-  border-radius: 3px;
-  width: 180px;
-  padding: 5px;
-}
-#menu_wrap button {
-  color: #ffffff;
-  background-color: #5200ff;
-  border-radius: 3px;
-  padding: 5px;
-  margin-left: 5px;
-}
-#placeList,
-#pagination {
+  position: relative;
 }
 /*******************************************************/
 .image-form__label {
