@@ -57,10 +57,12 @@
   padding: 2px;
 }
 .side-bar__map-info {
-  border-radius: 3px;
   margin: 20px 0;
   width: 100%;
-  height: 50%;
+  height: 75%;
+}
+#map {
+  border-radius: 3px;
 }
 .side-bar__info {
   display: flex;
