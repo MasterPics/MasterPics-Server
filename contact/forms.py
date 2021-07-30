@@ -23,10 +23,10 @@ class ContactForm(forms.ModelForm):
             'tags': '태그 (#을 붙이고 공백으로 구분)',
         }
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
+            'title': forms.TextInput(attrs={'placeholder': '아티스트 섭외를 위한 제목을 입력하세요.'}),
             'desc': forms.Textarea(
-                attrs={'placeholder': '설명을 작성하세요.'}),
-            'tags': forms.TextInput(attrs={'placeholder': '#masterpics #portfolio'}),
+                attrs={'placeholder': '사진작업의 컨셉, 요구사항, 섭외할 아티스트 등 사진작업에 대한 구체적인 설명을 입력하세요.'}),
+            'tags': forms.TextInput(attrs={'placeholder': '사진작업과 관련된 키워드를 입력하세요. (ex. #masterpics #contact)'}),
             'pay': forms.NumberInput(attrs={'placeholder': '페이입력'}),
 
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
