@@ -102,6 +102,7 @@ label {
 .place_create_form p{
   font-size: 0.8rem;
   margin:1.2rem 0;
+  line-height: 1.2rem;
 }
 
 .place_create_form form{
@@ -146,4 +147,31 @@ label {
   border: none;
   padding:1rem;
   margin:1rem 0;
+}
+
+/*-----tablet-----*/
+@media screen and (max-width:1024px) and (min-width:481px){
+  .place_create_form{
+    top:auto;
+    bottom:0;
+    width:100vw;
+    height:auto;
+  }
+} 
+
+@media screen and (max-width:480px){
+  .place_create_form{
+    top:59vh;
+    bottom:auto;
+    width:100vw;
+    height:auto;
+    padding:7%;
+  }
+  .free label::before{
+    font-size:8px;
+    margin-right:0;
+  }
+  #id_free{
+    width:18%;
+  }
 }
