@@ -27,6 +27,7 @@
             <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
         </div>
 
+        
         <!-- 좋아요&북마크 정보 -->
         <div class="likeSave">
             <!-- like -->
@@ -82,7 +83,8 @@
         <!-- 주소 & 날짜-->
         <div class="place-detail-info">
             <span><i class="fas fa-map-marker-alt"></i><p id="address">{{ place.location.address }}</p></span>
-            <span>{{ place.created_at }}</span>
+            <span class="pay-created"><span class="pay-info">{{place.pay}}원</span>
+            <span>{{ place.created_at }}</span></span>
             <input type="hidden" id="map_address" name="map_address" value="{{ place.location.address }}"/>
         </div>
 
@@ -115,12 +117,11 @@
         <p class="place-description">{{place.desc}}</p>
         
         <!-- 댓글 -->
-        <hr>
         <div class="place-comment">
             <!-- 댓글 작성창 -->
             <div class="createComment createComment-{{place.id}}">
                 <input class="comment__value" type="text" placeholder="후기를 작성해주세요.">
-                <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="댓글 게시">
+                <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="등록">
             </div>
 
             <!-- 댓글 리스트 -->
