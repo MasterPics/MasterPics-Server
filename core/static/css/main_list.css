@@ -1275,8 +1275,9 @@ a:active { text-decoration: none; }
     font-size: 15px;
     margin-bottom: 10px;
   }
-  .container .desc {
-    width: 160px;
+  .AboutUsMainContent1 .container .desc, .AboutUsMainContent2 .container .desc,
+  .AboutUsMainContent3 .container .desc, .AboutUsMainContent4 .container .desc {
+    width: 140px;
     height: 10px;
     font-size: 8px;
     line-height: 1.5;
