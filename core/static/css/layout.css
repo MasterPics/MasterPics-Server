@@ -140,6 +140,7 @@ nav a {
   margin-right: 70px;
   font-family: "Prata", serif;
   font-size: 14px;
+  font-weight: lighter;
 }
 
 .nav__profile a{
@@ -153,6 +154,7 @@ nav a {
   margin-right: 70px;
   font-family: "Prata", serif;
   font-size: 14px;
+  font-weight: lighter;
 }
 
 .nav__profile .here {
@@ -160,6 +162,7 @@ nav a {
   border: none;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 14px;
+  font-weight: lighter;
 }
 .nav__profile .here:active {
   cursor: pointer;
@@ -196,8 +199,8 @@ nav a {
   min-width: 140px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  margin-top: 80px;
-  margin-left: -10px;
+  margin-top: 95px;
+  margin-left: -40px;
 }
 
 .dropdown-content a {
