@@ -60,6 +60,12 @@
       }
       
       reader.readAsDataURL(file);
+      dt = new DataTransfer();
+      for(f in sel_files) {
+        var file = sel_files[f];
+        dt.items.add(file);
+      }
+      btnAtt.files = dt.files;
     }
     
     /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
