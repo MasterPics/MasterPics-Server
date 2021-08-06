@@ -92,7 +92,9 @@
 .save > .fas {
   color: #5200ff;
 }
-.comment > .far,
+.fa-comment-dots {
+  color: #888888;
+}
 .save > .far {
   color: #888888;
 }

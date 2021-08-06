@@ -23,8 +23,14 @@
                 <div class="side-bar__user-category">{{portfolio.user.category}}</div>
             </a>
         </div>
-        <!-- like, view_count, save -->
+        <!-- comment, like, view_count, save -->
         <div class="side-bar__info">
+            <div class="comment">
+                <a href="#comment">
+                <i class="far fa-comment-dots"></i>
+                <span class="comment__content">{{ portfolio.comments.count }}</span>
+                </a>
+            </div>
             <div class="eye">
                 <i class="far fa-eye"></i>
                 <span class="view__content">{{portfolio.view_count}}</span>

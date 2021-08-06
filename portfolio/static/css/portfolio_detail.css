@@ -66,6 +66,7 @@
   cursor: pointer;
   color: #5200ff;
 }
+.comment,
 .eye,
 .like,
 .save {
@@ -75,6 +76,7 @@
   align-items: center;
   font-size: 14px;
 }
+.comment i,
 .eye i,
 .like i,
 .save i {
@@ -83,6 +85,9 @@
 .like > .fas,
 .save > .fas {
   color: #5200ff;
+}
+.fa-comment-dots {
+  color: #888888;
 }
 .like > .far,
 .eye > .far,
