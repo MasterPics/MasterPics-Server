@@ -258,7 +258,7 @@ form {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 5px;
-  width: 73%;
+  width: 280px;
   font-size: 11px;
   color: #888888;
 }
@@ -276,7 +276,6 @@ form {
   right: 0px;
   cursor: pointer;
   z-index: 1;
-  width: 73%;
   font-size: 11px;
   color: #888888;
   text-align: start;
