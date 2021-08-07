@@ -13,12 +13,14 @@
         <!-- 유저 프로필 -->
         <div class="user-profile">
             <p class="writer">게시자</p>
-            <img class="user-image" src={{place.user.image.url}}/>
-        {% if place.user == request_user %}
-            <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user.username}}</a>
-        {% else %}
-            <a class="user-name" href="{% url 'profile:others_mypage' place.user.user_identifier %}">{{place.user.username}}</a>
-        {% endif %}
+            {% if place.user == request.user %}
+            <a href="{% url 'profile:mypage' %}">
+            {% else %}
+            <a href="{% url 'profile:others_mypage' place.user.user_identifier %}">
+            {% endif %}
+                <img class="user-image" src={{place.user.image.url}}/>
+                <p class="user-name">{{place.user.username}}</p>
+            </a>
             <p class="user-category">{{place.user.category}}</p>
         </div>
 
@@ -69,9 +71,9 @@
             {% if request.user.pk == place.user.pk %}
                 <div class="modify-delete">
                     <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-                    <form action="{% url 'place:place_delete' place.pk %}" method="POST">
+                    <form action="{% url 'place:place_delete' place.pk %}" method="POST" onsubmit="return confirm('게시물을 삭제하시겠습니까?');">
                         {% csrf_token %}
-                        <input class="delete" type="submit" value="삭제" onclick="alert('게시물을 삭제하시겠습니까?');"/>
+                        <input class="delete" type="submit" value="삭제"/>
                     </form>
                 
                 </div>
