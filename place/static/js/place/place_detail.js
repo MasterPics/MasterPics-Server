@@ -23,64 +23,12 @@ geocoder.addressSearch(address, function(result, status) {
             map: map,
             position: coords
         });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        /*
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">여기에 있어요!</div>'
-        });
-        infowindow.open(map, marker);
-        */
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
     } 
 });  
 
-/*
-const onClickSave = async (place_id) => {
-    console.log("save?");
-    try {
-        const url = '/place/';
-        const {
-        data
-        } = await axios.post(url, {
-        place_id,
-        })
-        modify(data.place_id, data.is_saved)
-        const options = {
-            url: '/place/save/',
-            method: 'POST',
-            data: {
-                place_id: place_id,
-            }
-        }
-        const response = await axios(options)
-        const responseOK = response && response.status === 200 && response.statusText === 'OK'
-        if (responseOK) {
-            const data = response.data
-            //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
-            modify(data.place_id, data.is_saved)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-const modify = (place_id, is_saved) => {
-    const save = document.querySelector(`.save-${place_id} i`);
-    const save_content = document.querySelector(`.save-${place_id} .save__content`)
-    const num = save_content.innerText; // [ {{ place.save_users.count }} ]
-    console.log(num)
-    if (is_saved === true) {
-        save.className = "fas fa-bookmark";
-        const count = Number(num) + 1;
-        save_content.innerHTML = count
-    } else {
-        save.className = "far fa-bookmark";
-        const count = Number(num) - 1;
-        save_content.innerHTML = count
-    }
-}
-*/
+
 const modifyNewComment = (place_id, comment_id, value) => {
     const CommentContainer = document.querySelector(`.comments-${place_id}`);
     console.log(CommentContainer)

@@ -92,7 +92,15 @@
                         <div class="place-user">    
                             <img class="user-image" src="{{place.user.image.url}}">
                             <div class="user-name">
-                                <p class="user-nickname">{{place.user}}</p>
+                                <p class="user-nickname">
+                                    {% if place.user == request.user %}
+                                    <a href="{% url 'profile:mypage' %}">
+                                    {% else %}
+                                    <a href="{% url 'profile:others_mypage' place.user.user_identifier %}">
+                                    {% endif %}
+                                        {{place.user.username}}
+                                    </a>
+                                </p>
                                 <p class="user-category">{{place.user.category}}</p>
                             </div>
                         </div>
