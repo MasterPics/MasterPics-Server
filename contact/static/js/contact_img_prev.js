@@ -14,11 +14,22 @@
                   + 'font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;';
   
     btnAtt.onchange = function(e){
+      console.log(1);
       var files = e.target.files;
       var fileArr = Array.prototype.slice.call(files)
-      for(f of fileArr){
-        imageLoader(f);
+      
+      if (sel_files.length+1 + fileArr.length > 10 && sel_files[0] ){
+        alert('최대 10장까지 업로드 가능합니다.');
+        console.log(2);
       }
+      else {
+        console.log("here");
+        for(f of fileArr){
+          imageLoader(f);
+        }
+        console.log(3);
+      } 
+      console.log(sel_files.length);
     }  
     
   
@@ -40,19 +51,30 @@
       e.stopPropagation();
       var dt = e.dataTransfer;
       files = dt.files;
-      for(f of files){
-        imageLoader(f);
+      console.log(4);
+      if (sel_files.length+1 + fileArr.length > 10 && sel_files[0] ){
+        alert('최대 10장까지 업로드 가능합니다.');
+        console.log(5);
       }
-      
+      else{
+        for(f of files){
+          imageLoader(f);
+        }
+        console.log(6);
+      }      
     }, false)
     
 
     
     /*첨부된 이미리즐을 배열에 넣고 미리보기 */
     imageLoader = function(file){
+      console.log(7);
+
       sel_files.push(file);
       var reader = new FileReader();
       reader.onload = function(ee){
+        console.log(8);
+
         let img = document.createElement('img')
         img.setAttribute('style', img_style)
         img.src = ee.target.result;
@@ -65,6 +87,8 @@
         var file = sel_files[f];
         dt.items.add(file);
       }
+      console.log(9);
+
       btnAtt.files = dt.files;
     }
     
@@ -72,6 +96,7 @@
     makeDiv = function(img, file){
       var div = document.createElement('div')
       div.setAttribute('style', div_style)
+      console.log(10);
       
       var images = document.createElement('input')
       images.setAttribute('type', 'button')
@@ -86,6 +111,7 @@
             sel_files.splice(i, 1);      
           }
         }
+        console.log(11);
         
         dt = new DataTransfer();
         for(f in sel_files) {
@@ -95,10 +121,17 @@
         btnAtt.files = dt.files;
         var p = ele.parentNode;
         attZone.removeChild(p)
+        console.log(12);
+
       }
       div.appendChild(img)
       div.appendChild(images)
+      console.log(13);
+
       return div
+
     }
+    console.log(14);
+
   }
 )('att_zone', 'images')
