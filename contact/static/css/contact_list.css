@@ -1,7 +1,12 @@
+/**layout**/
+.container {
+  min-height: 100%;
+}
+
 .wrapper {
   margin: 100px auto;
 }
-/******************* info ******************/
+/******************* header ******************/
 .header {
   background-image: url("./contact_background.jpg");
   background-size: cover;
@@ -291,6 +296,7 @@ figure.list__image.hover p {
   width: 27px;
   height: 27px;
   margin-right: 10px;
+  object-fit: cover;
 }
 .list__user-name {
   font-size: 11px;

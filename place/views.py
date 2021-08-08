@@ -40,7 +40,7 @@ def place_create(request):
                 image_obj = PostImage()
                 image_obj.post = Place.objects.get(id=place.id)
                 img = Image.objects.create(image=image)
-                img.save()
+                #img.save()
                 image_obj.image = img
                 image_obj.save()
 
@@ -85,18 +85,33 @@ def place_update(request, pk):
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES, instance=place)
         location_form = LocationForm(request.POST, instance=place.location)
+        
         if place_form.is_valid() and location_form.is_valid():
             place_update = place_form.save(commit=False)
             location = location_form.save(commit=False)
             location.save()
+            place_update.user = request.user
             place_update.location = location
-            print(place_form.image)
-            place_update.image = request.FILES.get('image')
-            place_update.image.save()
             place_update.save()
+            place_form.save_m2m()
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Place.objects.get(id=place_update.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     place_update.thumbnail = image_obj.image
+                #     place_update.save()
+                    
             return redirect('place:place_detail', place.pk)
     else:
         place_form = PlaceForm(instance=place)
+        print(dir(place_form))
         location_form = LocationForm(instance=place.location)
 
         ctx = {
@@ -170,7 +185,7 @@ def place_delete(request, pk):
 
     else:
         ctx = {'place': place}
-        return render(request, 'place/place_delete.html', context=ctx)
+        return render(request, 'place/place_detail.html', context=ctx)
 
 
 @csrf_exempt

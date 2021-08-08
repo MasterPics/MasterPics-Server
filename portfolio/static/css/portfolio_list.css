@@ -1,4 +1,12 @@
-/******************* info ******************/
+/**layout**/
+.container {
+  min-height: 100%;
+}
+
+.wrapper {
+  margin: 100px auto;
+}
+/******************* header ******************/
 .header {
   background-image: url("./portfolio_background.jpg");
   background-size: cover;
@@ -143,6 +151,9 @@
   margin: 0 auto;
   margin-top: 40px;
 }
+.grid {
+  margin: 0 auto;
+}
 .list__item-wrapper {
   width: 246px;
   margin-bottom: 25px;
@@ -249,6 +260,7 @@ figure.list__image.hover p {
   width: 27px;
   height: 27px;
   margin-right: 10px;
+  object-fit: cover;
 }
 .list__user-name {
   font-size: 11px;
@@ -285,7 +297,6 @@ figure.list__image.hover p {
   font-size: 14px;
 }
 .like__content,
-.save__content,
 .view__content {
   font-size: 14px;
 }

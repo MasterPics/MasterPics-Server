@@ -67,6 +67,9 @@ main{
     align-items: center;
     color:#6d6d6d;
 }
+.fas::before{
+    color:#5200ff;
+}
 .likeSave p{
     font-size:0.6rem;
     margin-top:0.6rem;
@@ -124,6 +127,10 @@ main{
     align-items: center;
     justify-content: space-between;
 }
+.modify-delete{
+    display: flex;
+    align-items: center;
+}
 .modify-delete button,
 .delete,
 .modify{
@@ -132,12 +139,14 @@ main{
     background-color: #E7E7E7;
     font-size: 0.6rem;
     padding:0.2rem 0.4rem;
+    margin:0 5px;
 }
 .modify-delete a,
-.delete a,
+.delete,
 .modify a{
     color:#6d6d6d;
 }
+
 .place-detail hr{
     margin:1rem 0;
 }
@@ -152,6 +161,10 @@ main{
 .place-detail-info span{
     display:flex;
     align-items: center;
+}
+.place-detail-info .pay-info{
+    margin-right: 0.4rem;
+    color:#5200ff;
 }
 .place-detail-info i{
     color:#5200ff;
@@ -237,7 +250,7 @@ main{
 .comment-content{
     display: flex;
 }
-.comment-image{
+.comment-image img{
     width:40px;
     height:40px;
     border-radius: 100px;
@@ -252,6 +265,8 @@ main{
 }
 .comment-text{
     font-size: 0.9rem;
+    line-height:1.2rem;
+    width:90%;
     color:#1E1E1E;
     margin-top:0.6rem;
 }
@@ -267,4 +282,52 @@ main{
 }
 a{
     color:#1E1E1E;
+}
+
+@media screen and (max-width:480px){
+ main{
+     flex-direction: column-reverse;
+ }   
+ .place-detail{
+     width:100%;
+ }
+ .place-detail-header h2{
+     font-size: 1.3rem;
+ }
+ .place-detail-info {
+     font-size:0.4rem;
+     align-items: flex-start;
+ }
+ .place-detail-info .pay-created{
+     display:flex;
+     flex-direction: column;
+     align-items: flex-start;
+ }
+ .place-images, .mySwiper2{
+     height:330px;
+ }
+ .place-images .image-list, .mySwiper{
+     height: 100px;
+ }
+ .image-box, .swiper-slide, .swiper-slide-active{
+     width:100%;
+ }
+ .image .swiper-slide .swiper-slide-visible .swiper-slide-active .swiper-slide-thumb-active{
+     width:calc(100%/3);
+ }
+ 
+ .comment__value{
+     width:80%;
+ }
+ .comment__btn{
+     width:18%;
+     font-size:0.7rem;
+ }
+ .place-pagenation{
+     margin: 1.5rem 0;
+ }
+ .info-box{
+     width:100%;
+     margin:0;
+ }
 }

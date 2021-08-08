@@ -187,12 +187,13 @@ LOGIN_REDIRECT_URL = "/profile/social_user_more_info/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = None
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]  # id unique관련 경고 비활성화
 
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
-TAGGIT_TAGS_FROM_STRING = 'portfolio.utils.hashtag_splitter'
-TAGGIT_STRING_FROM_TAGS = 'portfolio.utils.hashtag_joiner'
+TAGGIT_TAGS_FROM_STRING = 'core.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'core.utils.hashtag_joiner'
 
 
 # smtp

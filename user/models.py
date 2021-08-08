@@ -21,9 +21,11 @@ from phone_field import PhoneField
 from django import forms
 from django.core.exceptions import ValidationError
 
-# User validators
+# User image uuid-upload
+from .utils import user_uuid_name_upload_to
 
 
+# User validators 
 def is_ToS(value):
     if value == False:
         raise forms.ValidationError("약관에 동의해야 합니다.")
@@ -44,16 +46,12 @@ class User(AbstractUser):
         ('otheruse', CATEGORY_OTHERS),
     )
 
-    user_id = models.CharField(
-        max_length=20, unique=True, verbose_name='아이디')     # user id
-    username = models.CharField(
-        max_length=20, unique=False, verbose_name='사용자 이름')    # user name (본명 혹은 예명)
+    user_id = models.CharField(max_length=20, verbose_name='아이디')     # user id
+    username = models.CharField(max_length=20, unique=False, verbose_name='사용자 이름')    # user name (본명 혹은 예명)
     email = models.EmailField(unique=True, verbose_name='이메일')
     email_public = models.BooleanField(default=True)
-    category = models.CharField(
-        max_length=20, choices=CATEGORY, default='otheruse')
-    image = models.ImageField(
-        upload_to=uuid_name_upload_to, blank=True, default='profile_default.png')
+    category = models.CharField(max_length=20, choices=CATEGORY, default='otheruse')
+    image = models.ImageField(upload_to=user_uuid_name_upload_to, blank=True, default='user/profile_photo/default/profile_default.png')
     desc = models.TextField(blank=True, verbose_name='프로필 소개')
     phone = PhoneField(blank=True)
     phone_public = models.BooleanField(default=True)
@@ -62,15 +60,33 @@ class User(AbstractUser):
     is_ToS = models.BooleanField(default=False, validators=[is_ToS])
     is_social = models.BooleanField(default=False)
     user_identifier = models.CharField(max_length=100, blank=True, null=True)
-    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
+    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True, blank=True)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username', 'email', ]
 
-    # objects = MyUserManager()
 
     def __str__(self):
         return self.user_id
+
+    def clean(self, *args, **kwargs):
+        user_id = self.user_id
+
+        # social signup 시의 오류 해결
+        if user_id == '':
+            return
+        
+        # profile modify 시의 오류 해결
+        user_id_same_users = User.objects.filter(user_id=user_id)
+        current_user = self.pk
+        for user in user_id_same_users:
+            if user.pk == current_user:
+                return
+        
+        if User.objects.filter(user_id=user_id).exists():
+            raise ValidationError({
+                'user_id': ValidationError('이미 존재하는 아이디입니다.')
+            })
 
 
 @receiver(pre_save, sender=User)

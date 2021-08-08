@@ -6,6 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MasterPics</title>
+  <link rel="shortcut icon" href="{% static 'img/masterpics_favicon.png' %}">
+  <link rel="icon" href="{% static 'img/masterpics_favicon.png' %}">
   
   <!-- FONTS -->
   <script src="https://kit.fontawesome.com/0b02921f0e.js" crossorigin="anonymous"></script>
@@ -64,7 +66,7 @@
         -->
 
           <li class="user_dropdown">
-            <button class="dropbtn"> {{user.username}} <img class="user_img" src="media/Group 86.svg" alt="img"></button>
+            <button class="dropbtn"> {{user.username}}</button><img class="user-image" src="{{user.image.url}}">
             <div class="dropdown-content">
               <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
               <a>

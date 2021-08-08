@@ -2,8 +2,20 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/social_user_more_info.css' %}">
+{% endblock stylesheet %} 
+
 {% block content %}
 <div class="signup__container">
+    <div class="login__logo">
+        MasterPic's
+    </div>
+
+    <div class="login_info">
+        추가 정보를 입력해주세요.
+    </div>
+
     <div class="signup__body">
         <form action="" method="POST">
             
@@ -11,6 +23,9 @@
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form.visible_fields %}
+            {% if field.id_for_label == 'id_is_ToS' %}
+
+            {% else %}
                 {% if field.name != 'password' %}
                     <div class="form-group">
                         <label for="form-id" class="col-sm-2 {{field.name}} ">{{field.label}}</label>
@@ -27,8 +42,20 @@
                         </div>
                     </div>
                 {% endif %}
+            {% endif %}
             {% endfor %}
-            <input type="submit" class="update_btn " value="수정하기" />
+
+            <!--Tos 분리-->
+            <div class="form__group {{ field.name }}}">
+                <div class="form__label">
+                    <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
+                </div>
+                <div class="form__input">
+                    {{form.is_ToS}}
+                </div>
+            </div>
+
+            <input type="submit" class="update_btn " value="가입하기" />
         </form>
     </div>
 </div>

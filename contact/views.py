@@ -136,16 +136,37 @@ def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, instance=contact)
-        if form.is_valid():
-            contact.image = request.FILES.get('image')
-            contact = form.save()
+        location_form = LocationForm(request.POST, instance=contact.location)
+
+        if form.is_valid() and location_form.is_valid():
+            contact = form.save(commit=False)
+            location = location_form.save(commit=False)
+            location.save()
+            contact.user = request.user
+            contact.location = location
+            contact.save()
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Contact.objects.get(id=contact.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     contact.thumbnail = image_obj.image
+                #     contact.save()
 
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
+        images = contact.post_image_images.all()
         location_form = LocationForm(instance=contact)
         ctx = {'form': form,
-               'location_form': location_form}
+               'location_form': location_form,
+               'images': images}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
@@ -169,7 +190,7 @@ def contact_create(request):
                 image_obj = PostImage()
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
-                img.save()
+                #img.save()
                 image_obj.image = img
                 image_obj.save()
 
@@ -177,6 +198,12 @@ def contact_create(request):
                     contact.thumbnail = image_obj.image
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
+        
+        #TODO Else 문 로직 정리해줘야함 
+        else:
+            return redirect("contact:contact_list")
+
+
     else:
         ctx = {
             'contact_form': ContactForm(),
