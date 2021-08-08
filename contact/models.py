@@ -1,10 +1,21 @@
 from django.db import models
+from django.db.models.enums import Choices
 from core.utils import uuid_name_upload_to, compress
 from user.models import User
 from core.models import *
 import json
 from django.shortcuts import get_object_or_404
 
+
+PAY_CUSTOM = 0
+PAY_NEGO = 1
+PAY_FREE = 2
+
+PAY_TYPE_CHOICES = (
+    ('페이 입력',PAY_CUSTOM), 
+    ('페이 협의', PAY_NEGO), 
+    ('상호 무페이', PAY_FREE)
+)
 
 class Contact(PostBase):
 
@@ -14,9 +25,8 @@ class Contact(PostBase):
     file_attach = models.FileField(null=True)
     location = models.ForeignKey(
         to=Location, on_delete=models.CASCADE, default=None, blank=True)
-    pay = models.PositiveIntegerField()
-    pay_negotiation = models.BooleanField(default=False)
-    free = models.BooleanField(default=False)
+    pay = models.PositiveIntegerField(blank=True, default=0)
+    pay_type = models.IntegerField(choices=PAY_TYPE_CHOICES, default=PAY_CUSTOM)
 
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
