@@ -16,17 +16,9 @@ def main_list(request):
     contacts = Contact.objects.all().order_by('-created_at')[:4]
     places = Place.objects.all().annotate(num_save=Count('like_users')).order_by('-num_save')[:3]
 
-    # thumbnail 추출
-    portfolio_thumbnails = [portfolio.thumbnail.image.url for portfolio in portfolios]
-    contact_thumbnails = [contact.thumbnail.image.url for contact in contacts]
-    place_thumbnails = [place.thumbnail.image.url for place in places]
-
     ctx = {
         'portfolios': portfolios,
         'contacts': contacts,
         'places': places,
-        'portfolio_thumbnails': portfolio_thumbnails,
-        'contact_thumbnails': contact_thumbnails,
-        'place_thumbnails': place_thumbnails,
     }
     return render(request, 'core/main_list.html', context=ctx)
