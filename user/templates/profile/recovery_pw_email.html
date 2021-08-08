@@ -1,39 +1,39 @@
 {% autoescape off %}
 <!DOCTYPE html>
 <body>
-    <div style="background-color:E5E5E5;">
-        <table border="1px solid #CACACA" cellpadding="0" cellspacing="0" width="60%" height: "80%" rules="none" style= "margin: 40px auto;">
+    <table border="1px solid #F4F4F4" cellpadding="0" cellspacing="0" width="100%" height= "120%" rules="none" frame="void" style="background-color:#F4F4F4;">
+        <table border="1px solid #CACACA" cellpadding="0" cellspacing="0" width="50%" height= "75%" rules="none" frame="void" style= "margin: 40px auto; background-color:white;">
             <tr>
-                <td class="modify__body" style="width: 60%;height: 50%;line-height: 40px; text-align:center; font-size: 21px;padding-top: 40px;font-weight: 600;">
+                <td class="modify__body" style="width: 60%;height: 50%;line-height: 40px; text-align:center; font-size: 16px;padding-top: 30px;font-weight: 600;">
                     비밀번호 변경 이메일 인증 발송
                 </td>
             </tr>
             <tr>
-                <td class="content" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 20px;">
+                <td class="content" style="font-size: 12px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 15px;">
                 안녕하세요, {{user.username}}님. MasterPic's입니다
                 </td>
             </tr>
             <tr>
-                <td class="content" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 10px;">
+                <td class="content" style="font-size: 12px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 10px;">
                     아래의 인증번호를 입력하여 이메일 인증을 완료해주세요.
                 </td>
             </tr>
             <tr>
-                <td class="smtp_email_auth" style="font-size: 15px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 20px; color: #5200FF;">
+                <td class="smtp_email_auth" style="font-size: 13px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 15px; color: #5200FF;">
                 {{ auth_num }}
                 </td>
             </tr>
             <tr>
-                <td class="foot" style="font-size: 13px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 20px; color:#8F8F8F;">
+                <td class="foot" style="font-size: 8px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 30px; color:#8F8F8F;">
                 Find everything for your Masterpiece, MasterPic's
                 </td>
             </tr>
             <tr>
-                <td class="foot" style="font-size: 13px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 20px;padding-bottom: 40px; color:#8F8F8F; text-decoration:none;">
+                <td class="foot" style="font-size: 8px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 10px;padding-bottom: 30px; color:#8F8F8F; text-decoration:none;">
                 www.masterpics.com
                 </td>
             </tr>
         </table>  
-    <div style="background-color:E5E5E5;">     
+    </table>     
 </body>
 {% endautoescape %}

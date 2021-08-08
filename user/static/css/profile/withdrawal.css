@@ -23,6 +23,13 @@
       background-color: #C4C4C4;
   }
 
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active  {
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }  
+
 /**withdrawal**/  
 
 .modify__container{
@@ -33,6 +40,7 @@
     align-items: center;
     justify-content: center;
     background-color: #F4F4F4;
+    padding-bottom: 5%;
 }
 
 .modify__body{
@@ -40,7 +48,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 25%;
+    width: 30%;
     height: 40%;
     line-height: 40px;
     padding-left: 20px;
@@ -50,6 +58,7 @@
     margin-top: 3px;
     font-weight: 500;
     text-align: center;
+    border-radius: 10px;
 }
 
 li{

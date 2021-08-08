@@ -37,7 +37,7 @@
 
         <div id="div_find_pw">
             <button id="find_pw" name="recovery_pw" onclick="onClickFindPW()">이메일 전송</button>
-            <input type="button" class="undo_btn " value="취소" /><a href='#'></a>
+            <a href="{% url 'profile:login' %}"><input type="button" class="undo_btn " value="취소" /></a>
         </div>
 
         <div id="result_pw"></div>
