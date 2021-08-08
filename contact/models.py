@@ -1,5 +1,5 @@
 from django.db import models
-from .utils import uuid_name_upload_to, compress
+from core.utils import uuid_name_upload_to, compress
 from user.models import User
 from core.models import *
 import json
