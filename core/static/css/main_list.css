@@ -81,6 +81,7 @@ a:active { text-decoration: none; }
 .LandingBanner_1 .card_container-0 img{
   width: 500px;
   height: 120px;
+  background-image: url("./Rectangle 146.jpg");
 }
 
 .LandingBanner_1 .card_container-1 {
@@ -94,6 +95,7 @@ a:active { text-decoration: none; }
 .LandingBanner_1 .card_container-1 img{
   width: 200px;
   height: 200px;
+  background-image: url("./Rectangle 404.jpg");
 }
 
 .LandingBanner_1 .card_container-2 {
@@ -108,6 +110,7 @@ a:active { text-decoration: none; }
 .LandingBanner_1 .card_container-2 img{
   width: 250px;
   height: 250px;
+  background-image: url("./Rectangle 145.jpg");
 }
 
 .LandingBanner_1 .card_container-3 {
@@ -121,6 +124,7 @@ a:active { text-decoration: none; }
 .LandingBanner_1 .card_container-3 img{
   width: 380px;
   height: 530px;
+  background-image: url("./Rectangle 124.jpg");
 }
 
 .LandingBanner_1 .card_container-0,
@@ -228,6 +232,10 @@ a:active { text-decoration: none; }
   line-height: 2;
 }
 
+.AboutUs .goal_media {
+  display: none;
+}
+
 .AboutUs .main-content {
   display: flex;
   width: 100%;
@@ -236,7 +244,7 @@ a:active { text-decoration: none; }
   margin-bottom: 5%;
 }
 
-.AboutUsMainContent {
+.AboutUsMainContent1 , .AboutUsMainContent2, .AboutUsMainContent3, .AboutUsMainContent4 {
   width: 220px;
   height: 220px;
   border-radius: 50%;
@@ -247,19 +255,23 @@ a:active { text-decoration: none; }
   background-color: white;
   margin: 0px 30px;
 }
-.AboutUsMainContent:hover {
+.AboutUsMainContent1:hover, .AboutUsMainContent2:hover,
+.AboutUsMainContent3:hover, .AboutUsMainContent4:hover{
   background-color: #5200ff;
   transition: 0.2s;
 }
-.AboutUsMainContent:hover .container {
+.AboutUsMainContent1:hover .container, .AboutUsMainContent2:hover .container,
+.AboutUsMainContent3:hover .container, .AboutUsMainContent4:hover .container {
   color: white;
 }
-.AboutUsMainContent:hover .container .link {
+.AboutUsMainContent1:hover .container .link, .AboutUsMainContent2:hover .container .link,
+.AboutUsMainContent3:hover .container .link, .AboutUsMainContent4:hover .container .link {
   background-color: white;
   color: #5200ff;
   border-color: #5200ff;
 }
-.AboutUsMainContent .container {
+.AboutUsMainContent1 .container, .AboutUsMainContent2 .container,
+.AboutUsMainContent3 .container, .AboutUsMainContent4 .container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -269,16 +281,19 @@ a:active { text-decoration: none; }
   font-family: "Roboto", sans-serif;
 }
 
-.AboutUsMainContent .container .title {
+.AboutUsMainContent1 .container .title, .AboutUsMainContent2 .container .title
+.AboutUsMainContent3 .container .title, .AboutUsMainContent4 .container .title {
   font-size: 18px;
 }
-.AboutUsMainContent .container .desc {
+.AboutUsMainContent1 .container .desc, .AboutUsMainContent2 .container .desc,
+.AboutUsMainContent3 .container .desc, .AboutUsMainContent4 .container .desc {
   width: 180px;
   height: 20px;
   font-size: 12px;
   line-height: 1.5;
 }
-.AboutUsMainContent .container .link {
+.AboutUsMainContent1 .container .link, .AboutUsMainContent2 .container .link,
+.AboutUsMainContent3 .container .link, .AboutUsMainContent4 .container .link {
   width: 60px;
   height: 20px;
   background-color: #ffffff;
@@ -295,7 +310,6 @@ a:active { text-decoration: none; }
 }
 
 /*randomagazine*/
-
 
 .RandomMagazine_bg {
   width: 100%;
@@ -326,9 +340,11 @@ a:active { text-decoration: none; }
 }
 
 .RandomMagazine img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
+
 .RandomMagazine .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
 }
@@ -591,6 +607,11 @@ a:active { text-decoration: none; }
   font-size: 30px;
 }
 
+.magazine_more img{
+  width: 100%;
+  height: 100%;
+}
+
 /* RandomContact */
 
 .Randomcontact_bg {
@@ -613,8 +634,9 @@ a:active { text-decoration: none; }
 }
 
 .RandomContact img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
 .RandomContact .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
@@ -743,8 +765,7 @@ a:active { text-decoration: none; }
   transition: opacity 0.2s;
   width: 250px;
   height: 330px;
-  margin-left: 10px;
-  margin-top: -10px;
+  margin-right: 20px;
 }
 .RandomContact .card_container-2 {
   grid-area: card-2;
@@ -753,7 +774,7 @@ a:active { text-decoration: none; }
   transition: opacity 0.2s;
   width: 250px;
   height: 330px;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 .RandomContact .card_container-3 {
   grid-area: card-3;
@@ -796,8 +817,7 @@ a:active { text-decoration: none; }
 
 .RandomContact .card_container-0,
 .RandomContact .card_container-2 {
-  justify-self: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .RandomContact .card_container-0::after,
 .RandomContact .card_container-3::after {
@@ -811,8 +831,7 @@ a:active { text-decoration: none; }
 
 .RandomContact .card_container-1,
 .RandomContact .card_container-3 {
-  justify-content: flex-end;
-  align-self: flex-end;
+  justify-content: center;
 }
 
 .RandomContact .text-0 {
@@ -846,7 +865,8 @@ a:active { text-decoration: none; }
 	grid-row-end: 6;
   display:flex;
   justify-content: flex-end;
-  margin-right: 10px;
+  margin-right: 15px;
+  margin-top: -50px;
   cursor: pointer;
 }
 
@@ -862,6 +882,11 @@ a:active { text-decoration: none; }
 
 .contact_more i {
   font-size: 30px;
+}
+
+.contact_more img{
+  width: 100%;
+  height: 100%;
 }
 
 /*RandomPlace*/
@@ -913,9 +938,11 @@ a:active { text-decoration: none; }
 }
 
 .RandomPlace img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
+
 .RandomPlace .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
 }
@@ -1000,15 +1027,14 @@ a:active { text-decoration: none; }
 }
 
 .RandomPlace .card_container-0 {
-  justify-self: start;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .RandomPlace .card_container-1 {
   justify-content: center;
 }
 .RandomPlace .card_container-2 {
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .RandomPlace .info_container .title {
@@ -1074,479 +1100,660 @@ a:active { text-decoration: none; }
   font-size: 30px;
 }
 
-
-/*
-.carousel__photo p:hover {
-  cursor: pointer;
-}
-
-.carousel__photo p:hover + .jb i {
-  transition: all ease 0.8s;
-  transform: rotate(45deg);
-}
-
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR&family=Sarina&display=swap");
-.LandingBanner_1 {
-  background-color: #0d0d0d;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-.LandingBanner_1 .text_container {
-  pointer-events: none;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.LandingBanner_1 .text_container > * {
-  color: white;
-  font-family: "DM Serif Display", serif;
-}
-.LandingBanner_1 .text_container .logo {
-  font-size: 80px;
-  margin-bottom: 30px;
-}
-.LandingBanner_1 .text_container h5 {
-  font-style: italic;
-  font-size: 18px;
-  margin-bottom: 70px;
-}
-.LandingBanner_1 .text_container h3 {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 19px;
-}
-.LandingBanner_1 .background_container {
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-.LandingBanner_1 .background_container .box-gray {
-  background-color: #595959;
-}
-.LandingBanner_1 .background_container #center-box {
-  width: 250px;
-  height: 450px;
-}
-.LandingBanner_1 .background_container .circle-blue {
-  position: absolute;
-  border-radius: 50%;
-  background-color: #5200ff;
-}
-.LandingBanner_1 .background_container #top-left-circle {
-  transition: 0.8s left 0.1s ease-in-out;
-  width: 300px;
-  height: 300px;
-  top: 20vh;
-  left: 15vw;
-}
-.LandingBanner_1 .background_container .categories {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-}
-.LandingBanner_1 .background_container .categories > div {
-  font-family: "Sarina", cursive;
-  color: white;
-  width: min-content;
-  position: absolute;
-}
-.LandingBanner_1 .background_container .categories .photographer {
-  transform: rotate(-90deg) translateX(-50%);
-  transform-origin: 0%;
-  top: 50%;
-  left: 0;
-  transition: 0.5s;
-}
-.LandingBanner_1 .background_container .categories .photographer:hover {
-  transform: rotate(-90deg) translateX(-50%) scale(1.1);
-}
-.LandingBanner_1 .background_container .categories .stylist {
-  bottom: 0;
-  left: 0;
-  transition: 0.5s;
-}
-.LandingBanner_1 .background_container .categories .stylist:hover {
-  transform: scale(1.1);
-}
-.LandingBanner_1 .background_container .categories .model {
-  bottom: 0;
-  right: 0;
-  transition: 0.5s;
-}
-.LandingBanner_1 .background_container .categories .model:hover {
-  transform: scale(1.1);
-}
-.LandingBanner_1 .background_container .categories .hair-makeup {
-  transform-origin: 100%;
-  transform: rotate(90deg) translateX(50%);
-  top: 50%;
-  right: 0;
-  transition: 0.5s;
-}
-.LandingBanner_1 .background_container .categories .hair-makeup:hover {
-  transform: rotate(90deg) translateX(50%) scale(1.1);
-}
-
-* {
-  scroll-behavior: smooth;
-}
-*/
-
-
-
-/*carousel*/
-
-.carousel__photo {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.carousel__photo div {
-  padding: 5%;
-}
-
-.carousel__photo p {
-  text-align: center;
-  padding-bottom: 5%;
-}
-
-.about_left {
-  height: 50vh;
-}
-
-.about_left .first {
-  padding-bottom: 0;
-  margin-top: 20%;
-}
-
-.about_right .first {
-  margin-top: 20%;
-}
-
-/**/
-
-.jb {
-  width: 10px;
-  height: 10px;
-  padding: 0;
-  margin-left: 43%;
-}
-
-.jb i {
-  transition: all ease 0.8s;
-  color: black;
-  font-size: 1.2rem;
-}
-
-.jb i:hover {
-  transform: rotate(45deg);
-  cursor: pointer;
-}
-
-/* Parent wrapper to carousel. Width can be changed as needed. */
-.carousel-wrapper {
-  overflow: hidden;
-  width: 98%;
-  height: 80%;
-  margin: auto;
-}
-
-/* Apply 'border-box' to 'box-sizing' so border and padding is included in the width and height. */
-.carousel-wrapper * {
-  box-sizing: border-box;
-}
-
-/* We'll be using the 'transform' property to move the carousel's items, so setting the 'transform-style' to 'preserve-3d' will make sure our nested elements are rendered properly in the 3D space. */
-.carousel {
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
-/* By default we're hiding items (except the initial one) until the JS initiates. Elements are absolutely positioned with a width of 100% (as we're styling for mobile first), letting the content's height dictate the height of the carousel. Our magic property here for all our animation needs is 'transition', taking the properties we wish to animate 'transform' and 'opacity', along with the length of time in seconds. */
-.carousel__photo {
-  opacity: 0;
-  position: absolute;
-  top: 50;
-  width: 100%;
-  margin: auto;
-  padding: 1rem 4rem;
-  z-index: 100;
-  transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
-}
-
-/* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
-.carousel__photo.initial,
-.carousel__photo.active {
-  opacity: 1;
-  position: relative;
-  z-index: 900;
-}
-
-/* Set 'z-index' to sit behind our '.active' item. */
-.carousel__photo.prev,
-.carousel__photo.next {
-  z-index: 800;
-}
-
-/* Translate previous item to the left */
-.carousel__photo.prev {
-  transform: translateX(-100%);
-}
-
-/* Translate next item to the right */
-.carousel__photo.next {
-  transform: translateX(100%);
-}
-
-/* Style navigation buttons to sit in the middle, either side of the carousel. */
-.carousel__button--prev,
-.carousel__button--next {
-  position: absolute;
-  top: 50%;
-  width: 3rem;
-  height: 3rem;
-
-  transform: translateY(-50%);
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1001;
-  /* Sit on top of everything */
-
-  /*  opacity: 0;  Hide buttons until carousel is initialised 
-    transition:opacity 1s;*/
-}
-
-.carousel__button--prev {
-  left: 0;
-}
-
-.carousel__button--next {
-  right: 0;
-}
-
-/* Use pseudo elements to insert arrows inside of navigation buttons */
-.carousel__button--prev::after,
-.carousel__button--next::after {
-  content: " ";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: 90;
-  left: 54%;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  transform: translate(-50%, -50%) rotate(135deg);
-}
-
-.carousel__button--next::after {
-  left: 47%;
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-/**TITLE**/
-
-@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap")
-  repeat scroll 0 0 rgba(0, 0, 0, 0);
-
-.wrapper {
-  background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
-  color: #eee;
-  width: 100%;
-  height: 90%;
-  margin: 0;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-  animation: animation 100s linear infinite;
-  padding-top: 20%;
-}
-
-@keyframes animation {
-  100% {
-    background-position: 0px -3000px;
-  }
-}
-
-.main {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Quicksand", sans-serif;
-  font-size: 42px;
-}
-
-span {
-  margin: 0 15px;
-  line-height: 0.7;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.45);
-  animation: span 3s ease-in infinite alternate;
-}
-
-.letter {
-  display: inline-flex;
-  height: 30px;
-  width: 27px;
-  border: 2.6px solid rgb(255, 255, 255);
-
-  border-radius: 18px;
-  box-shadow: 0 0 2px rgba(255, 255, 255, 0.75),
-    inset 0 0 2px rgba(255, 255, 255, 0.45);
-
-  animation: letter 3s ease-in-out infinite alternate;
-}
-
-@keyframes span {
-  0%,
-  30% {
-    margin: 0 15px;
-  }
-
-  70%,
-  100% {
-    margin: 0 5px;
-  }
-}
-
-@keyframes letter {
-  0%,
-  30% {
-    width: 27px;
-  }
-
-  70%,
-  100% {
-    width: 30vw;
-  }
-}
-
-/*carousel*/
-.carousel-wrapper {
-  border-bottom: rgb(212, 212, 212) solid 1px;
-}
-
-/* random magazine */
-
-#magazine {
-  position: relative;
-  margin-top: 80px;
-  padding: 20px;
-}
-
-#magazine .title {
-  position: absolute;
-  top: -80px;
-  right: 10px;
-  text-align: end;
-  font-size: 6rem;
-}
-
-#magazine .title p {
-  font-family: "Abril Fatface", cursive;
-  letter-spacing: 0.06em;
-  line-height: 1.15em;
-}
-
-.magazine_content .img_grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1.6fr;
-}
-
-.magazine_content .img1 {
-  width: 260px;
-  height: 360px;
-  margin: 10px;
-  float: left;
-  margin-bottom: 20px;
-}
-
-.magazine_content .img2 {
-  width: 260px;
-  height: 360px;
-  margin: 10px;
-  float: right;
-}
-
-.magazine_content .img3 {
-  width: 260px;
-  height: 360px;
-  margin: 0 auto;
-  margin-top: 50%;
-}
-
-.magazine_content .img4 {
-  width: 260px;
-  height: 360px;
-  margin: 10px;
-  float: left;
-  margin-bottom: 20px;
-}
-
-.magazine_content .img5 {
-  width: 580px;
-  height: 360px;
-  margin: 10px;
-  float: left;
-}
-
-.img_grid img {
+.place_more img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-.magazine_content .text1 {
-  writing-mode: vertical-rl;
-  font-size: 1.2rem;
-  position: absolute;
-  top: 230px;
-  left: 300px;
-  font-family: "Dancing Script", cursive;
+
+/****** 반응형 main ******/
+
+@media screen and (min-width:360px) and (max-width:512px){
+  .LandingBanner_1_bg {
+    width: 100%;
+    height: 90%;
+  }
+  
+  .LandingBanner_1 {
+    display: grid;
+    grid-template-areas: "card-0 . ." " text-1 . card-3" "card-1 text-2 card-3";
+    align-items: flex-start;
+    height: 100%;
+  }
+  
+  .LandingBanner_1 .logo {
+    margin-top: 150px;
+    margin-right: -100px;
+  }
+  
+  .LandingBanner_1 .logo h1{
+    font-size: 55px;
+    letter-spacing: 3px;
+  }
+  
+  .LandingBanner_1 .logo h5{
+    font-size: 17px;
+    margin-top: 2px;
+    font-weight: 100;
+    word-spacing: 2px;
+  }
+  
+  .LandingBanner_1 .logo_back_m {
+    font-size: 180px;
+    margin-top: 30px;
+    margin-left: 60px;
+  }
+
+  .LandingBanner_1 .card_container-0 {
+    margin-top: 50px;
+    margin-left: 20px;
+  }
+  
+  .LandingBanner_1 .card_container-0 img{
+    width: 200px;
+    height: 70px;
+  }
+  
+  .LandingBanner_1 .card_container-1 {
+    margin-right: 70px;
+    margin-top: 50px;
+  }
+  
+  .LandingBanner_1 .card_container-1 img{
+    width: 120px;
+    height: 120px;
+  }
+  
+  .LandingBanner_1 .card_container-2 {
+    margin-top: -5px;
+    margin-left: 40px;
+    z-index: 2;
+  }
+  
+  .LandingBanner_1 .card_container-2 img{
+    display: none;
+  }
+  
+  .LandingBanner_1 .card_container-3 {
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: -20px;
+    z-index: 0;
+  }
+  
+  .LandingBanner_1 .card_container-3 img{
+    width: 160px;
+    height: 220px;
+  }
+  
+  .LandingBanner_1 .card_container-3::after {
+    display: none;
+  }
+  
+  .LandingBanner_1 .card_container-3::before {
+    display: none;
+  }
+  
+  /*LandingBanner_1 background*/
+  
+  .LandingBanner_1 .categories {
+    margin-top: 10px;
+    margin-right: -150px;
+    margin-left: -20px;
+  }
+  .LandingBanner_1 .categories > div {
+    font-size: 12px;
+    line-height: 30px;
+  }
 }
 
-.magazine_content .text2 {
-  writing-mode: vertical-rl;
-  font-size: 1.2rem;
-  position: absolute;
-  top: 30px;
-  right: 310px;
-  font-family: "Dancing Script", cursive;
+
+/****** 반응형 aboutus ******/
+
+@media screen and (min-width:360px) and (max-width:512px){
+
+  .AboutUs h1 {
+    letter-spacing: 3px;
+    font-size: 22px;
+    margin-top: 10%;
+  }
+  
+  .AboutUs h1::after, .AboutUs h1::before {
+    width: 50px;
+    height: 1px;
+    background-color: black;
+    margin: 0 30px;
+  }
+  
+  .AboutUs .goal {
+    display: none;
+  }
+  
+  .AboutUs .goal_media{
+    margin-top: 20px;
+    font-size: 9px;
+    font-weight: bold;
+    color: #424141;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    font-family: "Roboto", sans-serif;
+    line-height: 2;
+  }
+
+  .AboutUs .main-content {
+    display: grid;
+    grid-template-areas: "text-0 text-1" " text-2 text-3";
+    margin-top: 5%;
+    margin-bottom: 10%;
+    text-align: center;
+  }
+  
+  .AboutUsMainContent1 {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin:10px;
+    grid-area: text-0;
+    display: flex;
+    position: relative;
+  }
+
+  .AboutUsMainContent2 {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin:10px;
+    grid-area: text-1;
+    display: flex;
+    position: relative;
+  }
+
+  .AboutUsMainContent3 {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 10px;
+    grid-area: text-2;
+    display: flex;
+    position: relative;
+  }
+
+  .AboutUsMainContent4 {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 10px;
+    grid-area: text-3;
+    display: flex;
+    position: relative;
+  }
+
+  .container .title {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .AboutUsMainContent1 .container .desc, .AboutUsMainContent2 .container .desc,
+  .AboutUsMainContent3 .container .desc, .AboutUsMainContent4 .container .desc {
+    width: 140px;
+    height: 10px;
+    font-size: 8px;
+    line-height: 1.5;
+  }
+  .container .link {
+    width: 60px;
+    height: 20px;
+    border: none;
+    margin-top: 30px;
+    font-size: 8px;
+  }
 }
 
-.magazine_content .text3 {
-  font-size: 3rem;
-  position: absolute;
-  top: 80px;
-  left: 400px;
-  font-family: "Akaya Telivigala", cursive;
-  font-weight: bolder;
+/****** 반응형 random_magazine ******/
+
+@media screen and (min-width:360px) and (max-width:512px){
+  .RandomMagazine_bg {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-evenly;*/
+    align-items: center;
+  }
+  
+  .RandomMagazine {
+    width: 400px;
+    margin: 5% auto 3% auto;
+    display: grid;
+    row-gap: 5px;
+    grid-template-areas: "text-0 text-0" "card-0 card-2" "card-1 text-1" "card-3 card-4";
+    align-items: flex-start;
+  }
+  
+  .RandomMagazine img{
+    width: 100%;
+    height: 100%;
+  }
+  .RandomMagazine .magazine_img{
+    opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
+  }
+  
+  .RandomMagazine .card_container-0:hover .magazine_img,
+  .RandomMagazine .card_container-1:hover .magazine_img,
+  .RandomMagazine .card_container-2:hover .magazine_img,
+  .RandomMagazine .card_container-3:hover .magazine_img,
+  .RandomMagazine .card_container-4:hover .magazine_img{
+    background-color: #000;
+  }
+  
+  .RandomMagazine .card_container-0:hover img,
+  .RandomMagazine .card_container-1:hover img,
+  .RandomMagazine .card_container-2:hover img,
+  .RandomMagazine .card_container-3:hover img,
+  .RandomMagazine .card_container-4:hover img{
+    transform: scale(1.1, 1.1);
+    transition: all .3s ease;
+    opacity: 0.15;
+    cursor: pointer;
+  }
+  
+  .RandomMagazine .card_container-0 .info_container,
+  .RandomMagazine .card_container-1 .info_container,
+  .RandomMagazine .card_container-2 .info_container,
+  .RandomMagazine .card_container-3 .info_container,
+  .RandomMagazine .card_container-4 .info_container{
+    margin-top: 40%;
+    font-weight: 500;
+    font-size: 6px;
+    margin-bottom: 4px;
+  }
+  
+  .RandomMagazine .card_container-0 .user_container,
+  .RandomMagazine .card_container-1 .user_container,
+  .RandomMagazine .card_container-2 .user_container,
+  .RandomMagazine .card_container-3 .user_container,
+  .RandomMagazine .card_container-4 .user_container{
+    margin-top: 55%;
+  }
+  
+  .RandomMagazine .card_container-0 .meta_container,
+  .RandomMagazine .card_container-1 .meta_container,
+  .RandomMagazine .card_container-2 .meta_container,
+  .RandomMagazine .card_container-3 .meta_container,
+  .RandomMagazine .card_container-4 .meta_container{
+    margin: 90% auto 0 auto;
+  }
+
+  .RandomMagazine .user_container .user_category {
+    height: 20px;
+    font-size: 6px;
+    margin-left: 32%;
+    margin-top: 5%;
+  }
+
+  .RandomMagazine .card_container-0 {
+    width: 150px;
+    height: 200px;
+    margin-left: 30px;
+    margin-right: 0;
+  }
+  
+  .RandomMagazine .card_container-1 {
+    width: 150px;
+    height: 200px;
+    margin-left: 30px;
+    margin-top: -20px;
+  }
+  .RandomMagazine .card_container-2 {
+    width: 150px;
+    height: 200px;
+    margin: 0;
+    margin-right: 30px;
+    margin-top: 30px;
+  }
+  .RandomMagazine .card_container-3 {
+    width: 150px;
+    height: 200px;
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+  .RandomMagazine .card_container-4 {
+    width: 150px;
+    height: 200px;
+    margin: 0;
+    margin-right: 30px;
+    margin-top: -80px;
+    margin-bottom: 70px;
+  }
+  
+  .RandomMagazine .card_container-0::after {
+    display: none;
+  }
+  .RandomMagazine .card_container-3::after {
+    display: none;
+  }
+  
+  .RandomMagazine .info_container .title {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomMagazine .user_container .username {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomMagazine .meta_container {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /*RandomMagazine text*/
+  
+  .RandomMagazine .text-0 {
+    margin-top: 10px;
+  }
+  .RandomMagazine .text-0 h1 {
+    font-size: 34px;
+    margin-left: 30px;
+  }
+  .RandomMagazine .text-0 h2 {
+    margin-left: 30px;
+    margin-bottom: 15px;
+    margin-top: 3px;
+  }
+  .RandomMagazine .text-0 p {
+    margin-left: 30px;
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  .RandomMagazine .text-1 {
+    font-size: 2px;
+    line-height: 1.8;
+    margin-left: 15px;
+    margin-top: 15px;
+  }
+  
+  .magazine_more {
+    font-size: 12px;
+    justify-content: flex-start;
+    margin: 10px 40px;
+    font-weight: bold;
+  }
+  
+  .magazine_more div {
+    margin-left: -150px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .magazine_more i {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
-.magazine_content .text4 {
-  font-size: 1.2rem;
-  position: absolute;
-  top: 140px;
-  left: 485px;
-  font-family: "Akaya Telivigala", cursive;
+/****** 반응형 random_contact ******/
+
+@media screen and (min-width:360px) and (max-width:512px){
+
+  .RandomContact{
+    margin: 5% auto 3% auto;
+    width: 400px;
+    display: grid;
+    row-gap: 10px;
+    column-gap: 10px;
+    grid-template-areas: "text-0 text-0" "card-0 card-1" "card-2 card-3";
+  }
+   
+  .RandomContact .card_container-0 .info_container,
+  .RandomContact .card_container-1 .info_container,
+  .RandomContact .card_container-2 .info_container,
+  .RandomContact .card_container-3 .info_container{
+    margin-top: 40%;
+    font-weight: 500;
+    font-size: 6px;
+    margin-bottom: 4px;
+  }
+  
+  .RandomContact .card_container-0 .user_container,
+  .RandomContact .card_container-1 .user_container,
+  .RandomContact .card_container-2 .user_container,
+  .RandomContact .card_container-3 .user_container{
+    margin-top: 55%;
+  }
+  
+  .RandomContact .card_container-0 .meta_container,
+  .RandomContact .card_container-1 .meta_container,
+  .RandomContact .card_container-2 .meta_container,
+  .RandomContact .card_container-3 .meta_container{
+    margin: 90% auto 0 auto;
+  }
+  
+  .RandomContact .meta_container .pay{
+    margin-top: 5%;
+  }
+  
+  .RandomContact .user_container .user_category {
+    height: 20px;
+    font-size: 6px;
+    margin-left: 32%;
+    margin-top: 5%;
+  }
+  
+  .RandomContact .card_container-0 {
+    width: 150px;
+    height: 200px;
+    margin: 0;
+    margin-left: 20px;
+  }
+  
+  .RandomContact .card_container-1 {
+    width: 150px;
+    height: 200px;
+    margin-right: 30px;
+    margin-top: 0;
+    margin-left: 0;
+  }
+  .RandomContact .card_container-2 {
+    width: 150px;
+    height: 200px;
+    margin: 0;
+    margin-left: 20px;
+  }
+  .RandomContact .card_container-3 {
+    width: 150px;
+    height: 200px;
+    margin-right: 30px;
+    margin-top: 0;
+  }
+  
+  .RandomContact .card_container-0::after {
+    display: none;
+  }
+  .RandomContact .card_container-3::after {
+    display: none;
+  }
+  
+  .RandomContact .info_container .title {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomContact .user_container .username {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomContact .meta_container {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /*여기부터*/
+  
+  .RandomContact .card_container-0::after,
+  .RandomContact .card_container-3::after {
+    display: none;
+  }
+  
+  .RandomContact .text-0 h1 {
+    font-size: 34px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .RandomContact .text-0 p {
+    font-size: 8px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .contact_more {
+    font-size: 12px;
+    justify-content: flex-start;
+    margin: 10px 70px;
+    font-weight: bold;
+  }
+  
+  .contact_more div {
+    margin-left: -150px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .contact_more i {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
-.magazine_content .text5 {
-  font-size: 1.2rem;
-  position: absolute;
-  bottom: 130px;
-  left: 480px;
-  font-family: "Cormorant", serif;
+/****** 반응형 random_place ******/
+
+@media screen and (min-width:360px) and (max-width:512px){
+  .RandomPlace {
+    width: 400px;
+    display: grid;
+    row-gap: 10px;
+    grid-template-areas: "text-0 text-0 text-0" "card-0 card-0 card-0" "card-1 card-1 card-1" "card-2 card-2 card-2";
+    align-items: center;
+  }
+  
+  .RandomPlace .card_container-0 {
+    width: 300px;
+    height: 120px;
+    margin: 0 auto;
+    margin-left: 40px;
+  }
+  
+  .RandomPlace .card_container-1 {
+    width: 300px;
+    height: 120px;
+    margin: 0 auto;
+    margin-left: 40px;
+  }
+  .RandomPlace .card_container-2 {
+    width: 300px;
+    height: 120px;
+    margin: 0 auto;
+    margin-left: 40px;
+  }
+  
+  .RandomPlace .card_container-0 .info_container,
+  .RandomPlace .card_container-1 .info_container,
+  .RandomPlace .card_container-2 .info_container{
+    margin-top: 10%;
+    font-weight: 500;
+    font-size: 6px;
+    margin-bottom: 2px;
+  }
+  
+  .RandomPlace .card_container-0 .place_container,
+  .RandomPlace .card_container-1 .place_container,
+  .RandomPlace .card_container-2 .place_container{
+    margin-top: 20%;
+  }
+  
+  .RandomPlace .card_container-0 .meta_container,
+  .RandomPlace .card_container-1 .meta_container,
+  .RandomPlace .card_container-2 .meta_container{
+    margin: 30% auto 0 auto;
+  }
+  
+  .RandomPlace .card_container-0 {
+    justify-self: center;
+    justify-content: center;
+  }
+  
+  .RandomPlace .card_container-1 {
+    justify-self: center;
+    justify-content: center;
+  }
+  .RandomPlace .card_container-2 {
+    justify-self: center;
+    justify-content: center;
+  }
+
+  .RandomPlace img {
+    width: 300px;
+    height: 120px;
+}
+  
+  .RandomPlace .info_container .title {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomPlace .place_container .placename {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .RandomPlace .meta_container {
+    font-size: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /*RandomMagazine text*/
+  
+  .RandomPlace .text-0 h1 {
+    font-size: 34px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .RandomPlace .text-0 p {
+    font-size: 8px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .place_more {
+    font-size: 12px;
+    justify-content: flex-start;
+    margin: 10px 80px;
+    font-weight: bold;
+    grid-row-start: 5;
+    grid-row-end: 6;
+  }
+  
+  .place_more div {
+    margin-left: -150px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .place_more img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .place_more i {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
