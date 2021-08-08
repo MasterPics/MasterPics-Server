@@ -24,6 +24,7 @@ def uuid_name_upload_to(instance, filename):
 def compress(image):
     img = Image.open(image)
     img_io = BytesIO()
+    img_io = img_io.convert("RGB")
     img.save(img_io, 'JPEG', quality=50)
     compressed_img = File(img_io, name=image.name)
     return compressed_img
