@@ -34,20 +34,42 @@ class LoginForm(forms.ModelForm):
 class ProfileModifyForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('user_id', 'username', 'email', 'category', 'phone', 'instagram', 'desc', 'image',)
+        fields = ('image', 'username', 'category','email', 'email_public', 'phone','phone_public', 'instagram', 'instagram_public', 'desc',)
+        labels = {
+            'category': '카테고리',
+            'email': 'E-mail',
+            'email_public': '공개',
+            'phone': 'Phone',
+            'phone_public': '공개',
+            'instagram': 'Instagram',
+            'instagram_public': '공개',
+        }
 
 # password_modify (user password change form) - local user만 가능
 class LocalPasswordChangeForm(PasswordChangeForm):
     class Meta:
         model = User
         field = '__all__'
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs.update({
+            'placeholder': '현재 비밀번호'
+        })
+        self.fields['new_password1'].widget.attrs.update({
+            'placeholder': '새 비밀번호'
+        })
+        self.fields['new_password2'].widget.attrs.update({
+            'placeholder': '새 비밀번호 확인'
+        })
+        
 
 # social signup 시 redirect page에서 추가로 입력받아야 할 정보를 담은 form
 # TODO : html에서 email 필드는 readonly로 설정해야함
 class SocialUserInfoForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('user_id', 'username', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
+        fields = ('user_id', 'username', 'email', 'is_ToS',)
 
 
 class ProfileForm(forms.ModelForm):

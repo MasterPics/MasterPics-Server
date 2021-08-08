@@ -3,9 +3,6 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/main_list.css' %}">
-<script src="{% static 'js/RandomMagazine.js' %}"></script>
-<script src="{% static 'js/MagazineCard.js' %}"></script>
-
 {% endblock stylesheet %}
 
 {% block content %}
@@ -18,7 +15,6 @@
         <h5>Find everything for your Masterpiece</h5>
       </div>
       <h1 class ="logo_back_m">M</h1>
-      <h1 class ="logo_back_p">Pic's</h1>
     
           <div class="card_container-0">
             <img src="media/Rectangle 146.jpg">
@@ -66,10 +62,25 @@
               것을 목표로 하고 있습니다.
               <br />
     </div>
+
+    <div class="goal_media">
+              마스터픽스는 촬영 관련 직군의 아티스트들이
+              <br />
+              인지도나 지인 기반이 아닌,
+              </br>
+              촬영 시안 및 포트폴리오를 기반으로
+              </br>
+              컨택트 할 수 있도록 도와주는 서비스입니다.
+              <br />
+              상호무페이의 개인작업을 권장하며,
+              </br>
+              아티스트들 간의 성장 과정을 함께하는 것을 목표로 하고 있습니다.
+              <br />
+    </div>
   </div>
 
   <div class="main-content">
-    <div class="AboutUsMainContent">
+    <div class="AboutUsMainContent1">
         <div class="container">
           <div class="title">Contact</div>
           <div class="desc">작업을 위한 시안 기반의 컨택트를 진행해보세요.</div>
@@ -79,7 +90,7 @@
         </div>
     </div>
 
-    <div class="AboutUsMainContent">
+    <div class="AboutUsMainContent2">
         <div class="container">
           <div class="title">Portfolio</div>
           <div class="desc">다양한 아티스트들과 작업물을 공유해보세요.</div>
@@ -89,7 +100,7 @@
         </div>
     </div>
       
-    <div class="AboutUsMainContent">
+    <div class="AboutUsMainContent3">
         <div class="container">
           <div class="title">Reference</div>
           <div class="desc">다양한 키워드의 레퍼런스를 통해 영감을 얻어보세요.</div>
@@ -99,7 +110,7 @@
         </div>
     </div>
 
-    <div class="AboutUsMainContent">
+    <div class="AboutUsMainContent4">
         <div class="container">
           <div class="title">Place</div>
           <div class="desc">원하는 무드의 키워드로 촬영을 위한 공간을 탐색하세요.</div>
@@ -117,30 +128,30 @@
 <div class = "RandomMagazine_bg">
   <div class="RandomMagazine">
           <div class="card_container-0">
-            <div class="magazine_img"><img src="media/Rectangle 130.jpg"></div>
-              <div class="info_container">
-                <h2 class="title">제목</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">신현지{{user.username}}</span>
-                <div class="user_category">안녕{{user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                334{{meta.like}}
+              <div class="magazine_img"><img src="media/Rectangle 159.jpg"></div>
+                <div class="info_container">
+                  <h2 class="title">제목</h2>
                 </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                1068{{meta.view}}
-                </div>   
-                <div class="bookmark">
-                  <i class="fas fa-bookmark"></i>
-                  65{{meta.bookmark}}
+
+                <div class="user_container">
+                  <span class="username">신현지</span>
+                  <div class="user_category">{{user.category}}</div>
                 </div>
-              </div>
+
+                <div class="meta_container">
+                  <div class="like">
+                  <i class="fas fa-heart"></i>
+                  334{{meta.like}}
+                  </div>
+                  <div class="view">
+                  <i class="fas fa-eye"></i>
+                  1068{{meta.like}}
+                  </div>   
+                  <div class="bookmark">
+                    <i class="fas fa-bookmark"></i>
+                    65{{meta.like}}
+                  </div>
+                </div>
           </div>
           
           <div class="card_container-1">
@@ -466,139 +477,6 @@
         </div>
   </div>
 </div>
-
-<!--
-    <div class="carousel__photo">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">CONTACT</p>
-        <a href="{% url 'contact:contact_list' %}">
-          <div class="jb"><i class="fas fa-square-full"></i></div>
-        </a>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">사진 및 영상작업을 위한 시안 기반의 컨택트</p>
-        <p style="font-size:0.8rem;">with photographer, model, hair&makeup, stylist</p>
-      </div>
-    </div>
-
-    <div class="carousel__photo">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">PORTFOLIO</p>
-        <a href="{% url 'portfolio:portfolio_list' %}">
-          <div class="jb"><i class="fas fa-square-full"></i></div>
-        </a>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">다양한 아티스트들과 당신의 작업물을 공유해보세요 </p>
-        <p style="font-size:0.8rem;">share your portfolio</p>
-      </div>
-    </div>
-
-    <div class="carousel__photo">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">REFERENCE</p>
-        <div class="jb"><i class="fas fa-square-full"><a href="#"></a></i></div>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">다양한 키워드의 시안 레퍼런스를 통해 영감을 얻어보세요</p>
-        <p style="font-size:0.8rem;">for your creative inspiration</p>
-      </div>
-    </div>
-
-    <div class="carousel__photo">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">PLACE</p>
-        <div class="jb"><i class="fas fa-square-full"><a href="#"></a></i></div>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">원하는 무드의 키워드로 색다른 촬영 공간을 탐색해보세요</p>
-        <p style="font-size:0.8rem;">whatever you want ##</p>
-      </div>
-    </div>
-
-
-    <div class="carousel__photo">
-      <div class="about_left">
-        <p class="first" style="font-size:2rem; ">COLLABORATION</p>
-        <div class="jb"><i class="fas fa-square-full"><a href="#"></a></i></div>
-      </div>
-      <div class="about_right">
-        <p class="first" style="padding-bottom: 1%;">기타 예술분야의 아티스트, 브랜드 및 일반인들과의 콜라보레이션</p>
-        <p style="font-size:0.8rem;">for passionate artists</p>
-      </div>
-    </div>
-
-
-    <div class="carousel__button--next"></div>
-    <div class="carousel__button--prev"></div>
-
-  </div>
-</div>
-
--->
-
-<!-- random template -->
-<!--
-<div id="magazine">
-  <div class="title">
-    <P>PH</P>
-    <P>OI</P>
-    <P>NG</P>
-    <p>2{{month}}.</p>
-  </div>
-  <div class="magazine_content">
-    <div class="img_grid">
-      <div class="first_grid">
-        <div class="img1">
-          <img src="https://i.pinimg.com/474x/01/d4/a5/01d4a5c579c583db98c77169d49affbe.jpg">
-        </div>
-        <div class="img2">
-          <img src="https://i.pinimg.com/564x/a1/45/8c/a1458c364cd567e01a31740d3304d5a7.jpg">
-        </div>
-      </div>
-
-      <div class="img3">
-        <img src="https://i.pinimg.com/564x/f4/03/32/f40332a662861585a92fe44b7fb6c852.jpg">
-      </div>
-
-      <div>
-        <div class="img4">
-          <img src="https://i.pinimg.com/564x/fc/64/78/fc647868f663fc2df55c8a13846c458b.jpg">
-        </div>
-        <div class="img5">
-          <img src="https://i.pinimg.com/474x/8f/6f/12/8f6f12ec8ca1afb0404a879738af7f0a.jpg">
-        </div>
-      </div>
-    </div>
-
-    <div class="texts">
-      <div class="text1">
-        recommendation collage
-      </div>
-
-      <div class="text2">
-        recommendation random collage
-      </div>
-
-      <div class="text3">
-        Random Collage
-      </div>
-
-      <div class="text4">
-        with passionate artists
-      </div>
-
-      <div class="text5">
-        contact and portfolio website <br> for passionate artists.
-        <br> phoing provides <br> web services for <br> personal photo work.
-      </div>
-
-
-    </div>
-
-  </div>
-</div>
--->
 
 {% endblock content%}
 

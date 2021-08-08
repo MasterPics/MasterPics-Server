@@ -2,43 +2,60 @@
 
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/recovery_pw_reset.css' %}">
+{% endblock stylesheet %}
+
 {% block content %}
-    <form action="" method="POST" novalidate>
-        {% csrf_token %}
-        <div>
-            <label name="label_new_password1" for="{{ form.new_password1.id_for_label }}">
-                {{ form.new_password1.label }}
-            </label>
-            {{ form.new_password1 }}
-
-            {% if form.new_password1.errors %}
-                {% for error in form.new_password1.errors %}
-                    <div>
-                        {{ error }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+<div class="modify__container">
+    <div class="modify__body">
+        <div class="password_change_title">
+        비밀번호 재설정
         </div>
-
-        <div>
-            <label name="label_new_password2" for="{{ form.new_password2.id_for_label }}">
-                {{ form.new_password2.label }}
-            </label>
-            {{ form.new_password2 }}
-
-            {% if form.new_password2.errors %}
-                {% for error in form.new_password2.errors %}
-                    <div>
-                        {{ error }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+        <div class="password_change_info">
+            <p>안전한 비밀번호로 설정하세요</p>
+            <li>⦁ 다른 개인 정보와 너무 비슷하지 않게 설정하세요.</li>
+            <li>⦁ 8자 이상의 영문,숫자,특수문자 중 2가지 이상 혼합되어야 합니다. </li>
+            <li>⦁ 너무 일반적이지 않은 비밀번호로 설정하세요.</li>
         </div>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            <div>
+                <label name="label_new_password1" for="{{ form.new_password1.id_for_label }}">
+                    {{ form.new_password1.label }}
+                </label>
+                {{ form.new_password1 }}
 
-        <div>
-            <button>저장하기</button>
-        </div>
-        </div>
-    </form>
+                {% if form.new_password1.errors %}
+                    {% for error in form.new_password1.errors %}
+                        <div>
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div>
+                <label name="label_new_password2" for="{{ form.new_password2.id_for_label }}">
+                    {{ form.new_password2.label }}
+                </label>
+                {{ form.new_password2 }}
+
+                {% if form.new_password2.errors %}
+                    {% for error in form.new_password2.errors %}
+                        <div>
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="pw_reset">
+                <button  class="update_btn ">비밀번호 재설정</button>
+                <input type="button" class="undo_btn " value="취소" /><a href='#'></a>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock content%}

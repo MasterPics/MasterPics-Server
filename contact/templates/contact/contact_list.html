@@ -6,180 +6,51 @@
 <link rel="stylesheet" href="{% static 'css/contact_list.css' %}">
 {% endblock stylesheet %}
 
-
 {% block content %}
-<div class="contactlist">
-    <div class="bar">
+<div class="header">
+    <h1 class="header__title">Contact</h1>
+    <p class="header__desc">주변에서 개인작업을 위한</p>
+    <p class="header__desc">아티스트의 시안을 찾아보세요!</p>
+    <p class="header__desc-more">별도의 수수료 없이 MasterPic’s 내 아티스트들과 컨택할 수 있습니다.</p>
+    <a class="header__create-btn" href="{% url 'contact:contact_create' %}">컨택트 등록하기</a>
+    <a class="header__create-btn" href="#">내 주변 아티스트 찾기</a>
+</div>
 
-        <!--category-->
-        <div class="bar_left">
-            <div class="dropdown">
-                <div class="dropbtn">
-                    <div class="btn"><span class="noselect"><a href="javascript:void(0)"
-                                onclick="onClickLink('all')">Category</a></span></div>
-                </div>
-                <div class="dropdown-content">
-                    <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('otheruse')">Other use</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="bar_right">
-            <!--search-->
-            <div class="input-group">
-                <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
-                </div>
-            </div>
-
-            <!--sort-->
-            <div class="sort">
-                <select name="" id="" class="form-control sort ">
-                    <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
-                        최신
-                    </option>
-                    <option value="save" {% if sort == 'save' %}selected{% endif %}>
-                        저장순
-                    </option>
-                    <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
-                        가격순
-                    </option>
-                </select>
-
-            </div>
-
-            <!-- 상호무페이 -->
-            <div class="pay">
-                <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
-                <label for="no_pay">상호 무페이</label><br>
-            </div>
-
-            <!--게시글 생성-->
-            <div class="contact_create">
-                <a class="create_btn" href="{% url 'contact:contact_create' %}"><i class="far fa-plus-square"></i></a>
-            </div>
-        </div>
+<div class="filter">
+    <div class="filter__category">
+        <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
+        <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
+        <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
+        <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
+        <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
     </div>
-
-
-
-    <!--contact_list-->
-    <div>
-
-        <!--search-->
-        <div class="input-group">
-            <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
-            </div>
-        </div>
-
-
-        <div class="grid">
-            {% for contact in contacts %}
-            <div class="grid-item">
-                <div class=" item_top contact-{{contact.pk}}">
-
-                    <!-- 게시글 작성자 정보 -->
-                    <div>
-                        {% if contact.user == request_user %}
-                        <a href="{% url 'profile:mypage' %}">
-                            <a href="{% url 'profile:others_profile' contact.user.user_identifier %}">
-                                {% endif %}
-                                <div class="contact_owner">
-                                    <div class="user_img">
-                                        {% if contact.user.image %}
-                                        <img class="profile_image" src="{{contact.user.image.url}}" alt="profile_image">
-                                        {% else %}
-                                        <img class="profile_image"
-                                            src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                            alt="profile_image">
-                                        {% endif %}
-                                    </div>
-                                    <div>{{contact.user.username}}</div>
-                                    <div style="font-size: smaller">{{contact.user.category}}</div>
-                                </div>
-                            </a>
-                    </div>
-
-                    <!-- 게시글 정보 -->
-                    <div class="title">
-                        <a href="{% url 'contact:contact_detail' contact.pk %}">
-                            <div style="font-weight:bolder;">{{ contact.title }}</div>
-                        </a>
-                    </div>
-                    <div class="thumbnail_desc">
-                        <a href="{% url 'contact:contact_detail' contact.pk %}">
-                            <img src="{{ contact.thumbnail.url }}" alt="">
-                        </a>
-                    </div>
-
-                    <div class="pay_date">
-                        <div>
-                            {% if contact.pay == 0 %}
-                            Pay : 상호 무페이
-                            {% else %}
-                            Pay : {{ contact.pay }}원
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% if contact.is_closed %}
-                            마감
-                            {% else %}
-                            <p>{{ contact.start_date|datefilter }}</p>
-                            <p>~{{ contact.end_date|datefilter }}</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- comment, save -->
-                <div class="item_bottom">
-                    <div class="comment">
-                        <a href="{% url 'contact:contact_detail' contact.pk %}">
-                            <i class="far fa-comment-dots"></i>
-                            <span class="comment__content">{{ contact.contact_comments.count }}</span>
-                        </a>
-                    </div>
-
-                    <div class="save save-{{contact.id}}">
-                        {% if request.user in contact.save_users.all %}
-                        <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
-                            value="save"></i>
-                        {% else %}
-                        <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
-                            value="save"></i>
-                        {% endif %}
-                        <span class="save__content">{{ contact.save_users.count }}</span>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-        </div>
-
-
-        <!-- 버튼 누르면 상단으로 이동 -->
-        <div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-circle-up"></i></div>
-
-
-
-        <!-- infinite scroll -->
-        {% if contacts.has_next %}
-        <a class="infinite-more-link" href="?page={{ contacts.next_page_number }}">
-            <div class="loading" style="display: none;">Loading...</div>
-        </a>
-        {% endif %}
+    <!-- 상호무페이 -->
+    <div class="filter__nopay">
+        <label for="no_pay">상호무페이</label><br>
+        <input type="checkbox" class="no_pay" name="no_pay" value="no_pay">
     </div>
-
-    <!--category, sort, search, 상호무페이 filter form-->
+    <div class="filter__search">
+        <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'>
+        <button class="btn btn-outline-secondary btn_search" type="button" id=""><i class="fas fa-search"></i></button>
+    </div>
+    <div class="filter__sort">
+        <select name="" id="" class="form-control sort ">
+            <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
+                최신순
+            </option>
+            <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                저장순
+            </option>
+            <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
+                낮은 가격순
+            </option>
+            <option value="pay" {% if sort == 'pay' %}selected{% endif %}>
+                높은 가격순
+            </option>
+        </select>
+        <div class="select__arrow"></div>
+    </div>
+    <!-- filter form -->
     <div style="height: 0;">
         <form id="searchForm" method="get" action="{% url 'contact:contact_list' %}">
             <input type="hidden" id="category" name="category" value="{{ category }}">
@@ -189,78 +60,120 @@
         </form>
     </div>
 </div>
-{% endblock content %}
 
+<div class="line"></div>
 
-
+<div class="list">
+    <div class="list__container grid">
+        {% for contact in contacts %}
+        <div class="list__item-wrapper grid-item">
+            <div class="list__item">
+                <!-- contact pay, date-->
+                <div class="list__top-info">
+                    <div class="list__pay">
+                        {% if contact.pay_negotiation %}
+                        <div class="list__pay-text">페이협의</div>
+                        {% elif contact.free or contact.pay == 0 %}
+                        <div class="list__pay-text">상호무페이</div>
+                        {% elif contact.pay %}
+                        <div class="list__pay-text">{{ contact.pay }} 원</div>
+                        {% endif %}
+                    </div>
+                    <div class="list__date">
+                        {% if contact.is_closed %}
+                        <div class="list__date-text">마감</div>
+                        {% else %}
+                        <div class="list__date-text">{{ contact.start_date|datefilter }}</div>
+                        <div class="list__date-text">~</div>
+                        <div class="list__date-text">{{ contact.end_date|datefilter }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- contact thumbnail -->
+                <div class="list__thumbnail">
+                    <a href="{% url 'contact:contact_detail' contact.pk %}">
+                        <figure class="list__image">
+                            <img src="{{contact.thumbnail.image.url}}" alt="thumbnail">
+                            <figcaption>
+                                <div class="list__tags-info">
+                                    {% for tag in contact.tags.all %}
+                                    <p class="list__tags">
+                                        #{{ tag.name }} 
+                                    </p>
+                                    {% endfor %}
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- contact title -->
+                <div class="list__title">
+                    <a href="{% url 'contact:contact_detail' contact.pk %}">{{contact.title}}</a>
+                </div>
+                <div class="list__info">
+                    <!-- contact user -->
+                    <div class="list__user">
+                        {% if contact.user == request.user %}
+                        <a href="{% url 'profile:mypage' %}">
+                        {% else %}
+                        <a href="{% url 'profile:others_mypage' contact.user.user_identifier %}">
+                        {% endif %}
+                            {% if user.image  %}
+                            <img class="list__user-img" src="{{contact.user.image.url}}" alt="img">
+                            {% else %}
+                            <img class="list__user-img"
+                                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                                alt="img">
+                            {% endif %}
+                            <div class="list__user-info">
+                                <div class="list__user-name">{{contact.user.username}}</div>
+                                <div class="list__user-category">{{contact.user.category}}</div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- contact comment, save -->
+                    <div class="list__post-info">
+                        <div class="comment">
+                            <i class="far fa-comment-dots"></i>
+                            <span class="comment__content">{{ contact.comments.count }}</span>
+                        </div>
+                        <div class="save save-{{contact.id}}">
+                            {% if request.user in contact.bookmark_users.all %}
+                            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                                value="save"></i>
+                            {% else %}
+                            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                                value="save"></i>
+                            {% endif %}
+                            <span class="save__content">{{ contact.bookmark_users.count }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- infinite scroll -->
+{% if contacts.has_next %}
+<a class="infinite-more-link" href="?page={{ contacts.next_page_number }}">
+    <div class="loading" style="display: none;">Loading...</div>
+</a>
+{% endif %}
+<!-- go to top -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+{% endblock content%}
 
 {% block script %}
-<!-- map -->
-<script type="text /javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
-<script type="text
-    /javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
-<script type="text /javascript" src="{% static 'js/map/contact_map.js' %}"></script>
-
-
-<script src="{% static 'js/nopay.js' %}"></script>
-<script src="{% static 'js/search.js' %}"></script>
-<script src="{% static 'js/sort.js' %}"></script>
-<script src="{% static 'js/contact_save.js' %}"></script>
-<script src="{% static 'js/category.js' %}"></script>
-<script src="{% static 'js/go_to_top.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
-
-
-
-<script>
-    // TODO 기능 정리
-    function modal(id) {
-        var zIndex = 9999;
-        var modal = document.getElementById(id);
-        // 모달 div 뒤에 희끄무레한 레이어
-        var bg = document.createElement('div');
-        bg.setStyle({
-            position: 'fixed',
-            zIndex: zIndex,
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            overflow: 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
-            backgroundColor: 'rgba(0,0,0,0.4)'
-        });
-        document.body.append(bg);
-        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        modal.querySelector('.modal_close_btn').addEventListener('click', function () {
-            bg.remove();
-            modal.style.display = 'none';
-        });
-        modal.setStyle({
-            position: 'fixed',
-            display: 'block',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-            // 시꺼먼 레이어 보다 한칸 위에 보이기
-            zIndex: zIndex + 1,
-            // div center 정렬
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            msTransform: 'translate(-50%, -50%)',
-            webkitTransform: 'translate(-50%, -50%)'
-        });
-    }
-    // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
-    Element.prototype.setStyle = function (styles) {
-        for (var k in styles) this.style[k] = styles[k];
-        return this;
-    };
-    document.getElementById('popup_open_btn').addEventListener('click', function () {
-        // 모달창 띄우기
-        modal('my_modal');
-    });
-
-</script>
-
+<script src="{% static 'js/go_to_top.js' %}"></script>
+<script src="{% static 'js/contact_save.js' %}"></script>
+<script src="{% static 'js/contact_comment.js' %}"></script>
+<script src="{% static 'js/category.js' %}"></script>
+<script src="{% static 'js/sort.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/nopay.js' %}"></script>
 {% endblock script %}

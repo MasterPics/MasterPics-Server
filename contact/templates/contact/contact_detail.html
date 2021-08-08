@@ -3,119 +3,187 @@
 {% load static %}
 {% load customtags %}
 {% block stylesheet %}
-<!-- TODO -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 <link rel="stylesheet" href="{% static 'css/contact_detail.css' %}">
 {% endblock stylesheet %}
 
 
 {% block content %}
-<div class="choose">
-    {% if contact.user == request_user %}
-    <a class="choose_profile" href="{% url 'profile:mypage' %}">
-        <div class="btn"><span class="noselect">Show Profile</span></div>
-    </a>
-    {% else %}
-    <a class="choose_profile" href="{% url 'profile:others_profile' contact.user.user_identifier %}">
-        <div class="btn"><span class="noselect">Show Profile</span></div>
-    </a>
-    {% endif %}
-</div>
-
-<!-- 게시글 작성자 정보 -->
-<div class="container_8">
-    <div class="user">
-        <div class="user_img">
-            {% if contact.user.image %}
-            <img class="profile_image" src="{{contact.user.image.url}}" alt="profile_image">
+<div class="wrapper">
+    <div class="side-bar">
+        <div class="side-bar__user-info">
+            {% if contact.user == request.user %}
+            <a class="side-bar__user" href="{% url 'profile:mypage' %}">
             {% else %}
-            <img class="profile_image"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="profile_image">
+            <a class="side-bar__user" href="{% url 'profile:others_mypage' contact.user.user_identifier %}">
             {% endif %}
+                <div class="side-bar__text">
+                    게시자
+                </div>
+                {% if contact.user.image %}
+                <img class="side-bar__user-img" src="{{contact.user.image.url}}" alt="img">
+                {% else %}
+                <img class="side-bar__user-img"
+                    src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                    alt="img">
+                {% endif %}
+                <div class="side-bar__user-name">{{contact.user.username}}</div>
+                <div class="side-bar__user-category">{{contact.user.category}}</div>
+            </a>
         </div>
-        <p>{{contact.user.username}} </p>
-        <p> {{contact.user.category}}</p>
-    </div>
-
-    <!-- 게시글 정보 -->
-    <div>
-        <p style="font-weight: bolder; font-size:larger; margin-top:10px;">{{ contact.title }}</p>
-    </div>
-    <div class="contact_img_container">
-        <div class="contact_img">
-            <img src="{{ contact.thumbnail.url }}" alt="">
+        <div class="side-bar__map-info">
+            <div id="map" style="width:100%;height:100%;"></div>
         </div>
-    </div>
-    <div style="line-height: 1.73em;">{{contact.desc}}</div>
-
-    <!-- tag -->
-    <div class="contact_tags">
-        {% for tag in tags %}
-        <a href="" class="contact_tag tag-button">
-            #{{ tag.tag }}
-        </a>
-        {% endfor %}
-    </div>
-
-    <div class="file"><a href="{{ contact.file_attach.url }}">시안 첨부파일</a></div>
-
-    <div class="pay_date">
-        <p>pay: {{ contact.pay }}</p>
-        <!-- TODO 촬영날짜/마감여부 -->
-        <p>{{ contact.start_date|datefilter }} ~ {{ contact.end_date|datefilter }}</p>
-
-    </div>
-
-    <!-- Comment, Save -->
-    <div class="comment_bookmark">
-        <div class="comment"><a href="#comment">
+        <!-- comment, save -->
+        <div class="side-bar__info">
+            <div class="comment">
+                <a href="#comment">
                 <i class="far fa-comment-dots"></i>
-                <span class="comment__content">{{ contact.contact_comments.count }}</span>
-            </a></div>
+                <span class="comment__content">{{ contact.comments.count }}</span>
+                </a>
+            </div>
+            <div class="save save-{{contact.id}}">
+                {% if request.user in contact.bookmark_users.all %}
+                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                    value="save"></i>
+                {% else %}
+                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
+                    value="save"></i>
+                {% endif %}
+                <span class="save__content">{{ contact.bookmark_users.count }}</span>
+            </div>
+        </div>
+        <!-- tags -->
+        {% if contact.tags.all %}
+        <div class="side-bar__tags-info">
+            {% for tag in contact.tags.all %}
+            <a href="{% url 'reference:reference_list' %}?search={{tag.name}}" class="side-bar__tags">
+                #{{ tag.name }} 
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 
-        <div class="save save-{{contact.id}}">
-            {% if request_user in contact.save_users.all %}
-            <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
-                value="save"></i>
-            {% else %}
-            <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ contact.id }})" name="type"
-                value="save"></i>
-            {% endif %}
-            <span class="save__content">{{ contact.save_users.count }}</span>
+    <div class="post">
+        <div class="post__title-wrapper">
+            <h1 class="post__title">{{contact.title}}</h1>
+            <div class="post__edit">
+                <!-- 게시글 작성자만 수정/삭제 가능 -->
+                {% if request.user.pk == contact.user.pk %}
+                <a class="post__edit-btn" href="{% url 'contact:contact_update' contact.pk %}">수정</a>
+                <a class="post__edit-btn" href="{% url 'contact:contact_delete' contact.pk %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post__line"></div>
+        <div class="post__info-wrapper">
+            <div class="post__location">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="post__location-text">{{contact.location.address}}</div>
+            </div>
+            <div class="post__pay-date">
+                <div class="post__pay">
+                    {% if contact.pay_negotiation %}
+                    <div class="post__pay-text">페이협의</div>
+                    {% elif contact.free or contact.pay == 0 %}
+                    <div class="post__pay-text">상호무페이</div>
+                    {% elif contact.pay %}
+                    <div class="post__pay-text">{{ contact.pay }} 원</div>
+                    {% endif %}
+                </div>
+                <div class="post__date">
+                    {% if contact.is_closed %}
+                    <div class="post__date-text">마감</div>
+                    {% else %}
+                    <div class="post__date-text">{{ contact.start_date|datefilter }}</div>
+                    <div class="post__date-text">~</div>
+                    <div class="post__date-text">{{ contact.end_date|datefilter }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="post__wrapper">
+            <div class="post__images-wrapper">
+                <div class="post__images-text">Mood Board</div>    
+                <!-- Container for the image gallery -->
+                <div class="slides">
+                    <!-- Images with number text -->
+                    {% for image in contact.images.all %}
+                    {% if image %}
+                    <div class="mySlides">
+                        <div class="numbertext"> {{forloop.counter}} / {{contact.images.count}}</div>
+                        <img src="{{image.image.url}}">
+                        <!-- Next and previous buttons-->
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- Images with under bar-->
+                    <div class="under-bar">
+                    {% for image in contact.images.all %}
+                        {% if image %}
+                        <div class="img-container">
+                            <img class="demo" src="{{image.image.url}}" onclick="currentSlide({{forloop.counter}})" alt="img">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="post__content">
+                <div class="post__desc">{{contact.desc}}</div>
+                <div class="post__file"><a href="{{ contact.file_attach.url }}">시안 첨부파일 보기</a></div>
+            </div>
+        </div>
+        <div class="post__comment">
+            <div id="comment" class="createComment createComment-{{contact.id}}">
+                <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
+                <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="댓글 게시">
+            </div>
+            <div class="comments-{{ contact.id }} comments">
+                {% for comment in contact.comments.all %}
+                <div class="comment comment-{{ comment.id }}">
+                    <div class="comment__wrapper">
+                        <div class="comment__item">
+                            <div class="comment__writer-img">
+                                {% if comment.writer.image %}
+                            <img src="{{comment.writer.image.url}}" alt="img">
+                            {% else %}
+                            <img src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
+                                alt="img">
+                            {% endif %}
+                            </div>
+                            <div class="comment__content">
+                                <div class="comment__top-info">
+                                    <span class="comment__writer">{{ comment.writer }}</span>
+                                    <span class="comment__date">{{ comment.created_at.time }}</span>
+                                </div>
+                                <span class="comment__text">{{ comment.content }}</span>
+                            </div>
+                        </div>
+                        <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="댓글삭제">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>     
+        <div class="post__line"></div>
+        <div class="post__list-btn">
+            <a href="{% url 'contact:contact_list'%}">목록보기</a> 
         </div>
     </div>
-
-    <div id="comment" class="createComment createComment-{{contact.id}}">
-        <input class="comment__value" type="text" placeholder="댓글 달기...">
-        <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="게시">
-    </div>
-    <!--TODO Ajax 표현 시 유저 이름도 보이도록 해야 함-->
-    <div class="comments-{{ contact.id }} comments">
-        {% for comment in comments %}
-        <div class="comment comment-{{ comment.id }}">
-            <span>{{ comment.comment.writer }}</span>
-            <span>{{ comment.comment.content }}</span>
-            <span>{{ comment.comment.created_at }}</span>
-            <input class="comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
-        </div>
-        {% endfor %}
-    </div>
-
-
-    <!-- 게시물 작성자만 수정/삭제 가능 -->
-    {% if request_user.pk == contact.user.pk %}
-    <div class="contact_button">
-        <a class="edit_btn" href="{% url 'contact:contact_update' contact.pk %}">게시물 수정</a>
-        <a class="delete_btn" href="{% url 'contact:contact_delete' contact.pk %}">삭제</a>
-    </div>
-    {% endif %}
 </div>
-{% endblock content%}
-
-
+{% endblock content %}
 
 {% block script %}
-<script src="{% static 'js/contact_save.js' %}"></script>
-<script src="{% static 'js/contact_comment.js' %}"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
+<script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/contact_save.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/contact_comment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map/contact_map.js' %}"></script>
 {% endblock script %}
+
+
+
