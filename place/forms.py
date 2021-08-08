@@ -1,5 +1,6 @@
 from django import forms
 from .models import Place
+from taggit.forms import TagWidget
 
 
 class PlaceForm(forms.ModelForm):
@@ -14,7 +15,10 @@ class PlaceForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
             'pay': forms.NumberInput(attrs={'placeholder': '페이를 입력하세요.(상호 무페이의 경우 0을 입력하세요)'}),
-            'tags': forms.TextInput(attrs={'placeholder': '해시태그를 입력하세요.'}),
+            'tags' : TagWidget(
+                attrs={
+                    'placeholder': '#masterpics #portfolio'}
+            ),
             'desc': forms.Textarea(attrs={'placeholder': '상세 설명을 작성하세요.'})
         }
         # placeholder 위젯 적용
