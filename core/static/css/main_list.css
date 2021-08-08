@@ -340,9 +340,11 @@ a:active { text-decoration: none; }
 }
 
 .RandomMagazine img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
+
 .RandomMagazine .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
 }
@@ -605,6 +607,11 @@ a:active { text-decoration: none; }
   font-size: 30px;
 }
 
+.magazine_more img{
+  width: 100%;
+  height: 100%;
+}
+
 /* RandomContact */
 
 .Randomcontact_bg {
@@ -627,8 +634,9 @@ a:active { text-decoration: none; }
 }
 
 .RandomContact img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
 .RandomContact .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
@@ -757,8 +765,7 @@ a:active { text-decoration: none; }
   transition: opacity 0.2s;
   width: 250px;
   height: 330px;
-  margin-left: 10px;
-  margin-top: -10px;
+  margin-right: 20px;
 }
 .RandomContact .card_container-2 {
   grid-area: card-2;
@@ -767,7 +774,7 @@ a:active { text-decoration: none; }
   transition: opacity 0.2s;
   width: 250px;
   height: 330px;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 .RandomContact .card_container-3 {
   grid-area: card-3;
@@ -810,8 +817,7 @@ a:active { text-decoration: none; }
 
 .RandomContact .card_container-0,
 .RandomContact .card_container-2 {
-  justify-self: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .RandomContact .card_container-0::after,
 .RandomContact .card_container-3::after {
@@ -825,8 +831,7 @@ a:active { text-decoration: none; }
 
 .RandomContact .card_container-1,
 .RandomContact .card_container-3 {
-  justify-content: flex-end;
-  align-self: flex-end;
+  justify-content: center;
 }
 
 .RandomContact .text-0 {
@@ -860,7 +865,8 @@ a:active { text-decoration: none; }
 	grid-row-end: 6;
   display:flex;
   justify-content: flex-end;
-  margin-right: 10px;
+  margin-right: 15px;
+  margin-top: -50px;
   cursor: pointer;
 }
 
@@ -876,6 +882,11 @@ a:active { text-decoration: none; }
 
 .contact_more i {
   font-size: 30px;
+}
+
+.contact_more img{
+  width: 100%;
+  height: 100%;
 }
 
 /*RandomPlace*/
@@ -927,9 +938,11 @@ a:active { text-decoration: none; }
 }
 
 .RandomPlace img{
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
 }
+
 .RandomPlace .magazine_img{
   opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
 }
@@ -1085,6 +1098,11 @@ a:active { text-decoration: none; }
 
 .place_more i {
   font-size: 30px;
+}
+
+.place_more img{
+  width: 100%;
+  height: 100%;
 }
 
 

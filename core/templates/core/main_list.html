@@ -128,9 +128,10 @@
 <div class = "RandomMagazine_bg">
   <div class="RandomMagazine">
     {% for portfolio in portfolios %}
-      <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
-          <div class="card_container-0">
+          <div class="card_container-{{ forloop.counter0 }}">
+          <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
               <div class="magazine_img"><img src="{{ portfolio.thumbnail.image.url }}" alt='img'></div>
+          </a>
                 <div class="info_container">
                   <h2 class="title">{{ portfolio.title }}</h2>
                 </div>
@@ -153,119 +154,8 @@
                   <i class="fas fa-bookmark"></i>
                   {{ portfolio.bookmark_users.count }}
                   </div>
-                </div> 
+                </div>
           </div>
-          
-          <div class="card_container-1">
-            <div class="magazine_img">
-              <img src="{{ portfolio.thumbnail.image.url }}" alt='img'></a>
-            </div>
-              <div class="info_container">
-                <h2 class="title">{{ portfolio.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                  <span class="username">{{ portfolio.user.username }}</span>
-                  <div class="user_category">{{ portfolio.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                  <div class="like">
-                  <i class="fas fa-heart"></i>
-                  {{ portfolio.like_users.count }}
-                  </div>
-                  <div class="view">
-                  <i class="fas fa-eye"></i>
-                  {{ portfolio.view_count }}
-                  </div>   
-                  <div class="bookmark">
-                  <i class="fas fa-bookmark"></i>
-                  {{ portfolio.bookmark_users.count }}
-                  </div>
-              </div> 
-          </div>
-
-          <div class="card_container-2">  
-            <div class="magazine_img"><img src="{{ portfolio.thumbnail.image.url }}" alt='img'></div>
-              <div class="info_container">
-                <h2 class="title">{{ portfolio.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">{{ portfolio.user.username }}</span>
-                <div class="user_category">{{ portfolio.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                {{ portfolio.like_users.count }}
-                </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                {{ portfolio.view_count }}
-                </div>   
-                <div class="bookmark">
-                <i class="fas fa-bookmark"></i>
-                {{ portfolio.bookmark_users.count }}
-                </div>
-              </div>  
-          </div>
-
-          <div class="card_container-3">  
-            <div class="magazine_img"><img src="{{ portfolio.thumbnail.image.url }}" alt='img'></div>
-              <div class="info_container">
-                <h2 class="title">{{ portfolio.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">{{ portfolio.user.username }}</span>
-                <div class="user_category">{{ portfolio.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                {{ portfolio.like_users.count }}
-                </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                {{ portfolio.view_count }}
-                </div>   
-                <div class="bookmark">
-                <i class="fas fa-bookmark"></i>
-                {{ portfolio.bookmark_users.count }}
-                </div>
-              </div>  
-          </div>
-
-          <div class="card_container-4">  
-            <div class="magazine_img"><img src="{{ portfolio.thumbnail.image.url }}" alt='img'></div>
-              <div class="info_container">
-                <h2 class="title">{{ portfolio.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">{{ portfolio.user.username }}</span>
-                <div class="user_category">{{ portfolio.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                {{ portfolio.like_users.count }}
-                </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                {{ portfolio.view_count }}
-                </div>   
-                <div class="bookmark">
-                <i class="fas fa-bookmark"></i>
-                {{ portfolio.bookmark_users.count }}
-                </div>
-              </div>  
-          </div>
-      </a>
     {% endfor %}  
         <div class="text-0">
           <h1>Random Magazine</h1>
@@ -299,7 +189,7 @@
 <div class = "Randomcontact_bg">
   <div class="RandomContact">
     {% for contact in contacts %}
-          <div class="card_container-0">
+          <div class="card_container-{{ forloop.counter0 }}">
              <a href="{% url 'contact:contact_detail' contact.pk %}">
               <div class="magazine_img">
               <img src="{{ contact.thumbnail.image.url }}"></div>
@@ -314,64 +204,19 @@
                 </div>
 
                 <div class="meta_container">
-                  <span class="date">{{ contact.start_date }}</span>
-                  <div class="pay">{{contact.pay}}</div>
+                  <span class="date">{{ contact.start_date| date:'Y-m-d' }}</span> ~
+                  <span class="date">{{ contact.end_date| date:'Y-m-d' }}</span>
+                  {% if contact.pay_negotiation %}
+                  <div class="pay">페이협의</div>
+                  {% elif contact.free or contact.pay == 0 %}
+                  <div class="pay">상호무페이</div>
+                  {% elif contact.pay %}
+                  <div class="pay">{{ contact.pay }} 원</div>
+                  {% endif %}
+
                 </div>
-          </div>
-          
-          <div class="card_container-1">
-            <a href="{% url 'contact:contact_detail' contact.pk %}">
-              <div class="magazine_img">
-              <img src="{{ contact.thumbnail.image.url }}"></div>
-            </a>
-                <div class="info_container">
-                  <h2 class="title">{{ contact.title }}</h2>
-                </div>
-
-                <div class="user_container">
-                  <span class="username">{{contact.user.username}}</span>
-                  <div class="user_category">{{contact.user.category}}</div>
-                </div>
-
-                <div class="meta_container">
-                  <span class="date">{{ contact.start_date }}</span>
-                  <div class="pay">{{contact.pay}}</div>
-                </div>
-          </div>
-
-          <div class="card_container-2">  
-            <div class="magazine_img"><img src="{{ contact.thumbnail.image.url }}"></div>
-              <div class="info_container">
-                <h2 class="title">{{ contact.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">{{contact.user.username}}</span>
-                <div class="user_category">{{contact.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <span class="date">{{ contact.start_date }}</span>
-                <div class="pay">{{contact.pay}}</div>
-              </div>
-          </div>
-
-          <div class="card_container-3">  
-            <div class="magazine_img"><img src="{{ contact.thumbnail.image.url }}"></div>
-              <div class="info_container">
-                <h2 class="title">{{ contact.title }}</h2>
-              </div>
-
-              <div class="user_container">
-                <span class="username">{{contact.user.username}}</span>
-                <div class="user_category">{{contact.user.category}}</div>
-              </div>
-
-              <div class="meta_container">
-                <span class="date">{{ contact.start_date }}</span>
-                <div class="pay">{{contact.pay}}</div>
-              </div>
-          </div>
+          </div>      
+    {% endfor %}    
 
           <div class="text-0">
             <h1>Contact</h1>
@@ -387,7 +232,7 @@
               </div>
               <a href="{% url 'contact:contact_list' %}"><img src="media/Group 19.svg"></a>
           </div>
-    {% endfor %}
+    
   </div>
 </div>
 
@@ -396,62 +241,11 @@
 <div class = "RandomPlace_bg">
   <div class="RandomPlace">
     {% for place in places %}
-          <div class="card_container-0">
-            <div class="magazine_img"><img src="{{ place.thumbnail.image.url }}"></div>
-              <a href="{% url 'place:place_detail' place.pk %}"><div class="info_container">
-                {{ place.title }}</h2>
-              </div></a>
-
-              <div class="place_container">
-                <span class="placename">{{ place.user.username }}</span>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                {{ place.like_users.count }}
-                </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                {{ place.view_count }}
-                </div>   
-                <div class="bookmark">
-                <i class="fas fa-bookmark"></i>
-                {{ place.bookmark_users.count }}
-                </div>
-              </div>
-          </div>
-          
-          <div class="card_container-1">
-            <div class="magazine_img"><img src="{{ place.thumbnail.image.url }}"></div>
-              <a href="{% url 'place:place_detail' place.pk %}"><div class="info_container">
-                <h2 class="title">{{ place.title }}</h2>
-              </div></a>
-
-              <div class="place_container">
-                <span class="placename">{{ place.user.username }}</span>
-              </div>
-
-              <div class="meta_container">
-                <div class="like">
-                <i class="fas fa-heart"></i>
-                {{ place.like_users.count }}
-                </div>
-                <div class="view">
-                <i class="fas fa-eye"></i>
-                {{ place.view_count }}
-                </div>   
-                <div class="bookmark">
-                <i class="fas fa-bookmark"></i>
-                {{ place.bookmark_users.count }}
-                </div>
-              </div>
-          </div>
-
-          <div class="card_container-2">  
-            <div class="magazine_img"><img src="{{ place.thumbnail.image.url }}"></div>
+          <div class="card_container-{{ forloop.counter0 }}">
+            <a href="{% url 'place:place_detail' place.pk %}">
+            <div class="magazine_img"><img src="{{ place.thumbnail.image.url }}"></div></a>
               <div class="info_container">
-                <a href="{% url 'place:place_detail' place.pk %}"><h2 class="title">{{ place.title }}</h2></a>
+                {{ place.title }}</h2>
               </div>
 
               <div class="place_container">
@@ -472,7 +266,7 @@
                 {{ place.bookmark_users.count }}
                 </div>
               </div>
-          </div>   
+        </div>   
 
         <div class="text-0">
           <h1>Place Collection</h1>
@@ -484,7 +278,7 @@
         <div class="place_more">
               <div>
                 <a href="{% url 'place:place_list' %}">View more <br />
-                Placce</a>
+                Place</a>
               </div>
               <a href="{% url 'place:place_list' %}"><img src="media/Group 19.svg"></a>
         </div>

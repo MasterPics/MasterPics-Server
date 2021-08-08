@@ -419,24 +419,31 @@ def recovery_pw(request):
 # ajax 방식
 @csrf_exempt
 def recovery_pw_send_email(request):
-    req = json.loads(request.body)
-    user_id = req['user_id']
-    username = req['username']
-    email = req['email']
-    user = User.objects.get(user_id=user_id, username=username, email=email)
+    try:
+        req = json.loads(request.body)
+        user_id = req['user_id']
+        username = req['username']
+        email = req['email']
+        user = User.objects.get(user_id=user_id, username=username, email=email)
 
-    if user is not None:
-        auth_num = email_auth_num()
-        user.auth = auth_num
-        user.save()
+        if user is not None:
+            if user.is_social:
+                return JsonResponse(data={'status': 'false','message': '해당 계정은 소셜 계정입니다.'}, status=500)
 
-        send_mail(
-            "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
-            [email],
-            html=render_to_string('profile/recovery_pw_email.html', {
-                'auth_num': auth_num,
-            }),
-        )
+            auth_num = email_auth_num()
+            user.auth = auth_num
+            user.save()
+
+            send_mail(
+                "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
+                [email],
+                html=render_to_string('profile/recovery_pw_email.html', {
+                    'auth_num': auth_num,
+                }),
+            )
+    except User.DoesNotExist:
+        return JsonResponse(data={'status': 'false','message': '입력하신 정보가 일치하지 않거나 존재하지 않습니다.'}, status=500)
+        
     return JsonResponse({"user_id": user.user_id})
 
 
