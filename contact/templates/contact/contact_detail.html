@@ -85,10 +85,10 @@
                 <div class="post__pay">
                     {% if contact.pay_negotiation %}
                     <div class="post__pay-text">페이협의</div>
-                    {% elif contact.pay %}
-                    <div class="post__pay-text">{{ contact.pay }} 원</div>
                     {% elif contact.free or contact.pay == 0 %}
                     <div class="post__pay-text">상호무페이</div>
+                    {% elif contact.pay %}
+                    <div class="post__pay-text">{{ contact.pay }} 원</div>
                     {% endif %}
                 </div>
                 <div class="post__date">

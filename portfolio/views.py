@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from .forms import *
-
+from core.forms import PostImageForm
 from core.models import Tag
-
-
-from core.models import *
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -92,11 +89,6 @@ def portfolio_detail(request, pk):
     portfolio.view_count += 1
     portfolio.save()
 
-    print("Helo")
-    for image in portfolio.images.all():
-        print(image.image)
-
-
     parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
@@ -138,14 +130,35 @@ def portfolio_update(request, pk):
             portfolio.user = request.user
             portfolio.save()
             portfolio.tags.clear()
-
             form.save_m2m()
-            portfolio.image = request.FILES.get('image')
+
+            print(portfolio.images)
+            
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                print(image_obj)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     portfolio.thumbnail = image_obj.image
+                #     portfolio.save()
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
+
+        #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
+
         form = PortfolioForm(instance=portfolio)
-        ctx = {'form': form, }
+        images = portfolio.post_image_images.all()
+        ctx = {
+            'form': form,
+            'images': images
+        }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 

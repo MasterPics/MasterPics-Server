@@ -1,4 +1,3 @@
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -48,7 +47,6 @@ const onClickSave = async (place_id) => {
         place_id,
         })
         modify(data.place_id, data.is_saved)
-
         const options = {
             url: '/place/save/',
             method: 'POST',
@@ -67,25 +65,20 @@ const onClickSave = async (place_id) => {
         console.log(error)
     }
 }
-
 const modify = (place_id, is_saved) => {
     const save = document.querySelector(`.save-${place_id} i`);
     const save_content = document.querySelector(`.save-${place_id} .save__content`)
     const num = save_content.innerText; // [ {{ place.save_users.count }} ]
     console.log(num)
     if (is_saved === true) {
-
         save.className = "fas fa-bookmark";
-
         const count = Number(num) + 1;
         save_content.innerHTML = count
     } else {
         save.className = "far fa-bookmark";
-
         const count = Number(num) - 1;
         save_content.innerHTML = count
     }
-
 }
 */
 const modifyNewComment = (place_id, comment_id, value) => {
@@ -173,5 +166,4 @@ const onClickDeleteComment = async (commentId) => {
     })
     modifyDeleteComment(data.comment_id);
 }
-
 
