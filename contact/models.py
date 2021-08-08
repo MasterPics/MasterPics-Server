@@ -32,10 +32,15 @@ class Contact(PostBase):
     end_date = models.DateTimeField()
     is_closed = models.BooleanField(default=False)
 
-    def to_json(self):
+    def to_json(self, request_user):
         return {
             "pk": self.pk,
             "title": self.title,
+            "thumbnail" : self.thumbnail.image.url,
+            "writer" : self.user.username, 
+            "writer_thumbnail" : self.user.images.image.url,
+            "writer_category" : self.user.category,
+            "is_saved" : request_user in self.bookmark_users.all(), 
             "pay": self.pay,
             "start_date": self.start_date.strftime('%Y-%m-%d'),
             "end_date": self.end_date.strftime('%Y-%m-%d'),
