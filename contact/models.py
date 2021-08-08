@@ -11,11 +11,11 @@ PAY_CUSTOM = 0
 PAY_NEGO = 1
 PAY_FREE = 2
 
-PAY_TYPE_CHOICES = (
-    ('페이 입력',PAY_CUSTOM), 
-    ('페이 협의', PAY_NEGO), 
-    ('상호 무페이', PAY_FREE)
-)
+class PayType(models.IntegerChoices):
+    PAY_CUSTOM = 0, '페이 입력'
+    PAY_NEGO = 1, '상호 무페이'
+    PAY_FREE = 2, '페이 협의'
+
 
 class Contact(PostBase):
 
@@ -26,7 +26,7 @@ class Contact(PostBase):
     location = models.ForeignKey(
         to=Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField(blank=True, default=0)
-    pay_type = models.IntegerField(choices=PAY_TYPE_CHOICES, default=PAY_CUSTOM)
+    pay_type = models.IntegerField(choices=PayType.choices, default=PayType.PAY_CUSTOM)
 
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
