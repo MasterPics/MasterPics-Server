@@ -23,8 +23,8 @@ let markers = []; // 마커를 담을 배열입니다
 let infowindow = new kakao.maps.InfoWindow({zIndex:1}); // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 
 let userMarker;
-let userMarkerSrc = 'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-Free-Download-PNG.png', // 출발 마커이미지의 주소입니다    
-    userMarkerSize = new kakao.maps.Size(35, 40), // 출발 마커이미지의 크기입니다 
+let userMarkerSrc = 'https://i.imgur.com/rsjHKsd.png', // 출발 마커이미지의 주소입니다    
+    userMarkerSize = new kakao.maps.Size(35, 60), // 출발 마커이미지의 크기입니다 
     userMarkerOption = { 
         offset: new kakao.maps.Point(17, 43) // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
     };
@@ -145,7 +145,7 @@ function displayPlaces(places) {
     }
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
     listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    menuEl.scrollTop = 10;
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
     userMarker.setPosition(map.getCenter());
@@ -156,7 +156,7 @@ function getListItem(index, places) {
     let el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
+                '   <h6>' + places.place_name + '</h6>';
     if (places.road_address_name) {
         itemStr += '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';

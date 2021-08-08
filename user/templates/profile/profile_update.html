@@ -1,0 +1,107 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/profile_update.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="form__wrapper">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form__top">
+                <!-- Image Form -->
+                <div class="form__group {{ form.image.name }}">
+                    <div>
+                        <img id="form__img-preview" src="" alt="">
+                        <div class="form__upload">프로필 사진 변경</div>
+                    </div>
+                    <div class="form__input-image">
+                        {{ form.image }}
+                        {% for error in form.image.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        
+                <div>
+                    <!-- Username Form -->
+                    <div class="form__group {{ form.username.name }}">
+                        <label class="form__label">{{ form.username.label }}</label>
+                        <div class="form__input">
+                            {{ form.username }}
+                            {% for error in form.username.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+            
+                    <!-- Category Form -->
+                    <div class="form__group {{ form.category.name }}">
+                        <label class="form__label">{{ form.category.label }}</label>
+                        <div class="form__input">
+                            {{ form.category }}
+                            <div class="select__arrow"></div>
+                            {% for error in form.category.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Info Form -->
+            <div class="form__label-my-info">내 정보</div>
+            <div class="form__my-info">
+            {% for field in form.visible_fields %}
+            {% if field.id_for_label == 'id_username' or field.id_for_label == 'id_category' or field.id_for_label == 'id_desc' or field.id_for_label == 'id_image' or field.id_for_label == 'id_password' %}
+            
+            {% else %}
+            <div class="form__group {{ field.name }}">
+                <label class="form__label">{{ field.label }}</label>
+                <div class="form__input">
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            </div>
+            
+            <!-- Desc Form -->
+            <div class="form__group {{ form.desc.name }}">
+                <label class="form__label">{{ form.desc.label }}</label>
+                <div class="form__input">
+                    {{ form.desc }}
+                    {% for error in form.desc.errors %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form__btn">
+                <input type="submit" class="form__submit" value="수정하기" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/mypage/profile_update.js' %}"></script>
+{% endblock script %}

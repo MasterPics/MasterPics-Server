@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+/*layout*/
+
+#nav {
+  background-color: #F4F4F4;
+}
+
+nav {
+  background-color: #fff;
+}
+
+nav a {
+  color: black;
+}
+
+#footer{
+    background-color: #C4C4C4;
+}
+
+body{
+  height: 100%;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+/*login*/
+
+.login__container {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  /*justify-content: center;*/
+  background-color: F4F4F4;
+}
+
+
+.login__container > * {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.login__logo {
+  font-size: 32px;
+  font-family: "DM Serif Display", serif;
+  margin-bottom: 50px;
+}
+
+.login__body{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.login__body form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 165px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  width: 30%;
+  color: #CFCFCF;
+}
+
+.login__body form input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #CFCFCF;
+    padding-left: 10px;
+  }
+
+.login__body form > .submit_btn {
+  height: 45px;
+  width: 100%;
+  background-color: #5200ff;
+  border: #00000000 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.sub-login__container {
+  margin-top:8px;
+  margin-bottom: -10px;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 16%;
+}
+
+.sub-login__container .to-find__container {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-login__container > * {
+  color: #787878;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.social-login__container {
+  flex-direction: column;
+}
+.social-login__container .social-login__title {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 24px 0;
+}
+.social-login__container .social-login__body {
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.social-login__container .social-login__body > * {
+  background-color: white;
+  border: #CACACA 1px solid;
+  padding: 8px 22px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+input::placeholder{
+  font-size: 10px; 
+  color: #ccc;
+}
+
+a { text-decoration: none; color: black; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:focus { text-decoration: none; }
+a:active { text-decoration: none; }
+
+input[type="password"] {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*login sucess*/
+
+.login__form-success{
+    font-size: 10px;
+    margin: 5px auto;
+}
+

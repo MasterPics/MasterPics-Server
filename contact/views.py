@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
 from .models import *
+from core.models import *
 
 # for Comment, Save
 from django.http import JsonResponse
@@ -27,12 +28,13 @@ def contact_save(request):
         data = json.loads(request.body)
         contact_id = data["contact_id"]
         contact = get_object_or_404(Contact, pk=contact_id)
-        is_saved = request.user in contact.save_users.all()
-        if(is_saved):
-            contact.save_users.remove(
+        is_saved = request.user in contact.bookmark_users.all()
+        if is_saved:
+            contact.bookmark_users.remove(
                 get_object_or_404(User, pk=request.user.pk))
         else:
-            contact.save_users.add(get_object_or_404(User, pk=request.user.pk))
+            contact.bookmark_users.add(
+                get_object_or_404(User, pk=request.user.pk))
         is_saved = not is_saved
         contact.save()
         return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
@@ -73,7 +75,7 @@ def contact_list(request):
     # Sort
     if sort == 'save':
         contacts = contacts.annotate(num_save=Count(
-            'save_users')).order_by('-num_save', '-created_at')
+            'contactinformation')).order_by('-num_save', '-created_at')
     elif sort == 'pay':
         contacts = contacts.order_by('-pay', '-created_at')
     elif sort == 'recent':
@@ -103,26 +105,16 @@ def contact_list(request):
         'sort': sort,
         'category': category,
         'search': search,
-        'request_user': request.user,
     }
     return render(request, 'contact/contact_list.html', context=context)
 
 
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    # contact_information = ContactInformation.objects.get(
-    #     contact=contact)
-
-    #comment 를 가져오는 쿼리
-    comments = ContactComment.get_comments(contact)
-
-    # contact_information.information.view_count += 1
-    # contact_information.information.save()
-
+    comments = contact.comments.all()
     ctx = {
         'contact': contact,
-        'request_user': request.user,
-        'comments': comments,
+        'comments': comments
     }
     return render(request, 'contact/contact_detail.html', context=ctx)
 
@@ -144,54 +136,80 @@ def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, instance=contact)
-        if form.is_valid():
-            contact.image = request.FILES.get('image')
-            contact = form.save()
+        location_form = LocationForm(request.POST, instance=contact.location)
+
+        if form.is_valid() and location_form.is_valid():
+            contact = form.save(commit=False)
+            location = location_form.save(commit=False)
+            location.save()
+            contact.user = request.user
+            contact.location = location
+            contact.save()
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Contact.objects.get(id=contact.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                # if not i:
+                #     contact.thumbnail = image_obj.image
+                #     contact.save()
 
             return redirect('contact:contact_detail', contact.pk)
     else:
         form = ContactForm(instance=contact)
-        ctx = {'form': form}
+        images = contact.post_image_images.all()
+        location_form = LocationForm(instance=contact)
+        ctx = {'form': form,
+               'location_form': location_form,
+               'images': images}
         return render(request, 'contact/contact_update.html', ctx)
 
-#TODO 파일 첨부 
+# TODO 파일 첨부
+
+
 @login_required
 def contact_create(request):
     if request.method == 'POST':
         contact_form = ContactForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
-
         if contact_form.is_valid() and location_form.is_valid():
             contact = contact_form.save(commit=False)
-
-            # create location
             location = location_form.save(commit=False)
             location.save()
-
-            # create contact
             contact.user = request.user
-            contact.is_closed = False
             contact.location = location
             contact.save()
-            contact.image = request.FILES.get('image')
 
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Contact.objects.get(id=contact.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+                if not i:
+                    contact.thumbnail = image_obj.image
+                    contact.save()
             return redirect('contact:contact_detail', contact.pk)
         
+        #TODO Else 문 로직 정리해줘야함 
         else:
-            ctx = {
-                'contact_form': contact_form,
-                'location_form': location_form,
-            }
-            return render(request, 'contact/contact_create.html', ctx)
+            return redirect("contact:contact_list")
+
 
     else:
-        contact_form = ContactForm()
-        location_form = LocationForm()
-
-    ctx = {
-        'contact_form': contact_form, 'location_form': location_form
-    }
-    return render(request, 'contact/contact_create.html', context=ctx)
+        ctx = {
+            'contact_form': ContactForm(),
+            'location_form': LocationForm(),
+        }
+        return render(request, 'contact/contact_create.html', ctx)
 
 
 def contact_map(request):
@@ -207,20 +225,19 @@ def contact_map(request):
 def contact_comment_create(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        contact_id = data["id"]
-        comment_value = data["value"]
+        contact_id = data['id']
+        comment_value = data['value']
         contact = Contact.objects.get(id=contact_id)
         comment = Comment.objects.create(
-            writer=request.user, content=comment_value)
-        contactcomment = ContactComment.objects.create(comment=comment, contact=contact)
-        return JsonResponse({'contact_id': contact_id, 'comment_id': contactcomment.id, 'value': comment_value})
+            writer=request.user, post=contact, content=comment_value)
+        return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
 
 
 @csrf_exempt
 def contact_comment_delete(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        comment_id = data["comment_id"]
+        comment_id = data['commentId']
         comment = Comment.objects.get(id=comment_id)
         comment.delete()
         return JsonResponse({'comment_id': comment_id})
