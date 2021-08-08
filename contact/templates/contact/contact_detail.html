@@ -62,10 +62,16 @@
         <div class="post__title-wrapper">
             <h1 class="post__title">{{contact.title}}</h1>
             <div class="post__edit">
-                <!-- 게시글 작성자만 수정/삭제 가능 -->
+                <!-- 게시물 작성자만 수정/삭제 가능 -->
                 {% if request.user.pk == contact.user.pk %}
-                <a class="post__edit-btn" href="{% url 'contact:contact_update' contact.pk %}">수정</a>
-                <a class="post__edit-btn" href="{% url 'contact:contact_delete' contact.pk %}">삭제</a>
+                <div>
+                    <a class="post__edit-btn" href="{% url 'contact:contact_update' contact.pk %}">수정</a>
+                </div>
+                
+                <form action="{% url 'contact:contact_delete' contact.pk %}" id="postDelete" method="POST">
+                    {% csrf_token %}
+                    <a class="post__edit-btn" onclick="postDelete()" href="#">삭제</a>
+                </form>
                 {% endif %}
             </div>
         </div>
@@ -174,6 +180,7 @@
 <script type="text/javascript" src="{% static 'js/contact_comment.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map/contact_detail_map.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/post_delete.js' %}"></script>
 {% endblock script %}
 
 
