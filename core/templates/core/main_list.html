@@ -114,6 +114,10 @@
   <div class="RandomMagazine">
           <div class="card_container-0">
               {% for portfolio in portfolios %}
+              {% comment %} 
+                이미지 추출방법!
+                <img src='{{ portfolio.thumbnail.image.url }}'>
+              {% endcomment %}
               <div class="magazine_img"><img src="{{portfolio.user.image.url}}" alt='img'></div>
                 <div class="info_container">
                   <h2 class="title"><a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">{{portfolio.title}}</a></h2>

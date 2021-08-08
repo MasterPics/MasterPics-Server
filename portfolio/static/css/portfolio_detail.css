@@ -1,20 +1,10 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: "NanumSquare", sans-serif;
-}
-.container {
+.wrapper {
   width: 85%;
+  height: 100%;
   margin: 80px auto;
   display: flex;
   justify-content: center;
   margin-bottom: 0;
-}
-.wrapper {
-  display: flex;
-  justify-content: center;
 }
 /*********************** side-bar **************************/
 .side-bar {
@@ -48,6 +38,7 @@ body {
   height: 80px;
   border-radius: 100%;
   margin-bottom: 12px;
+  object-fit: cover;
 }
 .side-bar__user-name {
   font-size: 14px;

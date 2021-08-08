@@ -64,7 +64,7 @@
 <div class="line"></div>
 
 <div class="list">
-    <div class="list__group grid">
+    <div class="list__container grid">
         {% for contact in contacts %}
         <div class="list__item-wrapper grid-item">
             <div class="list__item">
@@ -73,10 +73,10 @@
                     <div class="list__pay">
                         {% if contact.pay_negotiation %}
                         <div class="list__pay-text">페이협의</div>
-                        {% elif contact.pay %}
-                        <div class="list__pay-text">{{ contact.pay }} 원</div>
                         {% elif contact.free or contact.pay == 0 %}
                         <div class="list__pay-text">상호무페이</div>
+                        {% elif contact.pay %}
+                        <div class="list__pay-text">{{ contact.pay }} 원</div>
                         {% endif %}
                     </div>
                     <div class="list__date">
