@@ -427,7 +427,6 @@ def recovery_pw_send_email(request):
         user = User.objects.get(user_id=user_id, username=username, email=email)
 
         if user is not None:
-            print(user.is_social)
             if user.is_social:
                 return JsonResponse(data={'status': 'false','message': '해당 계정은 소셜 계정입니다.'}, status=500)
 
@@ -442,8 +441,7 @@ def recovery_pw_send_email(request):
                     'auth_num': auth_num,
                 }),
             )
-    except Exception as ex:
-        print(ex)
+    except User.DoesNotExist:
         return JsonResponse(data={'status': 'false','message': '입력하신 정보가 일치하지 않거나 존재하지 않습니다.'}, status=500)
         
     return JsonResponse({"user_id": user.user_id})
