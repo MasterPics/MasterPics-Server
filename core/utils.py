@@ -20,9 +20,9 @@ from django.core.files import File
 def compress(image):
 
     img = Image.open(image)
-    print(img.size)
+    img = img.convert('RGB')
     img_io = BytesIO()
-    img.save(img_io, 'JPEG', quality=50)
+    img.save(img_io, 'JPEG', quality=30)
     compressed_img = File(img_io, name=image.name)
     return compressed_img
 
