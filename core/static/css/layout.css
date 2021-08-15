@@ -409,6 +409,11 @@ nav a {
 .navbar__toogleBtn {
   color: white;
   display: flex;
+  width: 20px;
+}
+
+.navbar__toogleBtn i{
+  font-size: 18px;
 }
 
 .drop_down {

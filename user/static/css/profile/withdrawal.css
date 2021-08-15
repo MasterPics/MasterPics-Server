@@ -102,3 +102,11 @@ li{
     font-size: 12px;
     font-weight: bold;
 }
+
+
+/* 반응형 */
+@media screen and (min-width:360px) and (max-width:512px) {
+    .modify__body{
+        width: 80%;
+    }
+}

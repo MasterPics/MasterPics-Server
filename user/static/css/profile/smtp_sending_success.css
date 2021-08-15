@@ -72,3 +72,15 @@ body{
     margin-top: 20px;
     margin-bottom: 40px;
 }
+
+
+/* 반응형 */
+@media screen and (min-width:360px) and (max-width:512px) {
+    .modify__body{
+        width: 90%;
+    }
+
+    .email_info {
+        font-size: 13px;
+    }
+}

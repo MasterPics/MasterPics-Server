@@ -185,7 +185,7 @@ input[type="password"] {
   }
   
   .login__body{
-    width: 80%;
+    width: 100%;
   }
   
   .login__body form{
