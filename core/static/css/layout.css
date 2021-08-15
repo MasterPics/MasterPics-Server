@@ -258,19 +258,16 @@ button {
 
 .footer__logo {
   margin-right: 20px;
+  font-size: 24px;
+  font-family: "DM Serif Display", serif;
 }
 
-.info {
+.info_1, .info_2 {
   margin: 0 15px 0 15px;
 }
 
 .mpright {
   margin-right: 320px;
-}
-
-.footer__logo {
-  font-size: 24px;
-  font-family: "DM Serif Display", serif;
 }
 
 .footer__right {
@@ -340,83 +337,106 @@ button {
   outline: 0;
 }
 
+
+/* 반응형 nav */
+
+.nav_logo_img{
+  width: 25px;
+}
+
+.nav__logo {
+  font-size: 22px;
+  margin-left: 3%;
+}
+
+
 /* 반응형 footer */
 
 @media screen and (min-width:360px) and (max-width:512px) {
   /*footer*/
 
 #footer {
+  display: grid;
+  grid-template-areas: "text-0 text-1 text-2 ." " text-3 . text-4 text-5";
   border-top: 1px solid CACACA;
-  padding: 10px 30px;
-  font-size: 9px;
+  padding: 7px 7px;
+  font-size: 8px;
   height: 50px;
 }
 
 #footer > div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   align-items: center;
 }
 
 .footer__left {
-  display: flex;
-  align-items: baseline;
-  margin-left: -10px;
+  display: grid;
+  margin-left: 5px;
+  height: 40px;
 }
 
 .footer__logo {
-  margin-right: 20px;
+  grid-area: text-0;
+  font-size: 16px;
+  margin-bottom: 40px;
 }
 
-.info {
-  margin: 0 15px 0 15px;
+.info_1 {
+  grid-area: text-1;
+  margin-left: 90px;
+  width: 100px;
+}
+
+.info_2 {
+  grid-area: text-2;
+  margin-left: 135px;
+  width: 100px;
 }
 
 .mpright {
-  margin-right: 320px;
-}
-
-.footer__logo {
-  font-size: 24px;
-  font-family: "DM Serif Display", serif;
+  margin-left: -268px;
+  grid-area: text-3;
+  margin-right: 0;
+  margin-top: 15px;
 }
 
 .footer__right {
-  display: flex;
+  display: grid;
   cursor: pointer;
+  grid-area: text-4;
+  margin-top: -40px;
 }
 .alliance {
   color: #5200ff;
 }
 
-
-  .nav__menu {
+.nav__menu {
     display: none;
     flex-direction: column;
     align-items: center;
     width: 100%;
-  }
+}
 
-  .nav__menu li {
-    width: 100%;
-    text-align: center;
-    padding-left: 0;
-  }
+.nav__menu li {
+  width: 100%;
+  text-align: center;
+  padding-left: 0;
+}
 
-  .nav__profile {
-    display: none;
-  }
+.nav__profile {
+  display: none;
+}
 
-  .nav__toggleBtn {
-    display: flex;
-    justify-content: flex-end;
-  }
+.nav__toggleBtn {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .nav__menu.active {
-    display: block;
-  }
+.nav__menu.active {
+  display: block;
+}
 
-  .nav__profile.active {
-    display: block;
-  }
+.nav__profile.active {
+  display: block;
+}
 }
