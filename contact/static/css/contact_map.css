@@ -10,7 +10,7 @@
 
 /******************* left ******************/
 .wrapper-left {
-  width: 550px;
+  width: 450px;
 }
 .header {
   background-color: #5200ff;
@@ -38,7 +38,7 @@
   margin-bottom: 15px;
 }
 .search-form input {
-  width: 320px;
+  width: 420px;
   border: 0;
   border-radius: 5px;
   background-color: #ffffff;
@@ -67,9 +67,9 @@
   color: #5200ff;
 }
 .category a {
-  padding: 2% 3%;
+  padding: 2% 4%;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 12px;
   color: #ffffff;
 }
 .category-selected {
@@ -140,7 +140,7 @@
   margin-left: 8px;
 }
 .place-title{
-  font-size: 14px;
+  font-size: 16px;
   color:#212121;
   margin-bottom: 5px;
   text-overflow: ellipsis;
@@ -148,18 +148,18 @@
   vertical-align: middle;
 }
 .address{
-  font-size: 10px;
+  font-size: 12px;
   color:#000000;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .pay-date{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .pay{
-  font-size: 10px;
+  font-size: 12px;
   color:#5200ff;
   margin-right: 5px;
 }
@@ -167,34 +167,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
   color:#000000;
 }
 .user-wrapper{
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .user-wrapper img{
   width: 24px;
   height: 24px;
   border-radius: 100%;
   margin-right: 10px;
+  object-fit: cover;
 }
 .writer{
-  font-size: 10px;
+  font-size: 12px;
   color:#000000;
+  margin-bottom: 5px;
 }
 .writer__category{
-  font-size: 8px;
+  font-size: 10px;
   color:#888888;
 }
 .thumbnail img{
-  width: 130px;
-  height: 100px;
+  width: 150px;
+  height: 120px;
   border-radius: 5px;
   margin-left: 5px;
+  object-fit: cover;
+
 }
 
 /******************* right ******************/
