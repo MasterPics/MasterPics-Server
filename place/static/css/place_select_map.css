@@ -1,6 +1,4 @@
 .map_wrap, .map_wrap * {
-    margin:0;
-    padding:0;
     font-family:'Malgun Gothic',dotum,'돋움',sans-serif;
     font-size:12px;
 }
@@ -16,7 +14,7 @@
 #menu_wrap{
   position: absolute;
   top: 0;
-  bottom: 0;
+  right: 0;
   width: 350px;
   margin: 10px 10px 30px 10px;
   padding: 1rem;
@@ -74,6 +72,9 @@
     background: rgba(255, 255, 255, 0.9);
     margin-top:1rem;
     height: auto;
+}
+#placesList {
+    margin-bottom: 1rem;
 }
 #placesList li {
     list-style: none;
@@ -164,12 +165,12 @@
     background-position: 0 -654px;
 }
 #pagination {
-    padding:1rem auto;
     text-align: center;
 }
 #pagination a {
     display:inline-block;
     margin-right:10px;
+    margin-bottom: 1rem;
 }
 #pagination .on {
     font-weight: bold; 
