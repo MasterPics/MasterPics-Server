@@ -134,8 +134,10 @@ body{
 /*구분선*/
 
 hr{
+  width:1120px;
   grid-column: span 2;
   margin:3% 0;
+  justify-self: center;
 }
 
 /*컨텐츠 목록*/
@@ -268,29 +270,6 @@ hr{
   margin-bottom:2rem;
 }
 
-/*중간 깨지는 부분*/
-@media screen and (max-width:1140px) and (min-width:769px){
-  .place-thumbnail{
-    width:197px;
-    height: 197px;
-  }
-  .place-content{
-    margin:1.5rem 0;
-    align-items: flex-start;
-  }
-  .place-content-title{
-    width:230px;
-    padding: 0 0.9rem;
-    margin:0;
-  }
-  .place-address, .place-pay {
-    font-size: 0.9rem;
-  }
-  .place-search{
-    width:100%;
-  }
-}
-
 /*모바일*/
 @media screen and (max-width:480px){
   .place-header-content h2{
@@ -356,7 +335,7 @@ hr{
 }
 
 /*패드*/
-@media screen and (max-width:768px) and (min-width:481px){
+@media screen and (max-width:1024px) and (min-width:481px){
   
   .place-list-grid{
     width:95vw;
