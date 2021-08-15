@@ -37,7 +37,7 @@
 
         <div id="div_find_pw">
             <button id="find_pw" name="recovery_pw" onclick="onClickFindPW()">이메일 전송</button>
-            <input type="button" class="undo_btn " value="취소" /><a href='#'></a>
+            <a href="{% url 'profile:login' %}"><input type="button" class="undo_btn " value="취소" /></a>
         </div>
 
         <div id="result_pw"></div>
@@ -120,7 +120,8 @@
             if (user_id == "" || username == "" || email == "") {
                 alert('아이디, 이름, 이메일을 모두 입력해주세요.');
             } else {
-                alert('입력하신 정보가 일치하지 않거나 존재하지 않습니다.');
+                // error message 출력
+                alert(error.response.data.message);
             }
         })
     };

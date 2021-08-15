@@ -215,7 +215,7 @@ def contact_create(request):
 def contact_map(request):
     contacts = Contact.objects.filter(is_closed=False)
     ctx = {
-        'contacts_json': json.dumps([contact.to_json() for contact in contacts])
+        'contacts_json': json.dumps([contact.to_json(request.user) for contact in contacts])
     }
     return render(request, 'contact/contact_map.html', context=ctx)
 
