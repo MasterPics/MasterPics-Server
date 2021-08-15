@@ -37,6 +37,14 @@ $(document).ready(function(){
         $("#page").val(1);   //검색버튼을 클릭할 경우 1페이지부터 조회한다.
         $("#searchForm").submit();
     });
+
+    $(".search").keypress(function(event) {
+        if(event.which == 13){
+            $("#search").val($(".search").val());
+            $("#page").val(1); 
+            $("#searchForm").submit();
+        }
+    });
 });
 
 //sort

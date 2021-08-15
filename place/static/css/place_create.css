@@ -54,16 +54,47 @@ label {
   font-size:0.7rem;
 }
 
+
 .location-lat{
   display:none;
 }
 .location-lon{
   display:none;
 }
+
 .images input{
   padding:0;
-  margin:5px 0 10px 0;
+  margin:5px 0 5px 0;
+  opacity:1;
+  width:30%;
+  z-index: 1000;
 }
+.filename{
+  font-size:0.7rem;
+  color: #999999;
+  margin:0.3rem 0 !important;
+}
+.image-field-custom{
+  grid-area: images;
+  position: absolute;
+  top:0rem;
+  left:0rem;
+  font-size:0.8rem;
+  width:50%;
+  margin:5px 0;
+  border:1px solid #cacaca;
+  border-radius: 2px;
+  padding:0.5rem
+}
+.image-field-custom p{
+  margin:0 !important;
+  font-size:0.7rem;
+}
+.custom-file-btn{
+  margin: 0 1rem 0 0;
+  background:transparent;
+}
+
 .title input,
 .desc textarea,
 .location-form input,
@@ -94,7 +125,7 @@ label {
   top:0;
   left:0;
   padding:3.5rem;
-  z-index: 1000;
+  z-index: 200;
   width:500px;
   height: 100vh;
   background-color: #FCFCFC;
@@ -135,6 +166,7 @@ label {
 }
 .place-form .images{
   grid-area: images;
+  position: relative;
 }
 
 

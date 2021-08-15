@@ -17,7 +17,7 @@ body{
 
 /* ======header======*/
 .reference-header{
-  margin:3%;
+  margin:5vw 3% 3% 3%;
   padding:5%;
   display: flex;
   flex-direction: column;
@@ -31,6 +31,7 @@ body{
   color:#434343;
   margin: 1rem 0;
   line-height: 1.2rem;
+  text-align: center;
 }
 .reference-header form{
     margin-top:0.5rem;
@@ -136,11 +137,11 @@ hr{
     align-items: center;
     margin-left:7px;
 }
-.fas::before{
-    color:#5200ff;
+.grid-item .fas::before{
+    color:#5200ff !important;
 }
-.fas{
-    color:#5200ff;
+.grid-item .fas{
+    color:#5200ff !important;
 }
 .title p{
     font-size:14px;
