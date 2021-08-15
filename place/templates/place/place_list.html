@@ -70,7 +70,7 @@
         <!-- 게시글 목록-->
         {% for place in places %}
             <div class="place-content">
-                <img class="place-thumbnail" src="{{ place.thumbnail.image.url }}"/>
+                <a href="{% url 'place:place_detail' place.pk %}" alt="게시물 썸네일"><img class="place-thumbnail" src="{{ place.thumbnail.image.url }}"/></a>
                 <div class="place-content-title">
                     <a href="{% url 'place:place_detail' place.pk %}">
                         <p class="place-title">{{place.title}}</p>
