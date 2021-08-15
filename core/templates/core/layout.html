@@ -39,6 +39,7 @@
       <ul class="nav__logo">
         <img class="nav_logo_img" src="/media/mp_logo.png" alt='img'><li><a href="{% url 'core:main_list' %}"> MasterPic's</a></li>
       </ul>
+
       <ul class="nav__menu">
         <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
         <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
@@ -81,12 +82,50 @@
               </a>
             </div>
           </li>
-
           {% endif %}
         </ul>
       </ul>
+
+      <!--햄버거 메뉴-->
+      <!--href="#"을 하면 클릭시 새로고침안됨-->
+      <li class="drop_down">
+        <button class="navbar__toogleBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+          <div class= "toogleBtn-content">
+            <ul class="toogle_nav__menu">
+              <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
+              <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
+              <li><a href="{% url 'reference:reference_list' %}">Reference</a></li>
+              <li><a href="{% url 'place:place_list' %}">Place</a></li>
+            <ul>
+
+            <ul class="toogle_nav__profile">
+              {% if not user.is_authenticated %}
+              <li><a href="{% url 'profile:login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
+              {% else %}
+
+              <li class="toogle_user_dropdown">
+                  <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
+                  <a>
+                    <form method="post" action="{% url 'account_logout' %}">
+                      {% csrf_token %}
+                      {% if redirect_field_value %}
+                      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                      {% endif %}
+                      <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                        style="margin-right: 10px;"></input>
+                    </form>
+                  </a>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+      </li>
     </nav>
   </head>
+
   <section class="container">
     {% block content %}
     {% endblock %}

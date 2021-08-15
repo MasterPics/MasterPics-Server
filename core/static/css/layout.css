@@ -99,6 +99,10 @@ nav a {
   z-index: 100;
 }
 
+.navbar__toogleBtn, .toogleBtn-content{
+  display: none;
+}
+
 .nav_logo_img{
   width: 30px;
   justify-content: center;
@@ -224,7 +228,7 @@ nav a {
   display: block;
 }
 
-button {
+.user_dropdown > button {
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -338,19 +342,7 @@ button {
 }
 
 
-/* 반응형 nav */
-
-.nav_logo_img{
-  width: 25px;
-}
-
-.nav__logo {
-  font-size: 22px;
-  margin-left: 3%;
-}
-
-
-/* 반응형 footer */
+/* 반응형 nav & footer */
 
 @media screen and (min-width:360px) and (max-width:512px) {
   /*footer*/
@@ -408,6 +400,65 @@ button {
 }
 .alliance {
   color: #5200ff;
+}
+
+
+
+/* 반응형 nav */
+
+.navbar__toogleBtn {
+  color: white;
+  display: flex;
+}
+
+.drop_down {
+  position: relative;
+}
+
+.toogleBtn-content {
+  display: none;
+  position: absolute;
+  background-color: #000000;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  margin-left: -100px;
+}
+
+.toogleBtn-content a {
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+}
+
+.toogle_user_dropdown > input{
+  font-family: 'DM Serif Display', serif;
+}
+
+.toogleBtn-content a:hover {
+  background-color: #5200ff;
+}
+
+.drop_down:hover .toogleBtn-content {
+  display: block;
+}
+
+.drop_down > button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.nav_logo_img{
+  width: 25px;
+}
+
+.nav__logo {
+  font-size: 22px;
+  margin-left: 3%;
 }
 
 .nav__menu {
