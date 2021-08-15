@@ -1,9 +1,11 @@
 from django import forms
 from .models import *
+from taggit.forms import TagWidget
 
 # form validator
 from django.core.exceptions import ValidationError
 import datetime
+
 
 
 class ContactForm(forms.ModelForm):
@@ -16,7 +18,7 @@ class ContactForm(forms.ModelForm):
 
         model = Contact
         fields = ('title', 'desc', 'start_date', 'end_date', 
-                  'file_attach', 'pay', 'tags')
+                  'file_attach', 'pay_type', 'pay', 'tags')
         labels = {
             'title': '제목',
             'desc': '설명',

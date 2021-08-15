@@ -1,20 +1,42 @@
 {% autoescape off %}
 <!DOCTYPE html>
 <body>
-    <div>
-        <div class='header'>
-            MasterPic's 회원가입 이메일 인증 발송
-        </div>
-        <div class='body'>
-            <div class='content'>
-                MasterPic's에 회원가입을 해주셔서 감사합니다. <br>
+    <table border="1px solid #F4F4F4" cellpadding="0" cellspacing="0" width="100%" height= "120%" rules="none" frame="void" style="background-color:#F4F4F4;">
+        <table border="1px solid #CACACA" cellpadding="0" cellspacing="0" width="50%" height= "75%" rules="none" frame="void" style= "margin: 40px auto; background-color:white;">
+            <tr>
+                <td class="modify__body" style="width: 60%;height: 50%;line-height: 40px; text-align:center; font-size: 16px;padding-top: 30px;font-weight: 600; color:black;">
+                    MasterPic's 회원가입 이메일 인증 발송
+                </td>
+            </tr>
+            <tr>
+                <td class="content" style="font-size: 12px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 15px; color:black;">
+                MasterPic's에 회원가입을 해주셔서 감사합니다.
+                </td>
+            </tr>
+            <tr>
+                <td class="content" style="font-size: 12px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 10px; color:black;">
                 아래의 '인증하기'를 클릭하여 이메일 인증을 완료해주세요.
-            </div>
-            <div class='smtp_email_auth'>
-                <a href="http://{{ domain }}{% url 'profile:local_signup_auth' uid64=uid token=token %}">인증하기</a>
-            </div>
-        </div>
-    </div>           
+                </td>
+            </tr>
+            <tr>
+                <td class="smtp_email_auth" style="font-size: 13px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center;padding-top: 25px;">
+                <a href="http://{{ domain }}{% url 'profile:local_signup_auth' uid64=uid token=token %}"
+                style="font-size: 12px;font-weight: 600;font-family: 'Noto Sans KR', sans-serif;text-align: center; border: 1px solid #5200FF; border-width: 50px; border-top-width: 10px; border-bottom-width: 10px; background-color: #5200FF; border-radius: 10px; color: white; text-decoration: none;">
+                이메일 인증하기</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="foot" style="font-size: 8px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 30px; color:#8F8F8F;">
+                Find everything for your Masterpiece, MasterPic's
+                </td>
+            </tr>
+            <tr>
+                <td class="foot" style="font-size: 8px;font-family: 'Noto Sans KR', sans-serif; text-align: center;padding-top: 10px;padding-bottom: 30px; color:#8F8F8F; text-decoration:none;">
+                www.masterpics.com
+                </td>
+            </tr>
+        </table>  
+    </table>        
 </body>
 </html>
 {% endautoescape %}

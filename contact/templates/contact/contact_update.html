@@ -54,6 +54,7 @@
                             <label for="pay">페이</label>
                         </div>                  
                         <div class="form__input">
+                            {{ form.pay_type }}
                             {{ form.pay }}
                             {% for error in form.pay.errors %}
                                 <div class="alert alert-danger">

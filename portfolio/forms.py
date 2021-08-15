@@ -1,11 +1,12 @@
 from django import forms
 from .models import *
-from core.models import Image, PostImage, PostBase
+from taggit.forms import TagField, TagWidget
 
 
 class PortfolioForm(forms.ModelForm):
     images = forms.ImageField(
         widget=forms.ClearableFileInput(attrs={'multiple': True, }))  # 다중이미지
+
 
     class Meta:
         model = Portfolio
@@ -13,7 +14,7 @@ class PortfolioForm(forms.ModelForm):
         labels = {
             'title': '제목',
             'desc': '설명',
-            'tags': '태그 (#을 붙이고 공백으로 구분)',
+            'tags': '태그 (#을 붙이고 공백으로 구분)'
         }
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': '포트폴리오를 대표할 제목을 입력하세요.'}),
