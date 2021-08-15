@@ -54,6 +54,7 @@ const modifyNewComment = (place_id, comment_id, value) => {
     commentImage.appendChild(commentUserImage);
 
     const commentInfo = document.createElement("div")
+    commentInfo.className = 'comment-info'
     const commentWriter =  document.createElement("span")
     commentWriter.className = `comment-writer`;
     commentWriter.textContent = writer;
@@ -75,13 +76,17 @@ const modifyNewComment = (place_id, comment_id, value) => {
     commentInfo.appendChild(commentWriter)
     commentInfo.appendChild(commentCreated)
     commentInfo.appendChild(commentText)
+    
 
     commentContent.appendChild(commentImage)
     commentContent.appendChild(commentInfo)
+    
 
     tempContainer.appendChild(commentContent)
     tempContainer.appendChild(deleteBtn);
-    CommentContainer.appendChild(tempContainer);
+    
+    CommentContainer.insertBefore(tempContainer,CommentContainer.firstChild);
+   
 }
 
 const onClickNewComment = async (id) => {
@@ -112,20 +117,15 @@ const modifyDeleteComment = (comment_id) => {
 }
 
 const onClickDeleteComment = async (commentId) => {
-    alert('start');
     if(confirm("댓글을 삭제하시겠습니까?")){
-        alert("1");
         const url = `/place/comment_delete/`;
-        alert("2");
         const {
             data
         } = await axios.post(url, {
             commentId
         })
-        alert("3");
         modifyDeleteComment(data.comment_id);
     }else{
-        alert("ohno");
         return;
     }
     
