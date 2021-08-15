@@ -20,8 +20,8 @@
     <div class="place-list-grid">
         <!--search-->
         <div class="place-search">
-            <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
-            <button class="btn_search" type="button" id="btn_search">찾기</button>
+            <input id="search_input" class="form-control search" type="text" value="{{ search|default_if_none:"" }}" placeholder="찾고싶은 장소를 검색해보세요!">
+            <button id="btn_search" class="btn_search" type="submit">검색</button>
         </div>
         <div style="display:none;">
             <form id="searchForm" method="get" action="{% url 'place:place_list' %}">
@@ -70,7 +70,7 @@
         <!-- 게시글 목록-->
         {% for place in places %}
             <div class="place-content">
-                <img class="place-thumbnail" src="{{ place.thumbnail.image.url }}"/>
+                <a href="{% url 'place:place_detail' place.pk %}" alt="게시물 썸네일"><img class="place-thumbnail" src="{{ place.thumbnail.image.url }}"/></a>
                 <div class="place-content-title">
                     <a href="{% url 'place:place_detail' place.pk %}">
                         <p class="place-title">{{place.title}}</p>
@@ -167,7 +167,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 
 
-<script type="text/javascript" src="{% static 'js/map/place_list_map.js' %}"></script>
+{% comment %} <script type="text/javascript" src="{% static 'js/map/place_list_map.js' %}"></script> {% endcomment %}
 <script type="text/javascript" src="{% static 'js/place/place_list.js' %}"></script>
 
 <script src="{% static 'js/place_bookmark.js' %}"></script>
