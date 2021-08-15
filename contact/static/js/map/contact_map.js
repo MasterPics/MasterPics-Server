@@ -29,11 +29,18 @@ function contactPlaces() {
     for (var i=0; i<contacts.length; i++) {
         positions.push(
             {
+                pk: contacts[i].pk,
                 title: contacts[i].title,
+                thumbnail:contacts[i].thumbnail,
+                is_saved:contacts[i].is_saved,
                 address: contacts[i].address, 
+                pay_type : contacts[i].pay_type,
                 pay : contacts[i].pay,
                 startDate : contacts[i].start_date,
                 endDate : contacts[i].end_date,
+                writer:contacts[i].writer,
+                writer_thumbnail:contacts[i].writer_thumbnail,
+                writer_category:contacts[i].writer_category,
                 latlng: ''
             }
         );   
@@ -53,8 +60,6 @@ function contactPlaces() {
 }
 
 // 현위치 주변 검색
-searchCurrentPosition();
-
 function searchCurrentPosition(){
     if (navigator.geolocation) {
     
@@ -179,23 +184,55 @@ function displayPlaces(keyword) {
 
 // 검색결과 항목을 Element로 반환
 function getListItem(index, places) {
+    console.log(places);
+    
+    let itemSave;
+    let itemPay;
+
+    if (places.is_saved){
+        itemSave = `<i class="fas fa-bookmark" type="submit" onclick="onClickMapSave(${places.pk})" name="type" value="save"></i>`;
+    } else {
+        itemSave = `<i class="far fa-bookmark" type="submit" onclick="onClickMapSave(${places.pk})" name="type" value="save"></i>`;
+    }
+
+    if (places.pay_type === 0){
+        itemPay = "상호무페이";
+    }
+    else if (places.pay_type === 1){
+        itemPay = places.pay + "원";
+    }
+    else {
+        itemPay = "페이협의";
+    }
 
     var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info">' +
-                '<h5>' + places.title + '</h5>';
 
-    itemStr += '<span class="address">' + places.address + '</span>';
-    
-    itemStr += '<span class="pay">' + places.pay  + '</span>';
 
-    itemStr += '<div class="date-wrapper>'
-    itemStr += '<span class="date">' + places.pay  + '</span>';
-    itemStr += '<span>' + places.startDate  + '</span>';
-    itemStr += '<span>' + '~'  + '</span>';
-    itemStr += '<span>' + places.endDate  + '</span>' +
-                '</div>'+           
-                '</div>';           
+    itemStr =   '<div class="info">' +
+                `<div class="save save-${places.pk}">`+ itemSave + `</div>`+
+                '<div class="content">'+
+                    `<a href="http://127.0.0.1:8000/contact/detail/${places.pk}">`+'<div class="place-title">' + places.title + '</div>'+`</a>`+
+                    '<div class="address">' + places.address + '</div>'+
+                    '<div class="pay-date">'+
+                        '<div class="pay">' + itemPay + '</div>'+
+                        '<div class="date-wrapper">'+
+                            '<div>' + places.startDate  + '</div>'+
+                            '<div>' + '~'  + '</div>'+
+                            '<div>' + places.endDate  + '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="user-wrapper">'+
+                        `<img src=${places.writer_thumbnail}>`+
+                        '<div>'+
+                            '<div class="writer">' + places.writer  + '</div>'+
+                            '<div class="writer__category">' + places.writer_category  + '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="thumbnail">'+
+                `<a href="http://127.0.0.1:8000/contact/detail/${places.pk}">`+`<img src=${places.thumbnail} />`+`</a>`+
+                '</div>'+
+            '</div>';         
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -205,11 +242,10 @@ function getListItem(index, places) {
 
 // 마커 생성
 function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
-        imageSize = new kakao.maps.Size(36, 37),
+    var imageSrc = 'https://i.imgur.com/rsjHKsd.png',
+        imageSize = new kakao.maps.Size(30, 53),
         imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            spriteSize : new kakao.maps.Size(30, 53), // 스프라이트 이미지의 크기
             offset: new kakao.maps.Point(10, 40) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
