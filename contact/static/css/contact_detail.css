@@ -1,6 +1,5 @@
 .wrapper {
   width: 85%;
-  height: 100%;
   margin: 80px auto;
   display: flex;
   justify-content: center;
@@ -10,8 +9,6 @@
 .side-bar {
   margin-right: 25px;
   width: 190px;
-  height: 100%;
-  padding-bottom: 150px;
 }
 .side-bar__user-info,
 .side-bar__info,
@@ -59,7 +56,7 @@
 .side-bar__map-info {
   margin: 20px 0;
   width: 100%;
-  height: 75%;
+  height: 35%;
 }
 #map {
   border-radius: 3px;
@@ -303,7 +300,6 @@
 .post__content {
   width: 100%;
   margin-left: 20px;
-  height: 100%;
 }
 .post__desc {
   border: 1px solid #ababab;
@@ -432,5 +428,4 @@
   width: 50px;
   font-size: 13px;
   color: #505050;
-  padding-bottom: 40px;
 }
