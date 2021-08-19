@@ -14,14 +14,13 @@ body{
 .reference{
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
 }
 
 /* ======header======*/
 .reference-header{
   margin:3%;
-  /* 5vw 3% 3% 3%; */
-  padding:5%;
+  padding:2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
