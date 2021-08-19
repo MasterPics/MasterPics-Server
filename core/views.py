@@ -27,6 +27,6 @@ def main_list(request):
 #이미지 삭제 위해 호출되는 함수 #image delete ajax test
 def delete_image(request,pk):
     image = get_object_or_404(Image,pk=pk)
-    print("삭제될 이미지",image)
-    #image.delete() #주석제거하면 찐삭제됨
+    #print("삭제될 이미지",image)
+    image.delete() #주석제거하면 찐삭제됨
     return HttpResponse("success")
