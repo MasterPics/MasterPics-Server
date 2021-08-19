@@ -5,7 +5,9 @@ from taggit.forms import TagWidget
 
 class PlaceForm(forms.ModelForm):
     images = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'multiple': True, 'placeholder': '이미지 파일을 등록하세요.','label':'이미지 파일'}))  # 다중이미지
+        widget=forms.ClearableFileInput(attrs={'multiple': True, 'placeholder': '이미지 파일을 등록하세요.','label':'이미지 파일'}),required=False)  # 다중이미지
+        #required=False는 기존이미지만 제거하는경우때문에
+        
     class Meta:
         model = Place
         fields = ('title', 'pay', 'free', 'tags', 'desc')
