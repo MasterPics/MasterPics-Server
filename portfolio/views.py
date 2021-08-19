@@ -144,9 +144,11 @@ def portfolio_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     portfolio.thumbnail = image_obj.image
-                #     portfolio.save()
+            images=portfolio.post_image_images.all()
+            if images:
+                portfolio.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                portfolio.thumbnail = None
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
 
