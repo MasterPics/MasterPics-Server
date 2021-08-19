@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from portfolio.models import Portfolio
 from contact.models import Contact
 from place.models import Place
-
+from .models import Image
 # for Category, Sort
 from django.db.models import Q, Count
 
@@ -22,3 +22,7 @@ def main_list(request):
         'places': places,
     }
     return render(request, 'core/main_list.html', context=ctx)
+
+def delete_image(pk):
+    image = get_object_or_404(Image,pk=pk)
+    image.delete()
