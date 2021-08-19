@@ -23,6 +23,7 @@ def main_list(request):
     }
     return render(request, 'core/main_list.html', context=ctx)
 
+#이미지 삭제 위해 호출되는 함수
 def delete_image(pk):
     image = get_object_or_404(Image,pk=pk)
     image.delete()
