@@ -28,5 +28,5 @@ def main_list(request):
 def delete_image(request,pk):
     image = get_object_or_404(Image,pk=pk)
     print("삭제될 이미지",image)
-    #image.delete()
+    #image.delete() #주석제거하면 찐삭제됨
     return HttpResponse("success")
