@@ -104,9 +104,11 @@ def place_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     place_update.thumbnail = image_obj.image
-                #     place_update.save()
+            images=place.post_image_images.all()
+            if images:
+                place.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                place.thumbnail = None
                     
             return redirect('place:place_detail', place.pk)
     else:
