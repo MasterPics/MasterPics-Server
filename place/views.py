@@ -111,12 +111,13 @@ def place_update(request, pk):
             return redirect('place:place_detail', place.pk)
     else:
         place_form = PlaceForm(instance=place)
-        print(dir(place_form))
         location_form = LocationForm(instance=place.location)
+        images = place.post_image_images.all()
 
         ctx = {
             'place_form': place_form,
             'location_form': location_form,
+            'images': images,
         }
 
         return render(request, 'place/place_update.html', context=ctx)
