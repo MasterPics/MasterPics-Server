@@ -14,7 +14,7 @@ class PlaceForm(forms.ModelForm):
         #free = forms.BooleanField(label="상호무페이", required=False)
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
-            'pay': forms.NumberInput(attrs={'placeholder': '페이를 입력하세요.(상호 무페이의 경우 0을 입력하세요)'}),
+            'pay': forms.NumberInput(attrs={'placeholder': '페이를 입력하세요.'}),
             'tags' : TagWidget(
                 attrs={
                     'placeholder': '#masterpics #portfolio'}

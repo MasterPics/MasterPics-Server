@@ -9,16 +9,18 @@
 body{
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
+}
+
+.reference{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
 /* ======header======*/
 .reference-header{
-  margin:5vw 3% 3% 3%;
-  padding:5%;
+  margin:3%;
+  padding:2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +60,7 @@ body{
 }
 
 /* ======article-category button======*/
-article{
+.reference-content{
     width:80vw;
 }
 
@@ -74,12 +76,13 @@ article{
 }
 .grid{
     position: none;
-    display: grid;
-    width:80vw;
+    display: flex;
+    /* width:80vw;
     grid-template-columns: repeat(4,1fr);
+    grid-auto-rows:auto; */
     justify-items: center;
     align-items: center;
-    grid-auto-flow: row;
+    /* grid-auto-flow: row; */
 }
 .category-btn{
     width:113px;

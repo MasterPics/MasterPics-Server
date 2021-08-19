@@ -11,14 +11,14 @@ window.onload = function(){
     // fileInput.innerHTML = fileInputContent;
     // targetHTML.appendChild(fileInput);
 
-    target.addEventListener('change',function(){
-        fileList = "";
-        for(i = 0; i < target.files.length; i++){
-            fileList += '<p class="filename">' + target.files[i].name + '</p>';
-        }
-        fileBox.innerHTML = fileList;
-        targetHTML.appendChild(fileBox);
-    })
+    // target.addEventListener('change',function(){
+    //     fileList = "";
+    //     for(i = 0; i < target.files.length; i++){
+    //         fileList += '<p class="filename">' + target.files[i].name + '</p>';
+    //     }
+    //     fileBox.innerHTML = fileList;
+    //     targetHTML.appendChild(fileBox);
+    // })
 }
 
 //상호무페이_pay control, 상호무페이 체크 시 0 입력 및 0 이상의 숫자 입력 불가능

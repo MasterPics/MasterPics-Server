@@ -145,8 +145,7 @@ label {
     "title title title title title"
     "pay pay pay pay free"
     "tags tags tags tags tags"
-    "desc desc desc desc desc"
-    "images images images images images";
+    "desc desc desc desc desc";
 }
 .place-form .title{
   grid-area: title;
@@ -164,11 +163,42 @@ label {
 .place-form .desc{
   grid-area: desc;
 }
-.place-form .images{
-  grid-area: images;
-  position: relative;
-}
 
+#image_preview{
+  position: relative;
+  margin-bottom: 5px;
+}
+.form-images .form-group .form__upload{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e8e8e8;
+  border-radius: 3px;
+}
+.form-images .form-group .form__input{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.form__upload-btn{
+  width:30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color:#bbbbbb;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:1rem;
+  color:#727272;
+}
+.form-images .form-group .form__input input{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+}
 
 .submit-btn{
   width:100%;
@@ -181,6 +211,7 @@ label {
   margin:1rem 0;
 }
 
+
 /*-----tablet-----*/
 @media screen and (max-width:1024px) and (min-width:481px){
   .place_create_form{
@@ -188,6 +219,11 @@ label {
     bottom:0;
     width:100vw;
     height:auto;
+  }
+  .form__img{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 } 
 
@@ -205,5 +241,14 @@ label {
   }
   #id_free{
     width:18%;
+  }
+  .form__img{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .form__img img{
+    width:60px !important;
+    height:60px !important;
   }
 }
