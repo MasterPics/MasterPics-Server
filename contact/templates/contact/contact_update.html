@@ -3,6 +3,7 @@
 {% load static %}
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/contact_update.css' %}">
+<script src="{% static 'js/delete_image.js' %}"></script>   
 {% endblock stylesheet %}
 
 {% block content %}
@@ -165,7 +166,7 @@
                             {% for image in images %}
                                 <div style="display:inline-block;position:relative;padding:3px;overflow:hidden;">
                                     <img src="{{image.image.image.url}}" class="{{image.image.pk}}" alt="" style="width:65px;height:65px;margin-right:1px;margin-bottom:4px;z-index:none;object-fit:cover;">
-                                    <input type="button" value="x" delfile="{{image.image.image.url}}" style="width:14px;height:14px;position:absolute;right:10px;top:10px;font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;">
+                                    <input type="button" onclick="remove(this)" value="x" delfile="{{image.image.image.url}}" style="width:14px;height:14px;position:absolute;right:10px;top:10px;font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;">
                                 </div>
                             {% endfor %}
                         </div>
