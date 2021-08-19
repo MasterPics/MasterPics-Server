@@ -5,6 +5,7 @@ from place.models import Place
 from .models import Image
 # for Category, Sort
 from django.db.models import Q, Count
+from django.http import HttpResponse #image delete ajax test
 
 # Create your views here.
 
@@ -23,7 +24,9 @@ def main_list(request):
     }
     return render(request, 'core/main_list.html', context=ctx)
 
-#이미지 삭제 위해 호출되는 함수
-def delete_image(pk):
+#이미지 삭제 위해 호출되는 함수 #image delete ajax test
+def delete_image(request,pk):
     image = get_object_or_404(Image,pk=pk)
-    image.delete()
+    print("삭제될 이미지",image)
+    #image.delete()
+    return HttpResponse("success")
