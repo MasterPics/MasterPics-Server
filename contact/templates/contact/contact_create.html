@@ -34,9 +34,9 @@
                         </div>                   
                         <div class="form__input">
                             {{ field }}
-                            <!-- {% if field.help_text %}
+                            {% if field.help_text %}
                                 <p class="help-block">{{ field.help_text }}</p>
-                            {% endif %} -->
+                            {% endif %}
                             {% for error in field.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -52,8 +52,22 @@
                             <label for="pay">페이</label>
                         </div>                  
                         <div class="form__input">
-                            {{ contact_form.pay_type }}
+                            <div class="pay__type">
+                                {{ contact_form.pay_type }}
+                                {% if contact_form.pay_type.help_text %}
+                                <p class="help-block">{{ contact_form.pay_type.help_text }}</p>
+                                {% endif %}
+                                {% for error in contact_form.pay_type.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                                <div class="select__arrow"></div>
+                            </div>
                             {{ contact_form.pay }}
+                            {% if contact_form.pay.help_text %}
+                                <p class="help-block">{{ contact_form.pay.help_text }}</p>
+                            {% endif %}
                             {% for error in contact_form.pay.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -70,6 +84,9 @@
                             <div class="form__group {{ contact_form.start_date.name }}">                  
                                 <div class="form__input">
                                     {{ contact_form.start_date }}
+                                    {% if contact_form.start_date.help_text %}
+                                        <p class="help-block">{{ contact_form.start_date.help_text }}</p>
+                                    {% endif %}
                                     {% for error in contact_form.start_date.errors %}
                                         <div class="alert alert-danger">
                                             {{ error }}
@@ -81,6 +98,9 @@
                             <div class="form__group {{ contact_form.end_date.name }}">                 
                                 <div class="form__input">
                                     {{ contact_form.end_date }}
+                                    {% if contact_form.end_date.help_text %}
+                                        <p class="help-block">{{ contact_form.end_date.help_text }}</p>
+                                    {% endif %}
                                     {% for error in contact_form.end_date.errors %}
                                         <div class="alert alert-danger">
                                             {{ error }}
@@ -101,6 +121,9 @@
                         </div>
                         <div class="form__input">
                             {{ field }}
+                            {% if field.help_text %}
+                                <p class="help-block">{{ field.help_text }}</p>
+                            {% endif %}
                             {% for error in field.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -129,7 +152,10 @@
                             </div>
                             <div class="form__input">
                                 {{ contact_form.images }}
-                                {% for error in form.images.errors %}
+                                {% if contact_form.images.help_text %}
+                                    <p class="help-block">{{ contact_form.images.help_text }}</p>
+                                {% endif %}
+                                {% for error in contact_form.images.errors %}
                                     <div class="alert alert-danger">
                                         {{ error }}
                                     </div>
@@ -149,6 +175,9 @@
                         </div>
                         <div class="form__input">
                             {{ contact_form.file_attach }}
+                            {% if contact_form.file_attach.help_text %}
+                                <p class="help-block">{{ contact_form.file_attach.help_text }}</p>
+                            {% endif %}
                             {% for error in contact_form.file_attach.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -162,6 +191,9 @@
                         </div>                   
                         <div class="form__input">
                             {{ contact_form.tags }}
+                            {% if contact_form.tags.help_text %}
+                                <p class="help-block">{{ contact_form.tags.help_text }}</p>
+                            {% endif %}
                             {% for error in contact_form.tags.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
