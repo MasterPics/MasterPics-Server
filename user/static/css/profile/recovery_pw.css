@@ -159,7 +159,7 @@ input:-webkit-autofill:active  {
 
 @media screen and (min-width:360px) and (max-width:512px) {
     .modify__body{
-        width: 90%;
+        width: 85%;
     }
 
     .navbar__toogleBtn {

@@ -465,12 +465,17 @@ nav a {
   padding: 8px 12px;
   text-decoration: none;
   display: block;
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 14px;
 }
 
-.toogle_user_dropdown > input{
-  font-family: 'DM Serif Display', serif;
+.toogleBtn-content a {
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
 }
 
 .toogleBtn-content a:hover {
