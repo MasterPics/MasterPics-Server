@@ -71,7 +71,7 @@ def place_detail(request, pk):
         'place': place,
         'tags': place.tags.all(),
         'images': place.images.all(),
-        'comments': place.comments.all(),
+        'comments': place.comments.all().order,
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
