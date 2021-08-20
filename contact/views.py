@@ -145,6 +145,8 @@ def contact_update(request, pk):
             contact.user = request.user
             contact.location = location
             contact.save()
+            contact.tags.clear()
+            form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
@@ -186,6 +188,7 @@ def contact_create(request):
             contact.user = request.user
             contact.location = location
             contact.save()
+            contact_form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
