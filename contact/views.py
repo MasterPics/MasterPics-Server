@@ -41,7 +41,7 @@ def contact_save(request):
 
 
 def contact_list(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.all().order_by('-created_at')
 
     # 상호무페이
     no_pay = request.GET.get('no_pay', False)
