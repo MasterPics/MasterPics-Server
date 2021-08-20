@@ -71,7 +71,7 @@ def place_detail(request, pk):
         'place': place,
         'tags': place.tags.all(),
         'images': place.images.all(),
-        'comments': place.comments.all(),
+        'comments': place.comments.all().order,
     }
 
     return render(request, 'place/place_detail.html', context=ctx)
@@ -104,19 +104,22 @@ def place_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     place_update.thumbnail = image_obj.image
-                #     place_update.save()
+            images=place.post_image_images.all()
+            if images:
+                place.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                place.thumbnail = None
                     
             return redirect('place:place_detail', place.pk)
     else:
         place_form = PlaceForm(instance=place)
-        print(dir(place_form))
         location_form = LocationForm(instance=place.location)
+        images = place.post_image_images.all()
 
         ctx = {
             'place_form': place_form,
             'location_form': location_form,
+            'images': images,
         }
 
         return render(request, 'place/place_update.html', context=ctx)
