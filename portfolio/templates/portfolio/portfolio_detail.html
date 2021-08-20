@@ -72,7 +72,7 @@
         <div class="post__title-wrapper">
             <h1 class="post__title">{{portfolio.title}}</h1>
             <div class="post__edit">
-                <!-- 게시글 작성자만 수정/삭제 가능 -->
+                <!-- 게시물 작성자만 수정/삭제 가능 -->
                 {% if request.user.pk == portfolio.user.pk %}
                 <div>
                     <a class="post__edit-btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">수정</a>

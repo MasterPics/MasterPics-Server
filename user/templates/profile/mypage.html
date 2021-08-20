@@ -67,12 +67,12 @@
         <span class="profile__desc">{{ request.user.desc }}</span>
     </div>
 
-    <!-- 게시글 정보 -->
+    <!-- 게시물 정보 -->
     <div class="post">
         <div class="post__local-bar">
             <ul>
                 <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio('{{ request.user.user_identifier }}')">포트폴리오</li>
-                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ request.user.user_identifier }}')">게시글</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ request.user.user_identifier }}')">게시물</li>
                 <li id="post__saved-post" type="submit" onclick="onClickSavedPost('{{ request.user.user_identifier }}')">저장 목록</li>
             </ul>
         </div>
