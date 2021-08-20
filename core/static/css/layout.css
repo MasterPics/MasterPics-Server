@@ -273,11 +273,11 @@ nav a {
   color: #5A5A5A;
 }
 
-.info_1, .info_2 {
+.info__1, .info__2 {
   margin: 0 15px 0 15px;
 }
 
-.info_1 > a, .info_2 > a{
+.info__1 > a, .info__2 > a{
   color: #5A5A5A;
 }
 
