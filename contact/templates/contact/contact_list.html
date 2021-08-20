@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="header">
-    <h1 class="header__title">Contact</h1>
+    <h2 class="header__title">Contact</h2>
     <p class="header__desc">주변에서 개인작업을 위한</p>
     <p class="header__desc">아티스트의 시안을 찾아보세요!</p>
     <p class="header__desc-more">별도의 수수료 없이 MasterPic’s 내 아티스트들과 컨택할 수 있습니다.</p>
@@ -34,7 +34,7 @@
         </div>
         <div class="filter__search">
             <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'>
-            <button class="btn btn-outline-secondary btn_search" type="button" id=""><i class="fas fa-search"></i></button>
+            <button type="submit" id="submit" class="btn btn-outline-secondary btn_search"><i class="fas fa-search"></i></button>
         </div>
         <div class="filter__sort">
             <select name="" id="" class="form-control sort ">
@@ -75,11 +75,11 @@
                 <!-- contact pay, date-->
                 <div class="list__top-info">
                     <div class="list__pay">
-                        {% if contact.pay_negotiation %}
-                        <div class="list__pay-text">페이협의</div>
-                        {% elif contact.free or contact.pay == 0 %}
-                        <div class="list__pay-text">상호무페이</div>
-                        {% elif contact.pay %}
+                        {% if contact.pay_type == 0 %}
+                        <div class="list__pay-text">상호 무페이</div>
+                        {% elif contact.pay_type == 1 %}
+                        <div class="list__pay-text">페이 협의</div>
+                        {% elif contact.pay_type == 2 %}
                         <div class="list__pay-text">{{ contact.pay }} 원</div>
                         {% endif %}
                     </div>
@@ -132,7 +132,7 @@
                     <!-- contact comment, save -->
                     <div class="list__post-info">
                         <div class="comment">
-                            <i class="far fa-comment-dots"></i>
+                            <i class="far fa-comment"></i>
                             <span class="comment__content">{{ contact.comments.count }}</span>
                         </div>
                         <div class="save save-{{contact.id}}">
@@ -169,7 +169,6 @@
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
 <script src="{% static 'js/go_to_top.js' %}"></script>
 <script src="{% static 'js/contact_save.js' %}"></script>
-<script src="{% static 'js/contact_comment.js' %}"></script>
 <script src="{% static 'js/category.js' %}"></script>
 <script src="{% static 'js/sort.js' %}"></script>
 <script src="{% static 'js/search.js' %}"></script>
