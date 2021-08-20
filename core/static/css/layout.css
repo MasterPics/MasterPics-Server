@@ -172,8 +172,10 @@ nav a {
 
 .user_image{
   width: 25px;
+  height: 25px;
   margin-left: 10px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .dropbtn {
