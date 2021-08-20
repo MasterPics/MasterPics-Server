@@ -132,6 +132,7 @@ def portfolio_update(request, pk):
             portfolio.save()
             portfolio.tags.clear()
             form.save_m2m()
+            
 
             print(portfolio.images)
             
