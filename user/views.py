@@ -364,8 +364,7 @@ def mypage_bookmark_place(request):
 @allowed_user
 def profile_modify(request):
     if request.method == 'POST':
-        form = ProfileModifyForm(
-            request.POST, request.FILES, instance=request.user)
+        form = ProfileModifyForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile:mypage')
@@ -382,7 +381,7 @@ def profile_modify(request):
         return render(request, 'profile/profile_update.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
-
+# TODO : local user만 가능하도록 decorator 만들어주기
 @required_login
 def password_change(request):
     if request.method == 'POST':
