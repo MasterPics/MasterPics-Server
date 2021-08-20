@@ -485,3 +485,10 @@ def recovery_pw_reset(request):
             auth_logout(request)
             request.session['auth'] = session_user
             return render(request, 'profile/recovery_pw_reset.html', {'form': reset_pw_form})
+
+
+
+
+# ----약관 및 부가설명 관련----
+def terms_of_service_use(request):
+    return render(request, 'profile/terms_of_service_use.html')

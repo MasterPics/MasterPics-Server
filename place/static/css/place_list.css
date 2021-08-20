@@ -15,7 +15,7 @@ body{
   background-image: url("../img/place-header.png");
   background-repeat: no-repeat;
   width:100vw;
-  height: 40vh;
+  height: 280px;
   background-size:cover;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@ body{
 }
 
 .place-header-content{
-  margin:10%;
+  margin:0 10%;
   color:white;
 }
 
@@ -138,8 +138,10 @@ body{
 /*구분선*/
 
 hr{
+  width:1120px;
   grid-column: span 2;
   margin:3% 0;
+  justify-self: center;
 }
 
 /*컨텐츠 목록*/
@@ -237,23 +239,24 @@ hr{
   align-items: center;
 }
 
-.place-like-count{
-  margin:0 1.2rem;
+.place-like-count,
+.place-comment,
+.place-save{
+  margin-right:1rem;
   font-size:0.9rem;
+  color:#6d6d6d;
+  display: flex;
+  align-items: flex-end;
 }
-.place-like-count i{
+.place-like-count i,
+.place-save i,
+.place-comment i{
   font-size:1.1rem;
-  color:#919191;
+  cursor: pointer;
 }
-.place-like-count span{
-  margin-left:0.2rem;
-  color:#858585;
-}
-.place-save i{
-  font-size:1.1rem;
-  color:#919191;
-}
-.place-savet span{
+.place-like-count span,
+.place-comment span,
+.place-save span{
   margin-left:0.2rem;
   color:#4f4f4f;
 }
@@ -270,29 +273,6 @@ hr{
   align-items: center;
   font-size:0.9rem;
   margin-bottom:2rem;
-}
-
-/*중간 깨지는 부분*/
-@media screen and (max-width:1140px) and (min-width:769px){
-  .place-thumbnail{
-    width:197px;
-    height: 197px;
-  }
-  .place-content{
-    margin:1.5rem 0;
-    align-items: flex-start;
-  }
-  .place-content-title{
-    width:230px;
-    padding: 0 0.9rem;
-    margin:0;
-  }
-  .place-address, .place-pay {
-    font-size: 0.9rem;
-  }
-  .place-search{
-    width:100%;
-  }
 }
 
 /*모바일*/
@@ -360,7 +340,7 @@ hr{
 }
 
 /*패드*/
-@media screen and (max-width:768px) and (min-width:481px){
+@media screen and (max-width:1024px) and (min-width:481px){
   
   .place-list-grid{
     width:95vw;

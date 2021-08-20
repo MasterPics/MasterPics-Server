@@ -23,7 +23,7 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 0.9rem;
+    font-size: 15px;
     margin-bottom:1rem;
 }
 .user-profile .writer{
@@ -32,12 +32,13 @@ main{
     padding:1rem;
 }
 .user-profile .user-name{
-    color:black;
+    color:#363636;
     font-weight: bold;
     margin-top:1rem;
+    text-align: center;
 }
 .user-profile .user-category{
-    background-color:#c4c4c4;
+    background-color:#e8e8e8;
     color:#575757;
     font-size:0.7rem;
     padding:0.3rem 1rem;
@@ -50,6 +51,7 @@ main{
     border-radius: 70%;
     overflow: hidden;
     object-fit: cover;
+    margin: 0;
 }
 .place-location-map{
     height: 377px;
@@ -72,20 +74,21 @@ main{
 }
 .likeSave p{
     font-size:0.6rem;
-    margin-top:0.6rem;
+    margin-top:8px;
 }
-.like{
+.like,
+.save,
+.comment-count{
     display:flex;
     flex-direction: column;
     align-items: center;
     padding: 0 1rem;
 }
-.save{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 1rem;
+.like i,
+.save i{
+    cursor: pointer;
 }
+
 .place-tag{
     margin:1rem 0;
     display: flex;
@@ -127,28 +130,37 @@ main{
     align-items: center;
     justify-content: space-between;
 }
+.place-detail-header h2{
+    font-size: 21px;
+    color:#1e1e1e;
+}
 .modify-delete{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .modify-delete button,
 .delete,
 .modify{
     border:none;
     border-radius: 3px;
-    background-color: #E7E7E7;
-    font-size: 0.6rem;
+    background-color: #f5f5f5;
+    font-size: 10px;
     padding:0.2rem 0.4rem;
     margin:0 5px;
+    cursor: pointer;
 }
 .modify-delete a,
 .delete,
 .modify a{
-    color:#6d6d6d;
+    color:#888888;
 }
 
 .place-detail hr{
     margin:1rem 0;
+    border: none;
+    height: 1px;
+    background: #aaaaaa;
 }
 
 .place-detail-info{
@@ -168,7 +180,7 @@ main{
 }
 .place-detail-info i{
     color:#5200ff;
-    font-size: 1rem;
+    font-size: 16px;
     margin-right: 0.5rem;
 }
 
@@ -228,21 +240,31 @@ main{
     font-size:0.9rem;
 }
 
+.createComment{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
 .comment__value{
-    width: 85%;
-    height: 88px;
+    width: 100%;
+    height: 70px;
     border: 1px solid #bcbcbc;
-    padding:1rem;
+    padding: 1rem;
+    margin-right: 10px;
+    resize: none
 }
 .comment__btn{
-    width: 14%;
-    height: 88px;
+    padding:10px 15px;
+    height: 70px;
     background-color:#5200ff;
     color:white;
     border:none;
+    cursor: pointer;
 }
 .comment{
-    padding:2rem 0;
+    padding:1.5rem 0;
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -257,6 +279,9 @@ main{
     background-color:#cacaca;
     margin-right:0.9rem;
 }
+.comment-info{
+    width:88%;
+}
 .comment-writer{
     font-size:1rem;
     font-weight: bold;
@@ -265,10 +290,12 @@ main{
 }
 .comment-text{
     font-size: 0.9rem;
-    line-height:1.2rem;
-    width:90%;
+    line-height:1.5rem;
     color:#1E1E1E;
     margin-top:0.6rem;
+    word-wrap:break-word;
+    white-space: normal;
+    width:100%;
 }
 .comment-created{
     font-size: 0.75rem;
@@ -278,7 +305,9 @@ main{
     display: flex;
     justify-content: center;
     font-size: 0.8rem;
-    margin-top:3rem;
+    margin-top:1rem;
+    padding-top:3rem;
+    border-top:1px solid #aaaaaa;
 }
 a{
     color:#1E1E1E;
@@ -293,6 +322,7 @@ a{
  }
  .place-detail-header h2{
      font-size: 1.3rem;
+     color:#1e1e1e;
  }
  .place-detail-info {
      font-size:0.4rem;
