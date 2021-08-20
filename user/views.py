@@ -37,7 +37,7 @@ import json
 from .forms import CustomSetPasswordForm
 
 # ----------------------smtp-------------------------------
-from .decorators import allowed_user, required_login
+from .decorators import allowed_user, required_login, local_user
 
 
 # ----login 관련----
@@ -381,8 +381,8 @@ def profile_modify(request):
         return render(request, 'profile/profile_update.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
-# TODO : local user만 가능하도록 decorator 만들어주기
 @required_login
+@local_user
 def password_change(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)
