@@ -118,19 +118,20 @@ hr{
 }
 .portfolio_info span{
     margin-left:3px;
+    color:#6d6d6d;
 }
 .portfolio_info i{
-    color:#707070;
+    color:#6d6d6d;
 }
 .like, .eye, .save{
     display: flex;
     align-items: center;
     margin-left:7px;
 }
-.grid-item .fas::before{
+.reference-item .fas::before{
     color:#5200ff !important;
 }
-.grid-item .fas{
+.reference-item .fas{
     color:#5200ff !important;
 }
 .title p{
@@ -203,9 +204,6 @@ hr{
     article{
         width:auto;
     }
-    .grid-container{
-        position: static;
-    }
     .reference-list{
         display:flex;
         flex-direction: column;
@@ -240,15 +238,12 @@ hr{
     .reference-header p{
         font-size:11px;
     }
-    .grid-container{
-        position: static;
-    }
-    .grid{
+    .reference-list{
         display:flex;
         flex-direction: column;
         width:100%;
     }
-    .grid-item{
+    .reference-item{
         width:100%;
         position:none;
         margin-bottom:1.7rem;
