@@ -1176,7 +1176,6 @@ a:active { text-decoration: none; }
   
   .LandingBanner_1 .card_container-3 {
     margin-top: 50px;
-    margin-left: 5px;
     margin-right: -20px;
     z-index: 0;
   }
@@ -1253,40 +1252,40 @@ a:active { text-decoration: none; }
   }
   
   .AboutUsMainContent1 {
-    width: 160px;
-    height: 160px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
-    margin:10px;
+    margin: 5px;
     grid-area: text-0;
     display: flex;
     position: relative;
   }
 
   .AboutUsMainContent2 {
-    width: 160px;
-    height: 160px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
-    margin:10px;
+    margin: 5px;
     grid-area: text-1;
     display: flex;
     position: relative;
   }
 
   .AboutUsMainContent3 {
-    width: 160px;
-    height: 160px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
-    margin: 10px;
+    margin: 5px;
     grid-area: text-2;
     display: flex;
     position: relative;
   }
 
   .AboutUsMainContent4 {
-    width: 160px;
-    height: 160px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
-    margin: 10px;
+    margin: 5px;
     grid-area: text-3;
     display: flex;
     position: relative;
