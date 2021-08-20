@@ -9,8 +9,8 @@ from django.shortcuts import get_object_or_404
 
 class PayType(models.IntegerChoices):
     PAY_FREE = 0, '상호 무페이'
-    PAY_CUSTOM = 1, '페이 입력'
-    PAY_NEGO = 2, '페이 협의'
+    PAY_NEGO = 1, '페이 협의'
+    PAY_CUSTOM = 2, '페이 입력'
 
 
 class Contact(PostBase):
