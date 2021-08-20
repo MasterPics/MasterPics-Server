@@ -117,7 +117,7 @@ def login(request):
         user_id = request.POST['user_id']
         password = request.POST['password']
         user = authenticate(user_id=user_id, password=password)
-        
+
         if user is not None:
             auth_login(request, user)
             return redirect('core:main_list')
@@ -153,7 +153,6 @@ def social_user_more_info(request):
         if form.is_valid():
             request.user.is_social = True
 
-            # TODO user identifier 확인 필요
             customer = form.save()
             string = str(customer.pk + int(time.time()))
             encoded_string = string.encode()
