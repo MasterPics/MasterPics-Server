@@ -51,7 +51,7 @@ const listSavedPost = (bookmarked_portfolios) => {
                             `<p class="post__title">${bookmarked_portfolios[i].title}</p>`+
                             `<div>`+
                                 `<p class="post__comment">`+
-                                `<i class="far fa-comment-dots"></i>`+
+                                `<i class="far fa-comment"></i>`+
                                 `<span>${bookmarked_portfolios[i].comment_count}</span>`+
                                 `</p>`+
                                 `<p class="post__view">`+

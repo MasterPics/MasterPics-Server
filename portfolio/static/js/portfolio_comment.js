@@ -1,24 +1,31 @@
 const modifyNewComment = (portfolio_id, comment_id, value) => {
-    const CommentContainer = document.querySelector(`.comments__container-${portfolio_id}`);
-    console.log(CommentContainer)
+    const CommentContainer = document.querySelector(`.comments-${portfolio_id}`);
 
     const tempContainer = document.createElement("div");
     tempContainer.className = `comment comment-${comment_id}`;
-    tempContainer.setAttribute("style", "font-size: 13px;olor: #1e1e1e;");
 
 
-    tempContainer.textContent = value;
+    /* comment wrapper */
+    
+    const commentWrapper = document.createElement("div");
+    commentWrapper.className= 'comment__wrapper';
+    commentWrapper.innerHTML = `<div class="comment__item">`+
+                                `<div class="comment__writer-img">`+
+                                    `<img src="${userImage}">`+
+                                `</div>`+
+                                `<div class="comment__content">`+
+                                    `<div class="comment__top-info">`+
+                                        `<span class="comment__writer">${writer}</span>`+
+                                        `<span class="comment__date">`+"방금 전"+`</span>`+
+                                    `</div>`+
+                                    `<span class="comment__text">${value}</span>`+
+                                `</div>`+
+                            `</div>`+
+                            `<input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment(${comment_id})" type="submit" value="삭제">`;
+                                
 
-    const deleteBtn = document.createElement("input");
-    deleteBtn.className = "comment-btn";
-    deleteBtn.setAttribute("type", "submit");
-    deleteBtn.setAttribute("value", "댓글삭제");
-    deleteBtn.setAttribute("style", " font-size: 11px;color: #747474;background-color: #ffffff;border: none;")
-    deleteBtn.setAttribute("onclick", `onClickDeleteComment(${comment_id})`)
-
-    tempContainer.appendChild(deleteBtn);
     CommentContainer.appendChild(tempContainer);
-
+    tempContainer.appendChild(commentWrapper);
 }
 
 const onClickNewComment = async (id) => {
@@ -50,12 +57,16 @@ const modifyDeleteComment = (comment_id) => {
 }
 
 const onClickDeleteComment = async (commentId) => {
-    const url = `/portfolio/comment_delete/`;
-
-    const {
-        data
-    } = await axios.post(url, {
-        commentId
-    })
-    modifyDeleteComment(data.comment_id);
+    if(confirm("댓글을 삭제하시겠습니까?")){
+        const url = `/portfolio/comment_delete/`;
+    
+        const {
+            data
+        } = await axios.post(url, {
+            commentId
+        })
+        modifyDeleteComment(data.comment_id);
+    } else{
+        return;
+    }
 }

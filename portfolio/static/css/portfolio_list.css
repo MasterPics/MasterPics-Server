@@ -8,17 +8,17 @@
 }
 /******************* header ******************/
 .header {
-  background-image: url("./portfolio_background.jpg");
+  background-image: url("../img/portfolio_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
   height: 280px;
-  padding: 0 150px;
   width: 100vw;
+  padding-left: 10%;
 }
 .header__title {
   margin-bottom: 20px;
-  padding-top: 50px;
+  padding-top: 3%;
   font-size: 24px;
   color: #191919;
 }
@@ -45,13 +45,15 @@
   margin: 0 auto;
   padding-top: 20px;
   overflow: hidden;
-  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 90px;
 }
-.filter__category {
-  float: left;
+.filter__right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .filter__category > span a {
   font-size: 14px;
@@ -65,21 +67,17 @@
   margin-right: 22px;
   font-weight: 600;
 }
-.filter__search,
 .filter__sort {
-  float: right;
-}
-.filter__sort {
-  position: absolute;
-  right: 0;
+  position: relative;
 }
 .filter__sort > select {
+  width: 90px;
   font-size: 10px;
   color: #000000;
-  padding: 8px 25px;
+  padding: 8px 15px;
   border: solid 1px #eeeeee;
-  display: inline-block;
-  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
   /* 화살표 없애기 */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -93,7 +91,7 @@
 .filter__sort > .select__arrow {
   position: absolute;
   top: 12px;
-  right: 10px;
+  right: 13px;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -109,10 +107,9 @@
   outline: none;
 }
 .filter__search {
-  position: absolute;
-  right: 110px;
   display: flex;
   justify-content: center;
+  margin-right: 10px;
 }
 .filter__search input {
   border: solid 1px #cfcfcf;
@@ -277,7 +274,7 @@ figure.list__image.hover p {
 .like > .far,
 .eye > .far,
 .save > .far {
-  color: #888888;
+  color: #6d6d6d;
 }
 .like,
 .eye {
@@ -299,6 +296,7 @@ figure.list__image.hover p {
 .like__content,
 .view__content {
   font-size: 14px;
+  color: #6d6d6d;
 }
 .save__content {
   display: none;
