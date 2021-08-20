@@ -13,12 +13,12 @@
   background-repeat: no-repeat;
   background-position-y: center;
   height: 280px;
-  padding: 0 150px;
   width: 100vw;
+  padding-left: 10%;
 }
 .header__title {
   margin-bottom: 20px;
-  padding-top: 50px;
+  padding-top: 3%;
   font-size: 24px;
   color: #191919;
 }
@@ -274,7 +274,7 @@ figure.list__image.hover p {
 .like > .far,
 .eye > .far,
 .save > .far {
-  color: #888888;
+  color: #6d6d6d;
 }
 .like,
 .eye {
@@ -296,6 +296,7 @@ figure.list__image.hover p {
 .like__content,
 .view__content {
   font-size: 14px;
+  color: #6d6d6d;
 }
 .save__content {
   display: none;

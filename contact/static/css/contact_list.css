@@ -13,12 +13,12 @@
   background-repeat: no-repeat;
   background-position-y: center;
   height: 280px;
-  padding: 0 150px;
   width: 100vw;
+  padding-left: 10%;
 }
 .header__title {
   margin-bottom: 20px;
-  padding-top: 50px;
+  padding-top: 3%;
   font-size: 24px;
   color: #191919;
 }
@@ -164,6 +164,9 @@
   margin: 0 auto;
   margin-top: 40px;
 }
+.grid {
+  margin: 0 auto;
+}
 .list__item-wrapper {
   width: 246px;
   margin-bottom: 25px;
@@ -303,7 +306,7 @@ figure.list__image.hover p {
 }
 .comment > .far,
 .save > .far {
-  color: #888888;
+  color: #6d6d6d;
 }
 .comment {
   margin-right: 10px;
@@ -320,7 +323,7 @@ figure.list__image.hover p {
 }
 .comment__content {
   font-size: 14px;
-  color: #000000;
+  color: #6d6d6d;
 }
 .save__content {
   display: none;
