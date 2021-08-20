@@ -27,8 +27,8 @@
         <div class="side-bar__info">
             <div class="comment">
                 <a href="#comment">
-                <i class="far fa-comment-dots"></i>
-                <span class="comment__content">{{ portfolio.comments.count }}</span>
+                <i class="far fa-comment"></i>
+                <span class="comment__count">{{ portfolio.comments.count }}</span>
                 </a>
             </div>
             <div class="eye">
@@ -73,9 +73,15 @@
             <h1 class="post__title">{{portfolio.title}}</h1>
             <div class="post__edit">
                 <!-- 게시글 작성자만 수정/삭제 가능 -->
-                {% if request_user.pk == portfolio_owner.pk %}
-                <a class="post__edit-btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">수정</a>
-                <a class="post__edit-btn" href="{% url 'portfolio:portfolio_delete' portfolio.pk %}">삭제</a>
+                {% if request.user.pk == portfolio.user.pk %}
+                <div>
+                    <a class="post__edit-btn" href="{% url 'portfolio:portfolio_update' portfolio.pk %}">수정</a>
+                </div>
+                
+                <form action="{% url 'portfolio:portfolio_delete' portfolio.pk %}" id="postDelete" method="POST">
+                    {% csrf_token %}
+                    <a class="post__edit-btn" onclick="postDelete()" href="#">삭제</a>
+                </form>
                 {% endif %}
             </div>
         </div>
@@ -114,10 +120,10 @@
         <div class="post__desc">{{portfolio.desc}}</div>
         <div class="post__comment">
             <div id="comment" class="createComment createComment-{{portfolio.id}}">
-                <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
+                <textarea class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?"></textarea>
                 <input class="comment__btn" onclick="onClickNewComment({{ portfolio.id }})" type="submit" value="댓글 게시">
             </div>
-            <div class="comments__container-{{portfolio.id}}">
+            <div class="comments-{{portfolio.id}} comments">
                 {% for comment in comments %}
                 <div class="comment comment-{{ comment.id }}">
                     <div class="comment__wrapper">
@@ -128,12 +134,16 @@
                             <div class="comment__content">
                                 <div class="comment__top-info">
                                     <span class="comment__writer">{{ comment.writer }}</span>
-                                    <span class="comment__date">{{ comment.created_at.time }}</span>
+                                    {% if comment.created_string == False %}
+                                    <span class="comment__date">{{ comment.created_at|date:'m월 d일' }}</span>
+                                    {% else %}
+                                    <span class="comment__date">{{ comment.created_string }}</span>
+                                    {% endif %}
                                 </div>
                                 <span class="comment__text">{{ comment.content }}</span>
                             </div>
                         </div>
-                        <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="댓글삭제">
+                        <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
                     </div>
                 </div>
                 {% endfor %}
@@ -152,11 +162,15 @@
 </div>
 {% endblock content %}
 
-
-
 {% block script %}
+<script>
+    var userImage = '{{request.user.image.url}}';
+    var writer = '{{request.user}}';
+</script>
 <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_like.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_save.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/portfolio_comment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/post_delete.js' %}"></script>
+
 {% endblock script %}
