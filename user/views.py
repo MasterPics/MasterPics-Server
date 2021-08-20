@@ -424,20 +424,22 @@ def recovery_pw_send_email(request):
         user = User.objects.get(user_id=user_id, username=username, email=email)
 
         if user is not None:
-            if user.is_social:
+            if user.is_social or not user.is_ToS:
                 return JsonResponse(data={'status': 'false','message': '해당 계정은 소셜 계정입니다.'}, status=500)
+            elif not user.is_active:
+                return JsonResponse(data={'status': 'false','message': '해당 계정은 회원가입 후 이메일 인증이 완료되지 않았습니다. 먼저 인증을 완료해주세요.'}, status=500)
+            else:
+                auth_num = email_auth_num()
+                user.auth = auth_num
+                user.save()
 
-            auth_num = email_auth_num()
-            user.auth = auth_num
-            user.save()
-
-            send_mail(
-                "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
-                [email],
-                html=render_to_string('profile/recovery_pw_email.html', {
-                    'auth_num': auth_num,
-                }),
-            )
+                send_mail(
+                    "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
+                    [email],
+                    html=render_to_string('profile/recovery_pw_email.html', {
+                        'auth_num': auth_num,
+                    }),
+                )
     except User.DoesNotExist:
         return JsonResponse(data={'status': 'false','message': '입력하신 정보가 일치하지 않거나 존재하지 않습니다.'}, status=500)
         
