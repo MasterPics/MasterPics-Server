@@ -145,14 +145,11 @@
                         <div class="comment-info">
                             <span class="comment-writer">{{ comment.writer }}</span>
                             <span id="comment-created-{{forloop.counter}}" class="comment-created">
-                                {{comment.created_at|date:'Y-m-d H:i'}}
-
-                                <!-- 지원이 브랜치 디벨롭에 푸시 후 적용 -->
-                                {% comment %} {% if comment.created_string == False %}
-                                <span class="comment__date">{{ comment.created_at|date:'m월 d일' }}</span>
+                                {% if comment.created_string == False %}
+                                {{ comment.created_at|date:'m월 d일' }}
                                 {% else %}
-                                <span class="comment__date">{{ comment.created_string }}</span>
-                                {% endif %} {% endcomment %}
+                                {{ comment.created_string }}
+                                {% endif %}
                             </span>
                             <p class="comment-text">{{ comment.content }}</p>
                         </div>
