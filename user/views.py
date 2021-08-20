@@ -71,11 +71,7 @@ def local_signup(request):
             )
 
             request.session['smtp_auth'] = True
-            messages.success(
-                request, '회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다.')
 
-            # 추후 smtp_sending_success.html 삭제 예정
-            # return redirect('core:main_list')
             return redirect('profile:smtp_sending_success')
         else:
             ctx = {
@@ -95,16 +91,16 @@ def local_signup_auth(request, uid64, token):
         uid = force_text(urlsafe_base64_decode(uid64))
         current_user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
-        messages.error(request, '메일 인증에 실패했습니다.')
+        # messages.error(request, '메일 인증에 실패했습니다.')
         return redirect('profile:login')
 
     if default_token_generator.check_token(current_user, token):
         current_user.is_active = True
         current_user.save()
-        messages.success(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
+        # messages.success(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
         return redirect('profile:login')
 
-    messages.error(request, '메일 인증에 실패했습니다.')
+    # messages.error(request, '메일 인증에 실패했습니다.')
     return redirect('profile:login')
 
 
@@ -112,7 +108,6 @@ def smtp_sending_success(request):
     if not request.session.get('smtp_auth', False):
         raise PermissionDenied
     request.session['smtp_auth'] = False
-
     return render(request, 'profile/smtp_sending_success.html')
 
 
@@ -121,6 +116,15 @@ def login(request):
         form = LoginForm(request.POST)
         user_id = request.POST['user_id']
         password = request.POST['password']
+
+        user = User.objects.filter(user_id=user_id)
+        if user and not user[0].is_active:
+            ctx = {
+                'form': form,
+                'error': '회원가입 후 이메일 인증이 완료되지 않았습니다. 인증을 완료해주세요.'
+            }
+            return render(request, 'profile/login.html', ctx)
+
         user = authenticate(user_id=user_id, password=password)
         if user is not None:
             auth_login(request, user)
@@ -154,7 +158,6 @@ def social_user_more_info(request):
             # TODO user identifier 확인 필요
             customer = form.save()
             string = str(customer.pk + int(time.time()))
-
             encoded_string = string.encode()
             result = hashlib.sha256(encoded_string).hexdigest()
             customer.user_identifier = result
@@ -180,10 +183,8 @@ def social_user_more_info(request):
 def withdrawal(request):
     if request.method == 'POST':
         request.user.delete()
-        # TODO : 추후 모달창으로 / messages.success(request, "탈퇴되었습니다.")
         return redirect('core:main_list')
-    # TODO : 추후 모달창으로
-    else:
+    elif request.method == 'GET':
         return render(request, 'profile/withdrawal.html')
 
 
