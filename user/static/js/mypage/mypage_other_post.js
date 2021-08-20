@@ -45,7 +45,7 @@ const listMyPost = (contacts) => {
                                 `<p class="post__title">${contacts[i].title}</p>`+
                                 `<div>`+
                                     `<p class="post__comment">`+
-                                        `<i class="far fa-comment-dots"></i>`+
+                                        `<i class="far fa-comment"></i>`+
                                         `<span>${contacts[i].comment_count}</span>`+
                                     `</p>`+
                                     `<p class="post__bookmark">`+

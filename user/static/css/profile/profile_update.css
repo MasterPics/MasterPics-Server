@@ -88,7 +88,7 @@ form {
   margin-right: 40px;
 }
 #id_username {
-  float: right;
+  display: inline-block;
   border-radius: 5px;
   border: 1px solid #cacaca;
   width: 100%;
