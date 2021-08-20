@@ -24,7 +24,7 @@
             {% endfor %}
 
             {% if messages %}
-                {% for msg in messages%}
+                {% comment %} {% for msg in messages%}
                     {% if msg.tags == 'success' %}
                         <div class='login__form-success'>
                             {{ msg }}
@@ -34,7 +34,7 @@
                             {{ msg }}
                         </div>
                     {% endif %}
-                {% endfor %}
+                {% endfor %} {% endcomment %}
             {% elif error %}
                 <div class='login__form-error'>
                     {{ error }}

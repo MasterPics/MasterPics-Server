@@ -475,7 +475,7 @@ def recovery_pw_reset(request):
 
         if reset_pw_form.is_valid():
             user = reset_pw_form.save()
-            messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
+            # messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
             auth_logout(request)
             return redirect('profile:login')
         else:
