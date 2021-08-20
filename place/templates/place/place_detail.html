@@ -4,7 +4,9 @@
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/place_detail.css' %}">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+
 {% endblock stylesheet %}
+
 
 {% block content %}
 <main>
@@ -125,7 +127,7 @@
             <!-- 댓글 작성창 -->
             <div class="createComment createComment-{{place.id}}">
                 <textarea class="comment__value" type="text" placeholder="후기를 작성해주세요."></textarea>
-                <input id="comment_submit" class="comment__btn" onclick="onClickNewComment({{ place.id }})" onkeyup="onEnterNewComment({{ place.id }})" type="submit" value="등록">
+                <input id="comment_submit" class="comment__btn" onclick="onClickNewComment({{ place.id }})" onkeyup="onEnterNewComment({{ place.id }})" type="submit" value="후기 게시">
             </div>
 
             <!-- 댓글 리스트 -->
@@ -137,7 +139,14 @@
                         <div class="comment-image"><img src={{comment.writer.image.url}}/></div>
                         <div class="comment-info">
                             <span class="comment-writer">{{ comment.writer }}</span>
-                            <span class="comment-created">{{ comment.created_at }}</span>
+                            <span id="comment-created-{{forloop.counter}}" class="comment-created">
+                                {{comment.created_at|date:'Y-m-d H:i'}}
+                                {% comment %} <script> 
+                                    var comment_time_target = document.getElementById('comment-created-{{forloop.counter}}');
+                                    var comment_date = displayedAt('{{comment.created_at}}');
+                                    comment_time_target.innerText = comment_date;
+                                </script> {% endcomment %}
+                            </span>
                             <p class="comment-text">{{ comment.content }}</p>
                         </div>
                     </div>
@@ -153,7 +162,6 @@
                 {% endfor %}
             </div>
         </div>
-        <hr>
 
         <!-- 페이지 이동 -->
         <div class="place-pagenation">
