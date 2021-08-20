@@ -21,9 +21,9 @@
     <article class="reference-content">
         <button class="category-btn">masterpics</button>
         <hr>
-            <div class="grid">
+            <div class="reference-list">
                 {% for portfolio in portfolios %}
-                <div class="grid-item" style="position:none;">
+                <div class="reference-item">
                     <!-- 썸네일 -->
                     <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
                         <div class="thumbnail_desc">
