@@ -155,9 +155,11 @@ def contact_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     contact.thumbnail = image_obj.image
-                #     contact.save()
+            images=contact.post_image_images.all()
+            if images:
+                contact.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                contact.thumbnail = None
 
             return redirect('contact:contact_detail', contact.pk)
     else:

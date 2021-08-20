@@ -13,12 +13,14 @@
         <!-- 유저 프로필 -->
         <div class="user-profile">
             <p class="writer">게시자</p>
-            <img class="user-image" src={{place.user.image.url}}/>
-        {% if place.user == request_user %}
-            <a class="user-name" href="{% url 'profile:mypage' %}">{{place.user.username}}</a>
-        {% else %}
-            <a class="user-name" href="{% url 'profile:others_mypage' place.user.user_identifier %}">{{place.user.username}}</a>
-        {% endif %}
+            {% if place.user == request.user %}
+            <a href="{% url 'profile:mypage' %}">
+            {% else %}
+            <a href="{% url 'profile:others_mypage' place.user.user_identifier %}">
+            {% endif %}
+                <img class="user-image" src={{place.user.image.url}}/>
+                <p class="user-name">{{place.user.username}}</p>
+            </a>
             <p class="user-category">{{place.user.category}}</p>
         </div>
 
@@ -51,6 +53,7 @@
         </div>
 
         <!-- 태그 리스트 -->
+        {% if tags %}
         <div class="place-tag">
             {% for tag in tags %}
                 <a href="{% url 'reference:reference_list' %}?search={{tag.name}}" class="portfolio_tag tag-button">
@@ -58,6 +61,7 @@
                 </a>
             {% endfor %}
         </div>
+        {% endif %}
     </section>
 
     <!-- 오른쪽 박스들 : 게시물 콘텐츠 -->
@@ -69,9 +73,9 @@
             {% if request.user.pk == place.user.pk %}
                 <div class="modify-delete">
                     <button class="modify"><a href="{% url 'place:place_update' place.pk %}">수정</a></button>
-                    <form action="{% url 'place:place_delete' place.pk %}" method="POST">
+                    <form action="{% url 'place:place_delete' place.pk %}" method="POST" onsubmit="return confirm('게시물을 삭제하시겠습니까?');">
                         {% csrf_token %}
-                        <input class="delete" type="submit" value="삭제" onclick="alert('게시물을 삭제하시겠습니까?');"/>
+                        <input class="delete" type="submit" value="삭제"/>
                     </form>
                 
                 </div>
@@ -120,8 +124,8 @@
         <div class="place-comment">
             <!-- 댓글 작성창 -->
             <div class="createComment createComment-{{place.id}}">
-                <input class="comment__value" type="text" placeholder="후기를 작성해주세요.">
-                <input class="comment__btn" onclick="onClickNewComment({{ place.id }})" type="submit" value="등록">
+                <textarea class="comment__value" type="text" placeholder="후기를 작성해주세요."></textarea>
+                <input id="comment_submit" class="comment__btn" onclick="onClickNewComment({{ place.id }})" onkeyup="onEnterNewComment({{ place.id }})" type="submit" value="등록">
             </div>
 
             <!-- 댓글 리스트 -->
@@ -131,7 +135,7 @@
                 <div class="comment comment-{{ comment.id }}">
                     <div class="comment-content">
                         <div class="comment-image"><img src={{comment.writer.image.url}}/></div>
-                        <div>
+                        <div class="comment-info">
                             <span class="comment-writer">{{ comment.writer }}</span>
                             <span class="comment-created">{{ comment.created_at }}</span>
                             <p class="comment-text">{{ comment.content }}</p>
@@ -140,8 +144,9 @@
                     <!-- 댓글 수정&삭제 버튼 -->
                     {% if request.user == comment.writer %} 
                     <div class="modify-delete">
-                        <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
-                        <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제"/>
+                            <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
+                            <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제" />
+                        
                     </div>
                     {% endif %}
                 </div>
@@ -155,7 +160,7 @@
             {% if place.get_previous %}
                 <a href="?page={{places.previous_page_number}}">이전글</a>
             {% endif %}
-            <a href="{% url 'place:place_list' %}">전체글보기</a>
+            <a href="{% url 'place:place_list' %}">목록보기</a>
             {% if place.get_next %}
                 <a href="?page={{places.next_page_number}}">다음글</a>
             {% endif %}        
@@ -197,8 +202,8 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript">
     var address = "{{place.location.address}}";
-    var lat = {{place.location.lat}}
-    var lon = {{place.location.lon}}
+    var lat = "{{place.location.lat}}";
+    var lon = "{{place.location.lon}}";
 </script>
 
 <!--comment variable-->

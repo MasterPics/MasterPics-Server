@@ -9,8 +9,15 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-// 주소로 좌표를 검색합니다
+let userMarkerSrc = 'https://i.imgur.com/rsjHKsd.png', // 출발 마커이미지의 주소입니다    
+    userMarkerSize = new kakao.maps.Size(35, 60), // 출발 마커이미지의 크기입니다 
+    userMarkerOption = { 
+    offset: new kakao.maps.Point(17, 43) // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+};
 
+let userMarkerImage = new kakao.maps.MarkerImage(userMarkerSrc, userMarkerSize, userMarkerOption);
+
+// 주소로 좌표를 검색합니다
 geocoder.addressSearch(address, function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
@@ -20,67 +27,16 @@ geocoder.addressSearch(address, function(result, status) {
 
         // 결과값으로 받은 위치를 마커로 표시합니다
         var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
+            position: coords,
+            image: userMarkerImage
         });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        /*
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">여기에 있어요!</div>'
-        });
-        infowindow.open(map, marker);
-        */
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        marker.setMap(map);
         map.setCenter(coords);
     } 
 });  
 
-/*
-const onClickSave = async (place_id) => {
-    console.log("save?");
-    try {
-        const url = '/place/';
-        const {
-        data
-        } = await axios.post(url, {
-        place_id,
-        })
-        modify(data.place_id, data.is_saved)
-        const options = {
-            url: '/place/save/',
-            method: 'POST',
-            data: {
-                place_id: place_id,
-            }
-        }
-        const response = await axios(options)
-        const responseOK = response && response.status === 200 && response.statusText === 'OK'
-        if (responseOK) {
-            const data = response.data
-            //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
-            modify(data.place_id, data.is_saved)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-const modify = (place_id, is_saved) => {
-    const save = document.querySelector(`.save-${place_id} i`);
-    const save_content = document.querySelector(`.save-${place_id} .save__content`)
-    const num = save_content.innerText; // [ {{ place.save_users.count }} ]
-    console.log(num)
-    if (is_saved === true) {
-        save.className = "fas fa-bookmark";
-        const count = Number(num) + 1;
-        save_content.innerHTML = count
-    } else {
-        save.className = "far fa-bookmark";
-        const count = Number(num) - 1;
-        save_content.innerHTML = count
-    }
-}
-*/
+
 const modifyNewComment = (place_id, comment_id, value) => {
     const CommentContainer = document.querySelector(`.comments-${place_id}`);
     console.log(CommentContainer)
@@ -98,6 +54,7 @@ const modifyNewComment = (place_id, comment_id, value) => {
     commentImage.appendChild(commentUserImage);
 
     const commentInfo = document.createElement("div")
+    commentInfo.className = 'comment-info'
     const commentWriter =  document.createElement("span")
     commentWriter.className = `comment-writer`;
     commentWriter.textContent = writer;
@@ -119,13 +76,17 @@ const modifyNewComment = (place_id, comment_id, value) => {
     commentInfo.appendChild(commentWriter)
     commentInfo.appendChild(commentCreated)
     commentInfo.appendChild(commentText)
+    
 
     commentContent.appendChild(commentImage)
     commentContent.appendChild(commentInfo)
+    
 
     tempContainer.appendChild(commentContent)
     tempContainer.appendChild(deleteBtn);
-    CommentContainer.appendChild(tempContainer);
+    
+    CommentContainer.insertBefore(tempContainer,CommentContainer.firstChild);
+   
 }
 
 const onClickNewComment = async (id) => {
@@ -151,19 +112,26 @@ const onClickNewComment = async (id) => {
 }
 
 const modifyDeleteComment = (comment_id) => {
-
     const targetCommentContainer = document.querySelector(`.comment-${comment_id}`);
     targetCommentContainer.remove();
 }
 
 const onClickDeleteComment = async (commentId) => {
-    const url = `/place/comment_delete/`;
-
-    const {
-        data
-    } = await axios.post(url, {
-        commentId
-    })
-    modifyDeleteComment(data.comment_id);
+    if(confirm("댓글을 삭제하시겠습니까?")){
+        const url = `/place/comment_delete/`;
+        const {
+            data
+        } = await axios.post(url, {
+            commentId
+        })
+        modifyDeleteComment(data.comment_id);
+    }else{
+        return;
+    }
+    
 }
 
+//enter event
+// document.getElementById("comment_submit").onkeyup = function(id) {
+//     onClickNewComment(id);
+// }
