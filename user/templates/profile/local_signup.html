@@ -62,13 +62,21 @@
             {% endfor %}
 
             <!--Tos 분리-->
-            <div class="form__group {{ field.name }}}">
+            <div class="form__group {{ form.is_ToS.name }}}">
                 <div class="form__label">
                     <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
                 </div>
                 <div class="form__input">
                     {{form.is_ToS}}
                 </div>
+
+                {% if form.is_ToS.errors|length > 0 %}
+                    <div class='field-error__container'>
+                        {% for error in form.is_ToS.errors %}
+                            <label for="{{ form.is_ToS.id_for_label }}" class="field-error">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 

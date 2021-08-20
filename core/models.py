@@ -76,7 +76,7 @@ class PostBase(models.Model):
 
     # foreing key
     thumbnail = models.ForeignKey('Image', related_name="thumbnail",
-                                  on_delete=models.CASCADE, blank=True, null=True, default=None)
+                                  on_delete=models.SET_NULL, blank=True, null=True, default=None) #SET_NULL은 update시 thumbnail 바뀔경우 위해
 
     def classname(self):
         return self.__class__.__name__
@@ -124,3 +124,6 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey(
         to='self', related_name='child_comments', on_delete=models.PROTECT, null=True)
     deleted = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
