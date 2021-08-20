@@ -12,7 +12,7 @@ class ContactForm(forms.ModelForm):
     # 해당 모델 자체의 정보를 담는 네임스페이스 클래스
     # https://stackoverflow.com/questions/57241617/what-is-exactly-meta-in-django
     images = forms.ImageField(
-            widget=forms.ClearableFileInput(attrs={'multiple': True}))  # 다중이미지
+            widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)  # 다중이미지 ,required=False는 기존이미지만 제거하는경우때문에
             
     class Meta:
 

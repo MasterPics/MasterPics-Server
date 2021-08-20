@@ -1,17 +1,22 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'css/place_update.css' %}">
+<link rel="stylesheet" href="{% static 'css/place_create.css' %}">
 <link rel="stylesheet" href="{% static 'css/place_select_map.css' %}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> <!--update할때 이미지 제거용-->
+<script src="{% static 'js/delete_image.js' %}"></script> <!--update할때 이미지 제거용(core안 js폴더에 존재)-->
 {% endblock stylesheet %}
+
 {% block content %}
-<div class='container'>
+
     <div class="map_wrap">
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    
         <div id="menu_wrap">
             <div class="option">
                 <div>
-                    <form onsubmit="searchPlaces(); return false;">
+                    <form class="search-form" onsubmit="searchPlaces(); return false;">
                         <input type="text" value="" id="keyword" placeholder="찾고싶은 장소를 입력하세요."/> 
                         <button type="submit" class="search-btn">
                             검색
@@ -35,33 +40,73 @@
                 {% csrf_token %}
                 <div class="place-form">
                     {% for field in place_form.visible_fields %}
-                    <div class="form-group {{ field.name }}">
-                        {{ field.label_tag }}
-                            {{ field }}
-                            {% for error in field.errors %}
+                        {% if field.id_for_label == 'id_images' %}
+
+                        {% else %}
+                        <div class="form-group {{ field.name }}">
+                            {{ field.label_tag }}
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="form-images">
+                    <div id="image_preview" class="form-group {{ field.name }}">
+                        <label for="id_images">이미지 (최대 10장)</label>
+                        <div class="form__upload">
+                            <p class="form__upload-text">
+                                드래그 또는 클릭하여 업로드
+                            </p>
+                            <div class="form__upload-btn">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                        </div>
+                        <div class="form__input">
+                            {{ place_form.images }}
+                            {% for error in form.images.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
                                 </div>
                             {% endfor %}
+                        </div>
+                        <!-- file 미리보기 -->
+                        <div id='att_zone' class="form__img">
+                            {% for image in images %}
+                                <div style="display:inline-block;position:relative;padding:3px;overflow:hidden;" class="{{image.image.pk}}">
+                                    <img src="{{image.image.image.url}}" alt="" style="width:65px;height:65px;margin-right:1px;margin-bottom:4px;z-index:none;object-fit:cover;">
+                                    <input type="button" onclick="remove(this)" value="x" delfile="{{image.image.image.url}}" style="width:14px;height:14px;position:absolute;right:10px;top:10px;font-size:10px;z-index:999;background-color:#c4c4c4;color:#ffffff;border:0;border-radius:100%;">
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
-
                 <div class="location-form">
                     {{ location_form.as_table }}
                 </div>
         
-                <input type="submit" class="submit-btn" value="등록하기"/>
+                <input type="submit" onclick="remove_all();" class="submit-btn" value="등록하기"/>
             </form>
         </div>
     </div>
-</div>
-{% endblock content %}
+
+
+{% endblock content%}
+
+
+
+
+
 
 {% block script %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript" src="{% static 'js/map/place_create_map.js' %}"></script>
-
-{% endblock script %}
+<script type="text/javascript" src="{% static 'js/place/place_create.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/place/image_preview.js' %}"></script>
+{% endblock script%}

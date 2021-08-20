@@ -24,7 +24,15 @@
             {% csrf_token %}
             {% for field in form.visible_fields %}
             {% if field.id_for_label == 'id_is_ToS' %}
-
+            <!--Tos 분리-->
+            <div class="form__group {{ field.name }}}">
+                <div class="form__label">
+                    <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
+                </div>
+                <div class="form__input">
+                    {{form.is_ToS}}
+                </div>
+            </div>
             {% else %}
                 {% if field.name != 'password' %}
                     <div class="form-group">
@@ -44,16 +52,6 @@
                 {% endif %}
             {% endif %}
             {% endfor %}
-
-            <!--Tos 분리-->
-            <div class="form__group {{ field.name }}}">
-                <div class="form__label">
-                    <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
-                </div>
-                <div class="form__input">
-                    {{form.is_ToS}}
-                </div>
-            </div>
 
             <input type="submit" class="update_btn " value="가입하기" />
         </form>
