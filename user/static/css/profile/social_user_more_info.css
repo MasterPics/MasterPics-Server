@@ -137,3 +137,19 @@ input[type="email"]:read-only {
     cursor: not-allowed;
 }
 
+
+/******* 반응형 ******/
+
+@media screen and (min-width:360px) and (max-width:512px) {
+  .signup__body form{
+      width: 70%;
+  }
+
+  #id_is_ToS {
+    margin-left: 94%;
+  }
+
+  .navbar__toogleBtn {
+      color: black;
+  }
+}

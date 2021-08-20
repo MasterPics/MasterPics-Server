@@ -161,4 +161,8 @@ input:-webkit-autofill:active  {
     .modify__body{
         width: 90%;
     }
+
+    .navbar__toogleBtn {
+        color: black;
+    }
 }

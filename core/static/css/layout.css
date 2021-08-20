@@ -60,7 +60,7 @@ svg {
   padding: 0;
   text-decoration: none;
   list-style-type: none;
-  font-family: "NanumSquare", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
@@ -104,10 +104,14 @@ nav a {
 }
 
 .nav_logo_img{
-  width: 30px;
   justify-content: center;
-  margin-right: 5px;
   background-image: url("./mp_logo.png");
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  margin-right: 6px;
+  margin-top: 3px;
 }
 
 .nav__logo {
@@ -266,22 +270,40 @@ nav a {
   margin-right: 20px;
   font-size: 24px;
   font-family: "DM Serif Display", serif;
+  color: #5A5A5A;
 }
 
 .info_1, .info_2 {
   margin: 0 15px 0 15px;
 }
 
+.info_1 > a, .info_2 > a{
+  color: #5A5A5A;
+}
+
 .mpright {
   margin-right: 320px;
+  color: #5A5A5A;
 }
 
 .footer__right {
   display: flex;
   cursor: pointer;
+  align-items: center;
 }
-.alliance {
+
+.alliance > a{
   color: #5200ff;
+}
+
+.insta{
+  font-size: 24px;
+  margin-left: 10px;
+  color: #989898;
+}
+
+.insta > a {
+  color: #989898;
 }
 
 /*LOADING*/
@@ -365,7 +387,7 @@ nav a {
 
 .footer__left {
   display: grid;
-  margin-left: 5px;
+  margin-left: 15px;
   height: 40px;
 }
 
@@ -388,7 +410,7 @@ nav a {
 }
 
 .mpright {
-  margin-left: -268px;
+  margin-left: -263px;
   grid-area: text-3;
   margin-right: 0;
   margin-top: 15px;
@@ -404,6 +426,12 @@ nav a {
   color: #5200ff;
 }
 
+.insta{
+  font-size: 20px;
+  margin-right: -50px;
+  margin-left: 45px;
+  margin-top: -23px;
+}
 
 
 /* 반응형 nav */
@@ -459,13 +487,14 @@ nav a {
   background-color: transparent;
 }
 
-.nav_logo_img{
-  width: 25px;
-}
-
 .nav__logo {
   font-size: 22px;
   margin-left: 3%;
+}
+
+.nav__logo > li{
+  position: relative;
+  bottom: 1px;
 }
 
 .nav__menu {
@@ -497,4 +526,5 @@ nav a {
 .nav__profile.active {
   display: block;
 }
+
 }

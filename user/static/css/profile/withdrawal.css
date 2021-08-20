@@ -109,4 +109,8 @@ li{
     .modify__body{
         width: 80%;
     }
+
+    .navbar__toogleBtn {
+        color: black;
+      }
 }

@@ -83,4 +83,8 @@ body{
     .email_info {
         font-size: 13px;
     }
+
+    .navbar__toogleBtn {
+        color: black;
+      }
 }

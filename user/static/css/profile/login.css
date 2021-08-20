@@ -135,6 +135,7 @@ input:-webkit-autofill:active  {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-items: center;
   justify-content: space-evenly;
 }
 
@@ -144,6 +145,33 @@ input:-webkit-autofill:active  {
   padding: 8px 22px;
   border-radius: 3px;
   font-size: 12px;
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.social-login__body > li{
+  display: flex;
+}
+
+.social-login__body > a{
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.google{
+  background-image: url(./google.jpg);
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+
+.naver{
+  background-image: url("./naver.jpg");
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  margin-right: 5px;
 }
 
 input::placeholder{
@@ -218,6 +246,7 @@ input[type="password"] {
     font-size: 11px;
     margin-top: 10px;
   }
+
   .social-login__container {
     flex-direction: column;
   }
@@ -230,7 +259,7 @@ input[type="password"] {
   }
   
   .social-login__container .social-login__body > * {
-    padding: 5px 15px;
+    padding: 7px;
     border-radius: 3px;
     font-size: 7px;
   }
@@ -244,4 +273,8 @@ input[type="password"] {
   .login__form-success{
       font-size: 8px;
       margin: 5px auto;
+  }
+  .navbar__toogleBtn {
+    color: black;
+  }
 }
