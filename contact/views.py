@@ -41,7 +41,7 @@ def contact_save(request):
 
 
 def contact_list(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.all().order_by('-created_at')
 
     # 상호무페이
     no_pay = request.GET.get('no_pay', False)
@@ -155,9 +155,11 @@ def contact_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     contact.thumbnail = image_obj.image
-                #     contact.save()
+            images=contact.post_image_images.all()
+            if images:
+                contact.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                contact.thumbnail = None
 
             return redirect('contact:contact_detail', contact.pk)
     else:
@@ -215,7 +217,7 @@ def contact_create(request):
 def contact_map(request):
     contacts = Contact.objects.filter(is_closed=False)
     ctx = {
-        'contacts_json': json.dumps([contact.to_json() for contact in contacts])
+        'contacts_json': json.dumps([contact.to_json(request.user) for contact in contacts])
     }
     return render(request, 'contact/contact_map.html', context=ctx)
 

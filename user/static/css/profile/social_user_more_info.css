@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+/*layout*/
+
+#nav {
+  background-color: #F4F4F4;
+}
+
+nav {
+  background-color: #fff;
+}
+
+nav a {
+  color: black;
+}
+
+.dropbtn {
+    color: black;
+    font-size: 14px;
+}
+
+.dropdown-content {
+    margin-left: -20px;
+}
+
+#footer{
+    background-color: #C4C4C4;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+}  
+
+/*social_user_info*/
+
+body{
+  height: 100%;
+}
+
+.container{
+  background-color: #F4F4F4;
+}
+
+.signup__container{
+  width: 100%;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login__logo {
+    font-size: 32px;
+    font-family: "DM Serif Display", serif;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.login_info{
+    font-size: 15px;
+    color: #888888;
+    font-weight: 500;
+}
+
+.signup__body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.signup__body form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 10px;
+  width: 25%;
+  font-size: 8pt;
+  font-weight: 500;
+  line-height: 30px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.signup__body form input {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #CFCFCF;
+    padding-left: 10px;
+}
+
+.signup__body form > .update_btn {
+    height: 40px;
+    width: 100%;
+    background-color: #888888;
+    border: #00000000 1px solid;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: white;
+    font-size: 8pt;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+.signup__body form > .update_btn:hover{
+  background-color: #5200ff;
+}
+.id_is_ToS{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-right: 10%;
+  margin-top: 10px;
+}
+
+#id_is_ToS{
+  width: 15px;
+  margin-left: 96%;
+  margin-top: -32px;
+}
+
+input[type="email"]:read-only {
+    cursor: not-allowed;
+}
+
+.signup__body form > #id_email:read-only{
+    cursor: not-allowed;
+}
+
+
+/******* 반응형 ******/
+
+@media screen and (min-width:360px) and (max-width:512px) {
+  .signup__body form{
+      width: 70%;
+  }
+
+  #id_is_ToS {
+    margin-left: 94%;
+  }
+
+  .navbar__toogleBtn {
+      color: black;
+  }
+}

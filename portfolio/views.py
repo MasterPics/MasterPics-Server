@@ -21,7 +21,8 @@ from django.forms import modelformset_factory
 
 
 def portfolio_list(request):
-    portfolios = Portfolio.objects.all().order_by("created_at")
+
+    portfolios = Portfolio.objects.all().order_by("-created_at")
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort
@@ -144,9 +145,11 @@ def portfolio_update(request, pk):
                 image_obj.image = img
                 image_obj.save()
 
-                # if not i:
-                #     portfolio.thumbnail = image_obj.image
-                #     portfolio.save()
+            images=portfolio.post_image_images.all()
+            if images:
+                portfolio.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                portfolio.thumbnail = None
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
 

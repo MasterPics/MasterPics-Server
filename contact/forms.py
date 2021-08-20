@@ -1,22 +1,24 @@
 from django import forms
 from .models import *
+from taggit.forms import TagWidget
 
 # form validator
 from django.core.exceptions import ValidationError
 import datetime
 
 
+
 class ContactForm(forms.ModelForm):
     # 해당 모델 자체의 정보를 담는 네임스페이스 클래스
     # https://stackoverflow.com/questions/57241617/what-is-exactly-meta-in-django
     images = forms.ImageField(
-            widget=forms.ClearableFileInput(attrs={'multiple': True}))  # 다중이미지
+            widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)  # 다중이미지 ,required=False는 기존이미지만 제거하는경우때문에
             
     class Meta:
 
         model = Contact
         fields = ('title', 'desc', 'start_date', 'end_date', 
-                  'file_attach', 'pay', 'tags')
+                  'file_attach', 'pay_type', 'pay', 'tags')
         labels = {
             'title': '제목',
             'desc': '설명',
@@ -26,7 +28,10 @@ class ContactForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': '제목을 입력하세요.'}),
             'desc': forms.Textarea(
                 attrs={'placeholder': '설명을 작성하세요.'}),
-            'tags': forms.TextInput(attrs={'placeholder': '#masterpics #portfolio'}),
+            'tags' : TagWidget(
+                attrs={
+                    'placeholder': '#masterpics #portfolio'}
+            ),
             'pay': forms.NumberInput(attrs={'placeholder': '페이입력'}),
 
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
