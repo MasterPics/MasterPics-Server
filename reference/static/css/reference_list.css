@@ -27,6 +27,9 @@ body{
   align-items: center;
   text-align: center;
 }
+.reference-header h2{
+    font-family: 'Roboto', sans-serif;
+}
 .reference-header p{
   font-size:13px;
   font-weight: 400;
@@ -52,6 +55,7 @@ body{
     font-size:1rem;
     background-color:#5200ff;
     border-radius: 7px;
+    border:none;
     color:white;
     margin-left:0.5rem;
 }
@@ -85,12 +89,12 @@ hr{
 .reference-list{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 .reference-item{
     width:calc(100%/4.1);
-    margin-bottom:1.7rem;
+    margin:0 0.3% 1.7rem 0.3%;
 }
 .item-info{
     display: flex;
@@ -229,6 +233,9 @@ hr{
     article{
         width:auto;
     }
+    hr{
+        margin:1rem 0
+    }
     .reference-header{
         margin:10% 0 3% 0;
     }
@@ -237,6 +244,14 @@ hr{
     }
     .reference-header p{
         font-size:11px;
+    }
+    .reference-content{
+        width:88vw;
+    }
+    .category-btn{
+        padding:0.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
     }
     .reference-list{
         display:flex;
