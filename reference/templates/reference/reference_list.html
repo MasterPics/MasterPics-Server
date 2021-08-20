@@ -6,7 +6,7 @@
 {% endblock stylesheet %}
 
 {% block content %}
-<div class="reference-container">
+<div class="reference">
     <header class="reference-header">
         <h2>Reference</h2>
         <p>촬영을 위한 레퍼런스들을 검색하고 영감을 얻을 수 있는 <br/>레퍼런스들을 저장해보세요!</p>
@@ -18,10 +18,9 @@
         </form>
     </header>
 
-    <article>
+    <article class="reference-content">
         <button class="category-btn">masterpics</button>
         <hr>
-        <div class="grid-container">
             <div class="grid">
                 {% for portfolio in portfolios %}
                 <div class="grid-item" style="position:none;">
@@ -87,7 +86,6 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>
         </div>
 
 
@@ -97,10 +95,10 @@
             <div class="loading" style="display: none;">Loading...</div>
         </a>
         {% endif %}
+
+
+
     </article>
-
-
-
 </div>
 {% endblock content %}
 
