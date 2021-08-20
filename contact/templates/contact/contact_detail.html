@@ -31,8 +31,8 @@
         <div class="side-bar__info">
             <div class="comment">
                 <a href="#comment">
-                <i class="far fa-comment-dots"></i>
-                <span class="comment__content">{{ contact.comments.count }}</span>
+                <i class="far fa-comment"></i>
+                <span class="comment__count">{{ contact.comments.count }}</span>
                 </a>
             </div>
             <div class="save save-{{contact.id}}">
@@ -83,11 +83,11 @@
             </div>
             <div class="post__pay-date">
                 <div class="post__pay">
-                    {% if contact.pay_negotiation %}
-                    <div class="post__pay-text">페이협의</div>
-                    {% elif contact.free or contact.pay == 0 %}
-                    <div class="post__pay-text">상호무페이</div>
-                    {% elif contact.pay %}
+                    {% if contact.pay_type == 0 %}
+                    <div class="post__pay-text">상호 무페이</div>
+                    {% elif contact.pay_type == 1 %}
+                    <div class="post__pay-text">페이 협의</div>
+                    {% elif contact.pay_type == 2 %}
                     <div class="post__pay-text">{{ contact.pay }} 원</div>
                     {% endif %}
                 </div>
@@ -103,7 +103,6 @@
             </div>
         </div>
         <div class="post__wrapper">
-            {% if contact.images.all %}
             <div class="post__images-wrapper">
                 <div class="post__images-text">Mood Board</div>    
                 <!-- Container for the image gallery -->
@@ -132,15 +131,15 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
             <div class="post__content">
                 <div class="post__desc">{{contact.desc}}</div>
+
                 <div class="post__file"><a href="{{ contact.file_attach.url }}">시안 첨부파일 보기</a></div>
             </div>
         </div>
         <div class="post__comment">
             <div id="comment" class="createComment createComment-{{contact.id}}">
-                <input class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?">
+                <textarea class="comment__value" type="text" placeholder="이 개인작업에 대해 어떻게 생각하시나요?"></textarea>
                 <input class="comment__btn" onclick="onClickNewComment({{ contact.id }})" type="submit" value="댓글 게시">
             </div>
             <div class="comments-{{ contact.id }} comments">
@@ -154,12 +153,16 @@
                             <div class="comment__content">
                                 <div class="comment__top-info">
                                     <span class="comment__writer">{{ comment.writer }}</span>
-                                    <span class="comment__date">{{ comment.created_at.time }}</span>
+                                    {% if comment.created_string == False %}
+                                    <span class="comment__date">{{ comment.created_at|date:'m월 d일' }}</span>
+                                    {% else %}
+                                    <span class="comment__date">{{ comment.created_string }}</span>
+                                    {% endif %}
                                 </div>
                                 <span class="comment__text">{{ comment.content }}</span>
                             </div>
                         </div>
-                        <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="댓글삭제">
+                        <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
                     </div>
                 </div>
                 {% endfor %}
@@ -174,11 +177,14 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+    var userImage = '{{request.user.image.url}}';
+    var writer = '{{request.user}}';
+</script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/contact_save.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/contact_comment.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map/contact_detail_map.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/post_delete.js' %}"></script>
 {% endblock script %}
