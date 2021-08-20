@@ -13,15 +13,9 @@
     <div class="update">
         <h1 class="update__text">Portfolio 수정하기</h1>
         <div class="update__user">
-            {% if request.user.image  %}
             <img class="update__user-img" src="{{request.user.image.url}}" alt="img">
-            {% else %}
-            <img class="update__user-img"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="img">
-            {% endif %}
             <div class="update__user-name">{{request.user.username}}</div>
-            <p class="update__user-category">{{request.user.category}}</p>
+            <div class="update__user-category">{{request.user.category}}</div>
         </div>
     </div>          
 
@@ -101,5 +95,5 @@
 {% endblock content%}
 
 {% block script %}
-<script src="{% static 'js/image_preview.js' %}"></script>
+<script src="{% static 'js/portfolio_img_prev.js' %}"></script>
 {% endblock script %}

@@ -9,8 +9,8 @@ from django.shortcuts import get_object_or_404
 
 class PayType(models.IntegerChoices):
     PAY_FREE = 0, '상호 무페이'
-    PAY_CUSTOM = 1, '페이 입력'
-    PAY_NEGO = 2, '페이 협의'
+    PAY_NEGO = 1, '페이 협의'
+    PAY_CUSTOM = 2, '페이 입력'
 
 
 class Contact(PostBase):
@@ -34,9 +34,10 @@ class Contact(PostBase):
             "title": self.title,
             "thumbnail" : self.thumbnail.image.url,
             "writer" : self.user.username, 
-            "writer_thumbnail" : self.user.images.image.url,
+            "writer_thumbnail" : self.user.image.url,
             "writer_category" : self.user.category,
             "is_saved" : request_user in self.bookmark_users.all(), 
+            "pay_type": self.pay_type,
             "pay": self.pay,
             "start_date": self.start_date.strftime('%Y-%m-%d'),
             "end_date": self.end_date.strftime('%Y-%m-%d'),
