@@ -41,7 +41,7 @@ def contact_save(request):
 
 
 def contact_list(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.all().order_by('-created_at')
 
     # 상호무페이
     no_pay = request.GET.get('no_pay', False)
@@ -145,6 +145,8 @@ def contact_update(request, pk):
             contact.user = request.user
             contact.location = location
             contact.save()
+            contact.tags.clear()
+            form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
@@ -186,6 +188,7 @@ def contact_create(request):
             contact.user = request.user
             contact.location = location
             contact.save()
+            contact_form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
 
@@ -201,10 +204,12 @@ def contact_create(request):
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
         
-        #TODO Else 문 로직 정리해줘야함 
         else:
-            return redirect("contact:contact_list")
-
+            ctx = {
+                'contact_form': contact_form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
 
     else:
         ctx = {

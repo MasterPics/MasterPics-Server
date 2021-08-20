@@ -21,7 +21,8 @@ from django.forms import modelformset_factory
 
 
 def portfolio_list(request):
-    portfolios = Portfolio.objects.all().order_by("created_at")
+
+    portfolios = Portfolio.objects.all().order_by("-created_at")
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort
@@ -131,6 +132,7 @@ def portfolio_update(request, pk):
             portfolio.save()
             portfolio.tags.clear()
             form.save_m2m()
+            
 
             print(portfolio.images)
             

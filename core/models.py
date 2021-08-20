@@ -124,3 +124,6 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey(
         to='self', related_name='child_comments', on_delete=models.PROTECT, null=True)
     deleted = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
