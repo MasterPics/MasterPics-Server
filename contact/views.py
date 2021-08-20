@@ -201,10 +201,12 @@ def contact_create(request):
                     contact.save()
             return redirect('contact:contact_detail', contact.pk)
         
-        #TODO Else 문 로직 정리해줘야함 
         else:
-            return redirect("contact:contact_list")
-
+            ctx = {
+                'contact_form': contact_form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
 
     else:
         ctx = {
