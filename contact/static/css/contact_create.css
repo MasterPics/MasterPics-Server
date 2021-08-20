@@ -102,12 +102,16 @@ form {
 .desc textarea:focus {
   outline: none !important;
 }
-.pay {
+.pay{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  margin-bottom: 8px;
+}
+.pay .form__input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
 }
 .pay input {
   width: 100%;
@@ -115,8 +119,50 @@ form {
   color: #999999;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  padding: 6px 22px;
+  padding: 8px 30px;
   text-align: center;
+}
+.pay_type {
+  width: 190px;
+  font-size: 10px;
+  color: #000000;
+  padding: 8px 10px;
+  border: solid 1px #eeeeee;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+  /* 화살표 없애기 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* 화살표 없애기 */
+.pay_type::-ms-expand {
+  display: none;
+}
+.pay__type{
+  position: relative;
+  margin-right:15px;
+  width:100%;
+}
+/* 화살표 커스터마이징 */
+.select__arrow {
+  position: absolute;
+  top: 12px;
+  right: 13px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: #c4c4c4 transparent transparent transparent;
+}
+.pay_type option {
+  font-size: 10px;
+  color: #000000;
+}
+.pay_type:focus {
+  outline: none;
 }
 .pay__text {
   position: absolute;
@@ -129,7 +175,7 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 .form__date-wrapper {
   display: flex;
@@ -150,8 +196,7 @@ form {
   font-size: 11px;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  padding: 4px 18px;
-  text-align: right;
+  padding: 4px 25px;
 }
 .form__date-text {
   font-size: 14px;
