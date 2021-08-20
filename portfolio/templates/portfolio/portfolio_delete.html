@@ -10,23 +10,27 @@
     <div class="delete">
         <h1 class="delete__text">Portfolio 삭제하기</h1>
         <div class="delete__user">
-            {% if request.user.image  %}
             <img class="delete__user-img" src="{{request.user.image.url}}" alt="img">
-            {% else %}
-            <img class="delete__user-img"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="img">
-            {% endif %}
             <div class="delete__user-name">{{request.user.username}}</div>
-            <p class="delete__user-category">{{request.user.category}}</p>
+            <div class="delete__user-category">{{request.user.category}}</div>
         </div>
     </div>          
     
     <div class="line"></div>
 
-    <p class="form__text">정말로 삭제하시겠습니까?</p>
+    <p class="form__text">게시물을 삭제하시겠습니까?</p>
     <p class="form__text">삭제한 Portfolio는 되돌릴 수 없습니다.</p>
-
+    
+    <div class="form__btn">
+        <form action="{% url 'portfolio:portfolio_delete' portfolio.pk %}" method="POST">
+            {% csrf_token %}
+            
+            <input class="form__submit" type="submit" value="확인"/>
+        </form>
+        <div>
+            <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}" class="form__submit">취소</a>
+        </div>
+    </div>
     <div class="delete__img">
         {% for image in portfolio.images.all %}
         {% if image %}
@@ -34,15 +38,8 @@
             <img class="demo" src="{{image.image.url}}" alt="img">
         </div>
         {% endif %}
-    {% endfor %}
+        {% endfor %}
     </div>
 
-    <form action="{% url 'portfolio:portfolio_delete' portfolio.pk %}" method="POST">
-        {% csrf_token %}
-        
-        <div class="form__btn">
-            <input class="form__submit" type="submit" value="삭제하기"/>
-        </div>
-    </form>
 </div>
 {% endblock content%}

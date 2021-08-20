@@ -11,6 +11,10 @@ main{
     align-items:flex-start;
     margin:7% 5%;
 }
+.info-box *:not(i),
+.place-detail *:not(i){
+    font-family: 'Roboto', sans-serif;
+}
 .info-box{
     width:213px;
     margin-right:5%;
@@ -33,7 +37,7 @@ main{
 }
 .user-profile .user-name{
     color:#363636;
-    font-weight: bold;
+    font-weight: 600;
     margin-top:1rem;
     text-align: center;
 }
@@ -124,6 +128,7 @@ main{
 
 .place-detail{
     width:65%;
+    font-family: 'Roboto', sans-serif !important;
 }
 .place-detail-header{
     display: flex;
@@ -271,6 +276,7 @@ main{
 }
 .comment-content{
     display: flex;
+    width:90%
 }
 .comment-image img{
     width:40px;
@@ -284,7 +290,7 @@ main{
 }
 .comment-writer{
     font-size:1rem;
-    font-weight: bold;
+    font-weight: 600;
     color:#1E1E1E;
     margin-right: 1rem;
 }
@@ -325,13 +331,16 @@ a{
      color:#1e1e1e;
  }
  .place-detail-info {
-     font-size:0.4rem;
+     font-size:0.35rem;
      align-items: flex-start;
  }
  .place-detail-info .pay-created{
      display:flex;
      flex-direction: column;
-     align-items: flex-start;
+     align-items: flex-end;
+ }
+ .place-detail-info .pay-info{
+     margin:0;
  }
  .place-images, .mySwiper2{
      height:330px;
@@ -352,6 +361,7 @@ a{
  .comment__btn{
      width:18%;
      font-size:0.7rem;
+     padding:0;
  }
  .place-pagenation{
      margin: 1.5rem 0;

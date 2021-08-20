@@ -23,6 +23,7 @@ body{
 }
 
 .place-header-content{
+  font-family: 'Roboto', sans-serif;
   margin:0 10%;
   color:white;
 }
@@ -51,6 +52,7 @@ body{
   justify-content: center;
   align-items: center;
   width:100%;
+  font-family: 'Roboto', sans-serif;
 }
 .place-list-grid{
   display:grid;
@@ -111,6 +113,7 @@ body{
   -moz-appearance: none !important;
   appearance: none !important;
   background-color: white;
+  width:100px;
 }
 /* 화살표 없애기 */
 .sort::-ms-expand {
@@ -151,6 +154,7 @@ hr{
   align-items: center;
   margin:1.5rem 1.5rem 1.5rem 0;
 }
+
 .place-thumbnail{
   width:250px; 
   height:197px;
@@ -289,61 +293,7 @@ hr{
     padding:0.8rem;
   }
   .place-list-grid{
-    width:95vw;
-    display:flex;
-    flex-direction: column;
-    align-items: flex-end;
-    overflow: hidden;
-  }
-  .place-search{
-    width:100%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  .place-search input{
-    width:80%;
-  }
-  .place-filter{
-    margin-top:1rem;
-    font-size: 0.5rem;
-  }
-  .sort-box{
-    margin:0;
-  }
-  .sort{
-    padding: 0.4rem 0.8rem;
-    font-size: 0.5rem;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    background-color: white;
-  }
-  hr{
-    width:100%;
-    margin:0.8rem 0;
-  }
-  .place-content{
-    flex-direction: column;
-    align-items: center;
-    width:100%;
-    margin:0.6rem 0;
-  }
-  .place-thumbnail{
-    width:95%;
-  }
-  .place-content-title{
-    width:95%;
-    margin: 0;
-    padding: 1.1rem 0 1.1rem 0;
-    border-bottom: 1px solid lightgray;
-  }
-}
-
-/*패드*/
-@media screen and (max-width:1024px) and (min-width:481px){
-  
-  .place-list-grid{
-    width:95vw;
+    width:90vw;
     display:flex;
     flex-direction: column;
     align-items: flex-end;
@@ -355,7 +305,72 @@ hr{
     justify-content: space-between;
   }
   .place-search input{
-    width:90%;
+    width:85%;
+  }
+  .btn_search{
+    width:13%;
+    font-size: 0.5rem;
+    padding:0.5rem;
+  }
+  .place-filter{
+    margin-top:1rem;
+    font-size: 0.5rem;
+  }
+  .sort-box{
+    margin:0;
+  }
+  .sort{
+    padding: 0.4rem 0.8rem;
+    font-size: 0.5rem;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-color: white;
+  }
+  hr{
+    width:100%;
+    margin:0.8rem 0;
+  }
+  .place-content{
+    flex-direction: column;
+    align-items: flex-end;
+    width:100%;
+    margin:0.6rem 0;
+  }
+  .place-content a{
+    width:100%;
+  }
+  .place-thumbnail{
+    width:100%;
+  }
+  .place-content-title{
+    width:100%;
+    margin: 0;
+    padding: 1.1rem 0 1.1rem 0;
+    border-bottom: 1px solid lightgray;
+  }
+}
+
+/*패드*/
+@media screen and (max-width:1024px) and (min-width:481px){
+  
+  .place-list-grid{
+    width:90vw;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .place-search{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .place-search input{
+    width:85%;
+  }
+  .btn_search{
+    width:13%;
   }
   .place-filter{
     margin-top:1rem;
@@ -382,12 +397,15 @@ hr{
     width:100%;
     margin:0.6rem 0;
   }
+  .place-content a{
+    width:100%;
+  }
   .place-thumbnail{
-    width:95%;
+    width:100%;
     height: 400px;
   }
   .place-content-title{
-    width:95%;
+    width:100%;
     margin: 0;
     padding: 1.1rem 0 1.1rem 0;
     border-bottom: 1px solid lightgray;
