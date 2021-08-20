@@ -109,6 +109,11 @@
                         </div>
                         
                         <div class="like-save">
+                            <div class="place-comment">
+                                <i class="far fa-comment"></i>
+                                <span>{{ place.comments.count }}</span>
+                            </div>
+
                             <div class="place-like-count like-{{place.id}}">
                                 {% if request_user in place.like_users.all %}
                                 <i class="fas fa-heart" type="submit" onclick="onClickLike({{ place.id }})" name="type"
@@ -119,6 +124,7 @@
                                 {% endif %}
                                 <span class="like__content">{{ place.like_users.count }}</span>
                             </div>
+                            
                             <div class="place-save save-{{place.id}}">
                                 {% if request_user in place.bookmark_users.all %}
                                 <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type"
@@ -128,7 +134,6 @@
                                     value="save"></i>
                                 {% endif %}
                                 <span class="save__content" style="display:none">{{ place.bookmark_users.count }}</span>
-
                             </div>
                         </div>
                     </div>

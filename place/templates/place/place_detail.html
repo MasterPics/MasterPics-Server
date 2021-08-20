@@ -52,6 +52,11 @@
                 {% endif %}
                 <p class="save__content">{{ place.bookmark_users.count }}</p>
             </div>
+            <!-- comment -->
+            <div class="comment-count">
+                <i class="far fa-comment"></i>
+                <p class="comment__count">{{ place.comments.count }}</p>
+            </div>
         </div>
 
         <!-- 태그 리스트 -->
@@ -141,11 +146,6 @@
                             <span class="comment-writer">{{ comment.writer }}</span>
                             <span id="comment-created-{{forloop.counter}}" class="comment-created">
                                 {{comment.created_at|date:'Y-m-d H:i'}}
-                                {% comment %} <script> 
-                                    var comment_time_target = document.getElementById('comment-created-{{forloop.counter}}');
-                                    var comment_date = displayedAt('{{comment.created_at}}');
-                                    comment_time_target.innerText = comment_date;
-                                </script> {% endcomment %}
                             </span>
                             <p class="comment-text">{{ comment.content }}</p>
                         </div>

@@ -239,20 +239,23 @@ hr{
   align-items: center;
 }
 
-.place-like-count{
-  margin:0 1.2rem;
+.place-like-count,
+.place-comment,
+.place-save{
+  margin-right:1rem;
   font-size:0.9rem;
+  color:#6d6d6d;
+  display: flex;
+  align-items: flex-end;
 }
 .place-like-count i,
-.place-save i{
+.place-save i,
+.place-comment i{
   font-size:1.1rem;
-  color:#6d6d6d;
   cursor: pointer;
 }
-.place-like-count span{
-  margin-left:0.2rem;
-  color:#6d6d6d;
-}
+.place-like-count span,
+.place-comment span,
 .place-save span{
   margin-left:0.2rem;
   color:#4f4f4f;
