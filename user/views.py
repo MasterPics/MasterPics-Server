@@ -116,19 +116,17 @@ def login(request):
         form = LoginForm(request.POST)
         user_id = request.POST['user_id']
         password = request.POST['password']
-
-        user = User.objects.filter(user_id=user_id)
-        if user and not user[0].is_active:
+        user = authenticate(user_id=user_id, password=password)
+        
+        if user is not None:
+            auth_login(request, user)
+            return redirect('core:main_list')
+        elif User.objects.filter(user_id=user_id) and not User.objects.filter(user_id=user_id)[0].is_active:
             ctx = {
                 'form': form,
                 'error': '회원가입 후 이메일 인증이 완료되지 않았습니다. 인증을 완료해주세요.'
             }
             return render(request, 'profile/login.html', ctx)
-
-        user = authenticate(user_id=user_id, password=password)
-        if user is not None:
-            auth_login(request, user)
-            return redirect('core:main_list')
         else:
             ctx = {
                 'form': form,
