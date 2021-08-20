@@ -16,6 +16,9 @@ from taggit.managers import TaggableManager
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
+""" commnet 시간 """
+from datetime import datetime, timedelta
+
 
 class Location(models.Model):
     address = models.TextField()  # 도로명 주소
@@ -124,3 +127,19 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey(
         to='self', related_name='child_comments', on_delete=models.PROTECT, null=True)
     deleted = models.BooleanField(default=False)
+
+    @property
+    def created_string(self):
+        time = datetime.now(tz=timezone.utc) - self.created_at
+
+        if time < timedelta(minutes=1):
+            return '방금 전'
+        elif time < timedelta(hours=1):
+            return str(int(time.seconds / 60)) + '분 전'
+        elif time < timedelta(days=1):
+            return str(int(time.seconds / 3600)) + '시간 전'
+        elif time < timedelta(days=7):
+            time = datetime.now(tz=timezone.utc).date() - self.created_at.date()
+            return str(time.days) + '일 전'
+        else:
+            return False
