@@ -27,11 +27,15 @@
   font-size: 14px;
   color: #1e1e1e;
   margin-left: 10px;
+  line-height: 14px;
+  vertical-align: middle;
 }
 .create__user-category {
   font-size: 12px;
   color: #6b6b6b;
   margin-left: 10px;
+  line-height: 12px;
+  vertical-align: middle;
 }
 
 .line {
@@ -46,6 +50,9 @@ form {
   position: relative;
   height: 100%;
 }
+.form{
+  width:100%;
+}
 .form__wrapper {
   overflow: hidden;
   display: flex;
@@ -53,21 +60,25 @@ form {
   align-items: stretch;
   margin-bottom: 20px;
   height: 100%;
+  width:100%;
 }
 .form__left {
-  width: 100%;
-  margin-right: 30px;
+  width: 48%;
 }
 .form__right {
-  width: 100%;
+  width: 48%;
 }
 .form__label {
   font-size: 14px;
+}
+.form__label label {
+  width: 100%;
 }
 .title,
 .desc,
 .tags {
   margin-bottom: 10px;
+  width:100%
 }
 .title .form__label,
 .desc .form__label,
@@ -95,21 +106,71 @@ form {
 .desc textarea:focus {
   outline: none !important;
 }
-.pay {
+.pay{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  margin-bottom: 8px;
+  width:100%;
+}
+.pay .form__label{
+  width:8%;
+}
+.pay .form__input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  width:90%;
 }
 .pay input {
-  width: 100%;
+  width: 48%;
   font-size: 11px;
-  color: #999999;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  padding: 6px 22px;
+  padding: 8px 30px;
   text-align: center;
+}
+.pay_type {
+  width: 100%;
+  font-size: 10px;
+  color: #000000;
+  padding: 8px 10px;
+  border: solid 1px #eeeeee;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+  /* 화살표 없애기 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* 화살표 없애기 */
+.pay_type::-ms-expand {
+  display: none;
+}
+.pay__type{
+  position: relative;
+  margin-right:15px;
+  width:48%;
+}
+/* 화살표 커스터마이징 */
+.select__arrow {
+  position: absolute;
+  top: 12px;
+  right: 13px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: #c4c4c4 transparent transparent transparent;
+}
+.pay_type option {
+  font-size: 10px;
+  color: #000000;
+}
+.pay_type:focus {
+  outline: none;
 }
 .pay__text {
   position: absolute;
@@ -122,20 +183,24 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin: 8px 0;
+  width:100%
+}
+.form__date .form__label{
+  width:8%;
 }
 .form__date-wrapper {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.start_date {
-  display: flex;
   justify-content: space-between;
   align-items: center;
+  width:90%;
 }
-.start_date label {
-  margin-right: 15px;
+.start_date,
+.end_date {
+  width:48%
+}
+.start_date .form__label {
+  width: 14%;
 }
 .start_date input,
 .end_date input {
@@ -143,13 +208,10 @@ form {
   font-size: 11px;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  padding: 4px 18px;
-  text-align: right;
+  padding: 4px 25px;
 }
 .form__date-text {
   font-size: 14px;
-  padding: 10px;
-  padding-bottom: 10px;
   vertical-align: middle;
 }
 .form__location {
@@ -157,59 +219,33 @@ form {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  width:100%;
 }
-.form__location label {
-  margin-right: 15px;
+.form__location .form__label {
+  width: 8%;
+}
+.form__location .form__input {
+  width: 90%;
+}
+.form__location .form__input input{
+  width:100%;
+  margin:0 auto;
 }
 #location-address {
   width: 100%;
   font-size: 0.7rem;
-  padding: 6px 110px;
+  padding: 6px 0px;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  text-align: start;
+  text-align: center;
   margin: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .map_wrap {
-  height: 200px;
-  position: relative;
-}
-#map {
-  width: 100%;
   height: 30%;
-  z-index: 1;
-}
-#menu_wrap {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  height: 100%;
-}
-.option {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-#keyword {
-  font-size: 11px;
-  color: #999999;
-  border: 1px solid #c4c4c4;
-  border-radius: 3px;
-  width: 180px;
-  padding: 5px;
-}
-#menu_wrap button {
-  color: #ffffff;
-  background-color: #5200ff;
-  border-radius: 3px;
-  padding: 5px;
-  margin-left: 5px;
-}
-#placeList,
-#pagination {
+  position: relative;
 }
 /*******************************************************/
 .image-form__label {
@@ -282,7 +318,7 @@ form {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 5px;
-  width: 73%;
+  width: 280px;
   font-size: 11px;
   color: #888888;
 }
@@ -300,7 +336,6 @@ form {
   right: 0px;
   cursor: pointer;
   z-index: 1;
-  width: 73%;
   font-size: 11px;
   color: #888888;
   text-align: start;

@@ -4,6 +4,13 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/profile/social_user_more_info.css' %}">
+
+{% comment %} 추후 css 파일로 정리 {% endcomment %}
+<style>
+    #id_email {
+        background-color: #cccccc;
+    }
+</style>
 {% endblock stylesheet %} 
 
 {% block content %}
@@ -32,6 +39,14 @@
                 <div class="form__input">
                     {{form.is_ToS}}
                 </div>
+
+                {% if form.is_ToS.errors|length > 0 %}
+                    <div class='field-error__container'>
+                        {% for error in form.is_ToS.errors %}
+                            <label for="{{ form.is_ToS.id_for_label }}" class="field-error">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             {% else %}
                 {% if field.name != 'password' %}
@@ -57,4 +72,11 @@
         </form>
     </div>
 </div>
+
+{% comment %} 추후 js 파일로 정리 {% endcomment %}
+<script>
+    // email 변경 불가
+    var email = document.querySelector('#id_email');
+    email.readOnly=true;
+</script>
 {% endblock content%}

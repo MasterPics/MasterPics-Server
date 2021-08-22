@@ -39,7 +39,7 @@ const listSavedPlace = (bookmarked_places) => {
                         `<p class="post__title">${bookmarked_places[i].title}</p>`+
                         `<div>`+
                             `<p class="post__comment">`+
-                                `<i class="far fa-comment-dots"></i>`+
+                                `<i class="far fa-comment"></i>`+
                                 `<span>${bookmarked_places[i].comment_count}</span>`+
                             `</p>`+
                             `<p class="post__like">`+

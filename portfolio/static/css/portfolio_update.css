@@ -27,11 +27,15 @@
   font-size: 14px;
   color: #1e1e1e;
   margin-left: 10px;
+  line-height: 14px;
+  vertical-align: middle;
 }
 .update__user-category {
   font-size: 12px;
   color: #6b6b6b;
   margin-left: 10px;
+  line-height: 12px;
+  vertical-align: middle;
 }
 .line {
   width: 100%;
