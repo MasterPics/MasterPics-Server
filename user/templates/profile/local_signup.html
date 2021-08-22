@@ -45,6 +45,7 @@
             <!--Tos 분리-->
             <div class="form__group {{ form.is_ToS.name }}}">
                 <div class="form__label">
+                    <div class="modal"> <div class="modal_body">Modal</div> </div>
                     <label for="id_is_ToS" class = "id_is_ToS">약관 및 개인정보 수집 동의</label>
                 </div>
                 <div class="form__input">
@@ -65,4 +66,16 @@
         </form>
     </div>
 </div>
+
+{% block script%}
+<script>
+const modal = document.querySelector('.modal');
+const btnOpenPopup = document.querySelector('.id_is_ToS');
+btnOpenPopup.addEventListener('click', () => { modal.style.display = 'block'; });
+body.style.overflow = 'hidden';
+body.style.overflow = 'auto';
+
+</script>
+{% endblock script%}
+
 {% endblock content%}
