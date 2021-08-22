@@ -37,7 +37,7 @@ const listMyPlace = (places) => {
                                 `<p class="post__title">${places[i].title}</p>`+
                                 `<div>`+
                                     `<p class="post__comment">`+
-                                        `<i class="far fa-comment-dots"></i>`+
+                                        `<i class="far fa-comment"></i>`+
                                         `<span>${places[i].comment_count}</span>`+
                                     `</p>`+
                                     `<p class="post__like">`+

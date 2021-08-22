@@ -59,22 +59,22 @@
         <span class="profile__desc">{{ profile_owner.desc }}</span>
     </div>
 
-    <!-- 게시글 정보 -->
+    <!-- 게시물 정보 -->
     <div class="post">
         <div class="post__local-bar">
             <ul>
-                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio({{ profile_owner.user_identifier }})">포트폴리오</li>
-                <li id="post__my-post" type="submit" onclick="onClickMyPost({{ profile_owner.user_identifier }})">게시글</li>
+                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">게시물</li>
             </ul>
         </div>
         <div class="post__local-sub-bar">
             <ul id="post__portfolio-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio({{ profile_owner.user_identifier }})">포트폴리오</li>
+                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
                 <li id="post__tagged-portfolio">태그된 목록</li>
             </ul>
             <ul class="post__not-selected" id="post__my-post-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost({{ profile_owner.user_identifier }})">컨택트</li>
-                <li id="post__my-place" onclick="onClickMyPlace({{ profile_owner.user_identifier }})">플레이스</li>
+                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">컨택트</li>
+                <li id="post__my-place" onclick="onClickMyPlace('{{ profile_owner.user_identifier }}')">플레이스</li>
             </ul>
         </div>
         <div class="post__container">
@@ -88,7 +88,7 @@
                                 <p class="post__title">{{ portfolio.title }}</p>
                                 <div>
                                     <p class="post__comment">
-                                        <i class="far fa-comment-dots"></i>
+                                        <i class="far fa-comment"></i>
                                         <span>{{portfolio.comments.count}}</span>
                                     </p>
                                     <p class="post__view">

@@ -128,10 +128,4 @@ const onClickDeleteComment = async (commentId) => {
     }else{
         return;
     }
-    
 }
-
-//enter event
-// document.getElementById("comment_submit").onkeyup = function(id) {
-//     onClickNewComment(id);
-// }

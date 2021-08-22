@@ -167,7 +167,7 @@ def contact_update(request, pk):
     else:
         form = ContactForm(instance=contact)
         images = contact.post_image_images.all()
-        location_form = LocationForm(instance=contact)
+        location_form = LocationForm(instance=contact.location)
         ctx = {'form': form,
                'location_form': location_form,
                'images': images}
