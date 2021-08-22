@@ -27,3 +27,16 @@ def required_login(function):
 
         return redirect("/profile/login/?next="+ path)
     return wrap
+
+
+# 로컬 유저만 접근할 수 있도록 하는 데코레이터
+# 소셜 유저일 경우 mypage로 이동시키게 하기 (현재 password change만이 소셜 유저가 접근 불가능한 기능이기 때문)
+def local_user(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        if request.user.is_social == False and request.user.is_ToS == True:
+            return function(request, *args, **kwargs)
+        else:
+            return redirect("profile:mypage")
+
+    return wrap
