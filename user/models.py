@@ -24,6 +24,49 @@ from django.core.exceptions import ValidationError
 # User image uuid-upload
 from .utils import user_uuid_name_upload_to
 
+# For UserManager
+from django.contrib.auth.models import BaseUserManager
+import time
+import hashlib
+
+class UserManager(BaseUserManager):    
+    use_in_migrations = True
+    
+    def create_user(self, user_id, username, email, password=None):
+        if not email :
+            raise ValueError('User must have an email address')
+        user = self.model(
+            email=self.normalize_email(email),
+            user_id=user_id,
+            username=username,
+        )        
+        user.set_password(password)
+        user.save(using=self._db)
+        
+        return user
+
+    def create_superuser(self, user_id, username, email,password ):
+        user = self.create_user(
+            email=self.normalize_email(email),
+            password=password,
+            user_id=user_id,
+            username=username,
+        )
+        user.is_admin = True
+        user.is_superuser = True
+        user.is_staff = True
+        
+        # hash (add user_identifier)
+        string = str(user.pk + int(time.time()))
+        encoded_string = string.encode()
+        result = hashlib.sha256(encoded_string).hexdigest()
+        user.user_identifier = result
+
+        user.is_ToS = True
+        user.save(using=self._db)
+
+        return user 
+
 
 # User validators 
 def is_ToS(value):
@@ -32,6 +75,8 @@ def is_ToS(value):
 
 
 class User(AbstractUser):
+    objects = UserManager()
+
     CATEGORY_PHOTOGRAPHER = 'photographer'
     CATEGORY_MODEL = 'model'
     CATEGORY_HM = 'HairMakeup'
