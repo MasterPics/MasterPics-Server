@@ -231,20 +231,19 @@ figure.list__image figcaption {
   justify-content: center;
 }
 figure.list__image .list__tags-info {
-  overflow: hidden;
-  height: 24%;
   padding: 0 28px;
+  height:2rem;
+  line-height:1rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 figure.list__image .list__tags {
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: lighter;
-  letter-spacing: 1px;
   opacity: 0;
   -webkit-transform: translateX(-40px);
   transform: translateX(-40px);
-  overflow: hidden;
   color: #ffffff;
-  margin: 2px;
   float: left;
 }
 figure.list__image:hover img,
