@@ -270,6 +270,7 @@ figure.list__image.hover p {
 .list__post-info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .like > .far,
 .eye > .far,
