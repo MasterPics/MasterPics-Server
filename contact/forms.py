@@ -12,7 +12,7 @@ class ContactForm(forms.ModelForm):
     # 해당 모델 자체의 정보를 담는 네임스페이스 클래스
     # https://stackoverflow.com/questions/57241617/what-is-exactly-meta-in-django
     images = forms.ImageField(
-            widget=forms.ClearableFileInput(attrs={'multiple': True}))  # 다중이미지
+            widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)  # 다중이미지 ,required=False는 기존이미지만 제거하는경우때문에
             
     class Meta:
 
@@ -31,8 +31,8 @@ class ContactForm(forms.ModelForm):
             'tags': forms.TextInput(attrs={'placeholder': '사진작업과 관련된 키워드를 입력하세요. (ex. #masterpics #contact)'}),
             'pay': forms.NumberInput(attrs={'placeholder': '페이입력'}),
 
-            'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
-            'end_date': forms.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
+            'start_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
+            'end_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),
         }
 
     def __init__(self, *args, **kwargs):

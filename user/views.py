@@ -37,7 +37,7 @@ import json
 from .forms import CustomSetPasswordForm
 
 # ----------------------smtp-------------------------------
-from .decorators import allowed_user, required_login
+from .decorators import allowed_user, required_login, local_user
 
 
 # ----login 관련----
@@ -71,11 +71,7 @@ def local_signup(request):
             )
 
             request.session['smtp_auth'] = True
-            messages.success(
-                request, '회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다.')
 
-            # 추후 smtp_sending_success.html 삭제 예정
-            # return redirect('core:main_list')
             return redirect('profile:smtp_sending_success')
         else:
             ctx = {
@@ -95,16 +91,16 @@ def local_signup_auth(request, uid64, token):
         uid = force_text(urlsafe_base64_decode(uid64))
         current_user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
-        messages.error(request, '메일 인증에 실패했습니다.')
+        # messages.error(request, '메일 인증에 실패했습니다.')
         return redirect('profile:login')
 
     if default_token_generator.check_token(current_user, token):
         current_user.is_active = True
         current_user.save()
-        messages.success(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
+        # messages.success(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
         return redirect('profile:login')
 
-    messages.error(request, '메일 인증에 실패했습니다.')
+    # messages.error(request, '메일 인증에 실패했습니다.')
     return redirect('profile:login')
 
 
@@ -112,7 +108,6 @@ def smtp_sending_success(request):
     if not request.session.get('smtp_auth', False):
         raise PermissionDenied
     request.session['smtp_auth'] = False
-
     return render(request, 'profile/smtp_sending_success.html')
 
 
@@ -122,9 +117,16 @@ def login(request):
         user_id = request.POST['user_id']
         password = request.POST['password']
         user = authenticate(user_id=user_id, password=password)
+
         if user is not None:
             auth_login(request, user)
             return redirect('core:main_list')
+        elif User.objects.filter(user_id=user_id) and not User.objects.filter(user_id=user_id)[0].is_active:
+            ctx = {
+                'form': form,
+                'error': '회원가입 후 이메일 인증이 완료되지 않았습니다. 인증을 완료해주세요.'
+            }
+            return render(request, 'profile/login.html', ctx)
         else:
             ctx = {
                 'form': form,
@@ -151,10 +153,8 @@ def social_user_more_info(request):
         if form.is_valid():
             request.user.is_social = True
 
-            # TODO user identifier 확인 필요
             customer = form.save()
             string = str(customer.pk + int(time.time()))
-
             encoded_string = string.encode()
             result = hashlib.sha256(encoded_string).hexdigest()
             customer.user_identifier = result
@@ -180,10 +180,8 @@ def social_user_more_info(request):
 def withdrawal(request):
     if request.method == 'POST':
         request.user.delete()
-        # TODO : 추후 모달창으로 / messages.success(request, "탈퇴되었습니다.")
         return redirect('core:main_list')
-    # TODO : 추후 모달창으로
-    else:
+    elif request.method == 'GET':
         return render(request, 'profile/withdrawal.html')
 
 
@@ -366,8 +364,7 @@ def mypage_bookmark_place(request):
 @allowed_user
 def profile_modify(request):
     if request.method == 'POST':
-        form = ProfileModifyForm(
-            request.POST, request.FILES, instance=request.user)
+        form = ProfileModifyForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile:mypage')
@@ -384,8 +381,8 @@ def profile_modify(request):
         return render(request, 'profile/profile_update.html', ctx)
 
 # TODO : 기존과 같은 비밀번호로 바꿔도 바뀜...
-
 @required_login
+@local_user
 def password_change(request):
     if request.method == 'POST':
         form = LocalPasswordChangeForm(request.user, request.POST)
@@ -427,20 +424,22 @@ def recovery_pw_send_email(request):
         user = User.objects.get(user_id=user_id, username=username, email=email)
 
         if user is not None:
-            if user.is_social:
+            if user.is_social or not user.is_ToS:
                 return JsonResponse(data={'status': 'false','message': '해당 계정은 소셜 계정입니다.'}, status=500)
+            elif not user.is_active:
+                return JsonResponse(data={'status': 'false','message': '해당 계정은 회원가입 후 이메일 인증이 완료되지 않았습니다. 먼저 인증을 완료해주세요.'}, status=500)
+            else:
+                auth_num = email_auth_num()
+                user.auth = auth_num
+                user.save()
 
-            auth_num = email_auth_num()
-            user.auth = auth_num
-            user.save()
-
-            send_mail(
-                "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
-                [email],
-                html=render_to_string('profile/recovery_pw_email.html', {
-                    'auth_num': auth_num,
-                }),
-            )
+                send_mail(
+                    "[masterpic's]: {}님의 비밀번호 찾기 인증메일 입니다.".format(user.user_id),
+                    [email],
+                    html=render_to_string('profile/recovery_pw_email.html', {
+                        'auth_num': auth_num,
+                    }),
+                )
     except User.DoesNotExist:
         return JsonResponse(data={'status': 'false','message': '입력하신 정보가 일치하지 않거나 존재하지 않습니다.'}, status=500)
         
@@ -478,10 +477,17 @@ def recovery_pw_reset(request):
 
         if reset_pw_form.is_valid():
             user = reset_pw_form.save()
-            messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
+            # messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
             auth_logout(request)
             return redirect('profile:login')
         else:
             auth_logout(request)
             request.session['auth'] = session_user
             return render(request, 'profile/recovery_pw_reset.html', {'form': reset_pw_form})
+
+
+
+
+# ----약관 및 부가설명 관련----
+def terms_of_service_use(request):
+    return render(request, 'profile/terms_of_service_use.html')

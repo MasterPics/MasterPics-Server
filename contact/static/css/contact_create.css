@@ -50,6 +50,9 @@ form {
   position: relative;
   height: 100%;
 }
+.form{
+  width:100%;
+}
 .form__wrapper {
   overflow: hidden;
   display: flex;
@@ -57,13 +60,13 @@ form {
   align-items: stretch;
   margin-bottom: 20px;
   height: 100%;
+  width:100%;
 }
 .form__left {
-  width: 100%;
-  margin-right: 30px;
+  width: 48%;
 }
 .form__right {
-  width: 100%;
+  width: 48%;
 }
 .form__label {
   font-size: 14px;
@@ -75,6 +78,7 @@ form {
 .desc,
 .tags {
   margin-bottom: 10px;
+  width:100%;
 }
 .title .form__label,
 .desc .form__label,
@@ -106,24 +110,34 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width:100%;
+}
+.pay .form__label{
+  width:8%;
 }
 .pay .form__input{
   display: flex;
   justify-content: space-between;
   align-items: center;
   vertical-align: middle;
+  width:90%;
 }
 .pay input {
-  width: 100%;
+  width: 48%;
   font-size: 11px;
-  color: #999999;
-  border: 1px solid #c4c4c4;
+  border: 1px solid #e2e2e2;
   border-radius: 3px;
   padding: 8px 30px;
   text-align: center;
+  background-color: #e2e2e2;
+}
+.pay input::-webkit-outer-spin-button,
+.pay input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .pay_type {
-  width: 190px;
+  width: 100%;
   font-size: 10px;
   color: #000000;
   padding: 8px 10px;
@@ -143,7 +157,7 @@ form {
 .pay__type{
   position: relative;
   margin-right:15px;
-  width:100%;
+  width:48%;
 }
 /* 화살표 커스터마이징 */
 .select__arrow {
@@ -164,28 +178,25 @@ form {
 .pay_type:focus {
   outline: none;
 }
-.pay__text {
-  position: absolute;
-  right: 8px;
-  bottom: 17px;
-  color: #999999;
-  font-size: 11px;
-}
 .form__date {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
+  width:100%;
+}
+.form__date .form__label{
+  width:8%;
 }
 .form__date-wrapper {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.start_date {
-  display: flex;
   justify-content: space-between;
   align-items: center;
+  width:90%;
+}
+.start_date,
+.end_date {
+  width:48%;
 }
 .start_date .form__label {
   width: 14%;
@@ -197,11 +208,10 @@ form {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 4px 25px;
+  text-align:right;
 }
 .form__date-text {
   font-size: 14px;
-  padding: 10px;
-  padding-bottom: 10px;
   vertical-align: middle;
 }
 .form__location {
@@ -209,12 +219,17 @@ form {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  width:100%;
 }
 .form__location .form__label {
-  width: 14%;
+  width: 8%;
 }
 .form__location .form__input {
-  width: 100%;
+  width: 90%;
+}
+.form__location .form__input input{
+  width:100%;
+  margin:0 auto;
 }
 #location-address {
   width: 100%;
@@ -229,7 +244,7 @@ form {
   white-space: nowrap;
 }
 .map_wrap {
-  height: 30%;
+  height: 25%;
   position: relative;
 }
 /*******************************************************/
@@ -349,7 +364,7 @@ form {
 }
 /*******************************************************/
 .form__btn {
-  margin-top: 30px;
+  margin-top: 50px;
   text-align: center;
 }
 .form__submit {

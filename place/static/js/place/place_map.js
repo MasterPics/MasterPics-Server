@@ -39,7 +39,7 @@ if (navigator.geolocation) {
 function displayUserMarker(locPosition) {
 
     let userMarker;
-    let userMarkerSrc = 'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-Free-Download-PNG.png', // 출발 마커이미지의 주소입니다    
+    let userMarkerSrc = 'https://i.imgur.com/rsjHKsd.png', // 출발 마커이미지의 주소입니다    
     userMarkerSize = new kakao.maps.Size(35, 40), // 출발 마커이미지의 크기입니다 
     userMarkerOption = { 
         offset: new kakao.maps.Point(17, 43) // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
@@ -63,7 +63,7 @@ function displayUserMarker(locPosition) {
 
 
 function displayContactMarkers(){
-    let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    let imageSrc = "'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png'"; 
     
     for (let i = 0; i < places.length; i ++) {
         

@@ -154,3 +154,15 @@ input:-webkit-autofill:active  {
     cursor: pointer;
     color: #FFFFFF;
 }
+
+/* 반응형 */
+
+@media screen and (min-width:360px) and (max-width:512px) {
+    .modify__body{
+        width: 85%;
+    }
+
+    .navbar__toogleBtn {
+        color: black;
+    }
+}

@@ -15,7 +15,7 @@ body{
   background-image: url("../img/place-header.png");
   background-repeat: no-repeat;
   width:100vw;
-  height: 40vh;
+  height: 280px;
   background-size:cover;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,8 @@ body{
 }
 
 .place-header-content{
-  margin:10%;
+  font-family: 'Roboto', sans-serif;
+  margin:0 10%;
   color:white;
 }
 
@@ -51,6 +52,7 @@ body{
   justify-content: center;
   align-items: center;
   width:100%;
+  font-family: 'Roboto', sans-serif;
 }
 .place-list-grid{
   display:grid;
@@ -111,6 +113,7 @@ body{
   -moz-appearance: none !important;
   appearance: none !important;
   background-color: white;
+  width:100px;
 }
 /* 화살표 없애기 */
 .sort::-ms-expand {
@@ -138,8 +141,10 @@ body{
 /*구분선*/
 
 hr{
+  width:1120px;
   grid-column: span 2;
   margin:3% 0;
+  justify-self: center;
 }
 
 /*컨텐츠 목록*/
@@ -149,6 +154,7 @@ hr{
   align-items: center;
   margin:1.5rem 1.5rem 1.5rem 0;
 }
+
 .place-thumbnail{
   width:250px; 
   height:197px;
@@ -237,23 +243,24 @@ hr{
   align-items: center;
 }
 
-.place-like-count{
-  margin:0 1.2rem;
+.place-like-count,
+.place-comment,
+.place-save{
+  margin-right:1rem;
   font-size:0.9rem;
+  color:#6d6d6d;
+  display: flex;
+  align-items: flex-end;
 }
-.place-like-count i{
+.place-like-count i,
+.place-save i,
+.place-comment i{
   font-size:1.1rem;
-  color:#919191;
+  cursor: pointer;
 }
-.place-like-count span{
-  margin-left:0.2rem;
-  color:#858585;
-}
-.place-save i{
-  font-size:1.1rem;
-  color:#919191;
-}
-.place-savet span{
+.place-like-count span,
+.place-comment span,
+.place-save span{
   margin-left:0.2rem;
   color:#4f4f4f;
 }
@@ -272,29 +279,6 @@ hr{
   margin-bottom:2rem;
 }
 
-/*중간 깨지는 부분*/
-@media screen and (max-width:1140px) and (min-width:769px){
-  .place-thumbnail{
-    width:197px;
-    height: 197px;
-  }
-  .place-content{
-    margin:1.5rem 0;
-    align-items: flex-start;
-  }
-  .place-content-title{
-    width:230px;
-    padding: 0 0.9rem;
-    margin:0;
-  }
-  .place-address, .place-pay {
-    font-size: 0.9rem;
-  }
-  .place-search{
-    width:100%;
-  }
-}
-
 /*모바일*/
 @media screen and (max-width:480px){
   .place-header-content h2{
@@ -309,61 +293,7 @@ hr{
     padding:0.8rem;
   }
   .place-list-grid{
-    width:95vw;
-    display:flex;
-    flex-direction: column;
-    align-items: flex-end;
-    overflow: hidden;
-  }
-  .place-search{
-    width:100%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  .place-search input{
-    width:80%;
-  }
-  .place-filter{
-    margin-top:1rem;
-    font-size: 0.5rem;
-  }
-  .sort-box{
-    margin:0;
-  }
-  .sort{
-    padding: 0.4rem 0.8rem;
-    font-size: 0.5rem;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    background-color: white;
-  }
-  hr{
-    width:100%;
-    margin:0.8rem 0;
-  }
-  .place-content{
-    flex-direction: column;
-    align-items: center;
-    width:100%;
-    margin:0.6rem 0;
-  }
-  .place-thumbnail{
-    width:95%;
-  }
-  .place-content-title{
-    width:95%;
-    margin: 0;
-    padding: 1.1rem 0 1.1rem 0;
-    border-bottom: 1px solid lightgray;
-  }
-}
-
-/*패드*/
-@media screen and (max-width:768px) and (min-width:481px){
-  
-  .place-list-grid{
-    width:95vw;
+    width:90vw;
     display:flex;
     flex-direction: column;
     align-items: flex-end;
@@ -375,7 +305,72 @@ hr{
     justify-content: space-between;
   }
   .place-search input{
-    width:90%;
+    width:85%;
+  }
+  .btn_search{
+    width:13%;
+    font-size: 0.5rem;
+    padding:0.5rem;
+  }
+  .place-filter{
+    margin-top:1rem;
+    font-size: 0.5rem;
+  }
+  .sort-box{
+    margin:0;
+  }
+  .sort{
+    padding: 0.4rem 0.8rem;
+    font-size: 0.5rem;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-color: white;
+  }
+  hr{
+    width:100%;
+    margin:0.8rem 0;
+  }
+  .place-content{
+    flex-direction: column;
+    align-items: flex-end;
+    width:100%;
+    margin:0.6rem 0;
+  }
+  .place-content a{
+    width:100%;
+  }
+  .place-thumbnail{
+    width:100%;
+  }
+  .place-content-title{
+    width:100%;
+    margin: 0;
+    padding: 1.1rem 0 1.1rem 0;
+    border-bottom: 1px solid lightgray;
+  }
+}
+
+/*패드*/
+@media screen and (max-width:1024px) and (min-width:481px){
+  
+  .place-list-grid{
+    width:90vw;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .place-search{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .place-search input{
+    width:85%;
+  }
+  .btn_search{
+    width:13%;
   }
   .place-filter{
     margin-top:1rem;
@@ -402,12 +397,15 @@ hr{
     width:100%;
     margin:0.6rem 0;
   }
+  .place-content a{
+    width:100%;
+  }
   .place-thumbnail{
-    width:95%;
+    width:100%;
     height: 400px;
   }
   .place-content-title{
-    width:95%;
+    width:100%;
     margin: 0;
     padding: 1.1rem 0 1.1rem 0;
     border-bottom: 1px solid lightgray;
