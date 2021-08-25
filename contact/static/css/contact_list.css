@@ -236,15 +236,10 @@ figure.list__image .list__tags-info {
   line-height:1rem;
   overflow:hidden;
   text-overflow:ellipsis;
-}
-figure.list__image .list__tags {
   font-size: 0.9rem;
-  font-weight: lighter;
-  opacity: 0;
-  -webkit-transform: translateX(-40px);
-  transform: translateX(-40px);
   color: #ffffff;
-  float: left;
+  opacity: 0;
+  font-weight: lighter;
 }
 figure.list__image:hover img,
 figure.list__image.hover img {
