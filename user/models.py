@@ -29,6 +29,7 @@ from django.contrib.auth.models import BaseUserManager
 import time
 import hashlib
 
+
 class UserManager(BaseUserManager):    
     use_in_migrations = True
     
@@ -42,7 +43,7 @@ class UserManager(BaseUserManager):
         )        
         user.set_password(password)
         user.save(using=self._db)
-        
+
         return user
 
     def create_superuser(self, user_id, username, email,password ):
