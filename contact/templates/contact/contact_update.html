@@ -36,9 +36,9 @@
                         </div>                   
                         <div class="form__input">
                             {{ field }}
-                            <!-- {% if field.help_text %}
+                            {% if field.help_text %}
                                 <p class="help-block">{{ field.help_text }}</p>
-                            {% endif %} -->
+                            {% endif %}
                             {% for error in field.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -56,7 +56,18 @@
                             <label for="pay">페이</label>
                         </div>                  
                         <div class="form__input">
-                            {{ form.pay_type }}
+                            <div class="pay__type">
+                                {{ form.pay_type }}
+                                {% if form.pay_type.help_text %}
+                                <p class="help-block">{{ form.pay_type.help_text }}</p>
+                                {% endif %}
+                                {% for error in form.pay_type.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                                <div class="select__arrow"></div>
+                            </div>
                             {{ form.pay }}
                             {% for error in form.pay.errors %}
                                 <div class="alert alert-danger">
@@ -64,7 +75,6 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        <div class="pay__text">원</div>
                     </div>
 
                     <!-- Date Form -->
@@ -204,4 +214,5 @@
 <script src="{% static 'js/map/contact_update_map.js' %}"></script>
 <script src="{% static 'js/contact_img_prev.js' %}"></script>
 <script src="{% static 'js/contact_update_file_prev.js' %}"></script>
+<script src="{% static 'js/contact_pay_form.js' %}"></script>
 {% endblock script %}
