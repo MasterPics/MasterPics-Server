@@ -195,6 +195,7 @@ main{
     margin:1rem 0;
     height:505px;
     background-color:#f6f6f6;
+    overflow: hidden;
 }
 .swiper-wrapper{
     background-color:#f6f6f6;

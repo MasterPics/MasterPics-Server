@@ -70,13 +70,11 @@
                         <figure class="list__image">
                             <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
                             <figcaption>
-                                <div class="list__tags-info">
+                                <p class="list__tags-info">
                                     {% for tag in portfolio.tags.all %}
-                                    <p class="list__tags">
                                         #{{ tag.name }} 
-                                    </p>
                                     {% endfor %}
-                                </div>
+                                </p>
                             </figcaption>
                         </figure>
                     </a>

@@ -49,7 +49,17 @@ body{
     border:1px solid #cacaca;
     border-radius: 7px;
     font-size:14px;
+
 }
+.reference-header input:-webkit-autofill,
+.reference-header input:-webkit-autofill:hover,
+.reference-header input:-webkit-autofill:focus,
+.reference-header input:-webkit-autofill:active {
+	transition: background-color 5000s ease-in-out 0s;
+	-webkit-transition: background-color 9999s ease-out;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
 .reference-header button{
     padding:1rem;
     font-size:1rem;
@@ -58,6 +68,7 @@ body{
     border:none;
     color:white;
     margin-left:0.5rem;
+    cursor: pointer;
 }
 .btn_search i::before{
     color:white;
