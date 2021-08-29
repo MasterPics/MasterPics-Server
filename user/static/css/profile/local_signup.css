@@ -154,7 +154,7 @@ input[type="password"] {
   background: #FFFFFF;
   backdrop-filter: blur( 13.5px );
   -webkit-backdrop-filter: blur( 13.5px );
-  border-radius: 30px;
+  border-radius: 5px;
   border: 1px solid #494949;
   width: 600px;
   height: 500px;
@@ -184,7 +184,7 @@ input[type="password"] {
   cursor: pointer;
   color: black;
   border: 1px solid #A7A7A7;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 0px;
   width: 100px;
   height: 30px;
@@ -192,6 +192,7 @@ input[type="password"] {
   padding: 2px;
   text-align: center;
 }
+
 .form__label #modal .close-area:hover{
   background-color: #7C7C7C;
   color: white;
@@ -300,7 +301,7 @@ input[type="password"] {
   background: #FFFFFF;
   backdrop-filter: blur( 13.5px );
   -webkit-backdrop-filter: blur( 13.5px );
-  border-radius: 30px;
+  border-radius: 5px;
   border: 1px solid #494949;
   width: 350px;
   height: 500px;
@@ -330,7 +331,7 @@ input[type="password"] {
   cursor: pointer;
   color: black;
   border: 1px solid #A7A7A7;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 0px;
   width: 80px;
   height: 30px;
