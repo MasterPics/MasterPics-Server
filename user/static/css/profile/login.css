@@ -264,9 +264,9 @@ input[type="password"] {
   }
   
   .social-login__container .social-login__body > * {
-    padding: 7px;
+    padding: 5px;
     border-radius: 3px;
-    font-size: 7px;
+    font-size: 6px;
   }
   
   input::placeholder{
