@@ -231,21 +231,15 @@ figure.list__image figcaption {
   justify-content: center;
 }
 figure.list__image .list__tags-info {
-  overflow: hidden;
-  height: 24%;
   padding: 0 28px;
-}
-figure.list__image .list__tags {
-  font-size: 14px;
-  font-weight: lighter;
-  letter-spacing: 1px;
-  opacity: 0;
-  -webkit-transform: translateX(-40px);
-  transform: translateX(-40px);
-  overflow: hidden;
+  height:2rem;
+  line-height:1rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size: 0.9rem;
   color: #ffffff;
-  margin: 2px;
-  float: left;
+  opacity: 0;
+  font-weight: lighter;
 }
 figure.list__image:hover img,
 figure.list__image.hover img {
@@ -303,6 +297,7 @@ figure.list__image.hover p {
 .list__post-info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .comment > .far,
 .save > .far {

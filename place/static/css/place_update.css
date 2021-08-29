@@ -24,13 +24,7 @@ label {
   padding:0.5rem;
   font-size:0.8rem;
 }
-/*
-.location-lat{
-  display:none;
-}
-.location-lon{
-  display:none;
-}*/
+
 .images input{
   padding:0;
   margin:5px 0 10px 0;
@@ -58,6 +52,15 @@ label {
   outline: none !important;
   border-color: #719ece;
   box-shadow: 0 0 10px #719ece;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	transition: background-color 5000s ease-in-out 0s;
+	-webkit-transition: background-color 9999s ease-out;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
 select {
