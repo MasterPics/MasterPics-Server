@@ -192,6 +192,10 @@ input[type="password"] {
   padding: 2px;
   text-align: center;
 }
+.form__label #modal .close-area:hover{
+  background-color: #7C7C7C;
+  color: white;
+}
 
 .form__label #modal .content {
   margin-top: 10px;
