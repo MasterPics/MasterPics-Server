@@ -99,13 +99,11 @@
                         <figure class="list__image">
                             <img src="{{contact.thumbnail.image.url}}" alt="thumbnail">
                             <figcaption>
-                                <div class="list__tags-info">
+                                <p class="list__tags-info">
                                     {% for tag in contact.tags.all %}
-                                    <p class="list__tags">
                                         #{{ tag.name }} 
-                                    </p>
                                     {% endfor %}
-                                </div>
+                                </p>
                             </figcaption>
                         </figure>
                     </a>

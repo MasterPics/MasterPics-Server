@@ -63,18 +63,18 @@
     <div class="post">
         <div class="post__local-bar">
             <ul>
-                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio({{ profile_owner.user_identifier }})">포트폴리오</li>
-                <li id="post__my-post" type="submit" onclick="onClickMyPost({{ profile_owner.user_identifier }})">게시물</li>
+                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">게시물</li>
             </ul>
         </div>
         <div class="post__local-sub-bar">
             <ul id="post__portfolio-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio({{ profile_owner.user_identifier }})">포트폴리오</li>
+                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
                 <li id="post__tagged-portfolio">태그된 목록</li>
             </ul>
             <ul class="post__not-selected" id="post__my-post-selected">
-                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost({{ profile_owner.user_identifier }})">컨택트</li>
-                <li id="post__my-place" onclick="onClickMyPlace({{ profile_owner.user_identifier }})">플레이스</li>
+                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">컨택트</li>
+                <li id="post__my-place" onclick="onClickMyPlace('{{ profile_owner.user_identifier }}')">플레이스</li>
             </ul>
         </div>
         <div class="post__container">
