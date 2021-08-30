@@ -203,10 +203,10 @@ function getListItem(index, places) {
         itemPay = "상호무페이";
     }
     else if (places.pay_type === 1) {
-        itemPay = places.pay + "원";
+        itemPay = "페이협의";
     }
     else {
-        itemPay = "페이협의";
+        itemPay = places.pay + "원";
     }
 
     var el = document.createElement('li'),

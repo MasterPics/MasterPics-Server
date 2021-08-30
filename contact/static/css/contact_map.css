@@ -57,7 +57,7 @@
 }
 .search-form button {
   position: absolute;
-  top: 13px;
+  top: 10px;
   right: 13px;
   border: none;
   background-color: none;
@@ -81,6 +81,9 @@
 .menu-selected {
   border-radius: 5px;
   background-color: #2c0088;
+}
+.result{
+  width:100%;
 }
 .result__summary {
   box-sizing: border-box;
@@ -124,18 +127,22 @@
   height: 69%;
   overflow-y: auto;
   -ms-overflow-style: none;
+  width: 100%;
 }
 .result__content::-webkit-scrollbar {
   display: none;
 }
 
 /******************* 게시물 ******************/
-
+#placesList{
+  width: 100%;
+}
 .info{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding:25px 15px;
+  width: 100%;
 }
 .save .far{
   color:#4d4d4d;
@@ -145,11 +152,13 @@
 }
 .content{
   margin-left: 8px;
+  width: 50%;
 }
 .place-title{
   font-size: 16px;
   color:#212121;
   margin-bottom: 5px;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
@@ -161,14 +170,14 @@
 }
 .pay-date{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin: 15px 0;
 }
 .pay{
   font-size: 12px;
   color:#5200ff;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .date-wrapper{
   display: flex;
@@ -211,6 +220,7 @@
 /******************* right ******************/
 .wrapper-right {
   width: 100%;
+  position: relative;
 }
 
 /********************************************/
@@ -227,5 +237,40 @@
   z-index: 100;
   font-size: 20px;
   cursor: pointer;
+}
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .wrapper{
+    display: block;
+  }
+  .wrapper-left{
+    width:100%;
+  }
+  .wrapper-right{
+    height: 40%;
+  }
+  .option input{
+    width: 100%;
+  }
+  .category li{
+    padding: 2%;
+  }
+  .result__content{
+    height: 60%;
+  }
+  .place-title{
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+  .address{
+    margin: 10px 0;
+  }
+  .pay-date{
+    margin: 10px 0;
+  }
+  .pay, .date-wrapper{
+    font-size: 8px;
+  }
 }
 
