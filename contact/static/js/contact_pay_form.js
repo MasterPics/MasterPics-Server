@@ -7,7 +7,6 @@ window.onload = function () {
         pay.style.backgroundColor = '#ffffff';
     }
     else {
-        pay.value = '';
         pay.readOnly = true;
         pay.style.backgroundColor = '#e2e2e2';
     }
@@ -19,7 +18,6 @@ window.onload = function () {
             pay.style.backgroundColor = '#ffffff';
         }
         else {
-            pay.value = '';
             pay.readOnly = true;
             pay.style.backgroundColor = '#e2e2e2';
         }
