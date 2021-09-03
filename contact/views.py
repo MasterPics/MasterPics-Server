@@ -144,12 +144,20 @@ def contact_update(request, pk):
             location.save()
             contact.user = request.user
             contact.location = location
-            contact.save()
+            # contact.save()
             contact.tags.clear()
             form.save_m2m()
 
-            for i, image in enumerate(request.FILES.getlist('images')):
+            if not PostImage.objects.filter(post=contact) and not request.FILES.getlist('images'):
+                ctx = {
+                    'form': form,
+                    'location_form': location_form,
+                    'images': contact.post_image_images.all(),
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'contact/contact_update.html', ctx)
 
+            for i, image in enumerate(request.FILES.getlist('images')):
                 image_obj = PostImage()
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
@@ -160,6 +168,7 @@ def contact_update(request, pk):
             images=contact.post_image_images.all()
             if images:
                 contact.thumbnail = images[0].image
+                contact.save()
             else: #사진이 아무것도 안남았을때
                 contact.thumbnail = None
 
@@ -184,14 +193,25 @@ def contact_create(request):
         if contact_form.is_valid() and location_form.is_valid():
             contact = contact_form.save(commit=False)
             location = location_form.save(commit=False)
-            location.save()
+            # location.save()
             contact.user = request.user
             contact.location = location
-            contact.save()
-            contact_form.save_m2m()
+            # contact.save()
+            # contact_form.save_m2m()
+
+            if not request.FILES.getlist('images'):
+                ctx = {
+                    'contact_form': contact_form,
+                    'location_form': location_form,
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'contact/contact_create.html', ctx)
+            else:
+                location.save()
+                contact.save()
+                contact_form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
-
                 image_obj = PostImage()
                 image_obj.post = Contact.objects.get(id=contact.id)
                 img = Image.objects.create(image=image)
