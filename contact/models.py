@@ -18,7 +18,7 @@ class Contact(PostBase):
     user = models.ForeignKey(
         to=User, related_name="contacts", on_delete=models.CASCADE)
 
-    file_attach = models.FileField(null=True)
+    file_attach = models.FileField(null=True, blank=True)
     location = models.ForeignKey(
         to=Location, on_delete=models.CASCADE, default=None, blank=True)
     pay = models.PositiveIntegerField(blank=True, default=0)
