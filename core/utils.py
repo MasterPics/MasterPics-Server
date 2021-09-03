@@ -18,9 +18,11 @@ from django.core.files import File
 #from .models import Tag
 
 def compress(image):
+
     img = Image.open(image)
+    img = img.convert('RGB')
     img_io = BytesIO()
-    img.save(img_io, 'JPEG', quality=50)
+    img.save(img_io, 'JPEG', quality=30)
     compressed_img = File(img_io, name=image.name)
     return compressed_img
 
@@ -66,3 +68,14 @@ def save_image_from_url(user, url):
     user.image.save(uuid_name_upload_to(user, user.email),
                     File(img_temp), save=True)
 
+
+
+def hashtag_splitter(tag_string):
+    return [t.strip() for t in tag_string.split('#') if t.strip()]
+
+
+def hashtag_joiner(tags):
+    if tags:
+        return '#' + ' #'.join(t.name for t in tags).lstrip()
+    else:
+        return ''

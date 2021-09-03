@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from .forms import *
-
-from portfolio.models import Tag
-
-
-from core.models import *
+from core.forms import PostImageForm
+from core.models import Tag
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -22,8 +19,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for multiple images
 from django.forms import modelformset_factory
 
+
 def portfolio_list(request):
-    portfolios = Portfolio.objects.all().order_by("created_at")
+
+    portfolios = Portfolio.objects.all().order_by("-created_at")
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort
@@ -57,7 +56,7 @@ def portfolio_list(request):
             'like_users')).order_by('-num_save', '-updated_at')
     elif sort == 'save':
         portfolios = portfolios.annotate(num_save=Count(
-            'save_users')).order_by('-num_save', '-updated_at')
+            'bookmark_users')).order_by('-num_save', '-updated_at')
 
     # Search
     if search:
@@ -78,44 +77,32 @@ def portfolio_list(request):
     except EmptyPage:
         portfolios = paginator.page(paginator.num_pages)
 
-    context = {'portfolios': portfolios, 'request_user': request.user, 'sort': sort,
+    context = {'portfolios': portfolios,
+               'sort': sort,
                'category': category, }
 
     return render(request, 'portfolio/portfolio_list.html', context=context)
 
+
 def portfolio_detail(request, pk):
+
     portfolio = Portfolio.objects.get(pk=pk)
-    portfolio_information = PortfolioInformation.objects.get(
-        portfolio=portfolio)
+    portfolio.view_count += 1
+    portfolio.save()
 
-    images = portfolio.portfolio_images.all()
-    
-
-    #TODO Image front 에서 counting 할 때 1개 더 생기는 에러 수정 필요
-    num_of_imgs = images.count
-
-    tags = portfolio.tags.all()
-
-    #comment 를 가져오는 쿼리
-    comments = PortfolioComment.get_comments(portfolio)
-
-    portfolio_owner = portfolio.user  # 게시글 작성자
-    request_user = request.user  # 로그인한 유저
-
-    portfolio_information.information.view_count += 1 
-    portfolio_information.information.save()
+    parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
-            'portfolio': portfolio,
-            'images': images,
-            'tags': tags,
-            'portfolio_owner': portfolio_owner,
-            'request_user': request_user,
-            'num_of_imgs': num_of_imgs,
-            'comments': comments,   
-        }
+        'portfolio': portfolio,
+        'images': portfolio.images.all(),
+        'tags': portfolio.tags.all(),
+        'comments': parent_comments,
+        'like_users': portfolio.like_users.all(),
+        'bookmark_users': portfolio.bookmark_users.all()
+    }
 
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
+
 
 @login_required
 def portfolio_delete(request, pk):
@@ -123,12 +110,16 @@ def portfolio_delete(request, pk):
     owner = portfolio.user  # 게시글 작성자
     if request.method == 'POST':
         portfolio.delete()
+        for image in portfolio.post_image_images.all():
+            image.delete()
+
         messages.success(request, "삭제되었습니다.")
 
-        return redirect('profile:profile_portfolio')
+        return redirect('portfolio:portfolio_list')
     else:
         ctx = {'portfolio': portfolio}
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
+
 
 @login_required
 def portfolio_update(request, pk):
@@ -140,15 +131,40 @@ def portfolio_update(request, pk):
             portfolio.user = request.user
             portfolio.save()
             portfolio.tags.clear()
-
             form.save_m2m()
-            portfolio.image = request.FILES.get('image')
+            
+
+            print(portfolio.images)
+            
+            for i, image in enumerate(request.FILES.getlist('images')):
+
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                print(image_obj)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+            images=portfolio.post_image_images.all()
+            if images:
+                portfolio.thumbnail = images[0].image
+            else: #사진이 아무것도 안남았을때
+                portfolio.thumbnail = None
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
+
+        #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
+
         form = PortfolioForm(instance=portfolio)
-        ctx = {'form': form, }
+        images = portfolio.post_image_images.all()
+        ctx = {
+            'form': form,
+            'images': images
+        }
         return render(request, 'portfolio/portfolio_update.html', ctx)
+
 
 @login_required
 def portfolio_create(request):
@@ -162,34 +178,21 @@ def portfolio_create(request):
             portfolio.save()
             form.save_m2m()
 
-            portfolio.image = request.FILES.get('images')
-
+            print(request.FILES.getlist('images'))
             for i, image in enumerate(request.FILES.getlist('images')):
 
-                image_obj = PortfolioImages()
-                image_obj.portfolio_id = portfolio.id
-                image_obj.image = Images()
-                image_obj.image.image = image
-                image_obj.image.save()
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
                 image_obj.save()
 
                 if not i:
                     portfolio.thumbnail = image_obj.image
                     portfolio.save()
-                else:
-                    i += 1
 
             messages.success(request, "posted!")
-
-            # 자동으로 comment 와 information 생성
-
-            information = Information.objects.create()
-
-            #TODO information 지울꺼면 지워도 됨
-            portfolio_information = PortfolioInformation.objects.create(
-                portfolio=portfolio,
-                information=information
-            )
 
             return redirect('portfolio:portfolio_detail', portfolio.pk)
         else:
@@ -209,12 +212,12 @@ def portfolio_save(request):
         portfolio_id = data["portfolio_id"]
         portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
         request_user = request.user
-        is_saved = request_user in portfolio.save_users.all()
+        is_saved = request_user in portfolio.bookmark_users.all()
         if is_saved:
-            portfolio.save_users.remove(
+            portfolio.bookmark_users.remove(
                 get_object_or_404(User, pk=request_user.pk))
         else:
-            portfolio.save_users.add(
+            portfolio.bookmark_users.add(
                 get_object_or_404(User, pk=request_user.pk))
         is_saved = not is_saved
         portfolio.save()
@@ -238,3 +241,26 @@ def portfolio_like(request):
         is_liked = not is_liked
         portfolio.save()
         return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})
+
+
+############################### comment ###############################
+@csrf_exempt
+def portfolio_comment_create(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        portfolio_id = data['id']
+        comment_value = data['value']
+        portfolio = Portfolio.objects.get(id=portfolio_id)
+        comment = Comment.objects.create(
+            writer=request.user, post=portfolio, content=comment_value)
+        return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
+
+
+@csrf_exempt
+def portfolio_comment_delete(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        comment_id = data['commentId']
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return JsonResponse({'comment_id': comment_id})

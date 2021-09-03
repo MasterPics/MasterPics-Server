@@ -1,0 +1,112 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/reference_list.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="reference">
+    <header class="reference-header">
+        <h2>Reference</h2>
+        <p>촬영을 위한 레퍼런스들을 검색하고 영감을 얻을 수 있는 <br/>레퍼런스들을 저장해보세요!</p>
+        <!-- 태그 검색 -->    
+        <form class="form-inline my-2 my-lg-0" action="{% url 'reference:reference_list' %}" method="get">
+        {% csrf_token %}
+            <input class="form-control search" type="search" placeholder="검색어를 입력해주세요" aria-label="Search" name="search" value="{{ search|default_if_none:"" }}">
+            <button class="btn btn-outline-secondary btn_search" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </header>
+
+    <article class="reference-content">
+        <button class="category-btn">masterpics</button>
+        <hr>
+            <div class="reference-list">
+                {% for portfolio in portfolios %}
+                <div class="reference-item">
+                    <!-- 썸네일 -->
+                    <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
+                        <div class="thumbnail_desc">
+                            <div class="thumbnail">
+                                <img class="thumbnail-img" src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
+                            </div>
+                            <div class="thumbnail-hover">
+                                <p>{{portfolio.desc}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    
+                    <a class="title" href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
+                        <p>{{portfolio.title}}</p>
+                    </a>
+                    
+                    <div class="item-info">
+                        <div class="reference-user">
+                        {% if portfolio.user == request.user %}
+                            <a href="{% url 'profile:mypage' %}">
+                        {% else %}
+                            <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
+                        {% endif %}
+                                <img class="profile_image" src="{{portfolio.user.image.url}}" alt="profile_image">
+                                <div class="portfolio_owner">
+                                    <p class="ref-username">{{portfolio.user.username}}</p>
+                                    <p class="ref-category">{{portfolio.user.category}}</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="portfolio_info">
+                            <!-- like count -->
+                            <div class="like like-{{portfolio.id}}">
+                                {% if request.user in portfolio.like_users.all %}
+                                <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                                    value="like"></i>
+                                {% else %}
+                                <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                                    value="like"></i>
+                                {% endif %}
+                                <span class="like__content">{{ portfolio.like_users.count }}</span>
+                            </div>
+                            <!-- view_count -->
+                            <div class="eye">
+                                <i class="far fa-eye"></i>
+                                <span class="view__content">{{portfolio.view_count}}</span>
+                            </div>
+                            <!-- save count -->
+                            <div class="save save-{{portfolio.id}}">
+                                {% if request.user in portfolio.bookmark_users.all %}
+                                <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
+                                    name="type" value="save"></i>
+                                {% else %}
+                                <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})"
+                                    name="type" value="save"></i>
+                                {% endif %}
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+
+
+        <!-- infinite scroll -->
+        {% if portfolios.has_next %}
+        <a class="infinite-more-link" href="?page={{ portfolios.next_page_number }}">
+            <div class="loading" style="display: none;">Loading...</div>
+        </a>
+        {% endif %}
+
+
+
+    </article>
+</div>
+{% endblock content %}
+
+
+
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="{% static 'js/reference_like.js' %}"></script>
+<script src="{% static 'js/reference_save.js' %}"></script>
+<script src="{% static 'js/infinite.scroll.js' %}"></script>
+{% endblock script %}

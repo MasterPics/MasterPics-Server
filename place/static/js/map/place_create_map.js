@@ -23,8 +23,8 @@ let markers = []; // 마커를 담을 배열입니다
 let infowindow = new kakao.maps.InfoWindow({zIndex:1}); // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 
 let userMarker;
-let userMarkerSrc = 'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-Free-Download-PNG.png', // 출발 마커이미지의 주소입니다    
-    userMarkerSize = new kakao.maps.Size(35, 40), // 출발 마커이미지의 크기입니다 
+let userMarkerSrc = 'https://i.imgur.com/rsjHKsd.png', // 출발 마커이미지의 주소입니다    
+    userMarkerSize = new kakao.maps.Size(35, 60), // 출발 마커이미지의 크기입니다 
     userMarkerOption = { 
         offset: new kakao.maps.Point(17, 43) // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
     };
@@ -71,8 +71,9 @@ function searchPlaces() {
         alert('키워드를 입력해주세요!');
         return false;
     }
+    let keywordOptions = {size:5}; 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch(keyword, placesSearchCB); 
+    ps.keywordSearch(keyword, placesSearchCB,keywordOptions); 
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -145,7 +146,7 @@ function displayPlaces(places) {
     }
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
     listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    menuEl.scrollTop = 10;
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
     userMarker.setPosition(map.getCenter());
@@ -156,7 +157,7 @@ function getListItem(index, places) {
     let el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
+                '   <h6>' + places.place_name + '</h6>';
     if (places.road_address_name) {
         itemStr += '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';
@@ -173,7 +174,7 @@ function getListItem(index, places) {
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
     let imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imageSize = new kakao.maps.Size(36,37),  // 마커 이미지의 크기
         imgOptions =  {
             spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
             spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표

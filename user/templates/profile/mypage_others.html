@@ -1,0 +1,127 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/profile/mypage.css' %}">
+{% endblock stylesheet %}
+
+
+{% block content %}
+<div class="wrapper">
+    <!-- 프로필 정보 -->
+    <div class="profile">
+        <div class="profile__info">
+            <div class="profile__id">
+                {{profile_owner.user_id}}
+            </div>
+            <img class="profile__img" src="{{profile_owner.image.url}}" alt="img">
+            <div class="profile__name">{{ profile_owner.username }}</div>
+            <div class="profile__category">{{ profile_owner.category }}</div>
+        </div>
+        <div class="profile__info-more">
+            {% if profile_owner.email and profile_owner.email_public %}
+            <div class="profile__email">
+                <span class="profile__text">E-mail</span>
+                <span class="profile__info-text">{{ profile_owner.email }}</span>
+            </div>
+            {% endif %}
+            {% if profile_owner.phone and profile_owner.phone_public %}
+            <div class="profile__phone">
+                <span class="profile__text">Phone</span>
+                <span class="profile__info-text">{{ profile_owner.phone }}</span>
+            </div>
+            {% endif %}
+            {% if profile_owner.instagram and profile_owner.instagram_public %}
+            <div class="profile__instagram">
+                <span class="profile__text">Instagram</span>
+                <span class="profile__info-text">{{ profile_owner.instagram }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% if profile_owner.email and profile_owner.email_public %}
+        <div class="profile__line"></div>
+        {% elif profile_owner.phone and profile_owner.phone_public %}
+        <div class="profile__line"></div>
+        {% elif profile_owner.instagram and profile_owner.instagram_public %}
+        <div class="profile__line"></div>
+        {% endif %}
+        <div class="profile__post-info">
+            <div class="profile__post-count">
+                <span class="profile__text">포트폴리오</span>
+            <span class="profile__text">{{ profile_owner.portfolios.count }} 게시물</span>
+            </div>
+            <div class="profile__post-count"> 
+                <span class="profile__text">컨택트</span>
+            <span class="profile__text">{{ profile_owner.contacts.count }} 게시물</span>
+            </div>
+        </div>
+        <span class="profile__desc">{{ profile_owner.desc }}</span>
+    </div>
+
+    <!-- 게시물 정보 -->
+    <div class="post">
+        <div class="post__local-bar">
+            <ul>
+                <li class="post__local-bar-selected" id="post__portfolio" type="submit" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
+                <li id="post__my-post" type="submit" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">게시물</li>
+            </ul>
+        </div>
+        <div class="post__local-sub-bar">
+            <ul id="post__portfolio-selected">
+                <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
+                <li id="post__tagged-portfolio">태그된 목록</li>
+            </ul>
+            <ul class="post__not-selected" id="post__my-post-selected">
+                <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">컨택트</li>
+                <li id="post__my-place" onclick="onClickMyPlace('{{ profile_owner.user_identifier }}')">플레이스</li>
+            </ul>
+        </div>
+        <div class="post__container">
+        {% for portfolio in portfolios %}
+            <div class="post__item">
+                <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
+                    <figure class="post__image">
+                        <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
+                        <figcaption>
+                            <div class="post__info">
+                                <p class="post__title">{{ portfolio.title }}</p>
+                                <div>
+                                    <p class="post__comment">
+                                        <i class="far fa-comment"></i>
+                                        <span>{{portfolio.comments.count}}</span>
+                                    </p>
+                                    <p class="post__view">
+                                        <i class="far fa-eye"></i>
+                                        <span>{{portfolio.view_count}}</span>
+                                    </p>
+                                    <p class="post__like">
+                                        <i class="fas fa-heart"></i>
+                                        <span>{{portfolio.like_users.count}}</span>
+                                    </p>
+                                    <p class="post__bookmark">
+                                        <i class="fas fa-bookmark"></i>
+                                        <span>{{portfolio.bookmark_users.count}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content%}
+
+
+
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_other_portfolio.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_other_post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_other_place.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mypage/mypage_profile.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/*layout*/
+
+/*layout*/
+
+#nav {
+    background-color: #F4F4F4;
+  }
+  
+  nav {
+    background-color: #fff;
+  }
+  
+  nav a {
+    color: black;
+  }
+  
+  #footer{
+      background-color: #C4C4C4;
+  }
+  
+  body{
+    height: 100%;
+  }
+  
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active  {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+
+/* tos */
+
+.terms__container{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.terms__logo{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.terms__container p {
+    font-weight: 600;
+}

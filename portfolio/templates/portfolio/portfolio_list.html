@@ -7,167 +7,147 @@
 
 
 {% block content %}
-<div class="portfolio_list">
-    <div class="bar">
-         <!-- category -->
-        <div class="bar_left">
-            <div class="dropdown">
-                <div class="dropbtn">
-                    <div class="btn"><span class="noselect"><a href="javascript:void(0)"
-                                onclick="onClickLink('all')">Category</a></span></div>
-                </div>
-                <div class="dropdown-content">
-                    <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
-                    <a href="javascript:void(0)" onclick="onClickLink('otheruse')">Other use</a>
-                </div>
-            </div>
-        </div>
-        
-       
-        <div class="bar_right">
-            <!--search-->
-            <div class="input-group">
-                <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn_search" type="button" id="">찾기</button>
-                </div>
-            </div>
-            
-            <!--sort-->  
-            <div class="sort">
-                <select name="" id="" class="form-control sort ">
-                    <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
-                        최신순
-                    </option>
-                    <option value="view" {% if sort == 'view' %}selected{% endif %}>
-                        조회순
-                    </option>
-                    <option value="like" {% if sort == 'like' %}selected{% endif %}>
-                        좋아요순
-                    </option>
-                    <option value="save" {% if sort == 'save' %}selected{% endif %}>
-                        저장순
-                    </option>
-                </select>
-            </div>
+<div class="header">
+    <h2 class="header__title">Portfolio</h2>
+    <p class="header__desc">나만의 포트폴리오를 게시해</p>
+    <p class="header__desc">MasterPic's 아티스트와 공유하세요!</p>
+    <a class="header__create-btn" href="{% url 'portfolio:portfolio_create' %}">포트폴리오 등록하기</a>
+</div>
 
-            <!--게시글 생성-->
-            <div class="create">
-                <a class="create_btn" href="{% url 'portfolio:portfolio_create' %}"><i class="far fa-plus-square"></i></a>
-            </div>
+<div class="filter">
+    <div class="filter__left">
+        <div class="filter__category">
+            <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
+            <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
+            <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
+            <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
+            <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
         </div>
     </div>
+    <div class="filter__right">
+        <div class="filter__search">
+            <input  type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'/>
+            <button type="submit" id="submit" class="btn btn-outline-secondary btn_search" ><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter__sort">
+            <select name="" id="" class="form-control sort ">
+                <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
+                    최신순
+                </option>
+                <option value="view" {% if sort == 'view' %}selected{% endif %}>
+                    조회순
+                </option>
+                <option value="like" {% if sort == 'like' %}selected{% endif %}>
+                    좋아요순
+                </option>
+                <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                    저장순
+                </option>
+            </select>
+            <div class="select__arrow"></div>
+        </div>
+      
+        <div style="height: 0;">
+            <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
+                <input type="hidden" id="category" name="category" value="{{ category }}">
+                <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+                <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="line"></div>
 
-
-    <div>
-        <div class="grid">
-            {% for portfolio in portfolios %}
-            <div class="grid-item">
-                <div class='item-top'>
-                    <!-- 게시글 작성자 정보 -->
-                    <div>
-                        {% if portfolio.user == request_user %}
-                            <a href="{% url 'profile:profile' %}">
+<div class="list">
+    <div class="list__container grid">
+        {% for portfolio in portfolios %}
+        <div class="list__item-wrapper grid-item">
+            <div class="list__item">
+                <!-- portfolio thumbnail -->
+                <div class="list__thumbnail">
+                    <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
+                        <figure class="list__image">
+                            <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
+                            <figcaption>
+                                <p class="list__tags-info">
+                                    {% for tag in portfolio.tags.all %}
+                                        #{{ tag.name }} 
+                                    {% endfor %}
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- portfolio title -->
+                <div class="list__title">
+                    <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">{{portfolio.title}}</a>
+                </div>
+                <div class="list__info">
+                    <!-- portfolio user -->
+                    <div class="list__user">
+                        {% if portfolio.user == request.user %}
+                        <a href="{% url 'profile:mypage' %}">
                         {% else %}
-                            <a href="{% url 'profile:others_profile' portfolio.user.user_identifier %}">
+                        <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
-                            <div class="portfolio_owner">
-                                <div class="user_img">
-                                    {% if user.image  %}
-                                    <img class="profile_image" src="{{portfolio.user.image.url}}" alt="profile_image">
-                                    {% else %}
-                                    <img class="profile_image"
-                                        src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                        alt="profile_image">
-                                    {% endif %}
-                                </div>
-                                <div>{{portfolio.user.username}}</div>
-                                <div style="font-size: smaller;">{{portfolio.user.category}}</div>
+                            <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
+                            <div class="list__user-info">
+                                <div class="list__user-name">{{portfolio.user.username}}</div>
+                                <div class="list__user-category">{{portfolio.user.category}}</div>
                             </div>
                         </a>
                     </div>
-
-                    <!-- 게시글 제목, 썸네일 -->
-                    <div class="title">
-                        <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
-                            <div style="font-weight:bolder;">{{portfolio.title}}</div>
-                        </a>
-                    </div>
-                    <div class="thumbnail_desc">
-                        <a href="{% url 'portfolio:portfolio_detail' portfolio.pk %}">
-                            <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
-                        </a>                    
-                    </div>
-                </div>
-
-
-
-                <!-- like, view_count, save -->
-                <div class="portfolio_info">
-                    <div class="like like-{{portfolio.id}}">
-                        {% if request_user in portfolio.like_users.all %}
-                        <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
-                            value="like"></i>
-                        {% else %}
-                        <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
-                            value="like"></i>
-                        {% endif %}
-                        <span class="like__content">{{ portfolio.like_users.count }}</span>
-                    </div>
-
-                    <div class="toright">
+                    <!-- portfolio like, view_count, save -->
+                    <div class="list__post-info">
                         <div class="eye">
                             <i class="far fa-eye"></i>
                             <span class="view__content">{{portfolio.view_count}}</span>
                         </div>
+                        <div class="like like-{{portfolio.id}}">
+                            {% if request.user in portfolio.like_users.all %}
+                            <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                                value="like"></i>
+                            {% else %}
+                            <i class="far fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
+                                value="like"></i>
+                            {% endif %}
+                            <span class="like__content">{{ portfolio.like_users.count }}</span>
+                        </div>
                         <div class="save save-{{portfolio.id}}">
-                            {% if request_user in portfolio.save_users.all %}
+                            {% if request.user in portfolio.bookmark_users.all %}
                             <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
                                 value="save"></i>
                             {% else %}
                             <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
                                 value="save"></i>
                             {% endif %}
-                            <span class="save__content">{{ portfolio.save_users.count }}</span>
+                            <span class="save__content">{{ portfolio.bookmark_users.count }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
-
-        <!-- infinite scroll -->
-        {% if portfolios.has_next %}
-        <a class="infinite-more-link" href="?page={{ portfolios.next_page_number }}">
-            <div class="loading" style="display: none;">Loading...</div>
-        </a>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
+    
+    
+<!-- infinite scroll -->
+{% if portfolios.has_next %}
+<a class="infinite-more-link" href="?page={{ portfolios.next_page_number }}">
+    <div class="loading" style="display: none;">Loading...</div>
+</a>
+{% endif %}
 
-
-<!-- 버튼 누르면 상단으로 -->
-<div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-circle-up"></i></div>
-
-
-<!--category, sort, search filter form-->
-<div style="height: 0;">
-    <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
-        <input type="hidden" id="category" name="category" value="{{ category }}">
-        <input type="hidden" id="sort" name="sort" value="{{ sort }}">
-        <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
-    </form>
-</div>
+<!-- go to top -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
 {% endblock content%}
 
 
 {% block script %}
-
 <script src="{% static 'js/infinite.min.js' %}"></script>
 <script src="{% static 'js/infinite.scroll.js' %}"></script>
 <script src="{% static 'js/go_to_top.js' %}"></script>
