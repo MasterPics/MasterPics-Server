@@ -34,4 +34,6 @@ urlpatterns = [
      path('recovery/pw/auth/', view=views.recovery_pw_auth, name='recovery_pw_auth'),
      path('recovery/pw/reset/', view=views.recovery_pw_reset, name='recovery_pw_reset'),
 
+     # ToS
+     path('terms_of_service_use/', view=views.terms_of_service_use, name='terms_of_service_use'),
 ]

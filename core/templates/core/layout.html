@@ -6,6 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MasterPics</title>
+  <link rel="shortcut icon" href="{% static 'img/masterpics_favicon.png' %}">
+  <link rel="icon" href="{% static 'img/masterpics_favicon.png' %}">
   
   <!-- FONTS -->
   <script src="https://kit.fontawesome.com/0b02921f0e.js" crossorigin="anonymous"></script>
@@ -35,8 +37,9 @@
     <nav id="nav">
       
       <ul class="nav__logo">
-        <li><a href="{% url 'core:main_list' %}"> MasterPic's</a></li>
+        <div class="nav_logo_img"></div><li><a href="{% url 'core:main_list' %}"> MasterPic's</a></li>
       </ul>
+
       <ul class="nav__menu">
         <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
         <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
@@ -45,15 +48,9 @@
         
         <ul class="nav__profile">
           {% if not user.is_authenticated %}
-
-          <!-- <li><a href="{% url 'google_login' %}">google</li>
-          <li><a href="{% url 'naver_login' %}">naver</li> -->
-          <li><a href="{% url 'account_login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
-          <li><a href="{% url 'account_login' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a></li>
+          <li><a href="{% url 'profile:login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
           {% else %}
-
-          {% url 'profile:profile' as profile_path %}
-
+        <!--
           <form method="post" action="{% url 'account_logout' %}">
             {% csrf_token %}
             {% if redirect_field_value %}
@@ -61,44 +58,97 @@
             {% endif %}
             <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
               style="margin-right: 10px;"></input>
-          </form>
 
-          <li>
-            <form method='post' action="{% url 'profile:logout' %}">
+              <form method='post' action="{% url 'profile:logout' %}">
               {% csrf_token %}
-              <button type='submit'>loggggout</button>
-            </form>
-          </li>
-          <li>
-            <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
-          </li>
+              <button type='submit'>로그아웃</button>
+              </form>
+          </form>
+        -->
 
+          <li class="user_dropdown">
+            <button class="dropbtn"> {{user.username}}</button><img class="user_image" src="{{user.image.url}}">
+            <div class="dropdown-content">
+              <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
+              <a>
+                <form method="post" action="{% url 'account_logout' %}">
+                  {% csrf_token %}
+                  {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                  {% endif %}
+                  <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                    style="margin-right: 10px;"></input>
+                </form>
+              </a>
+            </div>
+          </li>
           {% endif %}
         </ul>
       </ul>
+
+      <!--햄버거 메뉴-->
+      <!--href="#"을 하면 클릭시 새로고침안됨-->
+      <li class="drop_down">
+        <button class="navbar__toogleBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+          <div class= "toogleBtn-content">
+            <ul class="toogle_nav__menu">
+              <li><a href="{% url 'contact:contact_list' %}">Contact</a></li>
+              <li><a href="{% url 'portfolio:portfolio_list' %}">Portfolio</a></li>
+              <li><a href="{% url 'reference:reference_list' %}">Reference</a></li>
+              <li><a href="{% url 'place:place_list' %}">Place</a></li>
+            <ul>
+
+            <ul class="toogle_nav__profile">
+              {% if not user.is_authenticated %}
+              <li><a href="{% url 'profile:login' %}?next={{ request.path }}">Log In/Sign Up</a></li>
+              {% else %}
+
+              <li class="toogle_user_dropdown">
+                  <a href=" {% url 'profile:mypage' %}">My profile&nbsp;<i class="far fa-user-circle"></i></a>
+                  <a>
+                    <form method="post" action="{% url 'account_logout' %}">
+                      {% csrf_token %}
+                      {% if redirect_field_value %}
+                      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                      {% endif %}
+                      <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                        style="margin-right: 10px;"></input>
+                    </form>
+                  </a>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+      </li>
     </nav>
   </head>
+
   <section class="container">
     {% block content %}
     {% endblock %}
   </section>
   <footer id="footer">
-    <ul class="footer__left">
-      <li class="footer__logo">MasterPic's</li>
-      <li class="info"><a href="#">이용약관</a></li>
-      <li class="info"><a href="#">개인정보처리방침</a></li>
-    </ul>
-    <ul class="footer__center">
-      <li class="mpright">© MasterPic’s. 2021 All Rights Reserved.</a></li>
-    </ul>
-    <ul class="footer__right">
-      <li class="alliance"><a href="#">제휴문의</a></li>
-      <!--
-      <li class="insta"><i class="fab fa-instagram"></i></li>
-      <li><i class="fab fa-facebook-square"></i></li>
-      <li><i class="fab fa-youtube-square"></i></li>
-      -->
-    </ul>
+    <div>
+      <ul class="footer__left">
+        <li class="footer__logo">MasterPic's</li>
+        <li class="info__1"><a href="{% url 'profile:terms_of_service_use' %}">이용약관</a></li>
+        <li class="info__2"><a href="#">개인정보처리방침</a></li>
+      </ul>
+      <ul class="footer__center">
+        <li class="mpright">© MasterPic’s. 2021 All Rights Reserved.</a></li>
+      </ul>
+      <ul class="footer__right">
+        <li class="alliance"><a href="mailto:masterpics.official@gmail.com">제휴문의</a></li>
+        <li class="insta"><a href="https://www.instagram.com/masterpics.official/"><i class="fab fa-instagram"></i></a></li>
+        <!--
+        <li><i class="fab fa-facebook-square"></i></li>
+        <li><i class="fab fa-youtube-square"></i></li>
+        -->
+      </ul>
+    </div>
   </footer>
   
   <!-- axios for async buttons -->

@@ -1,0 +1,19 @@
+{% extends 'core/layout.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile/socialaccount_signup.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+    <div class="modify__container">
+        <div class="modify__body">
+                <li class="signup_info">이미 존재하는 email 계정입니다.</li>
+                <li class="signup_info">확인하시고 로그인해주세요.</li>
+                
+                <a href="{% url 'profile:login' %}"><input type="button" class="undo_btn" value="돌아가기"/></a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

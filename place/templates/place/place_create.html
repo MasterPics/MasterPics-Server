@@ -7,14 +7,13 @@
 
 {% block content %}
 
-<div class='container'>
     <div class="map_wrap">
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     
         <div id="menu_wrap">
             <div class="option">
                 <div>
-                    <form onsubmit="searchPlaces(); return false;">
+                    <form class="search-form" onsubmit="searchPlaces(); return false;">
                         <input type="text" value="" id="keyword" placeholder="찾고싶은 장소를 입력하세요."/> 
                         <button type="submit" class="search-btn">
                             검색
@@ -38,18 +37,44 @@
                 {% csrf_token %}
                 <div class="place-form">
                     {% for field in place_form.visible_fields %}
-                    <div class="form-group {{ field.name }}">
-                        {{ field.label_tag }}
-                            {{ field }}
-                            {% for error in field.errors %}
+                        {% if field.id_for_label == 'id_images' %}
+
+                        {% else %}
+                        <div class="form-group {{ field.name }}">
+                            {{ field.label_tag }}
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="form-images">
+                    <div id="image_preview" class="form-group {{ field.name }}">
+                        <label for="id_images">이미지 (최대 10장)</label>
+                        <div class="form__upload">
+                            <p class="form__upload-text">
+                                드래그 또는 클릭하여 업로드
+                            </p>
+                            <div class="form__upload-btn">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                        </div>
+                        <div class="form__input">
+                            {{ place_form.images }}
+                            {% for error in form.images.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
                                 </div>
                             {% endfor %}
+                        </div>
+                        <!-- file 미리보기 -->
+                        <div id='att_zone' class="form__img"></div>
                     </div>
-                    {% endfor %}
                 </div>
-
                 <div class="location-form">
                     {{ location_form.as_table }}
                 </div>
@@ -58,7 +83,6 @@
             </form>
         </div>
     </div>
-</div>
 
 
 {% endblock content%}
@@ -73,5 +97,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
 <script type="text/javascript" src="{% static 'js/map/place_create_map.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'js/place/place_create.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/place/image_preview.js' %}"></script>
 {% endblock script%}

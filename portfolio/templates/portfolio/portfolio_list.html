@@ -7,58 +7,60 @@
 
 
 {% block content %}
-<div class="info">
-    <h1 class="info__title">Portfolio</h1>
-    <p class="info__desc">나만의 포트폴리오를 게시해</p>
-    <p class="info__desc">MasterPic's 아티스트와 공유하세요!</p>
-    <a class="info__create-btn" href="{% url 'portfolio:portfolio_create' %}">포트폴리오 등록하기 ></a>
+<div class="header">
+    <h2 class="header__title">Portfolio</h2>
+    <p class="header__desc">나만의 포트폴리오를 게시해</p>
+    <p class="header__desc">MasterPic's 아티스트와 공유하세요!</p>
+    <a class="header__create-btn" href="{% url 'portfolio:portfolio_create' %}">포트폴리오 등록하기</a>
 </div>
 
 <div class="filter">
-    <div class="filter__category">
-        <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
-        <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
-        <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
-        <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
-        <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
-    </div>
-    <div class="filter__search">
-        <input type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'>
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary btn_search" type="button" id=""><i class="fas fa-search"></i></button>
+    <div class="filter__left">
+        <div class="filter__category">
+            <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
+            <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
+            <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
+            <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
+            <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
         </div>
     </div>
-    <div class="filter__sort">
-        <select name="" id="" class="form-control sort ">
-            <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
-                최신순
-            </option>
-            <option value="view" {% if sort == 'view' %}selected{% endif %}>
-                조회순
-            </option>
-            <option value="like" {% if sort == 'like' %}selected{% endif %}>
-                좋아요순
-            </option>
-            <option value="save" {% if sort == 'save' %}selected{% endif %}>
-                저장순
-            </option>
-        </select>
-        <div class="select__arrow"></div>
-    </div>
-  
-    <div style="height: 0;">
-        <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
-            <input type="hidden" id="category" name="category" value="{{ category }}">
-            <input type="hidden" id="sort" name="sort" value="{{ sort }}">
-            <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
-        </form>
+    <div class="filter__right">
+        <div class="filter__search">
+            <input  type="text" class="form-control search" value="{{ search|default_if_none:"" }}" placeholder='키워드를 검색하세요.'/>
+            <button type="submit" id="submit" class="btn btn-outline-secondary btn_search" ><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter__sort">
+            <select name="" id="" class="form-control sort ">
+                <option value="recent" {% if sort == 'recent' %}selected{% endif %}>
+                    최신순
+                </option>
+                <option value="view" {% if sort == 'view' %}selected{% endif %}>
+                    조회순
+                </option>
+                <option value="like" {% if sort == 'like' %}selected{% endif %}>
+                    좋아요순
+                </option>
+                <option value="save" {% if sort == 'save' %}selected{% endif %}>
+                    저장순
+                </option>
+            </select>
+            <div class="select__arrow"></div>
+        </div>
+      
+        <div style="height: 0;">
+            <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
+                <input type="hidden" id="category" name="category" value="{{ category }}">
+                <input type="hidden" id="sort" name="sort" value="{{ sort }}">
+                <input type="hidden" id="search" name="search" value="{{ search|default_if_none:'' }}">
+            </form>
+        </div>
     </div>
 </div>
 
 <div class="line"></div>
 
 <div class="list">
-    <div class="list__group grid">
+    <div class="list__container grid">
         {% for portfolio in portfolios %}
         <div class="list__item-wrapper grid-item">
             <div class="list__item">
@@ -68,13 +70,11 @@
                         <figure class="list__image">
                             <img src="{{portfolio.thumbnail.image.url}}" alt="thumbnail">
                             <figcaption>
-                                <div class="list__tags-info">
+                                <p class="list__tags-info">
                                     {% for tag in portfolio.tags.all %}
-                                    <p class="list__tags">
                                         #{{ tag.name }} 
-                                    </p>
                                     {% endfor %}
-                                </div>
+                                </p>
                             </figcaption>
                         </figure>
                     </a>
@@ -86,18 +86,12 @@
                 <div class="list__info">
                     <!-- portfolio user -->
                     <div class="list__user">
-                        {% if portfolio.user == request_user %}
+                        {% if portfolio.user == request.user %}
                         <a href="{% url 'profile:mypage' %}">
                         {% else %}
                         <a href="{% url 'profile:others_mypage' portfolio.user.user_identifier %}">
                         {% endif %}
-                            {% if user.image  %}
                             <img class="list__user-img" src="{{portfolio.user.image.url}}" alt="img">
-                            {% else %}
-                            <img class="list__user-img"
-                                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                                alt="img">
-                            {% endif %}
                             <div class="list__user-info">
                                 <div class="list__user-name">{{portfolio.user.username}}</div>
                                 <div class="list__user-category">{{portfolio.user.category}}</div>
@@ -111,7 +105,7 @@
                             <span class="view__content">{{portfolio.view_count}}</span>
                         </div>
                         <div class="like like-{{portfolio.id}}">
-                            {% if request_user in portfolio.like_users.all %}
+                            {% if request.user in portfolio.like_users.all %}
                             <i class="fas fa-heart" type="submit" onclick="onClickLike({{ portfolio.id }})" name="type"
                                 value="like"></i>
                             {% else %}
@@ -121,7 +115,7 @@
                             <span class="like__content">{{ portfolio.like_users.count }}</span>
                         </div>
                         <div class="save save-{{portfolio.id}}">
-                            {% if request_user in portfolio.save_users.all %}
+                            {% if request.user in portfolio.bookmark_users.all %}
                             <i class="fas fa-bookmark" type="submit" onclick="onClickSave({{ portfolio.id }})" name="type"
                                 value="save"></i>
                             {% else %}

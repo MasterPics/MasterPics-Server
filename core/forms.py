@@ -1,6 +1,10 @@
 from django import forms
-from .models import Location  
+from .models import Location, PostImage  
 
+class PostImageForm(forms.ModelForm):
+    class Meta:
+        model = PostImage
+        fields = {'image',}
 
 class LocationForm(forms.ModelForm):
     class Meta:

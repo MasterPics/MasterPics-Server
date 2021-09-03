@@ -1,26 +1,37 @@
-/******************* info ******************/
-.info {
-  background-image: url("./portfolio_background.jpg");
+/**layout**/
+.container {
+  min-height: 100%;
+}
+
+.wrapper {
+  margin: 100px auto;
+}
+/******************* header ******************/
+.header {
+  background-image: url("../img/portfolio_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
-  height: 300px;
-  padding: 0 150px;
+  height: 280px;
+  width: 100vw;
+  padding-left: 10%;
 }
-.info__title {
+.header__title {
   margin-bottom: 20px;
-  padding-top: 70px;
+  padding-top: 3%;
   font-size: 24px;
   color: #191919;
 }
-.info__desc {
+.header__desc {
   color: #000000;
-  font-size: 18px;
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 600;
 }
-.info__desc:last-of-type {
-  margin-bottom: 35px;
+.header__desc:last-of-type {
+  margin-bottom: 40px;
 }
-.info__create-btn {
+.header__create-btn {
   width: 150px;
   padding: 15px;
   color: #5200ff;
@@ -34,13 +45,15 @@
   margin: 0 auto;
   padding-top: 20px;
   overflow: hidden;
-  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 90px;
 }
-.filter__category {
-  float: left;
+.filter__right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .filter__category > span a {
   font-size: 14px;
@@ -54,21 +67,17 @@
   margin-right: 22px;
   font-weight: 600;
 }
-.filter__search,
 .filter__sort {
-  float: right;
-}
-.filter__sort {
-  position: absolute;
-  right: 0;
+  position: relative;
 }
 .filter__sort > select {
+  width: 90px;
   font-size: 10px;
   color: #000000;
-  padding: 8px 25px;
+  padding: 8px 15px;
   border: solid 1px #eeeeee;
-  display: inline-block;
-  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
   /* 화살표 없애기 */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -82,7 +91,7 @@
 .filter__sort > .select__arrow {
   position: absolute;
   top: 12px;
-  right: 10px;
+  right: 13px;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -98,10 +107,9 @@
   outline: none;
 }
 .filter__search {
-  position: absolute;
-  right: 110px;
   display: flex;
   justify-content: center;
+  margin-right: 10px;
 }
 .filter__search input {
   border: solid 1px #cfcfcf;
@@ -139,6 +147,9 @@
   width: 80%;
   margin: 0 auto;
   margin-top: 40px;
+}
+.grid {
+  margin: 0 auto;
 }
 .list__item-wrapper {
   width: 246px;
@@ -187,21 +198,15 @@ figure.list__image figcaption {
   justify-content: center;
 }
 figure.list__image .list__tags-info {
-  overflow: hidden;
-  height: 24%;
   padding: 0 28px;
-}
-figure.list__image .list__tags {
-  font-size: 14px;
-  font-weight: lighter;
-  letter-spacing: 1px;
-  opacity: 0;
-  -webkit-transform: translateX(-40px);
-  transform: translateX(-40px);
-  overflow: hidden;
+  height:2rem;
+  line-height:1rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size: 0.9rem;
   color: #ffffff;
-  margin: 2px;
-  float: left;
+  opacity: 0;
+  font-weight: lighter;
 }
 figure.list__image:hover img,
 figure.list__image.hover img {
@@ -223,6 +228,9 @@ figure.list__image.hover p {
 .list__title {
   margin-bottom: 10px;
   width: 251px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .list__title a {
   font-size: 14px;
@@ -243,6 +251,7 @@ figure.list__image.hover p {
   width: 27px;
   height: 27px;
   margin-right: 10px;
+  object-fit: cover;
 }
 .list__user-name {
   font-size: 11px;
@@ -255,18 +264,13 @@ figure.list__image.hover p {
 .list__post-info {
   display: flex;
   justify-content: space-between;
-}
-.like,
-.eye,
-.save {
-  font-size: 17px;
+  align-items: center;
 }
 .like > .far,
 .eye > .far,
 .save > .far {
-  color: #aaaaaa;
+  color: #6d6d6d;
 }
-
 .like,
 .eye {
   margin-right: 5px;
@@ -278,6 +282,19 @@ figure.list__image.hover p {
 .like > .fas,
 .save > .fas {
   color: #5200ff;
+}
+.like,
+.eye,
+.save {
+  font-size: 14px;
+}
+.like__content,
+.view__content {
+  font-size: 14px;
+  color: #6d6d6d;
+}
+.save__content {
+  display: none;
 }
 /******************* infinite scroll ******************/
 .loading,
@@ -356,4 +373,55 @@ figure.list__image.hover p {
 
 #myBtn:hover {
   background-color: #5200ff;
+}
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .header{
+    padding-top:50px;
+    width: 200vw;
+  }
+  .header__desc{
+    font-size: 16px;
+    font-weight:400;
+    line-height: 16px;
+  }
+  .header__create-btn{
+    padding:12px;
+    font-size: 12px;
+  }
+  .filter{
+    flex-direction: column;
+    height: 100px;
+    width: 90%;
+  }
+  .filter__right{
+    justify-content: space-between;
+  }
+  .filter__category > span a {
+    font-size: 12px;
+    margin-right: 16px;
+    font-weight: 400;
+  }
+  .filter__category > a {
+    font-size: 12px;
+    margin-right: 16px;
+    font-weight: 400;
+  }
+  .filter__search input{
+    width:200px;
+  }
+  .filter__sort > select{
+    padding: 6px 20px;
+  }
+  .filter__sort > .select__arrow{
+    top:10px;
+  }
+  .line{
+    width: 90%;
+    margin-top:15px;
+  }
+  .list{
+    width: 90%;
+  }
 }

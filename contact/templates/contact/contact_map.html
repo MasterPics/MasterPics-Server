@@ -5,22 +5,79 @@
 <link rel="stylesheet" href="{% static 'css/contact_map.css' %}">
 {% endblock stylesheet %}
 
-{% block content %}
-<div id="map" style="width:100%;height:350px;"></div>
-{% endblock content%}
 
+{% block content %}
+<div class="wrapper">
+    <div class="wrapper-left">
+        <div class="header">
+            <div class="title">
+                <a href="{% url 'contact:contact_list' %}"><i class="fas fa-arrow-left"></i></a>
+                <p>장소 기반 컨택트 검색</p>
+            </div>
+            <div class="search-form">
+                <div class="option">
+                    <div>
+                        <form onsubmit="searchPlaces(); return false;">
+                            <input type="text" value="" id="keyword" placeholder="장소명을 검색하세요."> 
+                            <button type="submit"><i class="fas fa-search"></i></button> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <ul>
+                    <li class="menu-selected" id="allMenu" onclick="changeMarker('all')">
+                        All
+                    </li>
+                    <li id="photographerMenu" onclick="changeMarker('photographer')">
+                        Photographer
+                    </li>
+                    <li id="modelMenu" onclick="changeMarker('model')">
+                        Model
+                    </li>
+                    <li id="hairMakeupMenu" onclick="changeMarker('hairMakeup')">
+                        Hair/makeup
+                    </li>
+                    <li id="stylistMenu" onclick="changeMarker('stylist')">
+                        Stylist
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="result">
+            <div class="result__summary">
+                <div class="result__location">
+                    <p>장소명</p>
+                    <p id="result__location-value"></p>
+                    <p>검색결과</p>
+                </div>
+                <div class="result__post">
+                    <p>게시물</p>
+                    <p id="result__post-value"></p>
+                </div>
+            </div>
+            <div class="result__line"></div>
+            <div class="result__content" id="content">
+                <ul id="placesList"></ul>
+                <!-- <div id="pagination"></div> -->
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-right">
+        <div id="map" style="width:100%;height:100%;"></div>
+        <!-- 내 위치 기반 검색 -->
+        <button onclick="searchCurrentPosition()" class="current-btn">
+            <i class="fas fa-crosshairs"></i>
+        </button>
+    </div>
+</div>
+{% endblock content %}
 
 {% block script %}
-<!-- map -->
-<script type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
-<script type="text/javascript" src="{% static 'js/map/contact_create_map.js' %}"></script>
-
 <script>
     let contacts = {{ contacts_json|safe }};
 </script>
-{% endblock script%}
-
-
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
+<script type="text/javascript" src="{% static 'js/map/contact_map_save.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map/contact_map.js' %}"></script>
+{% endblock script %}
