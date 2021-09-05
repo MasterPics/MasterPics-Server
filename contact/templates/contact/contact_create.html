@@ -163,6 +163,13 @@
                         </div>
                         <div id='att_zone' class="form__img">
                         </div>
+
+                        {% comment %} image error message {% endcomment %}
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="form__file-attach form__group {{ contact_form.file_attach.name }}">
                         <div class="form__label">
