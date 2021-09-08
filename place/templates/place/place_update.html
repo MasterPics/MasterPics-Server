@@ -83,6 +83,13 @@
                                 </div>
                             {% endfor %}
                         </div>
+
+                        {% comment %} image error message {% endcomment %}
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="location-form">
