@@ -3,7 +3,7 @@
 }
 .wrapper {
   margin: 40px auto;
-  width: 71vw;
+  width: 75vw;
   display: flex;
   justify-content: space-between;
 }
@@ -216,6 +216,7 @@
   overflow-y: auto;
   height: 64vh;
   width: 100%;
+  padding-right: 10px;
 }
 .post__container::-webkit-scrollbar {
   width: 6px;
@@ -233,8 +234,8 @@
   width: 170px;
   height: 195px;
   display: inline-block;
-  margin-right: 10px;
   margin-bottom: 14px;
+  margin-right: 10px;
 }
 .post__item:last-of-type {
   margin-bottom: 0;
@@ -331,3 +332,32 @@ figure.post__image.hover p {
   transform: translate(0px, 0px);
   opacity: 1;
 }
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .wrapper{
+    flex-direction: column;
+    width: 90vw;
+    margin: 20px auto;
+  }
+  .profile{
+    width: 100%;
+  }
+  .profile__edit-content{
+    right: -35vw;
+  }
+  .profile__edit-btn{
+    right: -45vw;
+  }
+  .post{
+    margin-left: 0;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .post__item{
+    width: 100%;
+    margin-bottom: 30px;
+    margin-right: 0;
+  }
+}
+

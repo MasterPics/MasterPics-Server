@@ -234,7 +234,9 @@ input[type="password"] {
   .sub-login__container {
     margin-top: 7px;
     width: 50%;
-    margin-right: 15%;
+    margin-right: 0%;
+    justify-content: center;
+    align-items: center;
   }
   
   .sub-login__container .to-find__container {
@@ -250,18 +252,21 @@ input[type="password"] {
   .social-login__container {
     flex-direction: column;
   }
+  
   .social-login__container .social-login__title {
     font-size: 14px;
-    margin-top: 20px;
+    margin-top: -10px;
+    margin-bottom: 15px;
   }
+
   .social-login__container .social-login__body {
     width: 50%;
   }
   
   .social-login__container .social-login__body > * {
-    padding: 7px;
+    padding: 5px;
     border-radius: 3px;
-    font-size: 7px;
+    font-size: 6px;
   }
   
   input::placeholder{

@@ -78,7 +78,7 @@ form {
 .desc,
 .tags {
   margin-bottom: 10px;
-  width:100%
+  width:100%;
 }
 .title .form__label,
 .desc .form__label,
@@ -125,10 +125,16 @@ form {
 .pay input {
   width: 48%;
   font-size: 11px;
-  border: 1px solid #c4c4c4;
+  border: 1px solid #e2e2e2;
   border-radius: 3px;
   padding: 8px 30px;
   text-align: center;
+  background-color: #e2e2e2;
+}
+.pay input::-webkit-outer-spin-button,
+.pay input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .pay_type {
   width: 100%;
@@ -172,19 +178,12 @@ form {
 .pay_type:focus {
   outline: none;
 }
-.pay__text {
-  position: absolute;
-  right: 8px;
-  bottom: 17px;
-  color: #999999;
-  font-size: 11px;
-}
 .form__date {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
-  width:100%
+  width:100%;
 }
 .form__date .form__label{
   width:8%;
@@ -197,7 +196,7 @@ form {
 }
 .start_date,
 .end_date {
-  width:48%
+  width:48%;
 }
 .start_date .form__label {
   width: 14%;
@@ -209,6 +208,7 @@ form {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 4px 25px;
+  text-align:right;
 }
 .form__date-text {
   font-size: 14px;
@@ -244,7 +244,7 @@ form {
   white-space: nowrap;
 }
 .map_wrap {
-  height: 30%;
+  height: 25%;
   position: relative;
 }
 /*******************************************************/
@@ -265,6 +265,7 @@ form {
   display: flex;
   align-items: center;
   padding: 5px 100px;
+  position: relative;
 }
 .form__upload-text {
   color: #1e1e1e;
@@ -281,11 +282,10 @@ form {
 }
 .images .form {
   opacity: 0;
-  width: 45%;
-  padding: 25px 50px;
+  padding: 6% 50%;
   position: absolute;
-  top: 38px;
-  right: 5px;
+  left: 0;
+  top:0;
   cursor: pointer;
   z-index: 1;
 }
@@ -364,7 +364,7 @@ form {
 }
 /*******************************************************/
 .form__btn {
-  margin-top: 30px;
+  margin-top: 50px;
   text-align: center;
 }
 .form__submit {
@@ -380,4 +380,63 @@ form {
   background-color: #5200ff;
   color: #ffffff;
   cursor: pointer;
+}
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .wrapper{
+    width: 90%;
+    margin: 20px auto;
+  }
+  .create__text{
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .create__user-name{
+    font-size: 12px;
+  }
+  .create__user-category{
+    font-size: 10px;
+  }
+  .form__wrapper{
+    overflow: visible;
+    flex-direction: column;
+  }
+  .form__left{
+    width: 100%;
+    margin-bottom: 190px;
+  }
+  .form__right{
+    width: 100%;
+  }
+  .desc textarea{
+    height: 100px;
+  }
+  .start_date input, .end_date input{
+    padding: 4px 15px;
+  }
+  .map_wrap{
+    height: 50%;
+  }
+  .form__upload{
+    padding: 5px 50px;
+  }
+  .form__upload-btn{
+    right:40px;
+  }
+  .form__file-attach{
+    margin-bottom: 30px;
+  }
+  .form__file-attach label{
+    margin-right: 10px;
+  }
+  .form__file-attach-btn{
+    width:230px;
+  }
+  .form__btn{
+    margin-top:0 ;
+  }
+  .form__btn input{
+    margin: 20px 0;
+  }
 }

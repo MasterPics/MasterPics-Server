@@ -74,7 +74,6 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        <div class="pay__text">원</div>
                     </div>
                     <div class="form__date">
                         <div class="form__label">
@@ -164,6 +163,13 @@
                         </div>
                         <div id='att_zone' class="form__img">
                         </div>
+
+                        {% comment %} image error message {% endcomment %}
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="form__file-attach form__group {{ contact_form.file_attach.name }}">
                         <div class="form__label">
@@ -191,9 +197,6 @@
                         </div>                   
                         <div class="form__input">
                             {{ contact_form.tags }}
-                            {% if contact_form.tags.help_text %}
-                                <p class="help-block">{{ contact_form.tags.help_text }}</p>
-                            {% endif %}
                             {% for error in contact_form.tags.errors %}
                                 <div class="alert alert-danger">
                                     {{ error }}
@@ -216,4 +219,5 @@
 <script src="{% static 'js/map/contact_create_map.js' %}"></script>
 <script src="{% static 'js/contact_img_prev.js' %}"></script>
 <script src="{% static 'js/contact_create_file_prev.js' %}"></script>
+<script src="{% static 'js/contact_pay_form.js' %}"></script>
 {% endblock script %}

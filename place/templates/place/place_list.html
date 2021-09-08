@@ -88,7 +88,9 @@
                     </a>
                     <div class="place-tag">
                     {% for tag in place.tags.all %}  
-                    <button><a href="{% url 'reference:reference_list' %}?search={{tag.name}}">#{{ tag.name }} </a></button>
+                        {% if forloop.counter <= 3 %}
+                            <button><a href="{% url 'reference:reference_list' %}?search={{tag.name}}">#{{ tag.name }} </a></button>
+                        {% endif %}
                     {% endfor %}    
                     </div>
                     <div class="user-info">
