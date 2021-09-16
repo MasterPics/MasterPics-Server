@@ -1,3 +1,5 @@
+@import 'reset_mobile.css';
+
 .wrapper {
   width: 85%;
   margin: 7% auto;
@@ -361,4 +363,48 @@
   padding-top: 3rem;
   font-size: 0.8rem;
   color: #1e1e1e;
+}
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .wrapper{
+    flex-direction: column;
+  }
+  .side-bar{
+    order:2;
+    width:100%;
+  }
+  .post{
+    width:100%;
+  }
+  .post__title{
+    font-size: 18px;
+  }
+  .post__edit{
+    width:40%;
+  }
+  .post__line{
+    margin-bottom: 26px;
+  }
+  .comment__content{
+    line-height: 1.2rem;
+  }
+  .comment__top-info{
+    margin-bottom: 0;
+  }
+  .comment__writer{
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .comment__date{
+    font-size: 12px;
+  }
+  .comment__text{
+    font-size: 12px;
+  }
+  .post__list-btn{
+    position: absolute;
+    bottom: 0;
+    left: 45%;
+  }
 }

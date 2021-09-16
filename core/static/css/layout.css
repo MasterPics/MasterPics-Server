@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap");
 
 
 html, body {
@@ -13,6 +14,7 @@ body {
 }
 .container {
   position: relative;
+  overflow-x: hidden;
 }
 
 a {
@@ -60,7 +62,7 @@ svg {
   padding: 0;
   text-decoration: none;
   list-style-type: none;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
@@ -273,11 +275,11 @@ nav a {
   color: #5A5A5A;
 }
 
-.info_1, .info_2 {
+.info__1, .info__2 {
   margin: 0 15px 0 15px;
 }
 
-.info_1 > a, .info_2 > a{
+.info__1 > a, .info__2 > a{
   color: #5A5A5A;
 }
 
@@ -371,165 +373,169 @@ nav a {
 @media screen and (min-width:360px) and (max-width:512px) {
   /*footer*/
 
-#footer {
-  display: grid;
-  grid-template-areas: "text-0 text-1 text-2 ." " text-3 . text-4 text-5";
-  border-top: 1px solid CACACA;
-  padding: 7px 7px;
-  font-size: 8px;
-  height: 50px;
-}
+  #footer {
+    display: grid;
+    grid-template-areas: "text-0 text-1 text-2 ." " text-3 . text-4 text-5";
+    border-top: 1px solid CACACA;
+    padding: 7px 7px;
+    font-size: 8px;
+    height: 50px;
+  }
 
-#footer > div {
-  display: grid;
-  align-items: center;
-}
-
-.footer__left {
-  display: grid;
-  margin-left: 15px;
-  height: 40px;
-}
-
-.footer__logo {
-  grid-area: text-0;
-  font-size: 16px;
-  margin-bottom: 40px;
-}
-
-.info_1 {
-  grid-area: text-1;
-  margin-left: 90px;
-  width: 100px;
-}
-
-.info_2 {
-  grid-area: text-2;
-  margin-left: 135px;
-  width: 100px;
-}
-
-.mpright {
-  margin-left: -263px;
-  grid-area: text-3;
-  margin-right: 0;
-  margin-top: 15px;
-}
-
-.footer__right {
-  display: grid;
-  cursor: pointer;
-  grid-area: text-4;
-  margin-top: -40px;
-}
-.alliance {
-  color: #5200ff;
-}
-
-.insta{
-  font-size: 20px;
-  margin-right: -50px;
-  margin-left: 45px;
-  margin-top: -23px;
-}
-
-
-/* 반응형 nav */
-
-.navbar__toogleBtn {
-  color: white;
-  display: flex;
-  width: 20px;
-}
-
-.navbar__toogleBtn i{
-  font-size: 18px;
-}
-
-.drop_down {
-  position: relative;
-}
-
-.toogleBtn-content {
-  display: none;
-  position: absolute;
-  background-color: #000000;
-  min-width: 140px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  margin-left: -100px;
-}
-
-.toogleBtn-content a {
-  color: white;
-  padding: 8px 12px;
-  text-decoration: none;
-  display: block;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
-}
-
-.toogleBtn-content a {
-  color: white;
-  padding: 8px 12px;
-  text-decoration: none;
-  display: block;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
-}
-
-.toogleBtn-content a:hover {
-  background-color: #5200ff;
-}
-
-.drop_down:hover .toogleBtn-content {
-  display: block;
-}
-
-.drop_down > button {
-  border: none;
-  cursor: pointer;
-  background-color: transparent;
-}
-
-.nav__logo {
-  font-size: 22px;
-  margin-left: 3%;
-}
-
-.nav__logo > li{
-  position: relative;
-  bottom: 1px;
-}
-
-.nav__menu {
-    display: none;
-    flex-direction: column;
+  #footer > div {
+    display: grid;
     align-items: center;
+  }
+
+  .footer__left {
+    display: grid;
+    margin-left: 15px;
+    height: 40px;
+  }
+
+  .footer__logo {
+    grid-area: text-0;
+    font-size: 16px;
+    margin-top: -30px;
+    margin-bottom: 10px;
+  }
+
+  .info__1 {
+    grid-area: text-1;
+    margin-left: 90px;
+    width: 100px;
+  }
+
+  .info__2 {
+    grid-area: text-2;
+    margin-left: 135px;
+    width: 100px;
+  }
+
+  .mpright {
+    margin-left: -263px;
+    grid-area: text-3;
+    margin-right: 0;
+    margin-top: 15px;
+  }
+
+  .footer__right {
+    display: grid;
+    cursor: pointer;
+    grid-area: text-4;
+    margin-top: -35px;
+  }
+
+  .alliance {
+    color: #5200ff;
+    margin-bottom: 4px;
+    margin-left: 20px;
+  }
+
+  .insta{
+    font-size: 20px;
+    margin-left: 70px;
+    margin-top: -23px;
+  }
+
+
+  /* 반응형 nav */
+
+  .navbar__toogleBtn {
+    color: white;
+    display: flex;
+    width: 20px;
+  }
+
+  .navbar__toogleBtn i{
+    font-size: 18px;
+  }
+
+  .drop_down {
+    position: relative;
+    margin-right: 5px;
+  }
+
+  .toogleBtn-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    margin-left: -100px;
+  }
+
+  .toogleBtn-content a {
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+  }
+
+  .toogleBtn-content a {
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+  }
+
+  .toogleBtn-content a:hover {
+    background-color: #5200ff;
+  }
+
+  .drop_down:hover .toogleBtn-content {
+    display: block;
+  }
+
+  .drop_down > button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .nav__logo {
+    font-size: 22px;
+    margin-left: 3%;
+  }
+
+  .nav__logo > li{
+    position: relative;
+    bottom: 1px;
+  }
+
+  .nav__menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+  }
+
+  .nav__menu li {
     width: 100%;
-}
+    text-align: center;
+    padding-left: 0;
+  }
 
-.nav__menu li {
-  width: 100%;
-  text-align: center;
-  padding-left: 0;
-}
+  .nav__profile {
+    display: none;
+  }
 
-.nav__profile {
-  display: none;
-}
+  .nav__toggleBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-.nav__toggleBtn {
-  display: flex;
-  justify-content: flex-end;
-}
+  .nav__menu.active {
+    display: block;
+  }
 
-.nav__menu.active {
-  display: block;
-}
-
-.nav__profile.active {
-  display: block;
-}
+  .nav__profile.active {
+    display: block;
+  }
 
 }

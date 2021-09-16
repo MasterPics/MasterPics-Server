@@ -1,3 +1,5 @@
+@import 'reset_mobile.css';
+
 /**layout**/
 .container {
   min-height: 100%;
@@ -373,4 +375,55 @@ figure.list__image.hover p {
 
 #myBtn:hover {
   background-color: #5200ff;
+}
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .header{
+    padding-top:50px;
+    width: 200vw;
+  }
+  .header__desc{
+    font-size: 16px;
+    font-weight:400;
+    line-height: 16px;
+  }
+  .header__create-btn{
+    padding:12px;
+    font-size: 12px;
+  }
+  .filter{
+    flex-direction: column;
+    height: 100px;
+    width: 90%;
+  }
+  .filter__right{
+    justify-content: space-between;
+  }
+  .filter__category > span a {
+    font-size: 12px;
+    margin-right: 16px;
+    font-weight: 400;
+  }
+  .filter__category > a {
+    font-size: 12px;
+    margin-right: 16px;
+    font-weight: 400;
+  }
+  .filter__search input{
+    width:200px;
+  }
+  .filter__sort > select{
+    padding: 6px 20px;
+  }
+  .filter__sort > .select__arrow{
+    top:10px;
+  }
+  .line{
+    width: 90%;
+    margin-top:15px;
+  }
+  .list{
+    width: 90%;
+  }
 }

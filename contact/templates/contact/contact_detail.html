@@ -134,7 +134,11 @@
             <div class="post__content">
                 <div class="post__desc">{{contact.desc}}</div>
 
-                <div class="post__file"><a href="{{ contact.file_attach.url }}">시안 첨부파일 보기</a></div>
+                {% if contact.file_attach %}
+                    <div class="post__file"><a href="{{ contact.file_attach.url }}">시안 첨부파일 보기</a></div>
+                {% else %}
+                    <div class="post__file no-file">시안 첨부파일이 없습니다.</div>
+                {% endif %}
             </div>
         </div>
         <div class="post__comment">
