@@ -52,7 +52,13 @@
                     <div id="image_preview" class="form__group {{ field.name }}">
                         <div class="form__label">
                             <label for="id_images">이미지 (최대 10장)</label>
-                        </div>                   
+                        </div>
+                        <!-- image error message -->
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}           
                         <div class="form__upload">
                             <p class="form__upload-text">
                                 드래그 또는 클릭하여 업로드
@@ -74,13 +80,6 @@
                         </div>
                         <div id='att_zone' class="form__img">
                         </div>
-
-                        {% comment %} image error message {% endcomment %}
-                        {% if image_error %}
-                            <div class="form__error">
-                                {{ image_error }}
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
