@@ -230,6 +230,7 @@ form {
   font-size: 14px;
   vertical-align: middle;
   margin: 0 3px;
+  color: #999999;
 }
 .form__location {
   display: flex;
