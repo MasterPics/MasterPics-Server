@@ -169,8 +169,13 @@
 .grid {
   margin: 0 auto;
 }
-.list__item-wrapper {
-  width: 246px;
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.grid-item {
+  width: 270px;
   margin-bottom: 25px;
 }
 .list__top-info {
