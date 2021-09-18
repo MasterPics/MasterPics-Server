@@ -113,7 +113,7 @@ class User(AbstractUser):
 
 
     def __str__(self):
-        return self.user_id
+        return self.username
 
     def clean(self, *args, **kwargs):
         user_id = self.user_id

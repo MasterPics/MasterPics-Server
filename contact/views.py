@@ -21,6 +21,8 @@ from django.db.models import Count, Q
 # for infinite scroll
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# for required_login
+from user.decorators import required_login
 
 @csrf_exempt
 def contact_save(request):
@@ -119,7 +121,7 @@ def contact_detail(request, pk):
     return render(request, 'contact/contact_detail.html', context=ctx)
 
 
-@login_required
+@required_login
 def contact_delete(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -131,7 +133,7 @@ def contact_delete(request, pk):
         return render(request, 'contact/contact_delete.html', context=ctx)
 
 
-@login_required
+@required_login
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -185,7 +187,7 @@ def contact_update(request, pk):
 # TODO 파일 첨부
 
 
-@login_required
+@required_login
 def contact_create(request):
     if request.method == 'POST':
         contact_form = ContactForm(request.POST, request.FILES)
