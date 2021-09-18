@@ -34,6 +34,11 @@
         
         <!-- 좋아요&북마크 정보 -->
         <div class="likeSave">
+            <!-- comment -->
+            <div class="comment-count">
+                <i class="far fa-comment"></i>
+                <p class="comment__count">{{ place.comments.count }}</p>
+            </div>
             <!-- like -->
             <div class="like like-{{place.id}}">
                 {% if request.user in place.like_users.all %}
@@ -51,11 +56,6 @@
                     <i class="far fa-bookmark" type="submit" onclick="onClickSave({{ place.id }})" name="type" value="save"></i>
                 {% endif %}
                 <p class="save__content">{{ place.bookmark_users.count }}</p>
-            </div>
-            <!-- comment -->
-            <div class="comment-count">
-                <i class="far fa-comment"></i>
-                <p class="comment__count">{{ place.comments.count }}</p>
             </div>
         </div>
 
