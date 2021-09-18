@@ -36,4 +36,5 @@ urlpatterns = [
 
      # ToS
      path('terms_of_service_use/', view=views.terms_of_service_use, name='terms_of_service_use'),
+     path('personal_info_policy/', view=views.personal_info_policy, name='personal_info_policy')
 ]
