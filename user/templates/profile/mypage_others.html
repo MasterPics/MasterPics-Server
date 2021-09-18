@@ -70,7 +70,7 @@
         <div class="post__local-sub-bar">
             <ul id="post__portfolio-selected">
                 <li class="post__local-sub-bar-selected" id="post__my-portfolio" onclick="onClickPortfolio('{{ profile_owner.user_identifier }}')">포트폴리오</li>
-                <li id="post__tagged-portfolio">태그된 목록</li>
+                {% comment %} <li id="post__tagged-portfolio">태그된 목록</li> {% endcomment %}
             </ul>
             <ul class="post__not-selected" id="post__my-post-selected">
                 <li class="post__local-sub-bar-selected" id="post__my-contact" onclick="onClickMyPost('{{ profile_owner.user_identifier }}')">컨택트</li>

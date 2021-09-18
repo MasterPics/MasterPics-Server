@@ -182,26 +182,40 @@ form {
 }
 .form__date {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   margin: 8px 0;
   width:100%;
 }
 .form__date .form__label{
   width:8%;
 }
-.form__date-wrapper {
+.form__date-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:90%;
+  width:100%;
+}
+.form__date-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+.form__date-error{
+  color: #5200ff;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 10px;
+  margin-left: 10%;
+}
+.form__date-error > div::before{
+  content: '*';
 }
 .start_date,
 .end_date {
   width:48%;
-}
-.start_date .form__label {
-  width: 14%;
 }
 .start_date input,
 .end_date input {
@@ -209,12 +223,14 @@ form {
   font-size: 11px;
   border: 1px solid #c4c4c4;
   border-radius: 3px;
-  padding: 4px 25px;
-  text-align:right;
+  padding: 4px;
+  text-align:center;
 }
 .form__date-text {
   font-size: 14px;
   vertical-align: middle;
+  margin: 0 3px;
+  color: #999999;
 }
 .form__location {
   display: flex;
@@ -256,6 +272,15 @@ form {
 }
 .images {
   width: 100%;
+}
+.images .form__error{
+  color: #5200ff;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.images .form__error::before{
+  content: '*';
 }
 .form__upload {
   overflow: hidden;

@@ -143,7 +143,10 @@
                                 <span class="comment__text">{{ comment.content }}</span>
                             </div>
                         </div>
+                        <!-- 댓글 작성자만 수정/삭제 가능 -->
+                        {% if request.user.pk == comment.writer.pk %}
                         <input class="comment__delete-btn comment-btn" onclick="onClickDeleteComment({{ comment.id }})" type="submit" value="삭제">
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
