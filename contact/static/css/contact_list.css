@@ -61,18 +61,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.filter__category > span a {
-  font-size: 14px;
-  color: #4d4d4d;
-  margin-right: 22px;
-  font-weight: 600;
-}
+} 
 .filter__category > a {
   font-size: 14px;
   color: #4d4d4d;
   margin-right: 22px;
   font-weight: 600;
+}
+.filter__category > .selected{
+  background-color: #5200ff;
+  padding: 5px;
+  color: #fff;
+  border-radius: 5px;
+  /* color: #5200ff; */
 }
 .filter__checkbox {
   font-size: 10px;
