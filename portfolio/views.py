@@ -19,6 +19,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for multiple images
 from django.forms import modelformset_factory
 
+# for required_login
+from user.decorators import required_login
+
 
 def portfolio_list(request):
 
@@ -104,7 +107,7 @@ def portfolio_detail(request, pk):
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
 
 
-@login_required
+@required_login
 def portfolio_delete(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
     owner = portfolio.user  # 게시글 작성자
@@ -121,7 +124,7 @@ def portfolio_delete(request, pk):
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
 
 
-@login_required
+@required_login
 def portfolio_update(request, pk):
     portfolio = get_object_or_404(Portfolio, pk=pk)
     if request.method == 'POST':
@@ -129,18 +132,21 @@ def portfolio_update(request, pk):
         if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
-            portfolio.save()
+            # portfolio.save()
             portfolio.tags.clear()
             form.save_m2m()
-            
 
-            print(portfolio.images)
+            if not PostImage.objects.filter(post=portfolio) and not request.FILES.getlist('images'):
+                ctx = {
+                    'form': form,
+                    'images': portfolio.post_image_images.all(),
+                    'image_error': '사진은 1장 이상이어야 합니다.'
+                }
+                return render(request, 'portfolio/portfolio_update.html', ctx)
             
             for i, image in enumerate(request.FILES.getlist('images')):
-
                 image_obj = PostImage()
                 image_obj.post = Portfolio.objects.get(id=portfolio.id)
-                print(image_obj)
                 img = Image.objects.create(image=image)
                 #img.save()
                 image_obj.image = img
@@ -149,6 +155,7 @@ def portfolio_update(request, pk):
             images=portfolio.post_image_images.all()
             if images:
                 portfolio.thumbnail = images[0].image
+                portfolio.save()
             else: #사진이 아무것도 안남았을때
                 portfolio.thumbnail = None
 
@@ -156,7 +163,6 @@ def portfolio_update(request, pk):
 
         #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
-
         form = PortfolioForm(instance=portfolio)
         images = portfolio.post_image_images.all()
         ctx = {
@@ -166,7 +172,7 @@ def portfolio_update(request, pk):
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 
-@login_required
+@required_login
 def portfolio_create(request):
     # 'extra' : number of photos
     if request.method == 'POST':
@@ -175,12 +181,20 @@ def portfolio_create(request):
         if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
-            portfolio.save()
-            form.save_m2m()
+            # portfolio.save()
+            # form.save_m2m()
 
-            print(request.FILES.getlist('images'))
+            if not request.FILES.getlist('images'):
+                ctx = {
+                    'form': form,
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'portfolio/portfolio_create.html', ctx)
+            else:
+                portfolio.save()
+                form.save_m2m()
+
             for i, image in enumerate(request.FILES.getlist('images')):
-
                 image_obj = PostImage()
                 image_obj.post = Portfolio.objects.get(id=portfolio.id)
                 img = Image.objects.create(image=image)
@@ -191,12 +205,14 @@ def portfolio_create(request):
                 if not i:
                     portfolio.thumbnail = image_obj.image
                     portfolio.save()
-
-            messages.success(request, "posted!")
-
+            # messages.success(request, "posted!")
             return redirect('portfolio:portfolio_detail', portfolio.pk)
+        
         else:
-            print(form.errors)
+            ctx = {
+                'form': form
+            }
+            return render(request, 'portfolio/portfolio_create.html', ctx)
 
     else:
         form = PortfolioForm()

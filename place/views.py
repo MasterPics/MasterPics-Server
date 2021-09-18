@@ -18,25 +18,36 @@ from .forms import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+# for required_login
+from user.decorators import required_login
 
-@login_required
+@required_login
 def place_create(request):
-
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
-
         if place_form.is_valid() and location_form.is_valid():
             place = place_form.save(commit=False)
             location = location_form.save(commit=False)
-            location.save()
+            # location.save()
             place.user = request.user
             place.location = location
-            place.save()
-            place_form.save_m2m()
+            # place.save()
+            # place_form.save_m2m()
+
+            if not request.FILES.getlist('images'):
+                ctx = {
+                    'place_form': place_form,
+                    'location_form': location_form,
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'place/place_create.html', ctx)
+            else:
+                location.save()
+                place.save()
+                place_form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
-
                 image_obj = PostImage()
                 image_obj.post = Place.objects.get(id=place.id)
                 img = Image.objects.create(image=image)
@@ -47,11 +58,7 @@ def place_create(request):
                 if not i:
                     place.thumbnail = image_obj.image
                     place.save()
-
-            print(place.tags.all())
-
             return redirect('place:place_detail', place.pk)
-
     else:
         place_form = PlaceForm()
         location_form = LocationForm()
@@ -78,10 +85,9 @@ def place_detail(request, pk):
 
 
 # TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
-@login_required
+@required_login
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
-
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES, instance=place)
         location_form = LocationForm(request.POST, instance=place.location)
@@ -92,11 +98,19 @@ def place_update(request, pk):
             location.save()
             place_update.user = request.user
             place_update.location = location
-            place_update.save()
+            # place_update.save()
             place_form.save_m2m()
 
-            for i, image in enumerate(request.FILES.getlist('images')):
+            if not PostImage.objects.filter(post=place) and not request.FILES.getlist('images'):
+                ctx = {
+                    'place_form': place_form,
+                    'location_form': location_form,
+                    'images': place.post_image_images.all(),
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'place/place_update.html', ctx)
 
+            for i, image in enumerate(request.FILES.getlist('images')):
                 image_obj = PostImage()
                 image_obj.post = Place.objects.get(id=place_update.id)
                 img = Image.objects.create(image=image)
@@ -107,6 +121,7 @@ def place_update(request, pk):
             images=place.post_image_images.all()
             if images:
                 place.thumbnail = images[0].image
+                place.save()
             else: #사진이 아무것도 안남았을때
                 place.thumbnail = None
                     
@@ -175,7 +190,7 @@ def place_list(request):
     return render(request, 'place/place_list.html', context=ctx)
 
 
-@login_required
+@required_login
 def place_delete(request, pk):
 
     place = get_object_or_404(Place, pk=pk)

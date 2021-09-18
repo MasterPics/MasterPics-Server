@@ -1,3 +1,5 @@
+@import 'reset_mobile.css';
+
 .wrapper {
   width: 65%;
   height: 100%;
@@ -114,6 +116,7 @@ form {
   display: flex;
   align-items: center;
   padding: 5px 100px;
+  position: relative;
 }
 .form__upload-text {
   color: #1e1e1e;
@@ -131,11 +134,10 @@ form {
 #id_images {
   opacity: 0;
   border: 1px solid red;
-  width: 45%;
-  padding: 25px 50px;
+  padding: 6% 50%;
   position: absolute;
-  top: 38px;
-  right: 5px;
+  left: 0;
+  top:0;
   cursor: pointer;
   z-index: 1;
 }
@@ -167,4 +169,42 @@ form {
   background-color: #5200ff;
   color: #ffffff;
   cursor: pointer;
+}
+
+/****************** responsive *******************/
+
+@media only screen and (max-width: 600px) {
+  .wrapper{
+    width: 90%;
+    margin: 20px auto;
+  }
+  .create__text{
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .create__user-name{
+    font-size: 12px;
+  }
+  .create__user-category{
+    font-size: 10px;
+  }
+  .form__wrapper{
+    flex-direction: column;
+  }
+  .desc textarea{
+    height: 100px;
+  }
+  .form__left{
+    margin-bottom: 20px;
+  }
+  .form__upload{
+    padding: 5px 50px;
+
+  }
+  .form__upload-btn{
+    right:40px;
+  }
+  .form__btn input {
+    margin: 20px 0;
+  }
 }
