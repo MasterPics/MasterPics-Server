@@ -143,6 +143,9 @@ hr{
     align-items: center;
     margin-left:7px;
 }
+.like,.save{
+    cursor: pointer;
+}
 .reference-item .fas::before{
     color:#5200ff !important;
 }
@@ -263,6 +266,7 @@ hr{
         padding:0.5rem;
         font-size: 0.7rem;
         font-weight: 600;
+        width:90px;
     }
     .reference-list{
         display:flex;

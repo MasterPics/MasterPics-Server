@@ -1,3 +1,5 @@
+@import 'reset_mobile.css';
+
 .wrapper {
   width: 85%;
   margin: 7% auto;
@@ -328,6 +330,11 @@
   text-align: center;
   line-height: 40px;
   margin-bottom: 30px;
+}
+.post__file.no-file{
+  border: 1px solid #ababab;
+  color: #ababab;
+  font-size: 13px;
 }
 .post__file a {
   color: #5200ff;

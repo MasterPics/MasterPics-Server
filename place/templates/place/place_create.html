@@ -73,6 +73,13 @@
                         </div>
                         <!-- file 미리보기 -->
                         <div id='att_zone' class="form__img"></div>
+                    
+                        {% comment %} image error message {% endcomment %}
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="location-form">
