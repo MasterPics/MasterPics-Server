@@ -17,11 +17,11 @@
 <div class="filter">
     <div class="filter__left">
         <div class="filter__category">
-            <span class="noselect"><a href="javascript:void(0)" onclick="onClickLink('all')">All</a></span>
-            <a href="javascript:void(0)" onclick="onClickLink('photographer')">Photographer</a>
-            <a href="javascript:void(0)" onclick="onClickLink('model')">Model</a>
-            <a href="javascript:void(0)" onclick="onClickLink('HairMakeup')">Hair/makeup</a>
-            <a href="javascript:void(0)" onclick="onClickLink('stylist')">Stylist</a>
+            <a class="selected all" href="javascript:void(0)">All</a>
+            <a class="photographer" href="javascript:void(0)">Photographer</a>
+            <a class="model" href="javascript:void(0)">Model</a>
+            <a class="HairMakeup" href="javascript:void(0)">Hair/makeup</a>
+            <a class="stylist" href="javascript:void(0)">Stylist</a>
         </div>
     </div>
     <div class="filter__right">
@@ -46,7 +46,7 @@
             </select>
             <div class="select__arrow"></div>
         </div>
-      
+        <!-- filter form -->
         <div style="height: 0;">
             <form id="searchForm" method="get" action="{% url 'portfolio:portfolio_list' %}">
                 <input type="hidden" id="category" name="category" value="{{ category }}">
