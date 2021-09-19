@@ -1,7 +1,8 @@
 const onClickSave = async (portfolio_id) => {
     try {
+        console.log(window.location.origin)
         const options = {
-            url: window.location.origin + 'portfolio/save/',
+            url: window.location.origin + '/portfolio/save/',
             method: 'POST',
             data: {
                 portfolio_id: portfolio_id,
@@ -12,7 +13,7 @@ const onClickSave = async (portfolio_id) => {
         if (responseOK) {
             const data = response.data
             modifySave(data.portfolio_id, data.is_saved)
-            print("Portfolio on click save networking finished")
+            console.log("Portfolio on click save networking finished")
         }
     } catch (error) {
         console.log(error)
