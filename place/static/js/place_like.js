@@ -1,7 +1,7 @@
 const onClickLike = async (place_id) => {
     try {
         const options = {
-            url: RootUrl+ '/place/like/',
+            url: '/place/like/',
             method: 'POST',
             data: {
                 place_id: place_id,
