@@ -76,37 +76,42 @@
                         </div>
                     </div>
                     <div class="form__date">
-                        <div class="form__label">
-                            <label for="start_date">날짜</label>
+                        <div class="form__date-container">
+                            <div class="form__label">
+                                <label for="start_date">날짜</label>
+                            </div>
+                            <div class="form__date-wrapper">
+                                <div class="form__group {{ contact_form.start_date.name }}">                  
+                                    <div class="form__input">
+                                        {{ contact_form.start_date }}
+                                        {% if contact_form.start_date.help_text %}
+                                            <p class="help-block">{{ contact_form.start_date.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form__date-text">~</div>
+                                <div class="form__group {{ contact_form.end_date.name }}">                 
+                                    <div class="form__input">
+                                        {{ contact_form.end_date }}
+                                        {% if contact_form.end_date.help_text %}
+                                            <p class="help-block">{{ contact_form.end_date.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form__date-wrapper">
-                            <div class="form__group {{ contact_form.start_date.name }}">                  
-                                <div class="form__input">
-                                    {{ contact_form.start_date }}
-                                    {% if contact_form.start_date.help_text %}
-                                        <p class="help-block">{{ contact_form.start_date.help_text }}</p>
-                                    {% endif %}
-                                    {% for error in contact_form.start_date.errors %}
-                                        <div class="alert alert-danger">
-                                            {{ error }}
-                                        </div>
-                                    {% endfor %}
+                        <!-- 시작일, 종료일 관련 에러 메세지-->
+                        <div class="form__date-error">    
+                            {% for error in contact_form.start_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
                                 </div>
-                            </div>
-                            <div class="form__date-text">~</div>
-                            <div class="form__group {{ contact_form.end_date.name }}">                 
-                                <div class="form__input">
-                                    {{ contact_form.end_date }}
-                                    {% if contact_form.end_date.help_text %}
-                                        <p class="help-block">{{ contact_form.end_date.help_text }}</p>
-                                    {% endif %}
-                                    {% for error in contact_form.end_date.errors %}
-                                        <div class="alert alert-danger">
-                                            {{ error }}
-                                        </div>
-                                    {% endfor %}
+                            {% endfor %}
+                            {% for error in contact_form.end_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <!-- location form -->
@@ -141,7 +146,13 @@
                     <div id="image_preview" class="form__group {{ contact_form.images.name }}">
                         <div class="form__label">
                             <label for="id_images">이미지 (최대 10장)</label>
-                        </div>                   
+                        </div>
+                        <!-- image error message -->
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}          
                         <div class="form__upload">
                             <p class="form__upload-text">
                                 드래그 또는 클릭하여 업로드
@@ -163,13 +174,6 @@
                         </div>
                         <div id='att_zone' class="form__img">
                         </div>
-
-                        {% comment %} image error message {% endcomment %}
-                        {% if image_error %}
-                            <div class="form__error">
-                                {{ image_error }}
-                            </div>
-                        {% endif %}
                     </div>
                     <div class="form__file-attach form__group {{ contact_form.file_attach.name }}">
                         <div class="form__label">
