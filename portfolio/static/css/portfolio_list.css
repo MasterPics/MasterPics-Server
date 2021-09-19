@@ -64,11 +64,7 @@
   font-weight: 600;
 }
 .filter__category > .selected{
-  background-color: #5200ff;
-  padding: 5px;
-  color: #fff;
-  border-radius: 5px;
-  /* color: #5200ff; */
+  color: #5200ff;
 }
 .filter__sort {
   position: relative;
@@ -405,11 +401,6 @@ figure.list__image.hover p {
   }
   .filter__right{
     justify-content: space-between;
-  }
-  .filter__category > span a {
-    font-size: 12px;
-    margin-right: 16px;
-    font-weight: 400;
   }
   .filter__category > a {
     font-size: 12px;
