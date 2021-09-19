@@ -1,14 +1,14 @@
 const onClickLike = async (portfolio_id) => {
     try {
         const options = {
-            url: RootUrl + '/portfolio/like/',
+            url: '/portfolio/like/',
             method: 'POST',
             data: {
                 portfolio_id: portfolio_id,
             }
         }
         const response = await axios(options)
-        const responseOK = response && response.status === 200 && response.statusText === 'OK'
+        const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
             modifyLike(data.portfolio_id, data.is_liked)
