@@ -18,8 +18,10 @@ from .forms import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+# for required_login
+from user.decorators import required_login
 
-@login_required
+@required_login
 def place_create(request):
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES)
@@ -83,7 +85,7 @@ def place_detail(request, pk):
 
 
 # TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
-@login_required
+@required_login
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
     if request.method == 'POST':
@@ -188,7 +190,7 @@ def place_list(request):
     return render(request, 'place/place_list.html', context=ctx)
 
 
-@login_required
+@required_login
 def place_delete(request, pk):
 
     place = get_object_or_404(Place, pk=pk)

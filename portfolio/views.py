@@ -19,6 +19,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for multiple images
 from django.forms import modelformset_factory
 
+# for required_login
+from user.decorators import required_login
+
 
 def portfolio_list(request):
 
@@ -104,7 +107,7 @@ def portfolio_detail(request, pk):
     return render(request, 'portfolio/portfolio_detail.html', context=ctx)
 
 
-@login_required
+@required_login
 def portfolio_delete(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
     owner = portfolio.user  # 게시글 작성자
@@ -121,7 +124,7 @@ def portfolio_delete(request, pk):
         return render(request, 'portfolio/portfolio_delete.html', context=ctx)
 
 
-@login_required
+@required_login
 def portfolio_update(request, pk):
     portfolio = get_object_or_404(Portfolio, pk=pk)
     if request.method == 'POST':
@@ -169,7 +172,7 @@ def portfolio_update(request, pk):
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 
-@login_required
+@required_login
 def portfolio_create(request):
     # 'extra' : number of photos
     if request.method == 'POST':
@@ -260,14 +263,18 @@ def portfolio_like(request):
 @csrf_exempt
 def portfolio_comment_create(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        portfolio_id = data['id']
-        comment_value = data['value']
-        portfolio = Portfolio.objects.get(id=portfolio_id)
-        comment = Comment.objects.create(
-            writer=request.user, post=portfolio, content=comment_value)
-        return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
-
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            portfolio_id = data['id']
+            comment_value = data['value']
+            portfolio = Portfolio.objects.get(id=portfolio_id)
+            comment = Comment.objects.create(
+                writer=request.user, post=portfolio, content=comment_value)
+            return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value, 'login_required':login_required})
+        else:
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 @csrf_exempt
 def portfolio_comment_delete(request):

@@ -56,6 +56,12 @@
                             </a>
                         </div>
                         <div class="portfolio_info">
+                            <!-- view_count -->
+                            <div class="eye">
+                                <i class="far fa-eye"></i>
+                                <span class="view__content">{{portfolio.view_count}}</span>
+                            </div>
+
                             <!-- like count -->
                             <div class="like like-{{portfolio.id}}">
                                 {% if request.user in portfolio.like_users.all %}
@@ -67,11 +73,7 @@
                                 {% endif %}
                                 <span class="like__content">{{ portfolio.like_users.count }}</span>
                             </div>
-                            <!-- view_count -->
-                            <div class="eye">
-                                <i class="far fa-eye"></i>
-                                <span class="view__content">{{portfolio.view_count}}</span>
-                            </div>
+
                             <!-- save count -->
                             <div class="save save-{{portfolio.id}}">
                                 {% if request.user in portfolio.bookmark_users.all %}
