@@ -608,8 +608,8 @@ a:active { text-decoration: none; }
 }
 
 .magazine_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 /* RandomContact */
@@ -885,8 +885,8 @@ a:active { text-decoration: none; }
 }
 
 .contact_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 /*RandomPlace*/
@@ -1101,8 +1101,8 @@ a:active { text-decoration: none; }
 }
 
 .place_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 
@@ -1747,8 +1747,8 @@ a:active { text-decoration: none; }
   }
   
   .place_more img{
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: 30px;
   }
 
   .place_more i {
