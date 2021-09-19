@@ -1,7 +1,7 @@
 const onClickSave = async (portfolio_id) => {
     try {
         const options = {
-            url: RootUrl + '/portfolio/save/',
+            url: '/save/',
             method: 'POST',
             data: {
                 portfolio_id: portfolio_id,
