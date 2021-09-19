@@ -13,7 +13,6 @@ const onClickSave = async (contact_id) => {
         if (responseOK) {
             const data = response.data
             //modify에서는 뒤집힌 is_saved 값이 들어감
-            print("Contact on click save networking finished")
             modify(data.contact_id, data.is_saved)
         }
     } catch (error) {
