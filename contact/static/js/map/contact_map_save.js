@@ -1,7 +1,7 @@
 const onClickMapSave = async (contact_id) => {
     try {
         const options = {
-            url: '/save/',
+            url: '/contact/save/',
             method: 'POST',
             data: {
                 contact_id: contact_id,

@@ -14,6 +14,7 @@
                 const data = response.data
                 //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
                 modifyPortfolio(data.portfolio_id, data.is_saved)
+                print("Mypage on click save networking finished")
             }
         } catch (error) {
             console.log(error)
