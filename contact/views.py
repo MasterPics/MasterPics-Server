@@ -175,6 +175,12 @@ def contact_update(request, pk):
                 contact.thumbnail = None
 
             return redirect('contact:contact_detail', contact.pk)
+        else:
+            ctx = {
+                'contact_form': form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
     else:
         form = ContactForm(instance=contact)
         images = contact.post_image_images.all()
