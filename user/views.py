@@ -498,3 +498,6 @@ def recovery_pw_reset(request):
 # ----약관 및 부가설명 관련----
 def terms_of_service_use(request):
     return render(request, 'profile/terms_of_service_use.html')
+
+def personal_info_policy(request):
+    return render(request, 'profile/personal_info_policy.html')
