@@ -8,9 +8,10 @@ const onClickSave = async (portfolio_id) => {
             }
         }
         const response = await axios(options)
-        const responseOK = response && response.status === 200 && response.statusText === 'OK'
+        const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
+            console.log(data)
             modifySave(data.portfolio_id, data.is_saved)
         }
     } catch (error) {

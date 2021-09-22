@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital@1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;500&display=swap');
-
+@import 'reset_mobile.css';
 
 a { text-decoration: none; color: black; }
 a:visited { text-decoration: none; }
@@ -608,8 +608,8 @@ a:active { text-decoration: none; }
 }
 
 .magazine_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 /* RandomContact */
@@ -885,8 +885,8 @@ a:active { text-decoration: none; }
 }
 
 .contact_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 /*RandomPlace*/
@@ -1101,8 +1101,8 @@ a:active { text-decoration: none; }
 }
 
 .place_more img{
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 
@@ -1335,6 +1335,12 @@ a:active { text-decoration: none; }
     width: 100%;
     height: 100%;
   }
+
+  .magazine_more img{
+    width: 30px;
+    height: 30px;
+  }
+
   .RandomMagazine .magazine_img{
     opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
   }
@@ -1747,8 +1753,8 @@ a:active { text-decoration: none; }
   }
   
   .place_more img{
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: 30px;
   }
 
   .place_more i {

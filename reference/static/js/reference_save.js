@@ -8,7 +8,7 @@ const onClickSave = async (portfolio_id) => {
             }
         }
         const response = await axios(options)
-        const responseOK = response && response.status === 200 && response.statusText === 'OK'
+        const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
             //modify에서는 뒤집힌 is_saved 값이 들어감

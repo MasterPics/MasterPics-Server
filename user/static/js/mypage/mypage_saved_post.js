@@ -1,5 +1,5 @@
-const onClickSavedPost = async(user_id) => {
-    try{
+const onClickSavedPost = async (user_id) => {
+    try {
         const options = {
             url: '/profile/mypage/bookmark/portfolio/',
             method: 'POST',
@@ -7,12 +7,12 @@ const onClickSavedPost = async(user_id) => {
                 user_id: user_id,
             }
         }
-    const response = await axios(options)
-    const responseOK = response && response.status === 200 && response.statusText === 'OK'
-    if (responseOK) {
-        const data = response.data
-        listSavedPost(data.bookmarked_portfolios)
-    }
+        const response = await axios(options)
+        const responseOK = response && response.status === 200
+        if (responseOK) {
+            const data = response.data
+            listSavedPost(data.bookmarked_portfolios)
+        }
     } catch (error) {
         console.log(error)
     }
@@ -25,7 +25,7 @@ const listSavedPost = (bookmarked_portfolios) => {
     const postPortfolioSelected = document.querySelector('#post__portfolio-selected');
     const postMyPostSelected = document.querySelector('#post__my-post-selected');
     const postSavedPostSelected = document.querySelector('#post__saved-post-selected');
-    const postSavedPortfolio= document.querySelector('#post__saved-portfolio');
+    const postSavedPortfolio = document.querySelector('#post__saved-portfolio');
     const postSavedContact = document.querySelector('#post__saved-contact');
     const postSavedPlace = document.querySelector('#post__saved-place');
     postPortfolio.className = "";
@@ -40,38 +40,38 @@ const listSavedPost = (bookmarked_portfolios) => {
 
     // 게시글 변경
     const postContainer = document.querySelector('.post__container');
-    postContainer.innerHTML='';
-    for(let i=0; i<bookmarked_portfolios.length; i++){
-        postContainer.innerHTML+=`<div class="post__item">`+
-            `<a href=http://127.0.0.1:8000/portfolio/${bookmarked_portfolios[i].id}>`+
-                `<figure class="post__image">`+
-                    `<img src=${bookmarked_portfolios[i].thumbnail_url}>`+
-                    `<figcaption>`+
-                        `<div class="post__info">`+
-                            `<p class="post__title">${bookmarked_portfolios[i].title}</p>`+
-                            `<div>`+
-                                `<p class="post__comment">`+
-                                `<i class="far fa-comment"></i>`+
-                                `<span>${bookmarked_portfolios[i].comment_count}</span>`+
-                                `</p>`+
-                                `<p class="post__view">`+
-                                    `<i class="far fa-eye"></i>`+
-                                    `<span>${bookmarked_portfolios[i].view_count}</span>`+
-                                `</p>`+
-                                `<p class="post__like">`+
-                                    `<i class="fas fa-heart"></i>`+
-                                    `<span>${bookmarked_portfolios[i].like_count}</span>`+
-                                `</p>`+
-                                `<p class="post__bookmark">`+
-                                    `<i class="fas fa-bookmark"></i>`+
-                                    `<span>${bookmarked_portfolios[i].bookmark_count}</span>`+
-                                `</p>`+
-                            `</div>`+
-                        `</div>`+
-                    `</figcaption>`+
-                `</figure>`+
-            `</a>`+
-        `</div>`
+    postContainer.innerHTML = '';
+    for (let i = 0; i < bookmarked_portfolios.length; i++) {
+        postContainer.innerHTML += `<div class="post__item">` +
+            `<a href=/portfolio/${bookmarked_portfolios[i].id}>` +
+            `<figure class="post__image">` +
+            `<img src=${bookmarked_portfolios[i].thumbnail_url}>` +
+            `<figcaption>` +
+            `<div class="post__info">` +
+            `<p class="post__title">${bookmarked_portfolios[i].title}</p>` +
+            `<div>` +
+            `<p class="post__comment">` +
+            `<i class="far fa-comment"></i>` +
+            `<span>${bookmarked_portfolios[i].comment_count}</span>` +
+            `</p>` +
+            `<p class="post__view">` +
+            `<i class="far fa-eye"></i>` +
+            `<span>${bookmarked_portfolios[i].view_count}</span>` +
+            `</p>` +
+            `<p class="post__like">` +
+            `<i class="fas fa-heart"></i>` +
+            `<span>${bookmarked_portfolios[i].like_count}</span>` +
+            `</p>` +
+            `<p class="post__bookmark">` +
+            `<i class="fas fa-bookmark"></i>` +
+            `<span>${bookmarked_portfolios[i].bookmark_count}</span>` +
+            `</p>` +
+            `</div>` +
+            `</div>` +
+            `</figcaption>` +
+            `</figure>` +
+            `</a>` +
+            `</div>`
     }
 
     // // save 기능

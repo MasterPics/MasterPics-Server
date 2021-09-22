@@ -175,6 +175,12 @@ def contact_update(request, pk):
                 contact.thumbnail = None
 
             return redirect('contact:contact_detail', contact.pk)
+        else:
+            ctx = {
+                'contact_form': form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
     else:
         form = ContactForm(instance=contact)
         images = contact.post_image_images.all()
@@ -253,13 +259,18 @@ def contact_map(request):
 @csrf_exempt
 def contact_comment_create(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        contact_id = data['id']
-        comment_value = data['value']
-        contact = Contact.objects.get(id=contact_id)
-        comment = Comment.objects.create(
-            writer=request.user, post=contact, content=comment_value)
-        return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value})
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            contact_id = data['id']
+            comment_value = data['value']
+            contact = Contact.objects.get(id=contact_id)
+            comment = Comment.objects.create(
+                writer=request.user, post=contact, content=comment_value)
+            return JsonResponse({'contact_id': contact_id, 'comment_id': comment.id, 'value': comment_value, 'login_required': login_required})
+        else:
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 
 @csrf_exempt

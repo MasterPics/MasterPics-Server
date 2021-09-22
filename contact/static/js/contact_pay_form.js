@@ -8,6 +8,7 @@ window.onload = function () {
     }
     else {
         pay.readOnly = true;
+        pay.value = '0';
         pay.style.backgroundColor = '#e2e2e2';
     }
 
@@ -19,6 +20,7 @@ window.onload = function () {
         }
         else {
             pay.readOnly = true;
+            pay.value = '0';
             pay.style.backgroundColor = '#e2e2e2';
         }
     });
