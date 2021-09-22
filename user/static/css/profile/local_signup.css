@@ -277,8 +277,9 @@ input[type="password"] {
 
 #id_is_ToS{
   width: 15px;
+  height: 15px;
   margin-left: 94%;
-  margin-top: -30px;
+  margin-top: -20px;
 }
 
 input[type="password"] {
