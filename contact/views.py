@@ -154,6 +154,7 @@ def contact_update(request, pk):
                     'location_form': location_form,
                     'images': contact.post_image_images.all(),
                     'image_error': '사진은 1장 이상이어야 합니다.',
+                    'images_count':contact.post_image_images.all().count,
                 }
                 return render(request, 'contact/contact_update.html', ctx)
 
@@ -179,7 +180,8 @@ def contact_update(request, pk):
         location_form = LocationForm(instance=contact.location)
         ctx = {'form': form,
                'location_form': location_form,
-               'images': images}
+               'images': images,
+               'images_count':images.count,}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부

@@ -137,7 +137,8 @@ def portfolio_update(request, pk):
                 ctx = {
                     'form': form,
                     'images': portfolio.post_image_images.all(),
-                    'image_error': '사진은 1장 이상이어야 합니다.'
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                    'images_count':portfolio.post_image_images.all().count,
                 }
                 return render(request, 'portfolio/portfolio_update.html', ctx)
             
@@ -164,7 +165,8 @@ def portfolio_update(request, pk):
         images = portfolio.post_image_images.all()
         ctx = {
             'form': form,
-            'images': images
+            'images': images,
+            'images_count': images.count,
         }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
