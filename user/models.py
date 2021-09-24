@@ -80,14 +80,14 @@ class User(AbstractUser):
 
     CATEGORY_PHOTOGRAPHER = 'photographer'
     CATEGORY_MODEL = 'model'
-    CATEGORY_HM = 'HairMakeup'
+    CATEGORY_HM = 'hairmakeup'
     CATEGORY_STYLIST = 'stylist'
     CATEGORY_OTHERS = 'otheruse'
 
     CATEGORY = (
         ('photographer', CATEGORY_PHOTOGRAPHER),
         ('model', CATEGORY_MODEL),
-        ('HairMakeup', CATEGORY_HM),
+        ('hairmakeup', CATEGORY_HM),
         ('stylist', CATEGORY_STYLIST),
         ('otheruse', CATEGORY_OTHERS),
     )
@@ -113,7 +113,7 @@ class User(AbstractUser):
 
 
     def __str__(self):
-        return self.user_id
+        return self.username
 
     def clean(self, *args, **kwargs):
         user_id = self.user_id

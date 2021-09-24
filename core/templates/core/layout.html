@@ -135,7 +135,7 @@
       <ul class="footer__left">
         <li class="footer__logo">MasterPic's</li>
         <li class="info__1"><a href="{% url 'profile:terms_of_service_use' %}">이용약관</a></li>
-        <li class="info__2"><a href="#">개인정보처리방침</a></li>
+        <li class="info__2"><a href="{% url 'profile:personal_info_policy' %}">개인정보처리방침</a></li>
       </ul>
       <ul class="footer__center">
         <li class="mpright">© MasterPic’s. 2021 All Rights Reserved.</a></li>
@@ -150,17 +150,21 @@
       </ul>
     </div>
   </footer>
-  
-  <!-- axios for async buttons -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- Gallery Layout -->
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  
+  <!-- axios for async buttons -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script type="text/javascript">
+    var RootUrl = '@Url.Content("~/")';
+    </script>
+
+  <!-- Gallery Layout -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
   <!-- infinite scrolls -->
   <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>

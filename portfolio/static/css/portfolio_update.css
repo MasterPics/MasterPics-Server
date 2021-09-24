@@ -98,12 +98,17 @@ form {
   outline: none !important;
 }
 /*******************************************************/
-.image-form__label {
-  margin-bottom: 20px;
-  font-size: 14px;
-}
 .images {
   width: 100%;
+}
+#image_preview .form__error{
+  color: #5200ff;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+#image_preview .form__error::before{
+  content: '*';
 }
 .form__upload {
   overflow: hidden;

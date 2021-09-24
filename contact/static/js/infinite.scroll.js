@@ -10,14 +10,18 @@ let infinite = new Waypoint.Infinite({
         console.log("here here2")
         $('.loading').hide();
         let msnry = new Masonry('.grid', {
+            // optionsW
             itemSelector: '.grid-item',
-            gutter: 10,
-        })
+            columnWidth: 270,
+            gutter: 20,
+            isFitWidth: true
+        });
     }
 });
 let msnry = new Masonry('.grid', {
     // optionsW
     itemSelector: '.grid-item',
-    gutter: 10,
-    // columnWidth: 200
+    columnWidth: 270,
+    gutter: 20,
+    isFitWidth: true
 });

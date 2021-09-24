@@ -6,37 +6,36 @@
 /*layout*/
 
 #nav {
-  background-color: #F4F4F4;
-}
-
-nav {
-  background-color: #fff;
-}
-
-nav a {
-  color: black;
-}
-
-.dropbtn {
+    background-color: #F4F4F4;
+  }
+  
+  nav {
+    background-color: #fff;
+  }
+  
+  nav a {
     color: black;
-    font-size: 14px;
-}
+  }
+  
+  .dropbtn {
+      color: black;
+      font-size: 14px;
+  }
 
-.navbar__toogleBtn{
-  color: black;
-}
+  .navbar__toogleBtn{
+    color: black;
+  }
+  
+  #footer{
+      background-color: #C4C4C4;
+  }
 
-#footer{
-    background-color: #C4C4C4;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-      -webkit-box-shadow: 0 0 0 30px white inset !important;
-}  
-
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active  {
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }  
 
 /* tos */
 

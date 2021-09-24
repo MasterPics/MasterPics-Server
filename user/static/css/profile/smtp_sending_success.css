@@ -1,3 +1,5 @@
+@import 'reset_mobile.css';
+
 /*layout*/
 
 #nav {
@@ -40,7 +42,6 @@ body{
     width: 30%;
     height: 50%;
     line-height: 40px;
-    padding-left: 20px;
     border: 1px solid #CACACA;
     background-color: #FFFFFF;
     font-size: 21px;

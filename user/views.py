@@ -112,6 +112,9 @@ def smtp_sending_success(request):
 
 
 def login(request):
+    # next_url
+    next_url = request.GET.get("next")
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         user_id = request.POST['user_id']
@@ -120,6 +123,10 @@ def login(request):
 
         if user is not None:
             auth_login(request, user)
+
+            # next_url
+            if next_url:
+                return redirect(next_url)
             return redirect('core:main_list')
         elif User.objects.filter(user_id=user_id) and not User.objects.filter(user_id=user_id)[0].is_active:
             ctx = {
@@ -491,3 +498,6 @@ def recovery_pw_reset(request):
 # ----약관 및 부가설명 관련----
 def terms_of_service_use(request):
     return render(request, 'profile/terms_of_service_use.html')
+
+def personal_info_policy(request):
+    return render(request, 'profile/personal_info_policy.html')

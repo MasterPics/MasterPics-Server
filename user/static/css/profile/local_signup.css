@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import 'reset_mobile.css';
 
 /*layout*/
 
@@ -74,7 +75,7 @@ input:-webkit-autofill:active  {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 450px;
+  height: 540px;
   padding-top: 8px;
   padding-bottom: 10px;
   width: 25%;
@@ -131,6 +132,15 @@ input:-webkit-autofill:active  {
 input[type="password"] {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
+}
+
+.field-error__container{
+  font-size: 5px;
+  font-weight: 600;
+}
+
+.field-error__container > label[for="id_is_ToS"]{
+  margin-left: 270px;
 }
 
 /* modal */
@@ -267,8 +277,9 @@ input[type="password"] {
 
 #id_is_ToS{
   width: 15px;
+  height: 15px;
   margin-left: 94%;
-  margin-top: -30px;
+  margin-top: -20px;
 }
 
 input[type="password"] {
@@ -349,6 +360,10 @@ input[type="password"] {
   height: 140px;
   border: 1.5px solid #CACACA;
   border-radius: 2px;
+}
+
+.field-error__container > label[for="id_is_ToS"]{
+  margin-left: 50%;
 }
 
 

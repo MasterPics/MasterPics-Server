@@ -114,23 +114,19 @@
 .profile__email,
 .profile__phone,
 .profile__instagram {
-  display: flex;
+  display: grid;
+  grid-template-columns: 52px auto;
   align-items: center;
   margin-bottom: 5px;
 }
-.profile__email .profile__text {
-  width: 52px;
-}
 .profile__text {
+  grid-column: 1;
   font-size: 13px;
   color: #000000;
 }
-.profile__email .profile__info-text,
-.profile__phone .profile__info-text,
-.profile__instagram .profile__info-text {
-  margin-left: 20px;
-}
 .profile__info-text {
+  grid-column: 2;
+  margin-left: 20px;
   width: 210px;
   font-size: 12px;
   color: #1e1e1e;
