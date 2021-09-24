@@ -1,4 +1,5 @@
 @import 'reset_mobile.css';
+@import 'image/image_form.css';
 
 .wrapper {
   width: 65%;
@@ -266,66 +267,6 @@ form {
   position: relative;
 }
 /*******************************************************/
-.image-form__label {
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-.images {
-  width: 100%;
-}
-.images .form__error{
-  color: #5200ff;
-  font-size: 11px;
-  line-height: 1.5;
-  margin-top: 10px;
-}
-.images .form__error::before{
-  content: '*';
-}
-.form__upload {
-  overflow: hidden;
-  background-color: #dedede;
-  height: 66px;
-  width: 100%;
-  margin-top: 15px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  padding: 5px 100px;
-  position: relative;
-}
-.form__upload-text {
-  color: #1e1e1e;
-  font-size: 13px;
-}
-.form__upload-btn {
-  background-color: #c4c4c4;
-  padding: 9px;
-  font-size: 0.9em;
-  border-radius: 100%;
-  color: #ffffff;
-  position: absolute;
-  right: 80px;
-}
-.images .form {
-  opacity: 0;
-  padding: 6% 50%;
-  position: absolute;
-  left: 0;
-  top:0;
-  cursor: pointer;
-  z-index: 1;
-}
-.form__img {
-  margin-top: 10px;
-  border: 1.5px solid #e2e2e2;
-  border-radius: 3px;
-  height: 172px;
-  width: 100%;
-  padding: 9px 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
 .form__file-attach {
   padding-top: 10px;
   margin-bottom: 60px;
