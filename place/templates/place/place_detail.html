@@ -155,12 +155,11 @@
                         </div>
                     </div>
                     <!-- 댓글 수정&삭제 버튼 -->
-                    {% if request.user == comment.writer %} 
-                    <div class="modify-delete">
-                            <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
-                            <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제" />
-                        
-                    </div>
+                    {% if request.user.pk == comment.writer.pk %} 
+                        <div class="modify-delete">
+                                <!--<input type="submit" class="modify" onclick="onClickDeleteComment({{ comment.id }})" value="수정"/>-->
+                                <input type="submit" class="delete" onclick="onClickDeleteComment({{ comment.id }})" value="삭제" />
+                        </div>
                     {% endif %}
                 </div>
                 {% endfor %}
