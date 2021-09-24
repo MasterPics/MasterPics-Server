@@ -108,7 +108,7 @@
       id_images.setAttribute('type', 'button')
       id_images.setAttribute('value', 'x')
       id_images.setAttribute('delFile', file.name);
-      images.setAttribute('class', 'image-check');
+      id_images.setAttribute('class', 'image-check');
       id_images.onclick = function (ev) {
         var ele = ev.srcElement;
         var delFile = ele.getAttribute('delFile');
