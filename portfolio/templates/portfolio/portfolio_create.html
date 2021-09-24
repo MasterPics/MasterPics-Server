@@ -11,15 +11,9 @@
     <div class="create">
         <h1 class="create__text">Portfolio 등록하기</h1>
         <div class="create__user">
-            {% if request.user.image  %}
             <img class="create__user-img" src="{{request.user.image.url}}" alt="img">
-            {% else %}
-            <img class="create__user-img"
-                src="https://cdn.iconscout.com/icon/free/png-512/account-profile-avatar-man-circle-round-user-30452.png"
-                alt="img">
-            {% endif %}
             <div class="create__user-name">{{request.user.username}}</div>
-            <p class="create__user-category">{{request.user.category}}</p>
+            <div class="create__user-category">{{request.user.category}}</div>
         </div>
     </div>          
 
@@ -50,7 +44,7 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        {%endif%}
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="form__right">
@@ -58,7 +52,13 @@
                     <div id="image_preview" class="form__group {{ field.name }}">
                         <div class="form__label">
                             <label for="id_images">이미지 (최대 10장)</label>
-                        </div>                   
+                        </div>
+                        <!-- image error message -->
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}           
                         <div class="form__upload">
                             <p class="form__upload-text">
                                 드래그 또는 클릭하여 업로드
@@ -92,5 +92,8 @@
 {% endblock content%}
 
 {% block script %}
-<script src="{% static 'js/image_preview.js' %}"></script>
+<script>
+    const existingImgCnt = false;
+</script>
+<script src="{% static 'js/portfolio_img_prev.js' %}"></script>
 {% endblock script %}

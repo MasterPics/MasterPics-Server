@@ -3,19 +3,38 @@
 {% load static %}
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/contact_update.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> <!--update할때 이미지 제거용-->
+<script src="{% static 'js/image/delete_image.js' %}"></script> <!--update할때 이미지 제거용(core안 js폴더에 존재)-->
 {% endblock stylesheet %}
 
 {% block content %}
-<div class='container'>
-    <div class='row'>
-        <div class='col-md-12'>
-            <h1 style="margin-top: 80px; margin-left: 60px; margin-bottom: 40px; font-size:30px;">Update Contact</h1>
-            <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% for field in form.visible_fields %}
-                    <div class="form-group {{ field.name }}">
-                        {{ field.label_tag }}
-                        <div class='col-sm-10'>
+
+
+
+<div class="wrapper">
+    <div class="update">
+        <h1 class="update__text">Contact 수정하기</h1>
+        <div class="update__user">
+            <img class="update__user-img" src="{{request.user.image.url}}" alt="img">
+            <div class="update__user-name">{{request.user.username}}</div>
+            <div class="update__user-category">{{request.user.category}}</div>
+        </div>
+    </div>          
+
+    <div class="line"></div>
+
+    <div class="form">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form__wrapper">
+                <div class="form__left">
+                    {% for field in form.visible_fields %}
+                    {% if field.name == 'title' or field.name == 'desc' %}
+                    <div class="form__group {{ field.name }}">
+                        <div class="form__label">
+                            {{ field.label }}
+                        </div>                   
+                        <div class="form__input">
                             {{ field }}
                             {% if field.help_text %}
                                 <p class="help-block">{{ field.help_text }}</p>
@@ -27,10 +46,187 @@
                             {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
-                <input type="submit" class="btn" />
-            </form>
-        </div>
+                    {% else %}
+                    {% endif %}
+                    {% endfor %}
+
+                    <!-- Pay Form -->
+                    <div class="form__group {{ form.pay.name }}">
+                        <div class="form__label">
+                            <label for="pay">페이</label>
+                        </div>                  
+                        <div class="form__input">
+                            <div class="pay__type">
+                                {{ form.pay_type }}
+                                {% if form.pay_type.help_text %}
+                                <p class="help-block">{{ form.pay_type.help_text }}</p>
+                                {% endif %}
+                                {% for error in form.pay_type.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                                <div class="select__arrow"></div>
+                            </div>
+                            {{ form.pay }}
+                            {% for error in form.pay.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Date Form -->
+                    <div class="form__date">
+                        <div class="form__date-container">
+                            <div class="form__label">
+                                <label for="start_date">날짜</label>
+                            </div>
+                            <div class="form__date-wrapper">
+                                <div class="form__group {{ form.start_date.name }}">                  
+                                    <div class="form__input">
+                                        {{ form.start_date }}
+                                    </div>
+                                </div>
+                                <div class="form__date-text">~</div>
+                                <div class="form__group {{ form.end_date.name }}">               
+                                    <div class="form__input">
+                                        {{ form.end_date }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 시작일, 종료일 관련 에러 메세지-->
+                        <div class="form__date-error">
+                            {% for error in form.start_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            {% for error in form.end_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- Location Form -->
+                    {% for field in location_form.visible_fields %}
+                    {% if field.id_for_label == 'location-lat' %}
+                    {% elif field.id_for_label == 'location-lon' %}
+                    {% else %}
+                    <div class="form__location">
+                        <div class="form__label">
+                            <label for="location-address">장소</label>
+                        </div>
+                        <div class="form__input">
+                            {{ field }}
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="map_wrap">
+                        <div id="map" style="width:100%;height:100%;"></div>
+                    </div>
+                </div>
+                <div class="form__right">
+                    <!-- Image Form -->
+                    <div id="image_preview" class="form__group {{ form.images.name }}">
+                        <div class="form__label">
+                            <label for="id_images">이미지 (최대 10장)</label>
+                        </div>
+                        <!-- image error message -->
+                        {% if image_error %}
+                            <div class="form__error">
+                                {{ image_error }}
+                            </div>
+                        {% endif %}               
+                        <div class="form__upload">
+                            <p class="form__upload-text">
+                                드래그 또는 클릭하여 업로드
+                            </p>
+                            <div class="form__upload-btn">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="form__input">
+                                {{ form.images }}
+                                {% for error in form.images.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div id='att_zone' class="form__img">
+                            {% for image in images %}
+                                <div class="image-wrapper {{image.image.pk}}">
+                                    <img class="image" src="{{image.image.image.url}}" alt="">
+                                    <input class="image-check" type="button" onclick="remove(this)" value="x" delfile="{{image.image.image.url}}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- File Form -->
+                    <div class="form__file-attach form__group {{ form.file_attach.name }}">
+                        <div class="form__label">
+                            <label for="id_file_attach">시안 첨부파일</label>
+                            <div class="form__cur-file-name">
+                                <p class="form__file-name" id="showPrevFiles"></p>
+                            </div>
+                        </div>
+                        <div class="form__file-attach-btn">
+                            <p class="form__file-name" id="showFiles"></p>
+                            <i class="far fa-folder-open"></i>    
+                        </div>
+                        <div class="form__input">
+                            {{ form.file_attach }}
+                            {% for error in form.file_attach.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Tags Form -->
+                    <div class="form__tags form__group {{ form.tags.name }}">
+                        <div class="form__label">
+                            {{ form.tags.label}}
+                        </div>                   
+                        <div class="form__input">
+                            {{ form.tags }}
+                            {% for error in form.tags.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form__btn" onclick="remove_all();">
+                        <input class="form__submit" id="btnSubmit" type="submit" value="수정하기" />
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content%}
+
+{% block script %}
+<script>
+    const existingImgCnt = '{{images_count}}';
+</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6bc437b6340a6a287508c2a0e89a88b&libraries=services"></script>
+<script src="{% static 'js/map/contact_update_map.js' %}"></script>
+<script src="{% static 'js/contact_img_prev.js' %}"></script>
+<script src="{% static 'js/contact_update_file_prev.js' %}"></script>
+<script src="{% static 'js/contact_pay_form.js' %}"></script>
+{% endblock script %}

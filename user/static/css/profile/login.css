@@ -23,15 +23,23 @@ body{
   height: 100%;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 /*login*/
 
 .login__container {
   width: 100%;
   display: flex;
-  height: 80%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 100px;
+  /*justify-content: center;*/
   background-color: F4F4F4;
 }
 
@@ -52,13 +60,6 @@ body{
   margin-bottom: 50px;
 }
 
-/*
-.form-field-group user_id_group{
-    width: 100%;
-  height: 150px;
-}
-*/
-
 .login__body{
   display: flex;
   flex-direction: row;
@@ -66,12 +67,6 @@ body{
   justify-content: center;
   width: 80%;
 }
-/*
-.login__container > .login__body form{
-  width: 100%;
-  height: 150px;
-}
-*/
 
 .login__body form{
   display: flex;
@@ -140,6 +135,7 @@ body{
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-items: center;
   justify-content: space-evenly;
 }
 
@@ -149,6 +145,33 @@ body{
   padding: 8px 22px;
   border-radius: 3px;
   font-size: 12px;
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.social-login__body > li{
+  display: flex;
+}
+
+.social-login__body > a{
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.google{
+  background-image: url(./google.jpg);
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+
+.naver{
+  background-image: url("./naver.jpg");
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  margin-right: 5px;
 }
 
 input::placeholder{
@@ -166,7 +189,6 @@ input[type="password"] {
   font-family: 'Open Sans', sans-serif;
 }
 
-
 /*login sucess*/
 
 .login__form-success{
@@ -174,3 +196,90 @@ input[type="password"] {
     margin: 5px auto;
 }
 
+
+/****** 반응형 ******/
+@media screen and (min-width:360px) and (max-width:512px){
+  .login__container {
+    padding-top: 50px;
+  }
+
+  .login__container > * {
+    height: 60px;
+  }
+
+  .login__logo {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .login__body{
+    width: 100%;
+  }
+  
+  .login__body form{
+    height: 120px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 50%;
+  }
+  
+  .login__body form input{
+      height: 30px;
+    }
+  
+  .login__body form > .submit_btn {
+    height: 35px;
+  }
+  
+  .sub-login__container {
+    margin-top: 7px;
+    width: 50%;
+    margin-right: 0%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sub-login__container .to-find__container {
+    width: 100px;
+  }
+  
+  .sub-login__container > * {
+    color: #787878;
+    font-size: 11px;
+    margin-top: 10px;
+  }
+
+  .social-login__container {
+    flex-direction: column;
+  }
+  
+  .social-login__container .social-login__title {
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+
+  .social-login__container .social-login__body {
+    width: 50%;
+  }
+  
+  .social-login__container .social-login__body > * {
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 6px;
+  }
+  
+  input::placeholder{
+    font-size: 8px; 
+  }
+  
+  /*login sucess*/
+  
+  .login__form-success{
+      font-size: 8px;
+      margin: 5px auto;
+  }
+  .navbar__toogleBtn {
+    color: black;
+  }
+}

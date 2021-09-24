@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q,Count
+from django.db.models import Q, Count
 import json
 
 # infinite loading
@@ -21,35 +21,42 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def place_create(request):
-
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES)
         location_form = LocationForm(request.POST)
-
         if place_form.is_valid() and location_form.is_valid():
             place = place_form.save(commit=False)
             location = location_form.save(commit=False)
-            location.save()
+            # location.save()
             place.user = request.user
             place.location = location
-            place.save()
-            place_form.save_m2m()
+            # place.save()
+            # place_form.save_m2m()
+
+            if not request.FILES.getlist('images'):
+                ctx = {
+                    'place_form': place_form,
+                    'location_form': location_form,
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'place/place_create.html', ctx)
+            else:
+                location.save()
+                place.save()
+                place_form.save_m2m()
 
             for i, image in enumerate(request.FILES.getlist('images')):
-
-                image_obj = Images()
+                image_obj = PostImage()
                 image_obj.post = Place.objects.get(id=place.id)
-                image_obj.image = image
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
                 image_obj.save()
 
                 if not i:
-                    place.thumbnail = image_obj
+                    place.thumbnail = image_obj.image
                     place.save()
-
-            print(place.tags.all())
-
             return redirect('place:place_detail', place.pk)
-
     else:
         place_form = PlaceForm()
         location_form = LocationForm()
@@ -64,42 +71,68 @@ def place_create(request):
 
 def place_detail(request, pk):
     place = get_object_or_404(Place, pk=pk)
-    
+
     ctx = {
         'place': place,
         'tags': place.tags.all(),
         'images': place.images.all(),
-        'comments': place.comments.all(),
+        'comments': place.comments.all().order_by('-created_at'),
     }
 
-    return render(request,'place/place_detail.html', context=ctx)
+    return render(request, 'place/place_detail.html', context=ctx)
 
 
 # TODO Update에서 썸네일 안 넘어가는 것 수정해야 함
 @login_required
 def place_update(request, pk):
     place = get_object_or_404(Place, pk=pk)
-
     if request.method == 'POST':
         place_form = PlaceForm(request.POST, request.FILES, instance=place)
         location_form = LocationForm(request.POST, instance=place.location)
+        
         if place_form.is_valid() and location_form.is_valid():
             place_update = place_form.save(commit=False)
             location = location_form.save(commit=False)
             location.save()
+            place_update.user = request.user
             place_update.location = location
-            print(place_form.image)
-            place_update.image = request.FILES.get('image')
-            place_update.image.save()
-            place_update.save()
+            # place_update.save()
+            place_form.save_m2m()
+
+            if not PostImage.objects.filter(post=place) and not request.FILES.getlist('images'):
+                ctx = {
+                    'place_form': place_form,
+                    'location_form': location_form,
+                    'images': place.post_image_images.all(),
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'place/place_update.html', ctx)
+
+            for i, image in enumerate(request.FILES.getlist('images')):
+                image_obj = PostImage()
+                image_obj.post = Place.objects.get(id=place_update.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+            images=place.post_image_images.all()
+            if images:
+                place.thumbnail = images[0].image
+                place.save()
+            else: #사진이 아무것도 안남았을때
+                place.thumbnail = None
+                    
             return redirect('place:place_detail', place.pk)
     else:
         place_form = PlaceForm(instance=place)
         location_form = LocationForm(instance=place.location)
+        images = place.post_image_images.all()
 
         ctx = {
             'place_form': place_form,
             'location_form': location_form,
+            'images': images,
         }
 
         return render(request, 'place/place_update.html', context=ctx)
@@ -112,7 +145,7 @@ def place_list(request):
     no_pay = request.GET.get('no_pay')
 
     # 상호무페이
-    #0718 상호무페이 필터링 추가
+    # 0718 상호무페이 필터링 추가
     if no_pay == 'true':
         places = Place.objects.all().filter(pay=0).distinct()
     else:
@@ -121,20 +154,18 @@ def place_list(request):
     # SORT
     if sort == 'pay':
         places = places.order_by('pay')
-    elif sort == 'like': #0718 like순 정렬 추가
+    elif sort == 'like':  # 0718 like순 정렬 추가
         places = places.order_by('-like_users')
     else:
         places = places.order_by('-created_at')
-    
 
     if search:
         places = places.filter(
             Q(title__icontains=search) |  # 제목검색
             Q(desc__icontains=search) |  # 내용검색
             Q(user__username__icontains=search) |  # 질문 글쓴이검색
-            Q(location__address__icontains=search)  #0718 주소검색
+            Q(location__address__icontains=search)  # 0718 주소검색
         ).distinct()
-    
 
     # infinite scroll
     places_per_page = 8
@@ -170,7 +201,7 @@ def place_delete(request, pk):
 
     else:
         ctx = {'place': place}
-        return render(request, 'place/place_delete.html', context=ctx)
+        return render(request, 'place/place_detail.html', context=ctx)
 
 
 @csrf_exempt

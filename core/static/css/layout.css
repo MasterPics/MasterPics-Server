@@ -1,15 +1,38 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap");
 
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
 
 body {
   overflow-x: hidden;
 }
+.container {
+  position: relative;
+  overflow-x: hidden;
+}
 
-a { text-decoration: none; color: black; }
-a:visited { text-decoration: none; }
-a:hover { text-decoration: none; }
-a:focus { text-decoration: none; }
-a:active { text-decoration: none; }
+a {
+  text-decoration: none;
+  color: black;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+a:focus {
+  text-decoration: none;
+}
+a:active {
+  text-decoration: none;
+}
 
 /*LOADING*/
 #loading {
@@ -26,10 +49,6 @@ a:active { text-decoration: none; }
   font-family: "Cabin Condensed", sans-serif;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
-
 svg {
   font-weight: bold;
   max-width: 600px;
@@ -43,11 +62,10 @@ svg {
   padding: 0;
   text-decoration: none;
   list-style-type: none;
-  font-family: "NanumSquare", sans-serif;
+  font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-
 
 nav {
   background-color: #fff;
@@ -55,9 +73,10 @@ nav {
 
 nav a {
   color: #fff;
+  font-family: 'DM Serif Display', serif;
 }
 
-.here{
+.here {
   color: #fff;
 }
 
@@ -65,19 +84,6 @@ nav a {
   display: block;
   margin: 0 auto;
 }
-
-/*
-.nav__profile {
-  display: flex;
-  align-items: center;
-}
-
-.nav__logo {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-}
-*/
 
 #nav {
   display: flex;
@@ -95,21 +101,40 @@ nav a {
   z-index: 100;
 }
 
+.navbar__toogleBtn, .toogleBtn-content{
+  display: none;
+}
+
+.nav_logo_img{
+  justify-content: center;
+  background-image: url("./mp_logo.png");
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  margin-right: 6px;
+  margin-top: 3px;
+}
 
 .nav__logo {
-  font-family: "DM Serif Display", serif;
+  font-family: 'DM Serif Display', serif;
   display: flex;
   align-items: center;
   font-size: 30px;
   margin-left: 3%;
 }
 
-
-.nav__menu, .nav__profile {
+.nav__menu,
+.nav__profile {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-left: auto;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.nav__menu a{
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nav__menu li {
@@ -118,6 +143,11 @@ nav a {
   margin-right: 70px;
   font-family: "Prata", serif;
   font-size: 14px;
+  font-weight: lighter;
+}
+
+.nav__profile a{
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nav__profile li {
@@ -127,13 +157,15 @@ nav a {
   margin-right: 70px;
   font-family: "Prata", serif;
   font-size: 14px;
+  font-weight: lighter;
 }
 
 .nav__profile .here {
   background: none;
   border: none;
-  font-family: "NanumSquare", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 14px;
+  font-weight: lighter;
 }
 .nav__profile .here:active {
   cursor: pointer;
@@ -144,14 +176,33 @@ nav a {
 
 /*user_drop_down*/
 
+.user_image{
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .dropbtn {
   color: white;
   border: none;
   background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  font-size: 14px;
 }
 
 .user_dropdown {
   position: relative;
+}
+
+.user_img{
+  width: 20px;
+  margin-left: 5px;
 }
 
 .dropdown-content {
@@ -159,10 +210,10 @@ nav a {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 140px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  margin-top: 80px;
-  margin-left: -10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  margin-top: 100px;
+  margin-left: -40px;
 }
 
 .dropdown-content a {
@@ -172,85 +223,90 @@ nav a {
   display: block;
 }
 
-.dropdown-content input{
+.dropdown-content input {
   color: black;
   cursor: pointer;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-.user_dropdown:hover .dropdown-content {display: block;}
+.user_dropdown:hover .dropdown-content {
+  display: block;
+}
 
-button {
+.user_dropdown > button {
   border: none;
   cursor: pointer;
   background-color: transparent;
 }
 
-
-/*
-.nav__profile li {
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-}
-
-
-.nav__menu li a:hover {
-  color: purple;
-  cursor: pointer;
-}
-
-.nav__profile a:hover i {
-  color: purple;
-  cursor: pointer;
-}
-
-*/
-
 /*footer*/
 
 #footer {
+  border-top: 1px solid CACACA;
+  padding: 10px 30px;
+  font-size: 15px;
+  background-color: #f5f5f5;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  width: 100%;
+}
+
+#footer > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid CACACA;
-  padding: 30px 30px;
-  font-size: 15px;
-  background-color: #F5F5F5;
 }
 
-.footer__left{
+.footer__left {
   display: flex;
   align-items: baseline;
   margin-left: 10px;
 }
 
-.footer__logo{
+.footer__logo {
   margin-right: 20px;
+  font-size: 24px;
+  font-family: "DM Serif Display", serif;
+  color: #5A5A5A;
 }
 
-.info{
+.info__1, .info__2 {
   margin: 0 15px 0 15px;
 }
 
-.mpright{
-  margin-right: 320px;
+.info__1 > a, .info__2 > a{
+  color: #5A5A5A;
 }
 
-.footer__logo{
-  font-size: 24px;
-  font-family: "DM Serif Display", serif;
+.mpright {
+  margin-right: 320px;
+  color: #5A5A5A;
 }
 
 .footer__right {
   display: flex;
   cursor: pointer;
-}
-.alliance{
-  color: #5200FF;
+  align-items: center;
 }
 
+.alliance > a{
+  color: #5200ff;
+}
+
+.insta{
+  font-size: 24px;
+  margin-left: 10px;
+  color: #989898;
+}
+
+.insta > a {
+  color: #989898;
+}
 
 /*LOADING*/
 #loading {
@@ -311,14 +367,152 @@ button {
   outline: 0;
 }
 
-/* 반응형 */
 
-@media screen and (max-width: 820px) {
-  .nav__menu {
-    display: none;
-    flex-direction: column;
+/* 반응형 nav & footer */
+
+@media screen and (min-width:360px) and (max-width:512px) {
+  /*footer*/
+
+  #footer {
+    display: grid;
+    grid-template-areas: "text-0 text-1 text-2 ." " text-3 . text-4 text-5";
+    border-top: 1px solid CACACA;
+    padding: 7px 7px;
+    font-size: 8px;
+    height: 50px;
+  }
+
+  #footer > div {
+    display: grid;
     align-items: center;
-    width: 100%;
+  }
+
+  .footer__left {
+    display: grid;
+    margin-left: 15px;
+    height: 40px;
+  }
+
+  .footer__logo {
+    grid-area: text-0;
+    font-size: 16px;
+    margin-top: -30px;
+    margin-bottom: 10px;
+  }
+
+  .info__1 {
+    grid-area: text-1;
+    margin-left: 90px;
+    width: 100px;
+  }
+
+  .info__2 {
+    grid-area: text-2;
+    margin-left: 135px;
+    width: 100px;
+  }
+
+  .mpright {
+    margin-left: -263px;
+    grid-area: text-3;
+    margin-right: 0;
+    margin-top: 15px;
+  }
+
+  .footer__right {
+    display: grid;
+    cursor: pointer;
+    grid-area: text-4;
+    margin-top: -35px;
+  }
+
+  .alliance {
+    color: #5200ff;
+    margin-bottom: 4px;
+    margin-left: 20px;
+  }
+
+  .insta{
+    font-size: 20px;
+    margin-left: 70px;
+    margin-top: -23px;
+  }
+
+
+  /* 반응형 nav */
+
+  .navbar__toogleBtn {
+    color: white;
+    display: flex;
+    width: 20px;
+  }
+
+  .navbar__toogleBtn i{
+    font-size: 18px;
+  }
+
+  .drop_down {
+    position: relative;
+    margin-right: 5px;
+  }
+
+  .toogleBtn-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    margin-left: -100px;
+  }
+
+  .toogleBtn-content a {
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+  }
+
+  .toogleBtn-content a {
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+  }
+
+  .toogleBtn-content a:hover {
+    background-color: #5200ff;
+  }
+
+  .drop_down:hover .toogleBtn-content {
+    display: block;
+  }
+
+  .drop_down > button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .nav__logo {
+    font-size: 22px;
+    margin-left: 3%;
+  }
+
+  .nav__logo > li{
+    position: relative;
+    bottom: 1px;
+  }
+
+  .nav__menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
   }
 
   .nav__menu li {
@@ -343,4 +537,5 @@ button {
   .nav__profile.active {
     display: block;
   }
+
 }

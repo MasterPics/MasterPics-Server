@@ -3,23 +3,26 @@
 {% load static %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/profile/profile_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile/withdrawal.css' %}">
 {% endblock stylesheet %}
 
 
 {% block content %}
-    <div class="container">
-        <div>
+    <div class="modify__container">
+        <div class="modify__body">
             <form action="" method="POST">
                 {% csrf_token %}
-                {{ request.user }}님, 탈퇴하시겠습니까?
+                <li class="repeat_ask">{{ request.user }}님</li>
+                <li class="repeat_ask">정말 탈퇴하시겠습니까?</li>
+
+                <li class="warning">회원 탈퇴 시, 계정을 되돌릴 수 없습니다</li>
                 
-                <input type="submit" class="" value="탈퇴" />
+                <input type="submit" class="submit_btn" value="탈퇴하기" />
+                <a href="{% url 'profile:mypage' %}"><input type="button" class="undo_btn" value="취소" /></a>
             </form>
         </div>
     </div>
 {% endblock content%}
-
 
 
 

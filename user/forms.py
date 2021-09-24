@@ -34,7 +34,16 @@ class LoginForm(forms.ModelForm):
 class ProfileModifyForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('user_id', 'username', 'email', 'category', 'phone', 'instagram', 'desc', 'image',)
+        fields = ('image', 'username', 'category','email', 'email_public', 'phone','phone_public', 'instagram', 'instagram_public', 'desc',)
+        labels = {
+            'category': '카테고리',
+            'email': 'E-mail',
+            'email_public': '공개',
+            'phone': 'Phone',
+            'phone_public': '공개',
+            'instagram': 'Instagram',
+            'instagram_public': '공개',
+        }
 
 # password_modify (user password change form) - local user만 가능
 class LocalPasswordChangeForm(PasswordChangeForm):
@@ -60,7 +69,7 @@ class LocalPasswordChangeForm(PasswordChangeForm):
 class SocialUserInfoForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('user_id', 'username', 'email', 'category', 'image', 'desc', 'phone', 'phone_public', 'instagram', 'is_ToS',)
+        fields = ('user_id', 'username', 'email', 'is_ToS',)
 
 
 class ProfileForm(forms.ModelForm):

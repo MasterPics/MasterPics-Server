@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from .forms import *
-
+from core.forms import PostImageForm
 from core.models import Tag
-
-
-from core.models import *
 # for Save, Like
 from django.http import JsonResponse
 import json
@@ -24,7 +21,8 @@ from django.forms import modelformset_factory
 
 
 def portfolio_list(request):
-    portfolios = Portfolio.objects.all().order_by("created_at")
+
+    portfolios = Portfolio.objects.all().order_by("-created_at")
 
     category = request.GET.get('category', 'all')  # Category
     sort = request.GET.get('sort', 'recent')  # Sort
@@ -91,6 +89,7 @@ def portfolio_detail(request, pk):
     portfolio = Portfolio.objects.get(pk=pk)
     portfolio.view_count += 1
     portfolio.save()
+
     parent_comments = portfolio.comments.all().filter(parent_comment__isnull=True)
 
     ctx = {
@@ -111,6 +110,9 @@ def portfolio_delete(request, pk):
     owner = portfolio.user  # 게시글 작성자
     if request.method == 'POST':
         portfolio.delete()
+        for image in portfolio.post_image_images.all():
+            image.delete()
+
         messages.success(request, "삭제되었습니다.")
 
         return redirect('portfolio:portfolio_list')
@@ -127,16 +129,45 @@ def portfolio_update(request, pk):
         if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
-            portfolio.save()
+            # portfolio.save()
             portfolio.tags.clear()
-
             form.save_m2m()
-            portfolio.image = request.FILES.get('image')
+
+            if not PostImage.objects.filter(post=portfolio) and not request.FILES.getlist('images'):
+                ctx = {
+                    'form': form,
+                    'images': portfolio.post_image_images.all(),
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                    'images_count':portfolio.post_image_images.all().count,
+                }
+                return render(request, 'portfolio/portfolio_update.html', ctx)
+            
+            for i, image in enumerate(request.FILES.getlist('images')):
+                image_obj = PostImage()
+                image_obj.post = Portfolio.objects.get(id=portfolio.id)
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
+                image_obj.save()
+
+            images=portfolio.post_image_images.all()
+            if images:
+                portfolio.thumbnail = images[0].image
+                portfolio.save()
+            else: #사진이 아무것도 안남았을때
+                portfolio.thumbnail = None
 
             return redirect('portfolio:portfolio_detail', portfolio.id)
+
+        #TODO Post 인데 Form not Valid일때 어떻게 처리할지 
     else:
         form = PortfolioForm(instance=portfolio)
-        ctx = {'form': form, }
+        images = portfolio.post_image_images.all()
+        ctx = {
+            'form': form,
+            'images': images,
+            'images_count': images.count,
+        }
         return render(request, 'portfolio/portfolio_update.html', ctx)
 
 
@@ -149,26 +180,38 @@ def portfolio_create(request):
         if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
-            portfolio.save()
-            form.save_m2m()
+            # portfolio.save()
+            # form.save_m2m()
 
-            print(request.FILES.getlist('images'))
+            if not request.FILES.getlist('images'):
+                ctx = {
+                    'form': form,
+                    'image_error': '사진은 1장 이상이어야 합니다.',
+                }
+                return render(request, 'portfolio/portfolio_create.html', ctx)
+            else:
+                portfolio.save()
+                form.save_m2m()
+
             for i, image in enumerate(request.FILES.getlist('images')):
-
-                image_obj = Images()
+                image_obj = PostImage()
                 image_obj.post = Portfolio.objects.get(id=portfolio.id)
-                image_obj.image = image
+                img = Image.objects.create(image=image)
+                #img.save()
+                image_obj.image = img
                 image_obj.save()
 
                 if not i:
-                    portfolio.thumbnail = image_obj
+                    portfolio.thumbnail = image_obj.image
                     portfolio.save()
-
-            messages.success(request, "posted!")
-
+            # messages.success(request, "posted!")
             return redirect('portfolio:portfolio_detail', portfolio.pk)
+        
         else:
-            print(form.errors)
+            ctx = {
+                'form': form
+            }
+            return render(request, 'portfolio/portfolio_create.html', ctx)
 
     else:
         form = PortfolioForm()
@@ -215,18 +258,22 @@ def portfolio_like(request):
         return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})
 
 
-
 ############################### comment ###############################
 @csrf_exempt
 def portfolio_comment_create(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        portfolio_id = data['id']
-        comment_value = data['value']
-        portfolio = Portfolio.objects.get(id=portfolio_id)
-        comment = Comment.objects.create(writer=request.user, post=portfolio, content=comment_value)
-        return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value})
-
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            portfolio_id = data['id']
+            comment_value = data['value']
+            portfolio = Portfolio.objects.get(id=portfolio_id)
+            comment = Comment.objects.create(
+                writer=request.user, post=portfolio, content=comment_value)
+            return JsonResponse({'portfolio_id': portfolio_id, 'comment_id': comment.id, 'value': comment_value, 'login_required':login_required})
+        else:
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 @csrf_exempt
 def portfolio_comment_delete(request):
