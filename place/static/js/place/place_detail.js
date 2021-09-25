@@ -101,11 +101,16 @@ const onClickNewComment = async (id) => {
             value: value_text
         })
 
-        modifyNewComment(id, data.comment_id, data.value);
+        if (data.login_required) {
+            alert('로그인 후 이용 가능합니다.');
+        }
+        else{
+            modifyNewComment(id, data.comment_id, data.value);
 
-        const cmt = document.querySelector('.comment__value')
-        cmt.value = ''
-    }   catch (error) {
+            const cmt = document.querySelector('.comment__value')
+            cmt.value = ''
+        }
+    }catch(error) {
         console.log(error)
     }
 

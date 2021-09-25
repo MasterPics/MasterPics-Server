@@ -255,14 +255,19 @@ def place_bookmark(request):
 @csrf_exempt
 def place_comment_create(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        place_id = data['id']
-        comment_value = data['value']
-        place = Place.objects.get(id=place_id)
-        comment = Comment.objects.create(
-            writer=request.user, post=place, content=comment_value)
-        return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value})
-
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            place_id = data['id']
+            comment_value = data['value']
+            place = Place.objects.get(id=place_id)
+            comment = Comment.objects.create(
+                writer=request.user, post=place, content=comment_value
+            )
+            return JsonResponse({'place_id': place_id, 'comment_id': comment.id, 'value': comment_value, 'login_required': login_required})
+        else:
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 @csrf_exempt
 def place_comment_delete(request):
