@@ -215,7 +215,7 @@ function getListItem(index, places) {
         itemStr = '<div class="info">' +
             `<div class="save save-${places.pk}">` + itemSave + `</div>` +
             '<div class="content">' +
-            `<a href="http://127.0.0.1:8000/contact/detail/${places.pk}">` + '<div class="place-title">' + places.title + '</div>' + `</a>` +
+            `<a href="/contact/detail/${places.pk}">` + '<div class="place-title">' + places.title + '</div>' + `</a>` +
             '<div class="address">' + places.address + '</div>' +
             '<div class="pay-date">' +
             '<div class="pay">' + itemPay + '</div>' +
@@ -234,7 +234,7 @@ function getListItem(index, places) {
             '</div>' +
             '</div>' +
             '<div class="thumbnail">' +
-            `<a href="http://127.0.0.1:8000/contact/detail/${places.pk}">` + `<img src=${places.thumbnail} />` + `</a>` +
+            `<a href="/contact/detail/${places.pk}">` + `<img src=${places.thumbnail} />` + `</a>` +
             '</div>' +
             '</div>';
 
@@ -333,8 +333,8 @@ function setMarkers(type) {
     else if (type === 'model') {
         places = positions.filter(x => x.writer_category == 'model');
     }
-    else if (type === 'hairMakeup') {
-        places = positions.filter(x => x.writer_category == 'HairMakeup');
+    else if (type === 'hairmakeup') {
+        places = positions.filter(x => x.writer_category == 'hairmakeup');
     }
     else if (type === 'stylist') {
         places = positions.filter(x => x.writer_category == 'stylist');
@@ -404,7 +404,7 @@ function changeMarker(type) {
     var allMenu = document.getElementById('allMenu');
     var photographerMenu = document.getElementById('photographerMenu');
     var modelMenu = document.getElementById('modelMenu');
-    var hairMakeupMenu = document.getElementById('hairMakeupMenu');
+    var hairmakeupMenu = document.getElementById('hairmakeupMenu');
     var stylistMenu = document.getElementById('stylistMenu');
 
     // 전체
@@ -414,7 +414,7 @@ function changeMarker(type) {
         allMenu.className = 'menu-selected';
         photographerMenu.className = '';
         modelMenu.className = '';
-        hairMakeupMenu.className = '';
+        hairmakeupMenu.className = '';
         stylistMenu.className = '';
 
         // 해당 마커만 지도에 표시하도록 설정합니다
@@ -427,7 +427,7 @@ function changeMarker(type) {
         allMenu.className = '';
         photographerMenu.className = 'menu-selected';
         modelMenu.className = '';
-        hairMakeupMenu.className = '';
+        hairmakeupMenu.className = '';
         stylistMenu.className = '';
 
         // 해당 마커만 지도에 표시하도록 설정합니다
@@ -440,20 +440,20 @@ function changeMarker(type) {
         allMenu.className = '';
         photographerMenu.className = '';
         modelMenu.className = 'menu-selected';
-        hairMakeupMenu.className = '';
+        hairmakeupMenu.className = '';
         stylistMenu.className = '';
 
         // 해당 마커만 지도에 표시하도록 설정합니다
         setMarkers(type);
 
     }
-    else if (type === 'hairMakeup') {
+    else if (type === 'hairmakeup') {
 
         // 카테고리를 선택된 스타일로 변경
         allMenu.className = '';
         photographerMenu.className = '';
         modelMenu.className = '';
-        hairMakeupMenu.className = 'menu-selected';
+        hairmakeupMenu.className = 'menu-selected';
         stylistMenu.className = '';
 
         // 해당 마커만 지도에 표시하도록 설정합니다
@@ -466,7 +466,7 @@ function changeMarker(type) {
         allMenu.className = '';
         photographerMenu.className = '';
         modelMenu.className = '';
-        hairMakeupMenu.className = '';
+        hairmakeupMenu.className = '';
         stylistMenu.className = 'menu-selected';
 
         // 해당 마커만 지도에 표시하도록 설정합니다
