@@ -26,7 +26,7 @@ def reference_list(request):
     # Search
     if search:
         portfolios = portfolios.filter(
-            Q(tags__name__icontains=search)
+            Q(tags__name=search)
         ).distinct()
 
     # infinite scroll

@@ -6,6 +6,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MasterPics</title>
+
+  <meta name="naver-site-verification" content="61298962a7cbf771140cad88603b5cce0c9bdc5f" />
+  <meta name="google-site-verification" content="XWNbttXvToX0sLo2v0sbyADECotwOuKIL3igwSodMHA" />
+  
   <link rel="shortcut icon" href="{% static 'img/masterpics_favicon.png' %}">
   <link rel="icon" href="{% static 'img/masterpics_favicon.png' %}">
   
@@ -76,7 +80,7 @@
                   {% if redirect_field_value %}
                   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                   {% endif %}
-                  <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                  <input class="here" type="submit" value="Log Out" onclick="return confirm('정말 로그아웃 하시겠습니까?');"
                     style="margin-right: 10px;"></input>
                 </form>
               </a>
@@ -113,7 +117,7 @@
                       {% if redirect_field_value %}
                       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                       {% endif %}
-                      <input class="here" type="submit" value="Log Out" onclick="return confirm('Are you sure?');"
+                      <input class="here" type="submit" value="Log Out" onclick="return confirm('정말 로그아웃 하시겠습니까?');"
                         style="margin-right: 10px;"></input>
                     </form>
                   </a>
