@@ -47,7 +47,6 @@ input:-webkit-autofill:active  {
 
 .login__container > * {
   width: 100%;
-  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,7 +57,7 @@ input:-webkit-autofill:active  {
 .login__logo {
   font-size: 32px;
   font-family: "DM Serif Display", serif;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .login__body{
@@ -107,8 +106,7 @@ input:-webkit-autofill:active  {
 }
 
 .sub-login__container {
-  margin-top:8px;
-  margin-bottom: -10px;
+  margin-bottom: 14px;
   width: 40%;
   display: flex;
   align-items: center;
@@ -135,7 +133,7 @@ input:-webkit-autofill:active  {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: bold;
   font-size: 16px;
-  margin: 24px 0;
+  margin-bottom: 24px;
 }
 .social-login__container .social-login__body {
   width: 25%;
@@ -214,13 +212,13 @@ input[type="password"] {
     padding-top: 50px;
   }
 
-  .login__container > * {
+  /* .login__container > * {
     height: 60px;
-  }
+  } */
 
   .login__logo {
     font-size: 28px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
   
   .login__body{
