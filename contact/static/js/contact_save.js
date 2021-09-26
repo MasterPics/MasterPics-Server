@@ -7,13 +7,18 @@ const onClickSave = async (contact_id) => {
                 contact_id: contact_id,
             }
         }
-        
+
         const response = await axios(options)
         const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
-            //modify에서는 뒤집힌 is_saved 값이 들어감
-            modify(data.contact_id, data.is_saved)
+            if (data.login_required === true) {
+                alert('로그인 후 이용 가능합니다.');
+            }
+            else {
+                //modify에서는 뒤집힌 is_saved 값이 들어감
+                modify(data.contact_id, data.is_saved)
+            }
         }
     } catch (error) {
         console.log(error)

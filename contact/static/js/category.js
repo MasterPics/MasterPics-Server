@@ -13,8 +13,8 @@ filterCategory.addEventListener('click', (e) => {
     else if (selectedCategory.classList.contains('model')) {
         category = 'model';
     }
-    else if (selectedCategory.classList.contains('HairMakeup')) {
-        category = 'HairMakeup';
+    else if (selectedCategory.classList.contains('hairmakeup')) {
+        category = 'hairmakeup';
     }
     else if (selectedCategory.classList.contains('stylist')) {
         category = 'stylist';

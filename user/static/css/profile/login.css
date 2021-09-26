@@ -87,6 +87,12 @@ input:-webkit-autofill:active  {
     padding-left: 10px;
   }
 
+.login__form-error{
+  font-size: 13px;
+  font-family: "Noto Sans KR", sans-serif;
+  color: red;
+}
+
 .login__body form > .submit_btn {
   height: 45px;
   width: 100%;
@@ -222,7 +228,7 @@ input[type="password"] {
   }
   
   .login__body form{
-    height: 120px;
+    height: 140px;
     padding-top: 5px;
     padding-bottom: 5px;
     width: 50%;
@@ -236,8 +242,12 @@ input[type="password"] {
     height: 35px;
   }
   
+  .login__form-error {
+    font-size: 10px;
+  }
+
   .sub-login__container {
-    margin-top: 7px;
+    margin-top: 20px;
     width: 100%;
     margin-right: auto;
     margin-left: auto;
@@ -257,6 +267,7 @@ input[type="password"] {
 
   .social-login__container {
     flex-direction: column;
+    width: 115%;
   }
   
   .social-login__container .social-login__title {
@@ -273,6 +284,7 @@ input[type="password"] {
     padding: 5px;
     border-radius: 3px;
     font-size: 6px;
+    margin: 3px;
   }
   
   input::placeholder{

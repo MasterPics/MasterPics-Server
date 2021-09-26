@@ -1335,6 +1335,12 @@ a:active { text-decoration: none; }
     width: 100%;
     height: 100%;
   }
+
+  .magazine_more img{
+    width: 30px;
+    height: 30px;
+  }
+
   .RandomMagazine .magazine_img{
     opacity: 1;transition: all 0.3s ease 0s;overflow: hidden
   }

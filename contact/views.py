@@ -27,20 +27,24 @@ from user.decorators import required_login
 @csrf_exempt
 def contact_save(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        contact_id = data["contact_id"]
-        contact = get_object_or_404(Contact, pk=contact_id)
-        is_saved = request.user in contact.bookmark_users.all()
-        if is_saved:
-            contact.bookmark_users.remove(
-                get_object_or_404(User, pk=request.user.pk))
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            contact_id = data["contact_id"]
+            contact = get_object_or_404(Contact, pk=contact_id)
+            is_saved = request.user in contact.bookmark_users.all()
+            if is_saved:
+                contact.bookmark_users.remove(
+                    get_object_or_404(User, pk=request.user.pk))
+            else:
+                contact.bookmark_users.add(
+                    get_object_or_404(User, pk=request.user.pk))
+            is_saved = not is_saved
+            contact.save()
+            return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved, 'login_required': login_required})
         else:
-            contact.bookmark_users.add(
-                get_object_or_404(User, pk=request.user.pk))
-        is_saved = not is_saved
-        contact.save()
-        return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
-
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 def contact_list(request):
     contacts = Contact.objects.all().order_by('-created_at')
@@ -159,6 +163,7 @@ def contact_update(request, pk):
                     'location_form': location_form,
                     'images': contact.post_image_images.all(),
                     'image_error': '사진은 1장 이상이어야 합니다.',
+                    'images_count':contact.post_image_images.all().count,
                 }
                 return render(request, 'contact/contact_update.html', ctx)
 
@@ -178,13 +183,20 @@ def contact_update(request, pk):
                 contact.thumbnail = None
 
             return redirect('contact:contact_detail', contact.pk)
+        else:
+            ctx = {
+                'contact_form': form,
+                'location_form': location_form,
+            }
+            return render(request, 'contact/contact_create.html', ctx)
     else:
         form = ContactForm(instance=contact)
         images = contact.post_image_images.all()
         location_form = LocationForm(instance=contact.location)
         ctx = {'form': form,
                'location_form': location_form,
-               'images': images}
+               'images': images,
+               'images_count':images.count,}
         return render(request, 'contact/contact_update.html', ctx)
 
 # TODO 파일 첨부
