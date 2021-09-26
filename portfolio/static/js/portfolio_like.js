@@ -11,7 +11,12 @@ const onClickLike = async (portfolio_id) => {
         const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
-            modifyLike(data.portfolio_id, data.is_liked)
+            if (data.login_required === true) {
+                alert('로그인 후 이용 가능합니다.');
+            }
+            else {
+                modifyLike(data.portfolio_id, data.is_liked)
+            }
         }
     } catch (error) {
         console.log(error)

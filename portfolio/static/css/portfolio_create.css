@@ -1,4 +1,4 @@
-@import 'reset_mobile.css';
+@import 'image/image_form.css';
 
 .wrapper {
   width: 65%;
@@ -97,63 +97,6 @@ form {
 .desc textarea:focus,
 .tags input:focus {
   outline: none !important;
-}
-/*******************************************************/
-.images {
-  width: 100%;
-}
-#image_preview .form__error{
-  color: #5200ff;
-  font-size: 11px;
-  line-height: 1.5;
-  margin-top: 10px;
-}
-#image_preview .form__error::before{
-  content: '*';
-}
-.form__upload {
-  overflow: hidden;
-  background-color: #dedede;
-  height: 70px;
-  width: 100%;
-  margin-top: 15px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  padding: 5px 100px;
-  position: relative;
-}
-.form__upload-text {
-  color: #1e1e1e;
-  font-size: 13px;
-}
-.form__upload-btn {
-  background-color: #c4c4c4;
-  padding: 13px;
-  font-size: 0.9em;
-  border-radius: 100%;
-  color: #ffffff;
-  position: absolute;
-  right: 80px;
-}
-#id_images {
-  opacity: 0;
-  border: 1px solid red;
-  padding: 6% 50%;
-  position: absolute;
-  left: 0;
-  top:0;
-  cursor: pointer;
-  z-index: 1;
-}
-.form__img {
-  margin-top: 18px;
-  border: 1.5px solid #e2e2e2;
-  border-radius: 3px;
-  height: 164px;
-  width: 100%;
-  padding: 9px;
-  overflow: hidden;
 }
 
 /*******************************************************/

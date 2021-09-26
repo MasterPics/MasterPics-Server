@@ -11,8 +11,13 @@ const onClickSave = async (place_id) => {
         const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
-            //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
-            modifySave(data.place_id, data.is_bookmarked)
+            if (data.login_required === true) {
+                alert('로그인 후 이용 가능합니다.');
+            }
+            else {
+                //modify에서는 이미 뒤집힌 is_saved 값이 들어감!
+                modifySave(data.place_id, data.is_bookmarked)
+            }
         }
     } catch (error) {
         console.log(error)

@@ -1,0 +1,109 @@
+.image-form__label {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.images {
+  width: 100%;
+  position: relative;
+}
+.images .form__error{
+  color: #5200ff;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.images .form__error::before{
+  content: '*';
+}
+.form__upload {
+    overflow: hidden;
+    background-color: #dedede;
+    height: 66px;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+  }
+  .form__upload-text {
+    color: #1e1e1e;
+    font-size: 13px;
+    margin-right: 20px;
+  }
+  .form__upload-btn {
+    background-color: #c4c4c4;
+    padding: 9px;
+    font-size: 0.9em;
+    border-radius: 100%;
+    color: #ffffff;
+  }
+  .images .form, #id_images {
+    opacity: 0;
+    padding: 6% 50%;
+    position: absolute;
+    left: 0;
+    top:30px;
+    cursor: pointer;
+    z-index: 1;
+    height: 66px;
+  }
+  #id_images{
+    width: 50%;
+  }
+  .form__img {
+    margin-top: 10px;
+    border: 1.5px solid #e2e2e2;
+    border-radius: 3px;
+    height: 172px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 10px;
+  }
+  .form__img::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* 이미지와 체크 박스를 감싸고 있는 div 속성 */
+  .image-wrapper{
+    position:relative;
+    width: 96px;
+    height: 96px;
+  }
+  /* 미리보기 이미지 속성 */
+  .image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  /* 이미지 안에 표시되는 체크박스의 속성 */
+  .image-check{
+    width: 11px;
+    padding-bottom: 1px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 10px;
+    z-index: 999;
+    background-color:#c4c4c4;
+    color:#ffffff;
+    border: 0;
+    border-radius: 100%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .image-wrapper{
+      position:relative;
+      width: 94px;
+      height: 94px;
+    }
+  }
