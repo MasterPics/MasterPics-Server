@@ -35,31 +35,31 @@ def portfolio_list(request):
     if category != 'all':
         if category == User.CATEGORY_PHOTOGRAPHER:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_PHOTOGRAPHER)
-                                           ).distinct().order_by("?")
+                                           ).distinct().order_by('-created_at')
         elif category == User.CATEGORY_MODEL:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_MODEL)
-                                           ).distinct().order_by("?")
+                                           ).distinct().order_by('-created_at')
         elif category == User.CATEGORY_HM:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_HM)
-                                           ).distinct().order_by("?")
+                                           ).distinct().order_by('-created_at')
         elif category == User.CATEGORY_STYLIST:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_STYLIST)
-                                           ).distinct().order_by("?")
+                                           ).distinct().order_by('-created_at')
         elif category == User.CATEGORY_OTHERS:
             portfolios = portfolios.filter(Q(user__category=User.CATEGORY_OTHERS)
-                                           ).distinct().order_by("?")
+                                           ).distinct().order_by('-created_at')
 
     # Sort 최신순, 조회순, 좋아요순, 저장순
     if sort == 'recent':
-        portfolios = portfolios.order_by('-updated_at')
+        portfolios = portfolios.order_by('-created_at')
     elif sort == 'view':
-        portfolios = portfolios.order_by('-view_count', '-updated_at')
+        portfolios = portfolios.order_by('-view_count', '-created_at')
     elif sort == 'like':
         portfolios = portfolios.annotate(num_save=Count(
-            'like_users')).order_by('-num_save', '-updated_at')
+            'like_users')).order_by('-num_save', '-created_at')
     elif sort == 'save':
         portfolios = portfolios.annotate(num_save=Count(
-            'bookmark_users')).order_by('-num_save', '-updated_at')
+            'bookmark_users')).order_by('-num_save', '-created_at')
 
     # Search
     if search:

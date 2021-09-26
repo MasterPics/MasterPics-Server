@@ -46,9 +46,10 @@ def contact_list(request):
     contacts = Contact.objects.all().order_by('-created_at')
 
     # 상호무페이
+
     no_pay = request.GET.get('no_pay', False)
     if no_pay == 'true':
-        contacts = Contact.objects.all().filter(pay=0).distinct()
+        contacts = Contact.objects.all().filter(pay_type=PayType.PAY_FREE).distinct()
     else:
         contacts = Contact.objects.all()
 
@@ -78,8 +79,10 @@ def contact_list(request):
     if sort == 'save':
         contacts = contacts.annotate(num_save=Count(
             'contactinformation')).order_by('-num_save', '-created_at')
-    elif sort == 'pay':
+    elif sort == 'payLow':
         contacts = contacts.order_by('-pay', '-created_at')
+    elif sort == 'payHigh':
+        contacts = contacts.order_by('pay', '-created_at')
     elif sort == 'recent':
         contacts = contacts.order_by('-created_at')
 

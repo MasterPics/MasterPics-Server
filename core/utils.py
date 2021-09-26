@@ -17,6 +17,7 @@ from django.core.files import File
 # Tag 따로 안쓰길래 주석처리함
 #from .models import Tag
 
+
 def compress(image):
 
     img = Image.open(image)
@@ -45,8 +46,8 @@ def list_to_four_groups(queryset_list):
 
 
 def uuid_name_upload_to(instance, filename):
-    #app_label = instance.__class__._meta.app_label  # 앱 별로
-    #cls_name = instance.__class__.__name__.lower()  # 모델 별로
+    # app_label = instance.__class__._meta.app_label  # 앱 별로
+    # cls_name = instance.__class__.__name__.lower()  # 모델 별로
     ymd_path = timezone.now().strftime('%Y/%m/%d')  # 업로드하는 년/월/일 별로
     uuid_name = uuid4().hex
     extension = os.path.splitext(filename)[-1].lower()  # 확장자 추출하고, 소문자로 변환
@@ -55,7 +56,6 @@ def uuid_name_upload_to(instance, filename):
         uuid_name,
         uuid_name + extension,
     ])
-
 
 
 def save_image_from_url(user, url):
@@ -69,9 +69,11 @@ def save_image_from_url(user, url):
                     File(img_temp), save=True)
 
 
-
 def hashtag_splitter(tag_string):
-    return [t.strip() for t in tag_string.split('#') if t.strip()]
+    hashtag_regex = "#([0-9a-zA-Z가-힣]*)"
+    pattern = re.compile(hashtag_regex)
+    tags = pattern.findall(tag_string)
+    return tags
 
 
 def hashtag_joiner(tags):
