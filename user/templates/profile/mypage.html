@@ -13,7 +13,9 @@
     <div class="profile">
         <div class="profile__edit">
             <div id="Dropdown" class="profile__edit-content">
+                {% if not request.user.is_social %}
                 <a href="{% url 'profile:password_change' %}">비밀번호 변경</a>
+                {% endif %}
                 <a href="{% url 'profile:withdrawal' %}">회원 탈퇴</a>
             </div>
             <div onclick="profileEdit()" class="profile__edit-btn">.&nbsp;.&nbsp;.</div>
