@@ -267,6 +267,7 @@ form {
 }
 /*******************************************************/
 .form__file-attach {
+  width: 100%;
   padding-top: 10px;
   margin-bottom: 60px;
   position: relative;
@@ -285,7 +286,7 @@ form {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 5px;
-  width: 280px;
+  width: 70%;
   font-size: 11px;
   color: #888888;
 }
@@ -295,7 +296,7 @@ form {
   text-align: center;
   border-left: 1px solid #c4c4c4;
 }
-.file_attach .form {
+.file_attach > .form__input {
   opacity: 0;
   padding: 10px 2px;
   position: absolute;
@@ -311,9 +312,9 @@ form {
   margin: 0 10px;
   font-size: 11px;
   color: #888888;
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 }
 .tags input {
   width: 100%;
