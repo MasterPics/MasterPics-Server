@@ -82,11 +82,11 @@ def contact_list(request):
     # Sort
     if sort == 'save':
         contacts = contacts.annotate(num_save=Count(
-            'contactinformation')).order_by('-num_save', '-created_at')
+            'bookmark_users')).order_by('-num_save', '-created_at')
     elif sort == 'payLow':
-        contacts = contacts.order_by('-pay', '-created_at')
-    elif sort == 'payHigh':
         contacts = contacts.order_by('pay', '-created_at')
+    elif sort == 'payHigh':
+        contacts = contacts.order_by('-pay', '-created_at')
     elif sort == 'recent':
         contacts = contacts.order_by('-created_at')
 
