@@ -49,6 +49,9 @@
     z-index: 1;
     height: 66px;
   }
+  #id_images{
+    width: 50%;
+  }
   .form__img {
     margin-top: 10px;
     border: 1.5px solid #e2e2e2;
