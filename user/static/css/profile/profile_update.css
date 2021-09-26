@@ -4,9 +4,9 @@
 }
 .wrapper {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: #f3f3f3;
-  padding-top: 120px;
+  padding-top: 80px;
 }
 .form__wrapper {
   margin: 0 auto;
