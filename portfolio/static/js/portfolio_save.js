@@ -11,8 +11,13 @@ const onClickSave = async (portfolio_id) => {
         const responseOK = response && response.status === 200
         if (responseOK) {
             const data = response.data
-            console.log(data)
-            modifySave(data.portfolio_id, data.is_saved)
+            if (data.login_required === true) {
+                alert('로그인 후 이용 가능합니다.');
+            }
+            else {
+                console.log(data)
+                modifySave(data.portfolio_id, data.is_saved)
+            }
         }
     } catch (error) {
         console.log(error)

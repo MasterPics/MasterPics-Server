@@ -27,20 +27,24 @@ from user.decorators import required_login
 @csrf_exempt
 def contact_save(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        contact_id = data["contact_id"]
-        contact = get_object_or_404(Contact, pk=contact_id)
-        is_saved = request.user in contact.bookmark_users.all()
-        if is_saved:
-            contact.bookmark_users.remove(
-                get_object_or_404(User, pk=request.user.pk))
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            contact_id = data["contact_id"]
+            contact = get_object_or_404(Contact, pk=contact_id)
+            is_saved = request.user in contact.bookmark_users.all()
+            if is_saved:
+                contact.bookmark_users.remove(
+                    get_object_or_404(User, pk=request.user.pk))
+            else:
+                contact.bookmark_users.add(
+                    get_object_or_404(User, pk=request.user.pk))
+            is_saved = not is_saved
+            contact.save()
+            return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved, 'login_required': login_required})
         else:
-            contact.bookmark_users.add(
-                get_object_or_404(User, pk=request.user.pk))
-        is_saved = not is_saved
-        contact.save()
-        return JsonResponse({'contact_id': contact_id, 'is_saved': is_saved})
-
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 def contact_list(request):
     contacts = Contact.objects.all().order_by('-created_at')

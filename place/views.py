@@ -210,45 +210,57 @@ def place_delete(request, pk):
 def place_like(request):
 
     if request.method == 'POST':
-        data = json.loads(request.body)
-        place_id = data["place_id"]
-        place = get_object_or_404(Place, pk=place_id)
-        is_liked = request.user in place.like_users.all()
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            place_id = data["place_id"]
+            place = get_object_or_404(Place, pk=place_id)
+            is_liked = request.user in place.like_users.all()
 
-        if is_liked:
-            place.like_users.remove(
-                get_object_or_404(User, pk=request.user.pk)
-            )
+            if is_liked:
+                place.like_users.remove(
+                    get_object_or_404(User, pk=request.user.pk)
+                )
+            else:
+                place.like_users.add(
+                    get_object_or_404(User, pk=request.user.pk)
+                )
+            is_liked = not is_liked
+            place.save()
+            return JsonResponse({
+                "place_id": place_id,
+                "is_liked": is_liked,
+                'login_required': login_required
+            })
         else:
-            place.like_users.add(
-                get_object_or_404(User, pk=request.user.pk)
-            )
-        is_liked = not is_liked
-        place.save()
-        return JsonResponse({
-            "place_id": place_id,
-            "is_liked": is_liked
-        })
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 
 @csrf_exempt
 def place_bookmark(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        place_id = data["place_id"]
-        place = get_object_or_404(Place, pk=place_id)
-        is_bookmarked = request.user in place.bookmark_users.all()
-        if is_bookmarked:
-            place.bookmark_users.remove(
-                get_object_or_404(User, pk=request.user.pk))
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            place_id = data["place_id"]
+            place = get_object_or_404(Place, pk=place_id)
+            is_bookmarked = request.user in place.bookmark_users.all()
+            if is_bookmarked:
+                place.bookmark_users.remove(
+                    get_object_or_404(User, pk=request.user.pk))
+            else:
+                place.bookmark_users.add(
+                    get_object_or_404(User, pk=request.user.pk))
+            is_bookmarked = not is_bookmarked
+            return JsonResponse({
+            'place_id': place_id,
+            'is_bookmarked': is_bookmarked,
+            'login_required': login_required
+        })
         else:
-            place.bookmark_users.add(
-                get_object_or_404(User, pk=request.user.pk))
-        is_bookmarked = not is_bookmarked
-    return JsonResponse({
-        'place_id': place_id,
-        'is_bookmarked': is_bookmarked
-    })
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 
 ############################### comment ###############################

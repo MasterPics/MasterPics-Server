@@ -226,40 +226,49 @@ def portfolio_create(request):
 @csrf_exempt
 def portfolio_save(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        portfolio_id = data["portfolio_id"]
-        portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-        request_user = request.user
-        is_saved = request_user in portfolio.bookmark_users.all()
-        if is_saved:
-            portfolio.bookmark_users.remove(
-                get_object_or_404(User, pk=request_user.pk))
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            portfolio_id = data["portfolio_id"]
+            portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+            request_user = request.user
+            is_saved = request_user in portfolio.bookmark_users.all()
+            if is_saved:
+                portfolio.bookmark_users.remove(
+                    get_object_or_404(User, pk=request_user.pk))
+            else:
+                portfolio.bookmark_users.add(
+                    get_object_or_404(User, pk=request_user.pk))
+            is_saved = not is_saved
+            portfolio.save()
+            return JsonResponse({'portfolio_id': portfolio_id, 'is_saved': is_saved,'login_required':login_required})
         else:
-            portfolio.bookmark_users.add(
-                get_object_or_404(User, pk=request_user.pk))
-        is_saved = not is_saved
-        portfolio.save()
-        return JsonResponse({'portfolio_id': portfolio_id, 'is_saved': is_saved})
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 
 @csrf_exempt
 def portfolio_like(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        portfolio_id = data["portfolio_id"]
-        portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-        request_user = request.user
-        is_liked = request_user in portfolio.like_users.all()
-        if is_liked:
-            portfolio.like_users.remove(
-                get_object_or_404(User, pk=request_user.pk))
+        if request.user.is_authenticated:
+            login_required = False 
+            data = json.loads(request.body)
+            portfolio_id = data["portfolio_id"]
+            portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+            request_user = request.user
+            is_liked = request_user in portfolio.like_users.all()
+            if is_liked:
+                portfolio.like_users.remove(
+                    get_object_or_404(User, pk=request_user.pk))
+            else:
+                portfolio.like_users.add(
+                    get_object_or_404(User, pk=request_user.pk))
+            is_liked = not is_liked
+            portfolio.save()
+            return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked,'login_required':login_required})
         else:
-            portfolio.like_users.add(
-                get_object_or_404(User, pk=request_user.pk))
-        is_liked = not is_liked
-        portfolio.save()
-        return JsonResponse({'portfolio_id': portfolio_id, 'is_liked': is_liked})
-
+            login_required = True
+            return JsonResponse({'login_required': login_required})
 
 ############################### comment ###############################
 @csrf_exempt
