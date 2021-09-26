@@ -87,9 +87,9 @@
                         {% if contact.is_closed %}
                         <div class="list__date-text">마감</div>
                         {% else %}
-                        <div class="list__date-text">{{ contact.start_date|datefilter }}</div>
+                        <div class="list__date-text">{{ contact.start_date|date:'y.m.d' }}</div>
                         <div class="list__date-text">~</div>
-                        <div class="list__date-text">{{ contact.end_date|datefilter }}</div>
+                        <div class="list__date-text">{{ contact.end_date|date:'y.m.d' }}</div>
                         {% endif %}
                     </div>
                 </div>
